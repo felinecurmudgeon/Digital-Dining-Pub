@@ -119,6 +119,7 @@ TBD
 | Parameter     | Values          |
 | ------------- | -------------  | 
 | restaurantsid | id (i.e. 123)  |
+| usersid | id (i.e. 123)  |
 
 ### Example POST
 TBD
