@@ -1,0 +1,19 @@
+<ion-view view-title="Confirmation">
+  <ion-content>
+    <h1>Confirm Checkout</h1>
+    <!-- dummy data -->
+    <ion-item ng-repeat="food in menuItemsSample" href="#/app/playlists/{{playlist.id}}" class = 'menuItem'>
+        <span class = 'foodName'>{{food.name}}</span>
+        <span class = 'price'> {{food.price}} </span>
+    </ion-item>
+    <!-- these will be for actual food categories on the menu -->
+    <div class="item item-divider">
+      Items Ordered
+    </div>
+    <div class="item item-divider">
+      Total
+    </div>
+  </ion-content>
+</ion-view>
+
+<!-- todo, link up with current bill page to reflect charges. this will be where payment is sent to stripe/braintree. -->
