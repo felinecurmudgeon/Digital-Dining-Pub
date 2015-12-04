@@ -1,0 +1,28 @@
+<ion-view view-title="Check In">
+  <ion-content>
+    <form ng-submit="doCheckIn()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Party Name</span>
+          <input type="text" ng-model="loginData.username">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Party Size</span>
+          <input type="number" ng-model="checkInData.partysize">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Special Requsts</span>
+          <input type="text" ng-model="checkInData.requests">
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Check In to (restaurantName)</button>
+        </label>
+        <div>
+          <h3> Wait Time : {{currentWait}} </h3>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>
+
+    

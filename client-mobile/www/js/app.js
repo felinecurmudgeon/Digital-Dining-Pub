@@ -41,11 +41,12 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
+  .state('app.order', {
+      url: '/order',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/order.html',
+          controller: 'RestaurantMenuCtrl'
         }
       }
     })
@@ -55,6 +56,48 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         'menuContent': {
           templateUrl: 'templates/playlists.html',
           controller: 'PlaylistsCtrl'
+        }
+      }
+    })
+    .state('app.home', {
+      url: '/home',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/home.html',
+          controller: 'HomeCtrl'
+        }
+      }
+    })
+    .state('app.checkIn', {
+      url: '/checkIn',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/checkIn.html',
+          controller: 'CheckInCtrl'
+        }
+      }
+    })
+    .state('app.success', {
+      url: '/success',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/success.html'
+        }
+      }
+    })
+    .state('app.settings', {
+      url: '/settings',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/settings.html'
+        }
+      }
+    })
+    .state('app.aboutUs', {
+      url: '/aboutUs',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/aboutUs.html'
         }
       }
     })

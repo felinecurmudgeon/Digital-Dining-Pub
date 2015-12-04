@@ -1,0 +1,21 @@
+<ion-view view-title="Order">
+  <ion-content>
+    <h1>Current Meal</h1>
+    <!-- dummy data -->
+    <ion-item ng-repeat="food in menuItemsSample" href="#/app/playlists/{{playlist.id}}" class = 'menuItem'>
+        <span class = 'foodName'>{{food.name}}</span>
+        <span class = 'indgredients'> {{food.ingredients}} </span>
+        <span class = 'foodImg'> <img src = '{{food.image}}'></span>
+    </ion-item>
+    <!-- these will be for actual food categories on the menu -->
+    <div class="item item-divider">
+      Appetizers
+    </div>
+    <div class="item item-divider">
+      Entrees
+    </div>
+    <div class="item item-divider">
+      Desserts
+    </div>
+  </ion-content>
+</ion-view>
