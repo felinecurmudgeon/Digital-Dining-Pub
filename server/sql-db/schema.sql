@@ -3,16 +3,6 @@ CREATE DATABASE digitaldining;
 
 USE digitaldining;
 
-CREATE TABLE restaurant_users (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  username VARCHAR(20) NOT NULL,
-  password CHAR(32) NOT NULL,
-
-  UNIQUE(username)
-);
-
 CREATE TABLE restaurants (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -32,6 +22,19 @@ CREATE TABLE restaurants (
   closing_hour_saturday TIME DEFAULT '23:00:00',
   opening_hour_sunday TIME DEFAULT '08:00:00',
   closing_hour_sunday TIME DEFAULT '23:00:00'
+);
+
+CREATE TABLE restaurant_users (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  username VARCHAR(20) NOT NULL,
+  password CHAR(32) NOT NULL,
+  restaurant_id INT NOT NULL,
+
+  FOREIGN KEY (restaurant_id)
+    REFERENCES restaurants(id),
+  UNIQUE(username)
 );
 
 CREATE TABLE tables (
@@ -90,6 +93,68 @@ CREATE TABLE credit_cards (
 
   FOREIGN KEY (user_id)
     REFERENCES users(id)
+);
+
+CREATE TABLE orders (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  restaurant_id INT NOT NULL,
+  table_id INT NOT NULL,
+  party_size INT NOT NULL,
+  checkedin_at TIMESTAMP,
+  seated_at TIMESTAMP,
+  closed_at TIMESTAMP,
+
+  FOREIGN KEY (restaurant_id)
+    REFERENCES restaurants(id),
+  FOREIGN KEY (table_id)
+    REFERENCES tables(id)
+);
+
+CREATE TABLE items_ordered (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  order_id INT NOT NULL,
+  menu_id INT NOT NULL,
+  quantity INT NOT NULL DEFAULT 1,
+  total_paid INT NOT NULL DEFAULT 0,
+  ordered_at TIMESTAMP,
+  served_at TIMESTAMP,
+  paied_at TIMESTAMP,
+
+  FOREIGN KEY (menu_id)
+    REFERENCES menu(id),
+  FOREIGN KEY (order_id)
+    REFERENCES orders(id)
+);
+
+CREATE TABLE order_participants (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  order_id INT NOT NULL,
+  user_id INT NOT NULL,
+
+  FOREIGN KEY (order_id)
+    REFERENCES orders(id),
+  FOREIGN KEY (user_id)
+    REFERENCES users(id)  
+);
+
+CREATE TABLE payments (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  menu_id INT NOT NULL,
+  user_id INT NOT NULL,
+  amount INT,
+
+  FOREIGN KEY (menu_id)
+    REFERENCES menu(id),
+  FOREIGN KEY (user_id)
+    REFERENCES users(id)  
 );
 
 /*  Execute this file from the command line by typing:
