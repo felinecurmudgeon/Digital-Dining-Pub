@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
 <!-- Active URL: http://ondras.zarovi.cz/sql/demo/ -->
-<!-- to visualize it copy past this content on the active URL page -->
 <sql>
 <datatypes db="mysql">
   <group label="Numeric" color="rgb(238,238,170)">
@@ -55,7 +54,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="52" y="402" name="credit_card">
+<table x="52" y="402" name="payment_info">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -63,7 +62,7 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="users" row="id" />
 </row>
-<row name="credit_card_info" null="1" autoincrement="0">
+<row name="payment_info" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
@@ -80,10 +79,6 @@
 <row name="password" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="restaurant_id" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="restaurants" row="id" />
-</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
@@ -92,9 +87,13 @@
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="name" null="1" autoincrement="0">
+<row name="restaurant_name" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<row name="restaurant_owner_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="restaurant_users" row="id" />
+</row>
 <row name="opening_hours (x 14)" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -102,7 +101,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="681" y="122" name="menu">
+<table x="681" y="122" name="menu_item">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -127,7 +126,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="702" y="302" name="orders">
+<table x="702" y="302" name="parties">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -161,7 +160,7 @@
 <default>NULL</default></row>
 <row name="menu_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="items_ordered" row="id" />
+<default>NULL</default><relation table="menu_items_ordered" row="id" />
 </row>
 <row name="user_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
@@ -174,17 +173,17 @@
 <part>id</part>
 </key>
 </table>
-<table x="939" y="304" name="items_ordered">
+<table x="939" y="304" name="menu_items_ordered">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="order_id" null="1" autoincrement="0">
+<row name="party_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="orders" row="id" />
+<default>NULL</default><relation table="parties" row="id" />
 </row>
-<row name="menu_id" null="1" autoincrement="0">
+<row name="menu_item_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="menu" row="id" />
+<default>NULL</default><relation table="menu_item" row="id" />
 </row>
 <row name="quantity" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
@@ -292,17 +291,33 @@
 <part>id</part>
 </key>
 </table>
-<table x="700" y="501" name="order_participants">
+<table x="700" y="501" name="party_participants">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="order_id" null="1" autoincrement="0">
+<row name="party_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
-<default>NULL</default><relation table="orders" row="id" />
+<default>NULL</default><relation table="parties" row="id" />
 </row>
 <row name="user_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="users" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="52" y="172" name="restaurant_employees">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="restaurant_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="restaurants" row="id" />
+</row>
+<row name="restaurant_user_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="restaurant_users" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
