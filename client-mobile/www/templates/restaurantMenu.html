@@ -2,7 +2,7 @@
   <ion-content>
     <h1>Menu</h1>
     <!-- dummy data -->
-    <ion-item ng-repeat="food in menuItemsSample" href="#/app/restaurantMenu/{{playlist.id}}" class = 'menuItem'>
+    <ion-item ng-repeat="food in menuItemsSample" href="#/app/restaurantMenu/{{restaurant.id}}" class = 'menuItem'>
         <span class = 'foodName'>{{food.name}}</span>
         <span class = 'indgredients'> {{food.ingredients}} </span>
         <span class = 'foodImg'> <img src = '{{food.image}}'></span>
@@ -37,7 +37,7 @@
         Favorites
       </a>
       <a class="tab-item">
-        Call Watier
+        Call Waiter
       </a>
     </div>
 </ion-view>
