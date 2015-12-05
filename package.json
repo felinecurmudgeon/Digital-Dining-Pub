@@ -49,6 +49,7 @@
     "jshint-stylish": "^2.1.0",
     "karma": "^0.13.15",
     "karma-jasmine": "^0.3.6",
+    "pre-commit": "^1.1.2",
     "supertest": "^1.1.0"
   }
 }
