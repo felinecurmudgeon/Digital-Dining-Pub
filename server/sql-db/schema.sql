@@ -62,6 +62,7 @@ CREATE TABLE tables (
   restaurant_id INT NOT NULL,
   table_number INT NOT NULL,
   seats INT NOT NULL,
+  available BOOLEAN NOT NULL DEFAULT TRUE,
 
   FOREIGN KEY (restaurant_id)
     REFERENCES restaurants(id)
