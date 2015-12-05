@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('digitalDining.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -88,7 +88,7 @@ angular.module('starter.controllers', [])
   }
 
   navigator.geolocation.getCurrentPosition(onSuccess, onError);
-  
+
 }])
 
 .controller('CheckInCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {

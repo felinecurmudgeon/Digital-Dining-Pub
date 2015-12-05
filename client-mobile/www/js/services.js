@@ -1,0 +1,1 @@
+angular.module('digitalDining.services', [])
