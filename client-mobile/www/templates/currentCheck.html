@@ -1,0 +1,21 @@
+<ion-view view-title="Current Check">
+  <ion-content>
+    <h1>Current Check</h1>
+    <h4> Orders </h4>
+    <div collection-repeat = 'item in orderItems'>
+      <li> <span class='itemName'> {{item.name}} </span> <span class = 'itemPrice'> {{item.price}} </span> </li>
+      <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
+    </div>
+    <div class = 'total'>
+    Total:
+    {{total}}
+    </div>
+    <div class = 'tax'> 
+    Tax:
+    </div>
+    <div class = 'tip'>
+    Tip:
+<!--     three buttons and a text field for custom tip, 15, 18 and 20% -->
+    </div>
+  </ion-content>
+</ion-view>
