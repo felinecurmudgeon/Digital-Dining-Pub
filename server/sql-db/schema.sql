@@ -139,7 +139,7 @@ CREATE TABLE menu_items_ordered (
   total_paid INT NOT NULL DEFAULT 0,
   ordered_at TIMESTAMP,
   served_at TIMESTAMP,
-  paied_at TIMESTAMP,
+  paid_at TIMESTAMP,
 
   FOREIGN KEY (menu_item_id)
     REFERENCES menu_items(id),
