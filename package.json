@@ -4,7 +4,7 @@
   "description": "The modern way to order and pay at restaurants",
   "main": "server.js",
   "scripts": {
-    "test": "npm test"
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",
@@ -12,10 +12,8 @@
   },
   "keywords": [
     "Eating",
-    "out",
     "restaurants",
     "mobile",
-    "pay",
     "bill",
     "splitting"
   ],
@@ -32,5 +30,7 @@
     "express": "^4.13.3",
     "express-session": "^1.12.1",
     "mysql": "^2.9.0"
+    "jasmine": "^2.4.1",
+    "supertest": "^1.1.0"
   }
 }
