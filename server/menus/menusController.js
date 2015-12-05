@@ -1,8 +1,13 @@
+var menusModel = require('./menusModel.js');
+
 module.exports = {
   getAllMenus : function (req, res){
     console.log("getting menu");
-    res.status(200);
-    res.send("stub success");
+    menusModel.menuCategory.getAll()
+      .then(function (menuItems){
+        res.status(200);
+        res.send(menuItems);
+      })
   }, 
 
   getMenu : function (req, res){
