@@ -71,8 +71,8 @@ angular.module('starter.controllers', [])
   {restaurantName: "Sizzler", restaurantImg: "http://capcityradio.net/b945live/wp-content/uploads/sites/7/2015/04/02Natomas-02.jpg"}
   ];
 
-  var onSuccess = function(position) {
-    console.log('Latitude: '          + position.coords.latitude          + '\n' +
+  var onSuccess = function (position) {
+    alert('Latitude: '          + position.coords.latitude          + '\n' +
           'Longitude: '         + position.coords.longitude         + '\n' +
           'Altitude: '          + position.coords.altitude          + '\n' +
           'Accuracy: '          + position.coords.accuracy          + '\n' +
@@ -82,14 +82,13 @@ angular.module('starter.controllers', [])
           'Timestamp: '         + position.timestamp                + '\n');
   };
 
-// onError Callback receives a PositionError object
-//
   var onError = function (error) {
     alert('code: '    + error.code    + '\n' +
           'message: ' + error.message + '\n');
   }
 
   navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  
 }])
 
 .controller('CheckInCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {
