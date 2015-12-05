@@ -7,6 +7,7 @@ var jasmine = require('gulp-jasmine');
 var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
+var jscs = require('gulp-jscs');
 
 var paths = {
   clientScripts: ['client-mobile/www/js/*.js'],
@@ -63,6 +64,12 @@ gulp.task('cleanMin', ['concat'], function() {
 gulp.task('clean', function () {
   return gulp.src('dist', {read: false})
     .pipe(clean());
+});
+ 
+gulp.task('style', function() {
+  return gulp.src(paths.clientScripts.concat(paths.serverScripts))
+    .pipe(jscs())
+    .pipe(jscs.reporter());
 });
 
 gulp.task('uglify', ['compress', 'concat', 'cleanMin']);
