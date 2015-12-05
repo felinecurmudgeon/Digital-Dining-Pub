@@ -4,8 +4,10 @@
   "description": "The modern way to order and pay at restaurants",
   "main": "server.js",
   "scripts": {
-    "test": "karma start"
+    "test": "karma start",
+    "lint": "jscs ./"
   },
+  "pre-commit": "lint",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/felinecurmudgeon/Digital-Dining.git"
@@ -41,6 +43,7 @@
     "gulp-uglify": "^1.5.1",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
+    "jscs": "^2.6.0",
     "jshint": "^2.8.0",
     "jshint-stylish": "^2.1.0",
     "karma": "^0.13.15",
