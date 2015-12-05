@@ -19,7 +19,7 @@ module.exports = {
     /*creates a new restaurant_user; expected parameters: username, password,
     and optional restaurant_id*/
       return new Promise(function (resolve, reject) {
-        db.con.query('INSERT into restaurant_users set ?', restaurantUser, function (err, data) {
+        db.con.query("INSERT into restaurant_users set ?", restaurantUser, function (err, data) {
           if(err){
             reject(err);
           } else {
@@ -47,7 +47,7 @@ module.exports = {
     /*creates a new restaurant; expected parameters: restaurant_name, restaurant_owner_id,
     and optional opening_hour_monday, closing_hour_monday, etc that default to 8am and 11pm*/
       return new Promise(function (resolve, reject) {
-        db.con.query('INSERT into restaurants set ?', restaurant, function (err, data) {
+        db.con.query("INSERT into restaurants set ?", restaurant, function (err, data) {
           if(err){
             reject(err);
           } else {
@@ -76,7 +76,7 @@ module.exports = {
     post: function (menuCategoryItem) {
     /*creates a menu_category entry; expected paramters: restaurant_id, category_name*/
       return new Promise(function (resolve, reject) {
-        db.con.query('INSERT into menu_categories set ?', menuCategoryItem, function (err, data) {
+        db.con.query("INSERT into menu_categories set ?", menuCategoryItem, function (err, data) {
           if(err){
             reject(err);
           } else {
@@ -107,7 +107,7 @@ module.exports = {
     /*creates a menu item; expected paramters: restaurant_id, title, description, price
     and optional menu_category_id*/
       return new Promise(function (resolve, reject) {
-        db.con.query('INSERT into menu_items set ?', menuItem, function (err, data) {
+        db.con.query("INSERT into menu_items set ?", menuItem, function (err, data) {
           if(err){
             reject(err);
           } else {
