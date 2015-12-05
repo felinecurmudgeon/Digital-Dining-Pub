@@ -4,7 +4,7 @@
   "description": "The modern way to order and pay at restaurants",
   "main": "server.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,11 @@
   }, 
   "devDependencies": {
     "jasmine": "^2.4.1",
-    "supertest": "^1.1.0"
+    "supertest": "^1.1.0",
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-shell": "^0.5.1",
+    "jshint": "^2.8.0",
+    "karma": "^0.13.15"
   }
 }
