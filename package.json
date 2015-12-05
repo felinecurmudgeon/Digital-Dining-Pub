@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "karma start",
-    "style": "gulp style"
+    "style": "echo \"STYLE\" && exit 1"
   },
   "pre-commit": "style",
   "repository": {
