@@ -30,14 +30,15 @@
     "express": "^4.13.3",
     "express-session": "^1.12.1",
     "mysql": "^2.9.0"
-  }, 
+  },
   "devDependencies": {
-    "jasmine": "^2.4.1",
-    "supertest": "^1.1.0",
     "gulp": "^3.9.0",
     "gulp-jshint": "^2.0.0",
     "gulp-shell": "^0.5.1",
+    "jasmine": "^2.4.1",
     "jshint": "^2.8.0",
-    "karma": "^0.13.15"
+    "jshint-stylish": "^2.1.0",
+    "karma": "^0.13.15",
+    "supertest": "^1.1.0"
   }
 }

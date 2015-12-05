@@ -1,0 +1,9 @@
+{
+  "disallowMultipleVarDecl": true,
+  "disallowSpacesInsideObjectBrackets": true,
+  "excludeFiles": [],
+  "requireSpacesInNamedFunctionExpression": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": true
+  }
+}

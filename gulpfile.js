@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var shell = require('gulp-shell');
 var jshint = require('gulp-jshint');
-
+var stylish = require('jshint-stylish');
 
 var paths = {
   scripts: ['./test/*.js'],
@@ -17,6 +17,8 @@ gulp.task('karma', shell.task([
 gulp.task('lint', function() {
   return gulp.src(paths.scripts)
     .pipe(jshint())
-    .pipe(jshint.reporter('default'))
+    .pipe(jshint.reporter(stylish))
     .pipe(jshint.reporter('fail'));
 });
+
+gulp.task('default', ['karma', 'lint']);
