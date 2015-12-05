@@ -158,7 +158,7 @@
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="menu_id" null="1" autoincrement="0">
+<row name="menu_item_ordered_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="menu_items_ordered" row="id" />
 </row>
