@@ -3,11 +3,25 @@ CREATE DATABASE digitaldining;
 
 USE digitaldining;
 
+CREATE TABLE restaurant_users (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  username VARCHAR(20) NOT NULL,
+  password CHAR(32) NOT NULL,
+  restaurant_id INT,
+
+  FOREIGN KEY (restaurant_id)
+    REFERENCES restaurants(id),
+  UNIQUE(username)
+);
+
 CREATE TABLE restaurants (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   restaurant_name VARCHAR(40) NOT NULL,
+  restaurant_owner_id INT NOT NULL,
   opening_hour_monday TIME DEFAULT '08:00:00',
   closing_hour_monday TIME DEFAULT '23:00:00',
   opening_hour_tuesday TIME DEFAULT '08:00:00',
@@ -22,19 +36,9 @@ CREATE TABLE restaurants (
   closing_hour_saturday TIME DEFAULT '23:00:00',
   opening_hour_sunday TIME DEFAULT '08:00:00',
   closing_hour_sunday TIME DEFAULT '23:00:00'
-);
 
-CREATE TABLE restaurant_users (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  username VARCHAR(20) NOT NULL,
-  password CHAR(32) NOT NULL,
-  restaurant_id INT NOT NULL,
-
-  FOREIGN KEY (restaurant_id)
-    REFERENCES restaurants(id),
-  UNIQUE(username)
+  FOREIGN KEY (restaurant_owner_id)
+    REFERENCES restaurant_users(id)
 );
 
 CREATE TABLE tables (
