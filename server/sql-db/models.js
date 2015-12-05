@@ -17,7 +17,7 @@ module.exports = {
     },
     post: function(restaurantUser) {
     /*creates a new restaurant_user; expected parameters: username, password,
-    and otionnal restaurant_id*/
+    and optional restaurant_id*/
       return new Promise(function (resolve, reject) {
         db.con.query('INSERT into restaurant_users set ?', restaurantUser, function (err, data) {
           if(err){
@@ -45,7 +45,7 @@ module.exports = {
     },
     post: function(restaurant) {
     /*creates a new restaurant; expected parameters: restaurant_name, restaurant_owner_id,
-    and optionnal opening_hour_monday, closing_hour_monday, etc that default to 8am and 11pm*/
+    and optional opening_hour_monday, closing_hour_monday, etc that default to 8am and 11pm*/
       return new Promise(function (resolve, reject) {
         db.con.query('INSERT into restaurants set ?', restaurant, function (err, data) {
           if(err){
