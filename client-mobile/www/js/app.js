@@ -41,11 +41,11 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
-  .state('app.order', {
-      url: '/order',
+  .state('app.restaurantMenu', {
+      url: '/restaurantMenu',
       views: {
         'menuContent': {
-          templateUrl: 'templates/order.html',
+          templateUrl: 'templates/restaurantMenu.html',
           controller: 'RestaurantMenuCtrl'
         }
       }
@@ -82,6 +82,14 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       views: {
         'menuContent': {
           templateUrl: 'templates/success.html'
+        }
+      }
+    })
+    .state('app.currentCheck', {
+      url: '/currentCheck',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/currentCheck.html'
         }
       }
     })

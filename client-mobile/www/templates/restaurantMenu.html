@@ -1,6 +1,6 @@
-<ion-view view-title="Order">
+<ion-view view-title="Menu">
   <ion-content>
-    <h1>Current Meal</h1>
+    <h1>Menu</h1>
     <!-- dummy data -->
     <ion-item ng-repeat="food in menuItemsSample" href="#/app/playlists/{{playlist.id}}" class = 'menuItem'>
         <span class = 'foodName'>{{food.name}}</span>
@@ -17,5 +17,16 @@
     <div class="item item-divider">
       Desserts
     </div>
+
+    
   </ion-content>
+  <ion-footer-bar align-title="left" class="bar-calm">
+      <div class="buttons">
+        <button class="button">Current Check</button>
+      </div>
+      <h1 class="title">Title!</h1>
+      <div class="buttons" ng-click="doSomething()">
+        <button class="button">Call a Server!</button>
+      </div>
+    </ion-footer-bar>
 </ion-view>
