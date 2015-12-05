@@ -32,7 +32,7 @@ CREATE TABLE restaurants (
   opening_hour_saturday TIME DEFAULT '08:00:00',
   closing_hour_saturday TIME DEFAULT '23:00:00',
   opening_hour_sunday TIME DEFAULT '08:00:00',
-  closing_hour_sunday TIME DEFAULT '23:00:00'
+  closing_hour_sunday TIME DEFAULT '23:00:00',
 
   FOREIGN KEY (restaurant_owner_id)
     REFERENCES restaurant_users(id)
@@ -139,7 +139,7 @@ CREATE TABLE menu_items_ordered (
   paied_at TIMESTAMP,
 
   FOREIGN KEY (menu_item_id)
-    REFERENCES menu_item(id),
+    REFERENCES menu_items(id),
   FOREIGN KEY (party_id)
     REFERENCES parties(id)
 );
@@ -151,8 +151,8 @@ CREATE TABLE party_participants (
   party_id INT NOT NULL,
   user_id INT NOT NULL,
 
-  FOREIGN KEY (order_id)
-    REFERENCES orders(id),
+  FOREIGN KEY (party_id)
+    REFERENCES parties(id),
   FOREIGN KEY (user_id)
     REFERENCES users(id)  
 );
@@ -161,17 +161,17 @@ CREATE TABLE payments (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  menu_id INT NOT NULL,
+  menu_item_ordered_id INT NOT NULL,
   user_id INT NOT NULL,
   amount INT,
 
-  FOREIGN KEY (menu_id)
-    REFERENCES menu(id),
+  FOREIGN KEY (menu_item_ordered_id)
+    REFERENCES menu_items_ordered(id),
   FOREIGN KEY (user_id)
     REFERENCES users(id)  
 );
 
 /*  Execute this file from the command line by typing:
- *    mysql -u root < sql-db/schema.sql
+ *    mysql -u root -p < server/sql-db/schema.sql
  *  to create the database and the tables.*/
 
