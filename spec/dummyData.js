@@ -1,4 +1,4 @@
-var data = {
+module.exports = {
   restaurantUsers: [
     {username: 'toto',
     password: 'pwd'},
