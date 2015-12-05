@@ -2,7 +2,7 @@
   <ion-content>
     <h1>Menu</h1>
     <!-- dummy data -->
-    <ion-item ng-repeat="food in menuItemsSample" href="#/app/playlists/{{playlist.id}}" class = 'menuItem'>
+    <ion-item ng-repeat="food in menuItemsSample" href="#/app/restaurantMenu/{{playlist.id}}" class = 'menuItem'>
         <span class = 'foodName'>{{food.name}}</span>
         <span class = 'indgredients'> {{food.ingredients}} </span>
         <span class = 'foodImg'> <img src = '{{food.image}}'></span>
@@ -20,7 +20,7 @@
 
     
   </ion-content>
-  <ion-footer-bar align-title="left" class="bar-calm">
+  <!-- <ion-footer-bar align-title="left" class="bar-calm">
       <div class="buttons">
         <button class="button">Current Check</button>
       </div>
@@ -28,5 +28,16 @@
       <div class="buttons" ng-click="doSomething()">
         <button class="button">Call a Server!</button>
       </div>
-    </ion-footer-bar>
+    </ion-footer-bar> -->
+    <div class="tabs">
+      <a class="tab-item" href='#/app/currentCheck'>
+        Current Check
+      </a>
+      <a class="tab-item">
+        Favorites
+      </a>
+      <a class="tab-item">
+        Call Watier
+      </a>
+    </div>
 </ion-view>
