@@ -68,7 +68,10 @@ CREATE TABLE menu_categories (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   restaurant_id INT NOT NULL,
-  category_name VARCHAR(40) NOT NULL
+  category_name VARCHAR(40) NOT NULL,
+
+  FOREIGN KEY (restaurant_id)
+    REFERENCES restaurants(id)
 );
 
 CREATE TABLE menu_items (
