@@ -8,6 +8,7 @@ var logger = require('./middleware/logger');
 var app = express();
 var expressRouter = express.Router(); 
 app.use(express.static(__dirname + '/../client-mobile'));
+app.use(logger);
 
 //cookie parser
 app.use(cookieParser());
@@ -15,9 +16,9 @@ app.use(cookieParser());
 // parse application/x-www-form-urlencoded and application/json
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//enable sessions
 app.use(session({secret: 'feline'}));  
-app.use(logger);
-app.use(bodyParser.json());
 
 //set up router 
 app.use('/', expressRouter); 
