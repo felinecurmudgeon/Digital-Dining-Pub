@@ -5,9 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "karma start",
-    "style": "echo \"STYLE\" && exit 1"
+    "style": "gulp style",
+    "lint": "gulp lint"
   },
-  "pre-commit": "style",
+  "pre-commit": ["lint", "style"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/felinecurmudgeon/Digital-Dining.git"

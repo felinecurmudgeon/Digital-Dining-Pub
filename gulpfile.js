@@ -69,7 +69,8 @@ gulp.task('clean', function () {
 gulp.task('style', function() {
   return gulp.src(paths.clientScripts.concat(paths.serverScripts))
     .pipe(jscs())
-    .pipe(jscs.reporter());
+    .pipe(jscs.reporter())
+    .pipe(jscs.reporter('fail'));
 });
 
 gulp.task('uglify', ['compress', 'concat', 'cleanMin']);

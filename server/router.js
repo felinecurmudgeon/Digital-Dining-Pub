@@ -20,4 +20,4 @@ module.exports = function (router) {
   router.put('/api/menus/:id', menusController.updateMenu);
   router.delete('/api/menus/:id', menusController.deleteMenu);
 
-}
+};
