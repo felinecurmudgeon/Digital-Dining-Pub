@@ -28,4 +28,4 @@ module.exports = {
     res.status(200);
     res.send("stub success");
   }
-}
+};

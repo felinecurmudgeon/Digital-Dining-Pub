@@ -1,3 +1,4 @@
+/*jshint -W079 */
 var db = require('./index');
 var Promise = require('bluebird');
 
