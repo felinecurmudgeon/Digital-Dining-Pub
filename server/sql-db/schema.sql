@@ -62,6 +62,7 @@ CREATE TABLE tables (
   restaurant_id INT NOT NULL,
   table_number INT NOT NULL,
   seats INT NOT NULL,
+  available BOOLEAN NOT NULL DEFAULT TRUE,
 
   FOREIGN KEY (restaurant_id)
     REFERENCES restaurants(id)
@@ -144,6 +145,7 @@ CREATE TABLE menu_items_ordered (
   ordered_at TIMESTAMP,
   served_at TIMESTAMP,
   paid_at TIMESTAMP,
+  canceled_at TIMESTAMP,
 
   FOREIGN KEY (menu_item_id)
     REFERENCES menu_items(id),
