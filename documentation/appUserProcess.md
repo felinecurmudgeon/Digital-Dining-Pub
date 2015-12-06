@@ -1,7 +1,7 @@
 # App User Process #
 
 The purpose of this doc is to describe what the usual process in Digital Dining (DD after) is, and how this interacts with the database.
-We assume for the bellow, that the client is arriving in a restaurant, and that this restaurant has uploaded all it's data to DD.
+We assume for the below, that the client is arriving in a restaurant, and that this restaurant has uploaded all its data to DD.
 
 ## App User Process ##
 
