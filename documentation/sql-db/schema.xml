@@ -185,7 +185,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="939" y="304" name="menu_items_ordered">
+<table x="1003" y="304" name="menu_items_ordered">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -210,6 +210,9 @@
 <datatype>DATETIME</datatype>
 <default>NULL</default></row>
 <row name="paid_at" null="1" autoincrement="0">
+<datatype>DATETIME</datatype>
+<default>NULL</default></row>
+<row name="canceled_at" null="1" autoincrement="0">
 <datatype>DATETIME</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">

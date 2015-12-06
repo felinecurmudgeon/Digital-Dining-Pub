@@ -145,6 +145,7 @@ CREATE TABLE menu_items_ordered (
   ordered_at TIMESTAMP,
   served_at TIMESTAMP,
   paid_at TIMESTAMP,
+  canceled_at TIMESTAMP,
 
   FOREIGN KEY (menu_item_id)
     REFERENCES menu_items(id),

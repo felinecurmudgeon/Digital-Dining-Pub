@@ -15,7 +15,7 @@ If the restaurant or the client want to cancel the reservation, the closed_at fi
 
 Once a table is free, the waiter sits the party, filling the table number field, and the seated_at (automatically).
 This enables the any `party_particpant` to add menuItems to the party (only in redis), and confirm this to the kitchen (this stores it in the db, and the restaurant now knows it has been ordered).
-Once ordered, an item cannot be canceled, except maybe by a restaurant staff (to be discussed).
+Once ordered, an item cannot be canceled, except maybe by a restaurant staff (to be discussed), filling the canceled_at field.
 
 As items are served, the corresponding served_at field is filled.
 At any time when all the orderd items are served, a `party_participant` can ask for the bill.
