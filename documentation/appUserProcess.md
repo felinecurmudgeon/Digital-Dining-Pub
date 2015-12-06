@@ -8,7 +8,7 @@ We assume for the below, that the client is arriving in a restaurant, and that t
 In the home page, the client chooses the restaurant and checks in the restaurant, inputing the party size.
 This creates a new entry in the parties table, with checkin_at filled.
 This provides a party ID to the client
-It also adds the user to the `party_participants` table. At any moment, other users can enter a `party_id` in the app, to join the party and be added to `table_participants`.
+It also adds the user to the `party_participants` table. At any moment, other users can enter a `party_id` in the app, to join the party and be added to `party_participants`.
 
 The restaurant can see all the opened parties waiting to be seated.
 If the restaurant or the client want to cancel the reservation, the closed_at field is filled (removing this party from the queue).
