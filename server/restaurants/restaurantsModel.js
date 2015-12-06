@@ -1,35 +1,8 @@
+/*jshint -W079 */
 var db = require('../sql-db/index.js');
 var Promise = require('bluebird');
 
 module.exports = {
-  restaurantUser: {
-    get: function (username) {
-      return new Promise( function (resolve, reject) {
-        db.con.query("SELECT * FROM restaurant_users \
-                      WHERE username = '" + username + "'", function (err, data) {
-          if(err){
-            reject(err);
-          } else {
-            resolve(data);
-          }
-        });
-      });
-    },
-    post: function(restaurantUser) {
-    /*creates a new restaurant_user; expected parameters: username, password,
-    and optional restaurant_id*/
-      return new Promise(function (resolve, reject) {
-        db.con.query("INSERT into restaurant_users set ?", restaurantUser, function (err, data) {
-          if(err){
-            reject(err);
-          } else {
-            resolve(data);
-          }
-        });
-      });
-    }
-  },
-
   restaurant: {
     get: function (restaurantId) {
       return new Promise( function (resolve, reject) {
