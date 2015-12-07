@@ -1,4 +1,5 @@
-/*jshint -W079 */
+/*jshint -W079*/
+// jscs:disable validateQuoteMarks
 var db = require('./index');
 var Promise = require('bluebird');
 

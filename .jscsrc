@@ -22,5 +22,6 @@
   "requireSpaceBetweenArguments": true,
   "requireSpacesInForStatement": true,
   "requireSpacesInFunctionDeclaration": {"beforeOpeningCurlyBrace": true},
-  "requireSpacesInFunctionExpression": {"beforeOpeningCurlyBrace": true}
+  "requireSpacesInFunctionExpression": {"beforeOpeningCurlyBrace": true},
+  "validateQuoteMarks": {"mark": "'", "escape": true}
 }
