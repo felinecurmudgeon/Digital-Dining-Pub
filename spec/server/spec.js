@@ -4,6 +4,8 @@ request = supertest('http://localhost:8000');
 
 describe("Restaurant Users API suite", function() {
   
+ // var uid = 0;
+
   it("Should be able to save a restaurant user", function (done){
     
     var testRestaurantUser = {
@@ -30,22 +32,24 @@ describe("Restaurant Users API suite", function() {
     });
    });
 
-  it("Should be able to save a restaurant user", function (done){
+  it("Should be able to get a restaurant user", function (done){
+    var usr = "";
+    request.get('/api/restaurantUsers')
+      .expect(200)
+      .expect(function (res){
+        usr = res.body[0].username;
+      })
+      .end(function (err, res){
+          if (err) {
+            done.fail(err);
+          } else {
+            //uid = res.body.id;
+            expect(usr).toBe("Timmy")
+            console.log("Restaurants User GET passed");
+            done();
+          }
+        });  
 
-  request.get('/api/restaurantUsers')
-    .expect(200)
-    // TODO: fix expect response to match API response
-    // .expect([{
-    //     username: 'Timmy'
-    //   }])
-    .end(function (err, res){
-        if (err) {
-          done.fail(err);
-        } else {
-          console.log("Restaurants User GET passed");
-          done();
-        }
-      });  
    });
   });
 
@@ -55,7 +59,7 @@ xdescribe("Restaurant API suite", function() {
     restaurant_adress, restaurant_city, restaurant_state, restaurant_zip_code,
     and optional opening_hour_monday, closing_hour_monday, etc that default to 8am and 11pm*/
 
-  xit("Should be able to save a restaurant", function (done){
+  it("Should be able to save a restaurant", function (done){
     var testRestaurant = {
       restaurant_name: "Timmy's Tacos",
       restaurant_owner_id: 1,
