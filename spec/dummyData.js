@@ -1,5 +1,11 @@
 module.exports = {
-  restaurantUsers: [
+  run: function (){
+    //TODO: either run test in gulp or make this function actually create dummy data
+    console.log("creating dummy data");
+  }
+};
+
+var restaurantUsers = [
     {username: 'toto',
     password: 'pwd'},
     
@@ -11,9 +17,9 @@ module.exports = {
     
     {username: 'tobias',
     password: '12345'}
-  ],
+  ];
 
-  restaurants: [
+var restaurants = [
     {restaurant_name: 'Pizza Pino',
     restaurant_owner_id: 1,
     restaurant_adress: '944 Market Street',
@@ -55,9 +61,9 @@ module.exports = {
     restaurant_city: 'San Francisco',
     restaurant_state: 'California',
     restaurant_zip_code: 94110}
-  ],
+  ];
 
-  menuCategories: [
+var menuCategories = [
     {restaurant_id: 1,
     category_name: 'Appetizer'},
     
@@ -81,9 +87,9 @@ module.exports = {
     
     {restaurant_id: 3,
     category_name: 'Deserts'}
-  ],
+  ];
 
-  menuItems: [
+var menuItems = [
     {restaurant_id: 1,
     title: 'Prosciutto', 
     description: 'ham and bread with small sliced tomatoes', 
@@ -98,5 +104,4 @@ module.exports = {
     {restaurant_id: 4,
     title: 'Angus Steak', 
     price: 12},
-  ]
-};
+  ];

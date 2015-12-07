@@ -1,3 +1,5 @@
+var restaurantModel = require('./restaurantsModel.js');
+
 module.exports = {
   getAllRestaurants : function (req, res){
     console.log("getting restaurant");
