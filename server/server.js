@@ -1,12 +1,12 @@
-var express = require('express'); 
+var express = require('express');
 var session = require('express-session');
-var router = require('./router.js'); 
-var bodyParser = require('body-parser'); 
-var cookieParser = require('cookie-parser'); 
+var router = require('./router.js');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var logger = require('./middleware/logger');
 
 var app = express();
-var expressRouter = express.Router(); 
+var expressRouter = express.Router();
 app.use(express.static(__dirname + '/../client-mobile'));
 app.use(logger);
 
@@ -18,13 +18,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //enable sessions
-app.use(session({secret: 'feline'}));  
+app.use(session({secret: 'feline'}));
 
-//set up router 
-app.use('/', expressRouter); 
-router(expressRouter); 
+//set up router
+app.use('/', expressRouter);
+router(expressRouter);
 
-app.listen(8000); 
+app.listen(8000);
 
-module.exports = app; 
+module.exports = app;
 
