@@ -1,31 +1,36 @@
+var menusModel = require('./menusModel.js');
+
 module.exports = {
-  getAllMenus : function (req, res){
-    console.log("getting menu");
-    res.status(200);
-    res.send("stub success");
-  }, 
+  getAllMenus : function (req, res) {
+    console.log('getting menu');
+    menusModel.menuCategory.getAll()
+      .then(function (menuItems) {
+        res.status(200);
+        res.send(menuItems);
+      });
+  },
 
-  getMenu : function (req, res){
-    console.log("getting menu ", req.params.id);
+  getMenu : function (req, res) {
+    console.log('getting menu ', req.params.id);
     res.status(200);
-    res.send("stub success");
-  }, 
+    res.send('stub success');
+  },
 
-  createMenu : function (req, res){
-    console.log("creating menu ");
+  createMenu : function (req, res) {
+    console.log('creating menu ');
     res.status(201);
-    res.send("stub success");
+    res.send('stub success');
   },
 
-  updateMenu : function (req, res){
-    console.log("updating menu ", req.params.id);
+  updateMenu : function (req, res) {
+    console.log('updating menu ', req.params.id);
     res.status(200);
-    res.send("stub success");
+    res.send('stub success');
   },
 
-  deleteMenu : function (req, res){
-    console.log("delete menu ", req.params.id);
+  deleteMenu : function (req, res) {
+    console.log('delete menu ', req.params.id);
     res.status(200);
-    res.send("stub success");
+    res.send('stub success');
   }
-}
+};

@@ -4,7 +4,7 @@
 | HTTP Method   | URL           | Description 
 | ------------- | ------------- | ---------------------------------
 | GET           | /users        | Gets all users
-| GET           | /users/:id    | Gets specific user for a given id
+| GET           | /users/:uid   | Gets specific user for a given id
 | POST          | /users        | Creates a new user
 | PUT           | /users        | Updates a user profile
 
@@ -19,10 +19,10 @@ TBD
 ## Payments API
 | HTTP Method   | URL                   | Description
 | ------------- | -------------------   | ---------------------------------
-| GET           | /users/:id/payment     | Gets all payment methods for a given user from Stripe
-| POST          | /users/:id/payment     | Adds a payment method for a given user in Stripe
-| PUT           | /users/:id/payment/:id | Updates a payment method for a given user in Stripe
-| DELETE        | /users/:id/payment/:id | Removes a payment method from a given user in Stripe
+| GET           | /users/:uid/payment     | Gets all payment methods for a given user from Stripe
+| POST          | /users/:uid/payment     | Adds a payment method for a given user in Stripe
+| PUT           | /users/:uid/payment/:payid | Updates a payment method for a given user in Stripe
+| DELETE        | /users/:uid/payment/:payid | Removes a payment method from a given user in Stripe
 
 - Note: this API follows a nested pattern due to the tight coupling of payment methods and users
 
@@ -33,8 +33,8 @@ TBD
 ## Charge API
 | HTTP Method   | URL                   | Description
 | ------------- | -------------------   | ---------------------------------
-| POST          | /user/:id/charge/:id | Updates the order + charges the customer CC via Stripe APIs
-| DELETE        | /user/:id/charge/:id | Refunds the charges the customer CC via Stripe APIs
+| POST          | /user/:uid/charge/:cid | Updates the order + charges the customer CC via Stripe APIs
+| DELETE        | /user/:uid/charge/:cid | Refunds the charges the customer CC via Stripe APIs
 
 ### Example POST
 TBD
@@ -44,10 +44,10 @@ TBD
 | HTTP Method   | URL           | Description
 | ------------- | ------------- | ---------------------------------
 | GET           | /restaurants       | Gets all restaurants
-| GET           | /restaurants/:id   | Gets a specific restaurant
+| GET           | /restaurants/:rid   | Gets a specific restaurant
 | POST          | /restaurants       | Creates an restaurant
-| PUT           | /restaurants/:id   | Updates an restaurant
-| DELETE        | /restaurants/:id   | Deletes an restaurant
+| PUT           | /restaurants/:rid   | Updates an restaurant
+| DELETE        | /restaurants/:rid   | Deletes an restaurant
 
 ### Restaurants API GET query string parameters
 | Parameter     | Values           |
@@ -61,32 +61,32 @@ TBD
 | HTTP Method   | URL           | Description
 | ------------- | ------------- | ---------------------------------
 | GET           | /menus       | Gets all menus
-| GET           | /menus/:id   | Gets a specific menu
+| GET           | /menus/:mid   | Gets a specific menu
 | POST          | /menus       | Creates an menu
-| PUT           | /menus/:id   | Updates an menu
-| DELETE        | /menus/:id   | Deletes an menu
+| PUT           | /menus/:mid   | Updates an menu
+| DELETE        | /menus/:mid   | Deletes an menu
 
 ### Menus API GET query string parameters
 | Parameter     | Values           |
 | ------------- | -------------    | 
-| restaurantsid | id (i.e. 123)  |
+| restaurantsid | rid (i.e. 123)  |
 
 ### Example POST
 TBD
 
-## Orders API
+## Party API
 | HTTP Method   | URL           | Description
 | ------------- | ------------- | ---------------------------------
-| GET           | /orders       | Gets all orders
-| GET           | /orders/:id   | Gets a specific order
-| POST          | /orders       | Creates an order
-| PUT           | /orders/:id   | Updates an order
-| DELETE        | /orders/:id   | Deletes an order
+| GET           | /parties       | Gets all parties
+| GET           | /parties/:pid   | Gets a specific party
+| POST          | /parties       | Creates a party
+| PUT           | /parties/:pid   | Updates a party
+| DELETE        | /parties/:pid   | Deletes a party
 
-### Orders API GET query string parameters
+### Party API GET query string parameters
 | Parameter     | Values          |
 | ------------- | -------------   | 
-| restaurantsid | id (i.e. 123)  |
+| restaurantsid | rid (i.e. 123)  |
 
 ### Example POST
 TBD
@@ -95,12 +95,12 @@ TBD
 ## OrdersItems API
 | HTTP Method   | URL                   | Description
 | ------------- | -------------------   | ---------------------------------
-| GET           | /orders/:id/items     | Gets all items for a given order
-| GET           | /orders/:id/items/:id | Gets a specific item on a given order
-| POST          | /orders/:id/items     | Adds an item to a specific order
-| DELETE        | /orders/:id/items/:id | Removes an item from a specific order    
+| GET           | /parties/:pid/menuitems     | Gets all menu items for a given party
+| GET           | /parties/:pid/menuitems/:mid | Gets a specific item on a given party
+| POST          | /parties/:pid/menuitems     | Adds item(s) to a specific party
+| DELETE        | /parties/:pid/menuitems/:mid | Removes an item from a specific party    
 
-- Note: this API follows a nested pattern due to the tight coupling of orders and order items.
+- Note: this API follows a nested pattern due to the tight coupling of parties and menu items.
 
 ### Example POST
 TBD
@@ -109,17 +109,17 @@ TBD
 ## Reservations API
 | HTTP Method   | URL                    | Description
 | ------------- | ---------------------- | ---------------------------------
-| GET           | /reservation           | Gets all reservations
-| GET           | /reservation/:id       | Gets a specific reservations
-| POST          | /reservation           | Creates a new reservation
-| PUT           | /reservation/:id       | Updates a existing reservation
-| DELETE        | /reservation/:id       | Deletes an existing reservation
+| GET           | /reservations           | Gets all reservations
+| GET           | /reservations/:resid       | Gets a specific reservations
+| POST          | /reservations           | Creates a new reservation
+| PUT           | /reservations/:resid       | Updates a existing reservation
+| DELETE        | /reservations/:resid       | Deletes an existing reservation
 
 ### Reservation API GET query string parameters
 | Parameter     | Values          |
 | ------------- | -------------  | 
-| restaurantsid | id (i.e. 123)  |
-| usersid | id (i.e. 123)  |
+| restaurantsid | rid (i.e. 123)  |
+| usersid | uid (i.e. 123)  |
 
 ### Example POST
 TBD
