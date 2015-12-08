@@ -3,7 +3,7 @@ var restaurantsModel = require('./restaurantsModel.js');
 module.exports = {
   getRestaurants : function (req, res) {
     console.log('getting restaurant ', req.params.id);
-    restaurantModel.restaurant.get(req.params.id)
+    restaurantsModel.restaurant.get(req.params.id)
       .then(function (data){
         res.status(200);
         res.send(data);
@@ -12,7 +12,7 @@ module.exports = {
 
   createRestaurant : function (req, res) {
     console.log('creating restaurant ');
-    restaurantModel.restaurant.post(req.body)
+    restaurantsModel.restaurant.post(req.body)
       .then(function (data){
         res.status(201);
         res.send(data);
