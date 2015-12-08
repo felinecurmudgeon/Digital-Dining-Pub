@@ -26,7 +26,17 @@ angular.module('digitalDining.services', [])
     addMenuItemToOrder: addMenuItemToOrder
   };
 })
-
+.factory('HomeFactory', function ($http) {
+  var getAllRestaurants = function() {
+    return $http({
+      url:'http:/localhost:8000/#/api/restaurants',
+      method: 'GET'
+    });
+  };
+  return {
+    getAllRestaurants: getAllRestaurants
+  };
+})
 .factory('CheckFactory', function ($http) {
   var getCheckItems = function () {
     return $http({

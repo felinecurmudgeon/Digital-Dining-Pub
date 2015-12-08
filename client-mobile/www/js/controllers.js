@@ -67,7 +67,7 @@ angular.module('digitalDining.controllers', [])
   ];
 }])
 
-.controller('HomeCtrl', ['$scope', function ($scope) {
+.controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {
   $scope.restaurantList = [
   {restaurantName: 'Olive Garden',
     restaurantImg: 'http://i.kinja-img.com/gawker-media/image/upload/sgqboy3tw4sxzqojvkfj.jpg'
@@ -104,6 +104,14 @@ angular.module('digitalDining.controllers', [])
 
   window.navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
+  $scope.displayRestaurants = function() {
+    HomeFactory.getAllRestaurants().then(function (restaurants) {
+      console.log('here', restaurants);
+      $scope.restaurants = restaurants;
+    });
+  };
+  $scope.displayRestaurants();
+  $scope.test = [1];
 }])
 
 .controller('CheckInCtrl', ['$scope', '$stateParams', function ($scope) {
