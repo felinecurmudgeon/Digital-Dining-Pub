@@ -2,6 +2,7 @@ var usersController = require('./users/usersController');
 var restaurantUsersController = require('./users/restaurantUsersController');
 var restaurantsController = require('./restaurants/restaurantsController');
 var menusController = require('./menus/menusController');
+var partiesController = require('./parties/partiesController');
 
 module.exports = function (router) {
   router.get('/api/users', usersController.getAllUsers);
@@ -24,5 +25,7 @@ module.exports = function (router) {
   router.post('/api/menus', menusController.createMenu);
   router.put('/api/menus/:id', menusController.updateMenu);
   router.delete('/api/menus/:id', menusController.deleteMenu);
+
+  router.post('/api/parties', partiesController.checkInAndCreateParty);
 
 };
