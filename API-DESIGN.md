@@ -39,6 +39,16 @@ TBD
 ### Example POST
 TBD
 
+## RestaurantUsers API
+| HTTP Method   | URL           | Description
+| ------------- | ------------- | ---------------------------------
+| GET           | /restaurants       | Gets all restaurants
+| GET           | /restaurants/:rid   | Gets a specific restaurant
+| POST          | /restaurants       | Creates an restaurant
+
+### Example POST
+`{username: "Timmy", password:'12345'}`
+
 
 ## Restaurants API
 | HTTP Method   | URL           | Description

@@ -12,10 +12,9 @@ module.exports = function (router) {
   router.get('/api/restaurantusers', restaurantUsersController.getUser);
   router.get('/api/restaurantusers/:id', restaurantUsersController.getUser);
   router.post('/api/restaurantusers', restaurantUsersController.createUser);
-  router.put('/api/restaurantusers/:id', restaurantUsersController.updateUser);
 
-  router.get('/api/restaurants', restaurantsController.getAllRestaurants);
-  router.get('/api/restaurants/:id', restaurantsController.getRestaurant);
+  router.get('/api/restaurants', restaurantsController.getRestaurants);
+  router.get('/api/restaurants/:id', restaurantsController.getRestaurants);
   router.post('/api/restaurants', restaurantsController.createRestaurant);
   router.put('/api/restaurants/:id', restaurantsController.updateRestaurant);
   router.delete('/api/restaurants/:id', restaurantsController.deleteRestaurant);
