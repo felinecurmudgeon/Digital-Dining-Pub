@@ -53,21 +53,21 @@ module.exports = {
         });
       });
     },
-    checkInAndCreateParty: function(parameters) {
+    checkInAndCreateParty: function (parameters) {
     /*creates a new party; expected parameters: restaurant_id, party_size, user_id, checkedin_at
     and creates the corresponding particpant in party_participants
     All of this is ine one SQL transaction*/
-      var partyParameters = {
-        restaurant_id: parameters.restaurant_id,
-        party_size: parameters.party_size,
-        checkedin_at: new Date().toMysqlFormat()
-      };
       return new Promise(function (resolve, reject) {
-        db.con.beginTransaction(function(err) {
+        db.con.beginTransaction(function (err) {
           if (err) { reject(err); }
-          db.con.query('INSERT INTO parties SET ?', partyParameters, function(err, party) {
+          var partyParameters = {
+            restaurant_id: parameters.restaurant_id,
+            party_size: parameters.party_size,
+            checkedin_at: new Date().toMysqlFormat()
+          };
+          db.con.query('INSERT INTO parties SET ?', partyParameters, function (err, party) {
             if (err) {
-              return db.con.rollback(function() {
+              return db.con.rollback(function () {
                 reject(err);
               });
             }
@@ -78,13 +78,13 @@ module.exports = {
          
             db.con.query('INSERT INTO party_participants SET ?', partyParticipantsParameters, function(err) {
               if (err) {
-                return db.con.rollback(function() {
+                return db.con.rollback(function () {
                   reject(err);
                 });
               }  
-              db.con.commit(function(err) {
+              db.con.commit(function (err) {
                 if (err) {
-                  return db.con.rollback(function() {
+                  return db.con.rollback(function () {
                     reject(err);
                   });
                 }
@@ -95,6 +95,48 @@ module.exports = {
           });
         });
       });
+    },
+    seatParty: function (parameters) {
+      /* seats a party, and assignes it to a table, changing the status of the table
+      expected parameters: party_id, table_id */
+      return new Promise(function (resolve, reject) {
+        db.con.beginTransaction(function (err) {
+          if (err) { reject(err); }
+          var partyParameters = {
+            table_id: parameters.table_id,
+            seated_at: new Date().toMysqlFormat()
+          }; 
+          db.con.query('UPDATE parties SET ? WHERE party_id = ?', [partyParameters, parameters.party_id], function (err, party) {
+            if (err) {
+              return db.con.rollback(function () {
+                reject(err);
+              });
+            }
+            db.con.query('UPDATE tables SET available = FALSE WHERE id = ?', parameters.table_id, function(err) {
+              if (err) {
+                return db.con.rollback(function () {
+                  reject(err);
+                });
+              }  
+              db.con.commit(function (err) {
+                if (err) {
+                  return db.con.rollback(function () {
+                    reject(err);
+                  });
+                }
+                resolve(party);
+              });
+            });
+          });
+        });
+      });
+    }
+  },
+  order: {
+    orderMenuItems: function() {
+    /*writes the orders in the DB to the party
+    expected parameters: party_id, and menu_items (an array of menu_items with menu_item_id and quantity) */
+
     }
   }
 };
