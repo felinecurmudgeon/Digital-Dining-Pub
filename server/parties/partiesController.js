@@ -40,7 +40,7 @@ module.exports = {
   checkInAndCreateParty : function (req, res) {
     partiesModel.party.checkInAndCreateParty(req.body)
       .then(function (data){
-        res.status(200);
+        res.status(201);
         res.send(data);
       });
   }
