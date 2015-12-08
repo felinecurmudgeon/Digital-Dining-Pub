@@ -13,8 +13,8 @@ module.exports = {
         var query = '';
 
         if (id) {
-          query = "SELECT * FROM restaurant_users \
-                      WHERE id = '" + id + "'";
+          query = 'SELECT * FROM restaurant_users \
+                      WHERE id = ' + id;
         } else {
           query = 'SELECT * FROM restaurant_users';
         }
@@ -24,7 +24,7 @@ module.exports = {
             reject(err);
           } else {
             for (var i = 0; i < data.length; i++) {
-              JsonDataObject.type= "restaurantUser";
+              JsonDataObject.type = "restaurantUsers";
               JsonDataObject.id = data[i].id;
               JsonDataObject.attributes = {
                 username: data[i].username,

@@ -21,8 +21,11 @@ module.exports = {
 
   updateRestaurant : function (req, res) {
     console.log('updating restaurant ', req.params.id);
-    res.status(200);
-    res.send('stub success');
+    restaurantModel.restaurant.put(req.body)
+      .then(function (data){
+        res.status(201)
+        res.send(data);
+      })
   },
 
   deleteRestaurant : function (req, res) {
