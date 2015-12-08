@@ -29,9 +29,9 @@ module.exports = {
               JsonDataObject.attributes = {
                 username: data[i].username,
                 password: data[i].password
-              }
+              };
               JsonResponseObject.data.push(JsonDataObject);
-            };
+            }
 
             resolve(JsonResponseObject);
           }

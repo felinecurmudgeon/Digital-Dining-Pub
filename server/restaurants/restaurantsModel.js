@@ -27,9 +27,8 @@ module.exports = {
                 restaurantName: data[i].restaurant_name,
                 restaurantOwnerId: data[i].restaurant_owner_id,
                 restaurantAddress: data[i].restaurant_address,
-                restaurantCity: data[i].restaurant_city, 
-                restaurantState: data[i].restaurant_state, 
-                restaurantZipCode: data[i].restaurant_zip_code,
+                restaurantCity: data[i].restaurant_city,
+                restaurantState: data[i].restaurant_state,
                 restaurantZipCode: data[i].restaurant_zip_code,
                 openingHourMonday: data[i].opening_hour_monday,
                 closingHourMonday: data[i].closing_hour_monday,
@@ -45,11 +44,11 @@ module.exports = {
                 closingHourSatday: data[i].closing_hour_saturday,
                 openingHourSunday: data[i].opening_hour_sunday,
                 closingHourSunday: data[i].closing_hour_sunday
-              }
+              };
               JsonResponseObject.data.push(JsonDataObject);
             };
             resolve(JsonResponseObject);
-          }
+          };
         });
       });
     },
