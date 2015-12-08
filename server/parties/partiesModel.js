@@ -39,7 +39,7 @@ module.exports = {
       });
     },
     checkInAndCreateParty: function (parameters) {
-    /*creates a new party; expected parameters: restaurant_id, party_size, user_id, checkedin_at
+    /*creates a new party; expected parameters: restaurant_id, party_size, user_id,
     and creates the corresponding particpant in party_participants
     All of this is ine one SQL transaction*/
       return new Promise(function (resolve, reject) {
