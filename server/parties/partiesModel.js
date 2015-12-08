@@ -71,7 +71,6 @@ module.exports = {
                 reject(err);
               });
             }
-            console.log(party, party.insertId);
             var partyParticipantsParameters = {
               party_id: party.insertId,
               user_id: parameters.user_id
