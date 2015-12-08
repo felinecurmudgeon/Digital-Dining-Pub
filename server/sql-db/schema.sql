@@ -19,7 +19,7 @@ CREATE TABLE restaurants (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   restaurant_name VARCHAR(40) NOT NULL,
   restaurant_owner_id INT NOT NULL,
-  restaurant_adress VARCHAR(255) NOT NULL,
+  restaurant_address VARCHAR(255) NOT NULL,
   restaurant_city VARCHAR(40) NOT NULL,
   restaurant_state VARCHAR(40) NOT NULL,
   restaurant_zip_code INT NOT NULL,

@@ -1,22 +1,22 @@
-// var restaurantModel = require('./restaurantsModel.js');
-//commented out because variable not currently in use
-module.exports = {
-  getAllRestaurants : function (req, res) {
-    console.log('getting restaurant');
-    res.status(200);
-    res.send('stub success');
-  },
+var restaurantModel = require('./restaurantsModel.js');
 
-  getRestaurant : function (req, res) {
+module.exports = {
+  getRestaurants : function (req, res) {
     console.log('getting restaurant ', req.params.id);
-    res.status(200);
-    res.send('stub success');
+    restaurantModel.restaurant.get(req.params.id)
+      .then(function (data){
+        res.status(200);
+        res.send(data);
+      });
   },
 
   createRestaurant : function (req, res) {
     console.log('creating restaurant ');
-    res.status(201);
-    res.send('stub success');
+    restaurantModel.restaurant.post(req.body)
+      .then(function (data){
+        res.status(201);
+        res.send(data);
+      });
   },
 
   updateRestaurant : function (req, res) {

@@ -3,7 +3,7 @@ var supertest = require('supertest');
 request = supertest('http://localhost:8000');
 
 describe("Restaurant Users API suite", function() {
-  
+
   it("Should be able to save a restaurant user", function (done){
     
     var testRestaurantUser = {
@@ -22,61 +22,98 @@ describe("Restaurant Users API suite", function() {
             if (err) {
               done.fail(err);
             } else {
-              console.log("Restaurants User POST passed");
+              console.log("/restaurantsUsers POST run");
               done();
             }
-          });  
+        });  
       }
     });
    });
 
-  it("Should be able to save a restaurant user", function (done){
-
-  request.get('/api/restaurantUsers')
-    .expect(200)
-    // TODO: fix expect response to match API response
-    // .expect([{
-    //     username: 'Timmy'
-    //   }])
-    .end(function (err, res){
-        if (err) {
-          done.fail(err);
-        } else {
-          console.log("Restaurants User GET passed");
-          done();
-        }
+  it("Should be able to get a restaurant user", function (done){
+    request.get('/api/restaurantUsers')
+      .expect(200)
+      .end(function (err, res){
+          if (err) {
+            done.fail(err);
+          } else {
+            console.log("/restaurantsUsers GET run");
+            expect(res.body.data[res.body.data.length-1].attributes.username).toBe("Timmy");
+            db.con.query("DELETE FROM restaurant_users WHERE username='Timmy'");
+            done();
+          }
       });  
    });
   });
 
 
-xdescribe("Restaurant API suite", function() {
+describe("Restaurant API suite", function() {
       /*creates a new restaurant; expected parameters: restaurant_name, restaurant_owner_id,
     restaurant_adress, restaurant_city, restaurant_state, restaurant_zip_code,
     and optional opening_hour_monday, closing_hour_monday, etc that default to 8am and 11pm*/
+  var restaurantUser = {};
 
-  xit("Should be able to save a restaurant", function (done){
+  beforeAll(function (done) {
+    db.con.query("INSERT INTO restaurant_users (username, password) VALUES ('Timmer','54321')", function (err, data){
+      if (err){
+        console.log(err);
+        done();
+      } else {
+        restaurantUser.id = data.insertId;
+        done();
+      }
+    });
+  });
+
+  it("Should be able to save a restaurant", function (done){
     var testRestaurant = {
       restaurant_name: "Timmy's Tacos",
-      restaurant_owner_id: 1,
-      restaurant_adress: "123 Main St.",
+      restaurant_owner_id: restaurantUser.id,
+      restaurant_address: "123 Main St.",
       restaurant_city: "Tuscon", 
       restaurant_state: "AZ", 
       restaurant_zip_code: "75104"
     };
 
-    request.post('/api/restaurant')
-      .expect(201)
+    request.post('/api/restaurants')
       .send(testRestaurant)
+      .expect(201)
       .end(function (err, res){
           if (err) {
             done.fail(err);
           } else {
-            console.log("Restaurants POST passed");
+            console.log("/restaurants POST run");
             done();
           }
-        });  
+      });  
    });
+
+  it("Should be able to get a restaurant", function (done){
+    request.get('/api/restaurants')
+      .expect(200)
+      .end(function (err, res){
+          if (err) {
+            done.fail(err);
+          } else {
+            console.log("/restaurants GET run");
+            expect(res.body.data[res.body.data.length-1].attributes.restaurantAddress).toBe("123 Main St.");
+            db.con.query("DELETE FROM restaurants WHERE restaurant_address='123 Main St.'");
+            done();
+          }
+      });  
+   });
+
+  afterAll(function (done) {
+    db.con.query("DELETE FROM restaurant_users WHERE username='Timmer'", function (err, data){
+      if (err){
+        console.log(err);
+        done();
+      } else {
+        done();
+      }
+    });
+  });
+
 });
 
 xdescribe("Menu item API suite", function() {
@@ -97,7 +134,7 @@ xdescribe("Menu item API suite", function() {
         if (err) {
           done.fail(err);
         } else {
-          console.log("Menu GET passed");
+          console.log("Menu POST passed");
           done();
         }
       });
@@ -107,7 +144,6 @@ xdescribe("Menu item API suite", function() {
     request.get('/api/menus')
       .expect(200)
       .expect('Content-Type', 'application/json')
-      //.expect("stub success") //TODO: check for actual response
       .end(function(err,res){
         if (err) {
           done.fail(err);
