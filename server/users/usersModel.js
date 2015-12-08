@@ -23,9 +23,20 @@ module.exports = {
         });
       });
     },
-    post: function(user) {
+    post: function (user) {
       return new Promise(function (resolve, reject) {
         db.con.query("INSERT into users set ?", user, function (err, data) {
+          if(err){
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
+    put: function (user) {
+      return new Promise(function (resolve, reject) {
+        db.con.query("UPDATE users SET ? WHERE id = ?", [user, user.id], function (err, data) {
           if(err){
             reject(err);
           } else {
