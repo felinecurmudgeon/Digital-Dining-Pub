@@ -1,4 +1,4 @@
-var restaurantModel = require('./restaurantsModel.js');
+var restaurantsModel = require('./restaurantsModel.js');
 
 module.exports = {
   getRestaurants : function (req, res) {
