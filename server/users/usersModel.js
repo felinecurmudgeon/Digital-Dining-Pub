@@ -34,9 +34,9 @@ module.exports = {
         });
       });
     },
-    put: function (user) {
+    put: function (userId, user) {
       return new Promise(function (resolve, reject) {
-        db.con.query("UPDATE users SET ? WHERE id = ?", [user, user.id], function (err, data) {
+        db.con.query("UPDATE users SET ? WHERE id = ?", [user, userId], function (err, data) {
           if(err){
             reject(err);
           } else {

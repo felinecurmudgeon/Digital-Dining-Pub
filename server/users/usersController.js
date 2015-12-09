@@ -30,7 +30,10 @@ module.exports = {
 
   updateUser : function (req, res) {
     console.log('updating user ', req.params.id);
-    res.status(200);
-    res.send('stub success');
+    usersModel.user.put(req.params.id, req.body)
+      .then(function (data) {
+        res.status(200);
+        res.send(data);
+      });
   }
 };
