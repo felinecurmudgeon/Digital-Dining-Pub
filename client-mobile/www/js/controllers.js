@@ -104,7 +104,7 @@ angular.module('digitalDining.controllers', [])
 
   window.navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
-  $scope.displayRestaurants = function() {
+  $scope.displayRestaurants = function () {
     HomeFactory.getAllRestaurants().then(function (restaurants) {
       console.log('here', restaurants);
       $scope.restaurants = restaurants;

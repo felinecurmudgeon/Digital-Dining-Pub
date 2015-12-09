@@ -27,9 +27,9 @@ angular.module('digitalDining.services', [])
   };
 })
 .factory('HomeFactory', function ($http) {
-  var getAllRestaurants = function() {
+  var getAllRestaurants = function () {
     return $http({
-      url:'http:/localhost:8000/#/api/restaurants',
+      url: 'http://localhost:8000/api/restaurants',
       method: 'GET'
     });
   };
