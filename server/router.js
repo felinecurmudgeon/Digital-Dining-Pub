@@ -27,5 +27,6 @@ module.exports = function (router) {
   router.delete('/api/menus/:id', menusController.deleteMenu);
 
   router.post('/api/parties', partiesController.checkInAndCreateParty);
+  router.put('/api/parties/:id', partiesController.editParty);
 
 };
