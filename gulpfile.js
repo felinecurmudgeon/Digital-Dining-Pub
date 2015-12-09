@@ -8,6 +8,7 @@ var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
 var jscs = require('gulp-jscs');
+var bg = require('gulp-bg');
 var dummydata = require('./spec/dummyData.js');
 
 var paths = {
@@ -31,11 +32,6 @@ gulp.task('karmaUgly', function(done) {
       files: __dirname + '/dist/',
       singleRun: true
     }, done);
-});
-
-gulp.task('jasmine', function () {
-  return gulp.src('spec/server/spec.js')
-    .pipe(jasmine());
 });
 
 gulp.task('lint', function() {
@@ -74,10 +70,15 @@ gulp.task('style', function() {
     .pipe(jscs.reporter('fail'));
 });
 
+gulp.task('jasmine', function () {
+  return gulp.src('spec/server/spec.js')
+    .pipe(jasmine());
+});
+
 gulp.task('dummydata', function () {
   return dummydata.run();
 });
 
 gulp.task('uglify', ['compress', 'concat', 'cleanMin']);
-gulp.task('test', ['karmaRaw', 'jasmine']);
+gulp.task('test', ['jasmine']);
 gulp.task('default', ['karmaRaw', 'jasmine', 'lint']);

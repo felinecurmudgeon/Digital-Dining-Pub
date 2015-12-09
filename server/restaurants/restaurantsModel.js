@@ -11,8 +11,8 @@ module.exports = {
   restaurant: {
     get: function (restaurantId) {
       return new Promise(function (resolve, reject) {
-        var query = "";
-        if(restaurantId){
+        var query = '';
+        if (restaurantId) {
           query = 'SELECT * FROM restaurants WHERE id = ' + restaurantId;
         } else {
           query = 'SELECT * FROM restaurants';
@@ -47,15 +47,15 @@ module.exports = {
                 closingHourSunday: data[i].closing_hour_sunday
               };
               JsonResponseObject.data.push(JsonDataObject);
-            };
+            }
             resolve(JsonResponseObject);
-          };
+          }
         });
       });
     },
     post: function (restaurant) {
       return new Promise(function (resolve, reject) {
-        db.con.query('INSERT into restaurants set ?', restaurant, function (err, data) {
+        db.con.query('INSERT into restaurants SET ?', restaurant, function (err, data) {
           if (err) {
             reject(err);
           } else {
@@ -64,19 +64,30 @@ module.exports = {
           }
         });
       });
-    }
-   //  ,
-   // put: function (updatedRestaurant) {
-   //  return new Promise(function (resolve, reject){
-   //    db.con.query('UPDATE TABLE restaurants SET ? WHERE ?', [updatedRestaurant, updatedRestaurant.id], function (err, data){
-   //      if (err){
-   //        reject (err);
-   //      } else {
-   //        resolve(updatedRestaurant);
-   //      }
-   //    })
-   //  })
-   // }
+    },
+   put: function (updatedRestaurant, id) {
+    return new Promise(function (resolve, reject){
+      db.con.query('UPDATE restaurants SET ? WHERE id='+id, updatedRestaurant, function (err, data){
+        console.log(data);
+        if (err){
+          reject (err);
+        } else {
+          resolve(updatedRestaurant);
+        }
+      })
+    })
+   }, 
+   delete: function (id) {
+    return new Promise(function (resolve, reject){
+      db.con.query('DELETE FROM restaurants WHERE id='+id, function (err, data){
+        if (err) {
+          reject(err);
+        } else {
+          resolve(id);
+        }
+      })
+    });
+   }
   }
 };
 

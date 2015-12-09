@@ -24,7 +24,7 @@ module.exports = {
             reject(err);
           } else {
             for (var i = 0; i < data.length; i++) {
-              JsonDataObject.type = "restaurantUsers";
+              JsonDataObject.type = 'restaurantUsers';
               JsonDataObject.id = data[i].id;
               JsonDataObject.attributes = {
                 username: data[i].username,
