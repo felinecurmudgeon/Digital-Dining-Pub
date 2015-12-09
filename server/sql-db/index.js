@@ -14,8 +14,13 @@ Date.prototype.toMysqlFormat = function () {
 
 var con = mysql.createConnection({
   host: 'localhost',
+<<<<<<< HEAD
   user: process.env.MYSQL_DDUSER, //set this in your bash profile
   password: process.env.MYSQL_DDPASSWORD, //set this in your bash profile
+=======
+  user: process.env.MYSQL_DDUSER,
+  password: process.env.MYSQL_DDPASSWORD,
+>>>>>>> CHanged restaurants to cards, styling
   database: 'digitaldining'
 });
 

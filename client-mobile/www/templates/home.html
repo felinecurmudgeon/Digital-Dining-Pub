@@ -1,6 +1,6 @@
 <ion-view view-title="Home">
   <ion-content>
-    <h1>Restaurants In Your Location</h1>
+    <h4>Restaurants In Your Location</h4>
     <div collection-repeat = 'rest in restaurantList'>
       <div class="list card">
 
@@ -8,9 +8,11 @@
           <h2>{{rest.restaurantName}} </h2>
         </div> -->
 
-        <div class="item item-image menuItem">
+        <div class="item item-image restaurantContainer">
+        <h2>{{rest.restaurantName}} </h2>
           <img src="{{rest.restaurantImg}}">
-          <h2>{{rest.restaurantName}} </h2>
+          <br>
+          
         </div>
         <br>
       </div>

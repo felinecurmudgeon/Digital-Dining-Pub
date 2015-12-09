@@ -4,7 +4,7 @@
   width: 100%;
 }
 
-.menuItem {
+.menuItem img{
   height: 150px;
   width: 150px;
 }
@@ -19,7 +19,7 @@ h1 {
 
 .restaurantContainer {
   height: 300px;
-  width: 350px;
+  width: 100%;
 }
 .restaurantContainer img {
   height: 100%;
