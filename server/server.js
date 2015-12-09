@@ -1,9 +1,10 @@
 var express = require('express');
-var session = require('express-session');
+//var session = require('express-session');
 var router = require('./router.js');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('./middleware/logger');
+var expressJwt = require('express-jwt');
 
 var app = express();
 var expressRouter = express.Router();
@@ -17,8 +18,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//enable sessions
-app.use(session({secret: 'feline'}));
+app.use(expressJwt({secret: 'feline'}));
 
 //set up router
 app.use('/', expressRouter);
