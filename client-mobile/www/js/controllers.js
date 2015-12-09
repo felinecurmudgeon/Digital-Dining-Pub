@@ -123,7 +123,6 @@ angular.module('digitalDining.controllers', [])
     console.log('hit');
   };
 }])
-
 .controller('SignUpCtrl', ['$scope', '$state', '$http', '$window', function ($scope, $state, $http, $window) {
   $scope.signupData = {};
 
@@ -150,4 +149,19 @@ angular.module('digitalDining.controllers', [])
       }
     });
   };
+}])
+.controller('PaymentsCtrl', ['$scope', function ($scope) {
+  $scope.testingTotalForTaxAndTip = 140;
+  $scope.totalWithTax = 0;
+  $scope.taxAmount = 0;
+  $scope.totalWithTaxAndTip = 0;
+  $scope.taxCalculator = function (total) {
+    $scope.taxAmount = total * .08;
+    $scope.totalWithTax = total + $scope.taxAmount;
+  };
+  $scope.tipCalculator = function (total, percentage) {
+    $scope.tipAmount = total * percentage
+    $scope.totalWithTaxAndTip = total + $scope.tipAmount;
+  };
 }]);
+

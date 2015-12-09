@@ -1,11 +1,19 @@
 <ion-view view-title="Home">
   <ion-content>
     <h1>Restaurants In Your Location</h1>
-    <div collection-repeat = 'restaurant in restaurantList'>
-      <ion-item class = 'restaurantContainer'>
-      <img src = "{{restaurant.restaurantImg}}">
-      <span class = 'restaurantName'>{{restaurant.restaurantName}} </span>
-      </ion-item>
+    <div collection-repeat = 'rest in restaurantList'>
+      <div class="list card">
+
+      <!--   <div>
+          <h2>{{rest.restaurantName}} </h2>
+        </div> -->
+
+        <div class="item item-image menuItem">
+          <img src="{{rest.restaurantImg}}">
+          <h2>{{rest.restaurantName}} </h2>
+        </div>
+        <br>
+      </div>
     </div>
     
   </ion-content>

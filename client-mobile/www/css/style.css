@@ -4,7 +4,7 @@
   width: 100%;
 }
 
-.menuItem img{
+.menuItem {
   height: 150px;
   width: 150px;
 }
@@ -31,4 +31,8 @@ h1 {
   width: 100%;
   display: block;
   margin: 0 auto;
+}
+
+.num {
+  float:right;
 }
