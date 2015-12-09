@@ -179,10 +179,10 @@ describe('Restaurant and Menu Test Suite', function() {
 
       it('Should be able to save a menuitems', function (done){
         var testMenuItemPost = {
-          restaurant_id : testMenuItem.restaurant_id, 
-          title : 'hot soup', 
-          description : 'More delicious turtle soup', 
-          price: '10.99', 
+          restaurant_id : testMenuItem.restaurant_id,
+          title : 'hot soup',
+          description : 'More delicious turtle soup',
+          price: '10.99',
           menu_category_id : testMenuItem.menu_category_id
         }
 
@@ -209,9 +209,6 @@ describe('Restaurant and Menu Test Suite', function() {
       });
       //Suite closer
     });
-
-
-
 //Parent Suite closer
 });
 
