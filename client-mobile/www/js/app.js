@@ -25,14 +25,25 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('app', {
     url: '/app',
+    //abstract: true,
+    views: {
+      '': { 
+        templateUrl: 'templates/login.html', 
+        controller: 'AppCtrl'
+      }
+    },
+  })
+
+  .state('menu', {
+    url: '/menu',
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
+  .state('menu.search', {
     url: '/search',
     views: {
       'menuContent': {
@@ -41,7 +52,7 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
     }
   })
 
-  .state('app.restaurantMenu', {
+  .state('menu.restaurantMenu', {
       url: '/restaurantMenu',
       views: {
         'menuContent': {
@@ -50,7 +61,7 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
         }
       }
     })
-    .state('app.playlists', {
+    .state('menu.playlists', {
       url: '/playlists',
       views: {
         'menuContent': {
@@ -59,7 +70,7 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
         }
       }
     })
-    .state('app.home', {
+    .state('menu.home', {
       url: '/home',
       views: {
         'menuContent': {
@@ -68,7 +79,7 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
         }
       }
     })
-    .state('app.checkIn', {
+    .state('menu.checkIn', {
       url: '/checkIn',
       views: {
         'menuContent': {
@@ -77,15 +88,15 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
         }
       }
     })
-    .state('app.success', {
+    .state('menu.success', {
       url: '/success',
       views: {
-        'menuContent': {
+        '': {
           templateUrl: 'templates/success.html'
         }
       }
     })
-    .state('app.currentCheck', {
+    .state('menu.currentCheck', {
       url: '/currentCheck',
       views: {
         'menuContent': {
@@ -93,7 +104,7 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
         }
       }
     })
-    .state('app.settings', {
+    .state('menu.settings', {
       url: '/settings',
       views: {
         'menuContent': {
@@ -101,7 +112,7 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
         }
       }
     })
-    .state('app.aboutUs', {
+    .state('menu.aboutUs', {
       url: '/aboutUs',
       views: {
         'menuContent': {
@@ -110,7 +121,7 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
       }
     })
 
-  .state('app.single', {
+  .state('menu.single', {
     url: '/playlists/:playlistId',
     views: {
       'menuContent': {
@@ -120,5 +131,5 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/home');
+  $urlRouterProvider.otherwise('/app');
 });
