@@ -10,6 +10,12 @@ var app = express();
 var expressRouter = express.Router();
 app.use(express.static(__dirname + '/../client-mobile'));
 
+app.use(function(req, res, next) {
+ res.header("Access-Control-Allow-Origin", "*");
+ res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+ next();
+});
+
 //cookie parser
 app.use(cookieParser());
 
