@@ -156,11 +156,11 @@ angular.module('digitalDining.controllers', [])
   $scope.taxAmount = 0;
   $scope.totalWithTaxAndTip = 0;
   $scope.taxCalculator = function (total) {
-    $scope.taxAmount = total * .08;
+    $scope.taxAmount = total * 0.08;
     $scope.totalWithTax = total + $scope.taxAmount;
   };
   $scope.tipCalculator = function (total, percentage) {
-    $scope.tipAmount = total * percentage
+    $scope.tipAmount = total * percentage;
     $scope.totalWithTaxAndTip = total + $scope.tipAmount;
   };
 }]);
