@@ -6,16 +6,16 @@ module.exports = {
   user: {
     get: function (id) {
       return new Promise( function (resolve, reject) {
-        var query = "";
-        if (id){
-          query = "SELECT * FROM users \
-                      WHERE id = " + id;
+        var query;
+        if (id) {
+          query = 'SELECT * FROM users \
+                      WHERE id = ' + id;
         } else {
-          query = "SELECT * FROM users";
+          query = 'SELECT * FROM users';
         }
 
         db.con.query(query, function (err, data) {
-          if (err){
+          if (err) {
             reject(err);
           } else {
             resolve(data);
@@ -25,8 +25,8 @@ module.exports = {
     },
     post: function (user) {
       return new Promise(function (resolve, reject) {
-        db.con.query("INSERT into users set ?", user, function (err, data) {
-          if (err){
+        db.con.query('INSERT into users set ?', user, function (err, data) {
+          if (err) {
             reject(err);
           } else {
             resolve(data);
@@ -36,8 +36,8 @@ module.exports = {
     },
     put: function (userId, user) {
       return new Promise(function (resolve, reject) {
-        db.con.query("UPDATE users SET ? WHERE id = ?", [user, userId], function (err, data) {
-          if (err){
+        db.con.query('UPDATE users SET ? WHERE id = ?', [user, userId], function (err, data) {
+          if (err) {
             reject(err);
           } else {
             resolve(data);

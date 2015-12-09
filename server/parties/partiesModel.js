@@ -9,12 +9,12 @@ module.exports = {
     getCheckedInParties: function (restaurantId) {
       //retrieves all checked_in parties that are not started yet for a given restaurantId
       return new Promise( function (resolve, reject) {
-        db.con.query("SELECT * FROM parties \
-                      WHERE id = " + restaurantId +
-                      "AND checkedin_at IS NOT NULL \
+        db.con.query('SELECT * FROM parties \
+                      WHERE id = ' + restaurantId +
+                      'AND checkedin_at IS NOT NULL \
                       AND seated_at IS NULL \
-                      AND closed_at IS NULL", function (err, data) {
-          if (err){
+                      AND closed_at IS NULL', function (err, data) {
+          if (err) {
             reject(err);
           } else {
             resolve(data);
@@ -25,12 +25,12 @@ module.exports = {
     getCurrentParties: function (restaurantId) {
       //retrieves all seated parties that are not finished yet for a given restaurantId
       return new Promise( function (resolve, reject) {
-        db.con.query("SELECT * FROM parties \
-                      WHERE id = " + restaurantId +
-                      "AND checkedin_at IS NOT NULL \
+        db.con.query('SELECT * FROM parties \
+                      WHERE id = ' + restaurantId +
+                      'AND checkedin_at IS NOT NULL \
                       AND seated_at IS NOT NULL \
-                      AND closed_at IS NULL", function (err, data) {
-          if (err){
+                      AND closed_at IS NULL', function (err, data) {
+          if (err) {
             reject(err);
           } else {
             resolve(data);
@@ -44,7 +44,9 @@ module.exports = {
     All of this is ine one SQL transaction*/
       return new Promise(function (resolve, reject) {
         db.con.beginTransaction(function (err) {
-          if (err) { reject(err); }
+          if (err) {
+            reject(err);
+          }
           var partyParameters = {
             restaurant_id: parameters.restaurant_id,
             party_size: parameters.party_size,
@@ -61,12 +63,12 @@ module.exports = {
               party_id: party.insertId,
               user_id: parameters.user_id
             };
-            db.con.query('INSERT INTO party_participants SET ?', partyParticipantsParameters, function(err) {
+            db.con.query('INSERT INTO party_participants SET ?', partyParticipantsParameters, function (err) {
               if (err) {
                 return db.con.rollback(function () {
                   reject(err);
                 });
-              }  
+              }
               db.con.commit(function (err) {
                 if (err) {
                   return db.con.rollback(function () {
@@ -86,23 +88,25 @@ module.exports = {
       expected parameters: table_id */
       return new Promise(function (resolve, reject) {
         db.con.beginTransaction(function (err) {
-          if (err) { reject(err); }
+          if (err) {
+            reject(err);
+          }
           var partyParameters = {
             table_id: parameters.table_id,
             seated_at: new Date().toMysqlFormat()
-          }; 
+          };
           db.con.query('UPDATE parties SET ? WHERE party_id = ?', [partyParameters, partyId], function (err, party) {
             if (err) {
               return db.con.rollback(function () {
                 reject(err);
               });
             }
-            db.con.query('UPDATE tables SET available = FALSE WHERE id = ?', parameters.table_id, function(err) {
+            db.con.query('UPDATE tables SET available = FALSE WHERE id = ?', parameters.table_id, function (err) {
               if (err) {
                 return db.con.rollback(function () {
                   reject(err);
                 });
-              }  
+              }
               db.con.commit(function (err) {
                 if (err) {
                   return db.con.rollback(function () {
@@ -124,7 +128,7 @@ module.exports = {
           user_id: parameters.user_id
         };
         db.con.query('INSERT INTO party_participants SET ?', partyParticipantsParameters, function (err, data) {
-          if (err){
+          if (err) {
             reject(err);
           } else {
             resolve(data);

@@ -1,28 +1,28 @@
 var usersModel = require('./usersModel.js');
 
 module.exports = {
-  getAllUsers : function (req, res){
-    console.log("getting users");
+  getAllUsers : function (req, res) {
+    console.log('getting users');
     usersModel.user.get()
       .then(function (users) {
         res.status(200);
         res.send(users);
       });
-  }, 
+  },
 
-  getUser : function (req, res){
-    console.log("getting user ", req.params.id);
+  getUser : function (req, res) {
+    console.log('getting user ', req.params.id);
     usersModel.user.get(req.params.id)
       .then(function (users) {
         res.status(200);
         res.send(users);
       });
-  }, 
+  },
 
-  createUser : function (req, res){
-    console.log("creating user ", req.body);
+  createUser : function (req, res) {
+    console.log('creating user ', req.body);
     usersModel.user.post(req.body)
-      .then(function (data){
+      .then(function (data) {
         res.status(201);
         res.send(data);
       });
