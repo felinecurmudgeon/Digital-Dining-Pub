@@ -74,7 +74,7 @@ TBD
 | POST          | /menucategories       | Creates an menucategories
 
 ### Example POST
-TBD
+`{"restaurant_id": 185, "category_name" : "brunch"}`
 
 ## MenuItems API
 | HTTP Method   | URL           | Description

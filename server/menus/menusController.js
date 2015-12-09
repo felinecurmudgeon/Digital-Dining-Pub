@@ -33,9 +33,9 @@ module.exports = {
 
   createMenuItems : function (req, res) {
     console.log('creating menu ');
-     menusModel.menuItems.post()
+     menusModel.menuItems.post(req.body)
       .then(function (createdItem) {
-        res.status(200);
+        res.status(201);
         res.send(createdItem);
       });
   },
@@ -55,6 +55,6 @@ module.exports = {
      .then(function (deletedItemId) {
        res.status(204);
        res.send(deletedItemId);
-     });;
+     });
   }
 };

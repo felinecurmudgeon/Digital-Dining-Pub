@@ -28,6 +28,6 @@ module.exports = function (router) {
 
   router.get('/api/menuItems/:rid', menusController.getMenuItems);
   router.post('/api/menuItems', menusController.createMenuItems);
-  router.put('/api/menuItems', menusController.updateMenuItems);
-  router.delete('/api/menuItems', menusController.deleteMenuItems);
+  router.put('/api/menuItems/:id', menusController.updateMenuItems);
+  router.delete('/api/menuItems/:id', menusController.deleteMenuItems);
 };

@@ -3,14 +3,13 @@
 var db = require('../sql-db/index.js');
 var Promise = require('bluebird');
 var JsonResponseObj = require('../JsonResponseObject.js');
-var JsonResponseObject = new JsonResponseObj();
 var JsonDataObj = require('../JsonDataObject.js');
-var JsonDataObject = new JsonDataObj();
 
 module.exports = {
   restaurant: {
     get: function (restaurantId) {
       return new Promise(function (resolve, reject) {
+        var JsonResponseObject = new JsonResponseObj();
         var query = '';
         if (restaurantId) {
           query = 'SELECT * FROM restaurants WHERE id = ' + restaurantId;
@@ -22,6 +21,7 @@ module.exports = {
             reject(err);
           } else {
             for (var i = 0; i < data.length; i++) {
+              var JsonDataObject = new JsonDataObj();
               JsonDataObject.type = 'restaurants';
               JsonDataObject.id = data[i].id;
               JsonDataObject.attributes = {
@@ -67,7 +67,7 @@ module.exports = {
     },
    put: function (updatedRestaurant, id) {
     return new Promise(function (resolve, reject) {
-      db.con.query('UPDATE restaurants SET ? WHERE id=' + id, updatedRestaurant, function (err, data) {
+      db.con.query('UPDATE restaurants SET ? WHERE id=' + id, updatedRestaurant, function (err) {
         if (err) {
           reject (err);
         } else {
