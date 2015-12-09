@@ -81,9 +81,9 @@ module.exports = {
         });
       });
     },
-    seatParty: function (parameters) {
+    seatParty: function (partyId, parameters) {
       /* seats a party, and assignes it to a table, changing the status of the table
-      expected parameters: party_id, table_id */
+      expected parameters: table_id */
       return new Promise(function (resolve, reject) {
         db.con.beginTransaction(function (err) {
           if (err) { reject(err); }
@@ -91,7 +91,7 @@ module.exports = {
             table_id: parameters.table_id,
             seated_at: new Date().toMysqlFormat()
           }; 
-          db.con.query('UPDATE parties SET ? WHERE party_id = ?', [partyParameters, parameters.party_id], function (err, party) {
+          db.con.query('UPDATE parties SET ? WHERE party_id = ?', [partyParameters, partyId], function (err, party) {
             if (err) {
               return db.con.rollback(function () {
                 reject(err);
