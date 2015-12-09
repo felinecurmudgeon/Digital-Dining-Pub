@@ -2,7 +2,7 @@
   "name": "digital-dining",
   "version": "1.0.0",
   "description": "The modern way to order and pay at restaurants",
-  "main": "server.js",
+  "main": "./server/server.js",
   "scripts": {
     "test": "karma start",
     "style": "gulp style",

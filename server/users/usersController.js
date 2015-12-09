@@ -1,25 +1,39 @@
+var usersModel = require('./usersModel.js');
+
 module.exports = {
   getAllUsers : function (req, res) {
     console.log('getting users');
-    res.status(200);
-    res.send('stub success');
+    usersModel.user.get()
+      .then(function (users) {
+        res.status(200);
+        res.send(users);
+      });
   },
 
   getUser : function (req, res) {
     console.log('getting user ', req.params.id);
-    res.status(200);
-    res.send('stub success');
+    usersModel.user.get(req.params.id)
+      .then(function (users) {
+        res.status(200);
+        res.send(users);
+      });
   },
 
   createUser : function (req, res) {
-    console.log('creating user ');
-    res.status(201);
-    res.send('stub success');
+    console.log('creating user ', req.body);
+    usersModel.user.post(req.body)
+      .then(function (data) {
+        res.status(201);
+        res.send(data);
+      });
   },
 
   updateUser : function (req, res) {
     console.log('updating user ', req.params.id);
-    res.status(200);
-    res.send('stub success');
+    usersModel.user.put(req.params.id, req.body)
+      .then(function (data) {
+        res.status(200);
+        res.send(data);
+      });
   }
 };

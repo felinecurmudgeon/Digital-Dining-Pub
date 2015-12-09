@@ -122,7 +122,7 @@ CREATE TABLE parties (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   restaurant_id INT NOT NULL,
-  table_id INT NOT NULL,
+  table_id INT,
   party_size INT NOT NULL,
   checkedin_at TIMESTAMP,
   seated_at TIMESTAMP,
