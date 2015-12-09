@@ -14,7 +14,7 @@ module.exports = {
                       "AND checkedin_at IS NOT NULL \
                       AND seated_at IS NULL \
                       AND closed_at IS NULL", function (err, data) {
-          if(err){
+          if (err){
             reject(err);
           } else {
             resolve(data);
@@ -30,7 +30,7 @@ module.exports = {
                       "AND checkedin_at IS NOT NULL \
                       AND seated_at IS NOT NULL \
                       AND closed_at IS NULL", function (err, data) {
-          if(err){
+          if (err){
             reject(err);
           } else {
             resolve(data);
@@ -116,7 +116,7 @@ module.exports = {
         });
       });
     },
-    addUserToParty: function(partyId, parameters) {
+    addUserToParty: function (partyId, parameters) {
     /*adds a user to a party, expected parameters: user_id */
       return new Promise(function (resolve, reject) {
         var partyParticipantsParameters = {
@@ -124,7 +124,7 @@ module.exports = {
           user_id: parameters.user_id
         };
         db.con.query('INSERT INTO party_participants SET ?', partyParticipantsParameters, function (err, data) {
-          if(err){
+          if (err){
             reject(err);
           } else {
             resolve(data);

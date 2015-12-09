@@ -4,7 +4,7 @@ module.exports = {
   getAllUsers : function (req, res){
     console.log("getting users");
     usersModel.user.get()
-      .then(function(users) {
+      .then(function (users) {
         res.status(200);
         res.send(users);
       });
@@ -13,7 +13,7 @@ module.exports = {
   getUser : function (req, res){
     console.log("getting user ", req.params.id);
     usersModel.user.get(req.params.id)
-      .then(function(users) {
+      .then(function (users) {
         res.status(200);
         res.send(users);
       });

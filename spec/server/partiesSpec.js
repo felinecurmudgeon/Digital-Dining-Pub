@@ -11,11 +11,11 @@ describe("Parties API suite", function() {
 
   beforeEach(function (done) {
     db.con.query("DELETE FROM users WHERE username='Timmy'", function (err, data){
-      if(err){
+      if (err){
         console.log(err);
       } else {
         db.con.query("INSERT INTO users SET ?", testUser, function (err, data){
-          if(err){
+          if (err){
             console.log(err);
           } else {
             testUser.id = data.insertId;
