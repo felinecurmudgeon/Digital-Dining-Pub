@@ -7,12 +7,9 @@ var ps = require('ps-node');
 ps.lookup({
     command: 'node',
     }, function(err, resultList ) {
-      if(!resultList.length){
+      if(!resultList.length || resultList[0].arguments[0] === '/usr/local/bin/jasmine'){
          var server = require('../../server/server.js');
       }
-      // resultList.forEach(function(result){
-      //   ps.kill(result.pid);
-      // })
   });
 
 describe('Restaurant and Menu Test Suite', function() {

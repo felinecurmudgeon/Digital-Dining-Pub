@@ -1,36 +1,60 @@
 var menusModel = require('./menusModel.js');
 
 module.exports = {
-  getAllMenus : function (req, res) {
+
+  //menu categories
+  getMenuCategories : function (req, res) {
+    console.log('getting menu categories');
+    menusModel.menuCategory.get()
+      .then(function (menuCats) {
+        res.status(200);
+        res.send(menuCats);
+      });
+  },
+
+  createMenuCategories : function (req, res) {
+    console.log('creating menu category');
+     menusModel.menuCategory.post(req.body)
+      .then(function (menuCats) {
+        res.status(201);
+        res.send(menuCats);
+      });
+  },
+
+  ///menu items
+  getMenuItems : function (req, res) {
     console.log('getting menu');
-    menusModel.menuCategory.getAll()
+    menusModel.menuItems.get(req.params.rid)
       .then(function (menuItems) {
         res.status(200);
         res.send(menuItems);
       });
   },
 
-  getMenu : function (req, res) {
-    console.log('getting menu ', req.params.id);
-    res.status(200);
-    res.send('stub success');
-  },
-
-  createMenu : function (req, res) {
+  createMenuItems : function (req, res) {
     console.log('creating menu ');
-    res.status(201);
-    res.send('stub success');
+     menusModel.menuItems.post()
+      .then(function (createdItem) {
+        res.status(200);
+        res.send(createdItem);
+      });
   },
 
-  updateMenu : function (req, res) {
+  updateMenuItems : function (req, res) {
     console.log('updating menu ', req.params.id);
-    res.status(200);
-    res.send('stub success');
+    menusModel.menuItems.put(req.body, req.params.id)
+      .then(function (updatedItem) {
+        res.status(201);
+        res.send(updatedItem);
+      });
   },
 
-  deleteMenu : function (req, res) {
+  deleteMenuItems : function (req, res) {
     console.log('delete menu ', req.params.id);
-    res.status(200);
-    res.send('stub success');
+    menusModel.menuItems.delete(req.params.id)
+     .then(function (deletedItemId) {
+       res.status(204);
+       res.send(deletedItemId);
+     });;
   }
 };

@@ -66,26 +66,25 @@ module.exports = {
       });
     },
    put: function (updatedRestaurant, id) {
-    return new Promise(function (resolve, reject){
-      db.con.query('UPDATE restaurants SET ? WHERE id='+id, updatedRestaurant, function (err, data){
-        console.log(data);
-        if (err){
+    return new Promise(function (resolve, reject) {
+      db.con.query('UPDATE restaurants SET ? WHERE id=' + id, updatedRestaurant, function (err, data) {
+        if (err) {
           reject (err);
         } else {
           resolve(updatedRestaurant);
         }
-      })
-    })
-   }, 
+      });
+    });
+   },
    delete: function (id) {
-    return new Promise(function (resolve, reject){
-      db.con.query('DELETE FROM restaurants WHERE id='+id, function (err, data){
+    return new Promise(function (resolve, reject) {
+      db.con.query('DELETE FROM restaurants WHERE id=' + id, function (err) {
         if (err) {
           reject(err);
         } else {
           resolve(id);
         }
-      })
+      });
     });
    }
   }

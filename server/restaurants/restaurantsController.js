@@ -31,7 +31,7 @@ module.exports = {
   deleteRestaurant : function (req, res) {
     console.log('deleting restaurant ', req.params.id);
     restaurantModel.restaurant.delete(req.params.id)
-      .then(function (data){
+      .then(function (data) {
         res.status(204);
         res.send(data);
       });

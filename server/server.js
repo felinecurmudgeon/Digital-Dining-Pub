@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 //enable sessions
 app.use(session({secret: 'feline'}));
 
-//set up router 
+//set up router
 app.use('/', expressRouter);
 router(expressRouter);
 
