@@ -56,11 +56,11 @@ module.exports = {
                 reject(err);
               });
             }
+
             var partyParticipantsParameters = {
               party_id: party.insertId,
               user_id: parameters.user_id
             };
-         
             db.con.query('INSERT INTO party_participants SET ?', partyParticipantsParameters, function(err) {
               if (err) {
                 return db.con.rollback(function () {
@@ -113,6 +113,22 @@ module.exports = {
               });
             });
           });
+        });
+      });
+    },
+    addUserToParty: function(partyId, parameters) {
+    /*adds a user to a party, expected parameters: user_id */
+      return new Promise(function (resolve, reject) {
+        var partyParticipantsParameters = {
+          party_id: partyId,
+          user_id: parameters.user_id
+        };
+        db.con.query('INSERT INTO party_participants SET ?', partyParticipantsParameters, function (err, data) {
+          if(err){
+            reject(err);
+          } else {
+            resolve(data);
+          }
         });
       });
     }

@@ -51,6 +51,12 @@ module.exports = {
           res.status(200);
           res.send(data);
         });
+    } else if (req.body.event === 'addParticipant') {
+      partiesModel.party.addUserToParty(req.params.id, req.body)
+        .then(function (data){
+          res.status(200);
+          res.send(data);
+        });
     } else {
       res.status(400);
       res.send();
