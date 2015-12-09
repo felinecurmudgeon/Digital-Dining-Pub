@@ -1,4 +1,5 @@
 /*jshint -W079 */
+/*jshint camelcase: false */
 var db = require('../sql-db/index.js');
 var Promise = require('bluebird');
 var JsonResponseObj = require('../JsonResponseObject.js');
@@ -19,10 +20,10 @@ var JsonDataObj = require('../JsonDataObject.js');
                 JsonDataObject.id = data[i].id;
                 JsonDataObject.attributes = {
                   restaurant_id : data[i].restaurant_id,
-                  category_name : data[i].category_name,
-                }
+                  category_name : data[i].category_name
+                };
                 JsonResponseObject.data.push(JsonDataObject);
-              };
+              }
               resolve(JsonResponseObject);
             }
           });
@@ -65,9 +66,9 @@ var JsonDataObj = require('../JsonDataObject.js');
                   description : data[i].description,
                   price : data[i].price,
                   menu_category_id : data[i].menu_category_id
-                }
+                };
                 JsonResponseObject.data.push(JsonDataObject);
-              };
+              }
               resolve(JsonResponseObject);
             }
           });
