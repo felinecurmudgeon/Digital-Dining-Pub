@@ -29,9 +29,9 @@ module.exports = {
   createMenuCategories : function (req, res) {
     console.log('creating menu category');
      menusModel.menuCategory.post(req.body)
-      .then(function (menuCats) {
+      .then(function (menuCat) {
         res.status(201);
-        res.send(menuCats);
+        res.send(menuCat);
       });
   },
 

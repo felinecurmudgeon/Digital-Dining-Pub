@@ -19,7 +19,6 @@ var Promise = require('bluebird');
       post: function (menuCategoryItem) {
       /*creates a menu_category entry; expected paramters: restaurant_id, category_name*/
         return new Promise(function (resolve, reject) {
-          console.log(menuCategoryItem);
           db.con.query('INSERT into menu_categories SET ?', menuCategoryItem, function (err, data) {
             if (err) {
               reject(err);
