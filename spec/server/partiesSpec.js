@@ -2,7 +2,7 @@ var db = require('../../server/sql-db/index.js');
 var supertest = require('supertest');
 request = supertest('http://localhost:8000');
 
-describe("Parties API suite", function() {
+xdescribe("Parties API suite", function() {
 
   var testUser = {
     username: "Timmy",

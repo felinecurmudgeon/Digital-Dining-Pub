@@ -16,8 +16,8 @@ Date.prototype.toMysqlFormat = function () {
 
 var con = mysql.createConnection({
   host: 'localhost',
-  user: 'curmudgeon',
-  password: 'password',
+  user: process.env.MYSQL_DDUSER, //set this in your bash profile
+  password: process.env.MYSQL_DDPASSWORD, //set this in your bash profile
   database: 'digitaldining'
 });
 

@@ -33,11 +33,6 @@ gulp.task('karmaUgly', function(done) {
     }, done);
 });
 
-gulp.task('jasmine', function () {
-  return gulp.src('spec/server/spec.js')
-    .pipe(jasmine());
-});
-
 gulp.task('lint', function() {
   return gulp.src(paths.clientScripts.concat(paths.serverScripts))
     .pipe(jshint())
@@ -74,10 +69,15 @@ gulp.task('style', function() {
     .pipe(jscs.reporter('fail'));
 });
 
+gulp.task('jasmine', function () {
+  return gulp.src('spec/server/restaurantMenuSpec.js')
+    .pipe(jasmine());
+});
+
 gulp.task('dummydata', function () {
   return dummydata.run();
 });
 
 gulp.task('uglify', ['compress', 'concat', 'cleanMin']);
-gulp.task('test', ['karmaRaw', 'jasmine']);
+gulp.task('test', ['jasmine']);
 gulp.task('default', ['karmaRaw', 'jasmine', 'lint']);

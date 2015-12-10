@@ -20,13 +20,14 @@ module.exports = function (router) {
   router.put('/api/restaurants/:id', restaurantsController.updateRestaurant);
   router.delete('/api/restaurants/:id', restaurantsController.deleteRestaurant);
 
-  router.get('/api/menus', menusController.getAllMenus);
-  router.get('/api/menus/:id', menusController.getMenu);
-  router.post('/api/menus', menusController.createMenu);
-  router.put('/api/menus/:id', menusController.updateMenu);
-  router.delete('/api/menus/:id', menusController.deleteMenu);
-
   router.post('/api/parties', partiesController.checkInAndCreateParty);
   router.put('/api/parties/:id', partiesController.editParty);
 
+  router.get('/api/menuCategories', menusController.getMenuCategories);
+  router.post('/api/menuCategories', menusController.createMenuCategories);
+
+  router.get('/api/menuItems/:rid', menusController.getMenuItems);
+  router.post('/api/menuItems', menusController.createMenuItems);
+  router.put('/api/menuItems/:id', menusController.updateMenuItems);
+  router.delete('/api/menuItems/:id', menusController.deleteMenuItems);
 };

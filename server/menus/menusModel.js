@@ -1,26 +1,13 @@
 /*jshint -W079 */
+/*jshint camelcase: false */
 var db = require('../sql-db/index.js');
 var Promise = require('bluebird');
 
   module.exports = {
     menuCategory: {
-      getAll: function () {
-        return new Promise (function (resolve, reject) {
-          db.con.query('SELECT * FROM menu_categories', function (err, data) {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(data);
-            }
-          });
-        });
-      },
-      get: function (restaurantId) {
-      //retrieves whole menu_categories for a given restaurantId
+      get: function () {
         return new Promise(function (resolve, reject) {
-          db.con.query('SELECT id as menuCategoryId, category_name as menuCategoryName \
-                        FROM menu_categories \
-                        WHERE restaurant_id = ' + restaurantId, function (err, data) {
+          db.con.query('SELECT * FROM menu_categories', function (err, data) {
             if (err) {
               reject(err);
             } else {
@@ -32,7 +19,7 @@ var Promise = require('bluebird');
       post: function (menuCategoryItem) {
       /*creates a menu_category entry; expected paramters: restaurant_id, category_name*/
         return new Promise(function (resolve, reject) {
-          db.con.query('INSERT into menu_categories set ?', menuCategoryItem, function (err, data) {
+          db.con.query('INSERT into menu_categories SET ?', menuCategoryItem, function (err, data) {
             if (err) {
               reject(err);
             } else {
@@ -42,7 +29,7 @@ var Promise = require('bluebird');
         });
       }
     },
-    menuItem: {
+    menuItems: {
       get: function (restaurantId) {
       //retrieves whole menu for a given restaurantId
         return new Promise(function (resolve, reject) {
@@ -71,6 +58,28 @@ var Promise = require('bluebird');
             }
           });
         });
-      }
+      },
+      put: function (updatedMenuItem, id) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('UPDATE menu_items SET ? WHERE id=' + id, updatedMenuItem, function (err) {
+          if (err) {
+            reject (err);
+          } else {
+            resolve(updatedMenuItem);
+          }
+        });
+      });
+     },
+     delete: function (id) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('DELETE FROM menu_items WHERE id=' + id, function (err) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(id);
+          }
+        });
+      });
+     }
     }
   };
