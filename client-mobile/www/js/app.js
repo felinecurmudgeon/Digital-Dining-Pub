@@ -25,6 +25,7 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalD
 .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider
 
+  //login view.  should probably not be called '/app'.
   .state('app', {
     url: '/app',
     views: {

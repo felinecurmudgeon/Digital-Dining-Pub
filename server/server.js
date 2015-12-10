@@ -1,5 +1,4 @@
 var express = require('express');
-//var session = require('express-session');
 var router = require('./router.js');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -8,6 +7,9 @@ var expressJwt = require('express-jwt');
 
 var app = express();
 var expressRouter = express.Router();
+
+require('./../auth/authController').intializePassportFB(passport);
+
 app.use(express.static(__dirname + '/../client-mobile'));
 
 app.use(function (req, res, next) {
@@ -24,6 +26,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger);
+app.use(passport.initialize());
 app.use(expressJwt({secret: 'feline'}).unless({path: /\/.*/})); //TODO: make secret private
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
@@ -36,7 +39,7 @@ app.use(function (err, req, res, next) {
 
 //set up router
 app.use('/', expressRouter);
-router(expressRouter);
+router(expressRouter, passport);
 
 app.listen(8000);
 
