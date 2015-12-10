@@ -106,7 +106,7 @@ angular.module('digitalDining.controllers', [])
 
   $scope.displayRestaurants = function () {
     HomeFactory.getAllRestaurants().then(function (restaurants) {
-      console.log('here', restaurants);
+      console.log('here', restaurants.data);
       $scope.restaurants = restaurants;
     });
   };

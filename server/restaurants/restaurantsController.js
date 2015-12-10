@@ -2,10 +2,11 @@
 var restaurantsModel = require('./restaurantsModel.js');
 var JsonResponseObj = require('../JsonResponseObject.js');
 var JsonDataObj = require('../JsonDataObject.js');
-var JsonResponseObject = new JsonResponseObj();
+
 
 module.exports = {
   getRestaurants : function (req, res) {
+    var JsonResponseObject = new JsonResponseObj();
     console.log('getting restaurant ', req.params.id);
     restaurantsModel.restaurant.get(req.params.id)
       .then(function (data) {
