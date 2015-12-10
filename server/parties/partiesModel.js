@@ -1,6 +1,5 @@
 /*jshint -W079 */
 /*jshint camelcase: false */
-
 var db = require('../sql-db/index.js');
 var Promise = require('bluebird');
 
