@@ -29,11 +29,22 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
     url: '/app',
     //abstract: true,
     views: {
-      '': { 
-        templateUrl: 'templates/login.html', 
+      '': {
+        templateUrl: 'templates/login.html',
         controller: 'AppCtrl'
       }
-    },
+    }
+  })
+
+  .state('signup', {
+    url: '/signup',
+    //abstract: true,
+    views: {
+      '': {
+        templateUrl: 'templates/signup.html',
+        controller: 'SignUpCtrl'
+      }
+    }
   })
 
   .state('menu', {

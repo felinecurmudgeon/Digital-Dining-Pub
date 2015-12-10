@@ -11,6 +11,13 @@ var expressRouter = express.Router();
 app.use(express.static(__dirname + '/../client-mobile'));
 app.use(logger);
 
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
 //cookie parser
 app.use(cookieParser());
 
@@ -18,7 +25,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(expressJwt({secret: 'feline'}));
+app.use(expressJwt({secret: 'feline'}).unless({path: ['/api/signin', '/api/signup']}));
 
 //set up router
 app.use('/', expressRouter);

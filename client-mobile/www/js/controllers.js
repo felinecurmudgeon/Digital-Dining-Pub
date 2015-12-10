@@ -1,6 +1,6 @@
 angular.module('digitalDining.controllers', [])
 
-.controller('AppCtrl', function ($state, $scope) {
+.controller('AppCtrl', ['$state', '$scope', '$http', function ($state, $scope, $http) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -29,19 +29,41 @@ angular.module('digitalDining.controllers', [])
 
   // Perform the login action when the user submits the login form
   $scope.doLogin = function () {
-    console.log('asdfjiadf');
-    console.log('Doing login', $scope.loginData);
-     
+    $scope.invalidLogin = false;
+    $http({
+      method: 'POST',
+      url: 'http://localhost:8000/api/signin',
+      data: {
+        username: $scope.loginData.username,
+        password: $scope.loginData.password
+      }
+    })
+    .then(function (resp) {
+      console.log('response gotten: ', resp);
+      $scope.loginData.username = '';
+      $scope.loginData.password = '';
+      $state.go('menu.home');
+    })
+    .catch(function (err) {
+      if (err) {
+        $scope.loginData.username = '';
+        $scope.loginData.password = '';
+        $scope.invalidLogin = true;
+      }
+    });
+
+
     //make ajax request to server with $scope.loginData
       //if validated, put the JWT in local storage
       //and route to menu.home
-      $state.go('menu.home');
       //if not validated, display error message
   };
-})
+  $scope.signUp = function () {
+    $state.go('signup');
+  };
+}])
 
 .controller('RestaurantMenuCtrl', ['$scope', function ($scope) {
-  console.log('asdfjiadf');
   $scope.menuItemsSample = [
     {name: 'Pizza',
       ingredients: 'Crust, Cheese',
@@ -112,5 +134,34 @@ angular.module('digitalDining.controllers', [])
     //assign table number
     $scope.currentWait = 15 + ' minutes';
     console.log('hit');
+  };
+}])
+
+.controller('SignUpCtrl', ['$scope', '$state', '$http', function ($scope, $state, $http) {
+  $scope.signupData = {};
+
+  $scope.goToLogin = function () {
+  console.log('sign up controller');
+    $state.go('app');
+  };
+
+  $scope.doSignUp = function () {
+    $http({
+      method: 'POST',
+      url: 'http://localhost:8000/api/signup',
+      data: {
+        username: $scope.signupData.username,
+        password: $scope.signupData.password
+      }
+    })
+    .then(function (resp) {
+      $state.go('menu.home');
+      console.log('response received: ', resp);
+    })
+    .catch(function (err) {
+      if (err.status === 409) {
+        $scope.invalidUsername = true;
+      }
+    });
   };
 }]);
