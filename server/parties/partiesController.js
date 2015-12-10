@@ -67,7 +67,13 @@ module.exports = {
   editParty: function (req, res) {
     var query = url.parse(req.url, true).query;
     if (query.event === 'seat') {
-      partiesModel.party.seat(req.params.id, req.body)
+      partiesModel.party.seatParty(req.params.id, req.body)
+        .then(function (data) {
+          res.status(200);
+          res.send(data);
+        });
+    } else if (query.event === 'close') {
+      partiesModel.party.closeParty(req.params.id)
         .then(function (data) {
           res.status(200);
           res.send(data);

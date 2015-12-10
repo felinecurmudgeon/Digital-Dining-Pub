@@ -174,6 +174,21 @@ module.exports = {
         });
       });
     },
+    closeParty: function (partyId) {
+      return new Promise(function (resolve, reject) {
+        var partyParameters = {
+          closed_at: new Date().toMysqlFormat()
+        };
+        db.con.query('UPDATE parties SET ? WHERE party_id = ?', [partyParameters, partyId], function (err) {
+          if (err) {
+            reject(err);
+          } else {
+            partyParameters.id = partyId;
+            resolve(partyParameters);
+          }
+        });
+      });
+    },
     addUserToParty: function (partyId, parameters) {
     /*adds a user to a party, expected parameters: user_id */
       return new Promise(function (resolve, reject) {
