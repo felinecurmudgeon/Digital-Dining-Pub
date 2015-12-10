@@ -26,7 +26,7 @@ module.exports = function (router) {
   router.get('/api/menuCategories', menusController.getMenuCategories);
   router.post('/api/menuCategories', menusController.createMenuCategories);
 
-  router.get('/api/menuItems/:rid', menusController.getMenuItems);
+  router.get('/api/menuItems', menusController.getMenuItems);
   router.post('/api/menuItems', menusController.createMenuItems);
   router.put('/api/menuItems/:id', menusController.updateMenuItems);
   router.delete('/api/menuItems/:id', menusController.deleteMenuItems);
