@@ -154,13 +154,13 @@ var menuCategories = [ //each subArray will be affected to the corresponding res
   {category_name: 'Drinks'}],
   
   [{category_name: 'Soups'},
-  {category_name: 'Deserts'}],
+  {category_name: 'Desserts'}],
   
   [{category_name: 'Appetizer'},
   {category_name: 'Drinks'}],
   
   [{category_name: 'Main Courses'},
-  {category_name: 'Deserts'}]
+  {category_name: 'Desserts'}]
 ];
 
 var menuItems = [ /*each subArray will be affected to the corresponding restaurant above
