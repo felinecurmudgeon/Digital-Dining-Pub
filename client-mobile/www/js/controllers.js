@@ -1,12 +1,8 @@
 angular.module('digitalDining.controllers', [])
 
+//This is currently 'AppCtrl' but really only deals with login -- should probably update naming
 .controller('AppCtrl', ['$state', '$scope', '$http', '$window', function ($state, $scope, $http, $window) {
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  // Form data for the login modal
   $scope.loginData = {};
 
   $scope.logout = function () {
@@ -27,7 +23,6 @@ angular.module('digitalDining.controllers', [])
     });
   };
 
-  // Perform the login action when the user submits the login form
   $scope.doLogin = function () {
     $scope.invalidLogin = false;
     $http({
@@ -51,13 +46,8 @@ angular.module('digitalDining.controllers', [])
         $scope.invalidLogin = true;
       }
     });
-
-
-    //make ajax request to server with $scope.loginData
-      //if validated, put the JWT in local storage
-      //and route to menu.home
-      //if not validated, display error message
   };
+
   $scope.signUp = function () {
     $state.go('signup');
   };
@@ -141,7 +131,6 @@ angular.module('digitalDining.controllers', [])
   $scope.signupData = {};
 
   $scope.goToLogin = function () {
-  console.log('sign up controller');
     $state.go('app');
   };
 

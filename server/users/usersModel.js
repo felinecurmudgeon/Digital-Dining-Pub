@@ -25,8 +25,8 @@ module.exports = {
     },
     getByUsername: function (username) {
       return new Promise( function (resolve, reject) {
-        db.con.query("SELECT * FROM users \
-                                 WHERE username = '" + username + "'", function (err, data) {
+        db.con.query('SELECT * FROM users \
+                                 WHERE username = ?', username, function (err, data) {
           if (err) {
             reject(err);
           } else {

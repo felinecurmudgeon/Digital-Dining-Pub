@@ -3,7 +3,7 @@ var restaurantUsersController = require('./users/restaurantUsersController');
 var restaurantsController = require('./restaurants/restaurantsController');
 var menusController = require('./menus/menusController');
 var partiesController = require('./parties/partiesController');
-var authController = require('./authController');
+var authController = require('./auth/authController');
 
 module.exports = function (router) {
   router.get('/api/users', usersController.getAllUsers);
