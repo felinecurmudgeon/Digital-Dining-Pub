@@ -37,7 +37,7 @@ var Promise = require('bluebird');
                           m.title, m.description, m.price \
                         FROM menu_items m \
                         INNER JOIN menu_categories c ON m.menu_category_id = c.id \
-                        WHERE m.restaurant_id = ' + restaurantId, function (err, data) {
+                        WHERE m.restaurant_id = ?', restaurantId, function (err, data) {
             if (err) {
               reject(err);
             } else {
@@ -61,7 +61,7 @@ var Promise = require('bluebird');
       },
       put: function (updatedMenuItem, id) {
       return new Promise(function (resolve, reject) {
-        db.con.query('UPDATE menu_items SET ? WHERE id=' + id, updatedMenuItem, function (err) {
+        db.con.query('UPDATE menu_items SET ? WHERE id = ?', [updatedMenuItem, id], function (err) {
           if (err) {
             reject (err);
           } else {
@@ -72,7 +72,7 @@ var Promise = require('bluebird');
      },
      delete: function (id) {
       return new Promise(function (resolve, reject) {
-        db.con.query('DELETE FROM menu_items WHERE id=' + id, function (err) {
+        db.con.query('DELETE FROM menu_items WHERE id = ?', id, function (err) {
           if (err) {
             reject(err);
           } else {
