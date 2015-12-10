@@ -27,26 +27,6 @@ var insertData = function (table, object) {
   });
 };
 
-var bulkInsertData = function (table, arrayOfSameKeyedObjects) {
-  return new Promise( function (resolve, reject) {
-    var keys = Object.keys(arrayOfSameKeyedObjects[0]);
-    var toInsert = arrayOfSameKeyedObjects.map(function(element) {
-      var res = [];
-      for (var i = 0; i < keys.length; i++) {
-        res.push(element[keys[i]]);
-      }
-      return res;
-    });
-    db.con.query('INSERT INTO ?? ?? SET ??', [table, keys, toInsert], function (err, data) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(data);
-      }
-    });
-  });
-};
-
 var insertOrUpdateUser = function (table, user) { //only for unique key constraint username
   return new Promise( function (resolve, reject) {
     db.con.query('SELECT * FROM ?? WHERE username = ?', [table, user.username], function (err, data) {
@@ -308,4 +288,3 @@ module.exports = {
       });    
   }
 };
-
