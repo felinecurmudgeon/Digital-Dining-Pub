@@ -137,10 +137,18 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalD
         }
       }
     })
-
-  .state('nav.single', {
-    url: '/playlists/:playlistId',
-    views: {
+    .state('nav.restaurantDescription', {
+      url: '/restaurantDescription',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/restaurantDescription.html',
+          controller: 'RestaurantDisplayCtrl'
+        }
+      }
+    })
+    .state('nav.single', {
+     url: '/playlists/:playlistId',
+     views: {
       'menuContent': {
         templateUrl: 'templates/playlist.html',
         controller: 'PlaylistCtrl'

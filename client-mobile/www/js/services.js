@@ -33,8 +33,18 @@ angular.module('digitalDining.services', [])
       method: 'GET'
     });
   };
+  var focusedRestaurant = {};
+  var focusRestaurant = function (rest) {
+    focusedRestaurant = rest;
+  };
+  var getFocusedRestaurant = function() {
+    return focusedRestaurant;
+  };
   return {
-    getAllRestaurants: getAllRestaurants
+    getAllRestaurants: getAllRestaurants,
+    focusedRestaurant: focusedRestaurant,
+    focusRestaurant: focusRestaurant,
+    getFocusedRestaurant: getFocusedRestaurant
   };
 })
 .factory('CheckFactory', function ($http) {

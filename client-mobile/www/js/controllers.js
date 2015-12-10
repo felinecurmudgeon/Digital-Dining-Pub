@@ -102,7 +102,7 @@ angular.module('digitalDining.controllers', [])
           'message: ' + error.message + '\n');
   };
 
-  window.navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  // window.navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
   $scope.displayRestaurants = function () {
     HomeFactory.getAllRestaurants().then(function (restaurants) {
@@ -112,6 +112,10 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.displayRestaurants();
   $scope.test = [1];
+
+  $scope.focusRestaurant = function(rest) {
+    HomeFactory.focusRestaurant(rest);
+  };
 }])
 
 .controller('CheckInCtrl', ['$scope', '$stateParams', function ($scope) {
@@ -120,7 +124,6 @@ angular.module('digitalDining.controllers', [])
     //add to checked in to restaurant
     //assign table number
     $scope.currentWait = 15 + ' minutes';
-    console.log('hit');
   };
 }])
 .controller('SignUpCtrl', ['$scope', '$state', '$http', '$window', function ($scope, $state, $http, $window) {
@@ -149,6 +152,12 @@ angular.module('digitalDining.controllers', [])
       }
     });
   };
+.controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory',  function ($scope, HomeFactory) {
+  $scope.focusedRestaurant = {};
+  $scope.getFocusedRestaurant = function () {
+    $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
+  };
+  $scope.getFocusedRestaurant();
 }])
 .controller('PaymentsCtrl', ['$scope', function ($scope) {
   $scope.testingTotalForTaxAndTip = 140;
