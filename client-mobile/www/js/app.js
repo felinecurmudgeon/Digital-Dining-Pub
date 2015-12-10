@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
+angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalDining.services'])
 
 .run(function ($ionicPlatform) {
   $ionicPlatform.ready(function () {
@@ -22,12 +22,11 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
   });
 })
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider
 
   .state('app', {
     url: '/app',
-    //abstract: true,
     views: {
       '': {
         templateUrl: 'templates/login.html',
@@ -38,7 +37,6 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
 
   .state('signup', {
     url: '/signup',
-    //abstract: true,
     views: {
       '': {
         templateUrl: 'templates/signup.html',
@@ -143,4 +141,5 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app');
-});
+  $httpProvider.interceptors.push('AttachTokens');
+}]);

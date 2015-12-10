@@ -4,11 +4,9 @@ var bcrypt = require('bcryptjs');
 
 module.exports = {
   signin: function (req, res) {
-    console.log('req.body = ', req.body);
     Users.getByUsername(req.body.username)
     .then(function (user) {
       if (user.length === 0) {
-        console.log(req.body.username + ' not found');
          res.status(401).send('Wrong username or password');
          return;
       } else {
@@ -21,7 +19,6 @@ module.exports = {
             var token = jwt.sign(profile, 'feline', { expiresIn: 300 });
             res.status(200).json({token: token});
           } else {
-            console.log('no match');
             res.status(401).send('Wrong username or password');
           }
         });
@@ -30,7 +27,6 @@ module.exports = {
   },
 
   signup: function (req, res) {
-    console.log('got req body ', req.body);
     Users.getByUsername(req.body.username)
     .then(function (user) {
       if (user.length === 0) {

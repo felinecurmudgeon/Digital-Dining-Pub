@@ -1,6 +1,6 @@
 angular.module('digitalDining.controllers', [])
 
-.controller('AppCtrl', ['$state', '$scope', '$http', function ($state, $scope, $http) {
+.controller('AppCtrl', ['$state', '$scope', '$http', '$window', function ($state, $scope, $http, $window) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -9,22 +9,22 @@ angular.module('digitalDining.controllers', [])
   // Form data for the login modal
   $scope.loginData = {};
 
-  // Create the login modal that we will use later
-  // $ionicModal.fromTemplateUrl('templates/login.html', {
-  //   scope: $scope
-  // }).then(function (modal) {
-  //   $scope.modal = modal;
-  // });
-
-  // Triggered in the login modal to close it
-  // $scope.closeLogin = function () {
-  //   $scope.modal.hide();
-  // };
-
-
   $scope.logout = function () {
-    //TODO: delete JWT
+    if ($window.localStorage.getItem('digitaldining')) {
+      $window.localStorage.removeItem('digitaldining');
+    }
     $state.go('app');
+  };
+
+  $scope.getRestaurants = function () {
+    $http({
+      method: 'GET',
+      url: 'http://localhost:8000/api/users'
+    }).then(function (resp) {
+      console.log('got response of ', resp);
+    }).catch(function (err) {
+      console.log('got err: ', err);
+    });
   };
 
   // Perform the login action when the user submits the login form
@@ -39,7 +39,7 @@ angular.module('digitalDining.controllers', [])
       }
     })
     .then(function (resp) {
-      console.log('response gotten: ', resp);
+      $window.localStorage.setItem('digitaldining', resp.data.token);
       $scope.loginData.username = '';
       $scope.loginData.password = '';
       $state.go('menu.home');
@@ -137,7 +137,7 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('SignUpCtrl', ['$scope', '$state', '$http', function ($scope, $state, $http) {
+.controller('SignUpCtrl', ['$scope', '$state', '$http', '$window', function ($scope, $state, $http, $window) {
   $scope.signupData = {};
 
   $scope.goToLogin = function () {
@@ -155,8 +155,8 @@ angular.module('digitalDining.controllers', [])
       }
     })
     .then(function (resp) {
+      $window.localStorage.setItem('digitaldining', resp.data.token);
       $state.go('menu.home');
-      console.log('response received: ', resp);
     })
     .catch(function (err) {
       if (err.status === 409) {

@@ -49,5 +49,24 @@ angular.module('digitalDining.services', [])
   return {
     getAllRestaurants: getAllRestaurants
   };
-});
+})
 
+.factory('AttachTokens', function ($window) {
+  // this is an $httpInterceptor
+  // its job is to stop all out going request
+  // then look in local storage and find the user's token
+  // then add it to the header so the server can validate the request
+  var attach = {
+    request: function (object) {
+      console.log('hooking onto request');
+      var jwt = $window.localStorage.getItem('digitaldining');
+      if (jwt) {
+      console.log('adding jwt to headers');
+        object.headers.authorization = 'Bearer ' + jwt;
+      }
+      console.dir(object);
+      return object;
+    }
+  };
+  return attach;
+});
