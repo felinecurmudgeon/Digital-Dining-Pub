@@ -35,7 +35,7 @@ module.exports = {
     },
    put: function (updatedRestaurant, id) {
     return new Promise(function (resolve, reject) {
-      db.con.query('UPDATE restaurants SET ? WHERE id= ?' + [updatedRestaurant, id], function (err) {
+      db.con.query('UPDATE restaurants SET ? WHERE id= ?', [updatedRestaurant, id], function (err) {
         if (err) {
           reject (err);
         } else {

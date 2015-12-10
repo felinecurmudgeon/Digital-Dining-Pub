@@ -3,12 +3,16 @@ var restaurantUsersController = require('./users/restaurantUsersController');
 var restaurantsController = require('./restaurants/restaurantsController');
 var menusController = require('./menus/menusController');
 var partiesController = require('./parties/partiesController');
+var authController = require('./auth/authController');
 
 module.exports = function (router) {
   router.get('/api/users', usersController.getAllUsers);
   router.get('/api/users/:id', usersController.getUser);
   router.post('/api/users', usersController.createUser);
   router.put('/api/users/:id', usersController.updateUser);
+
+  router.post('/api/signin', authController.signin);
+  router.post('/api/signup', authController.signup);
 
   router.get('/api/restaurantusers', restaurantUsersController.getUser);
   router.get('/api/restaurantusers/:id', restaurantUsersController.getUser);
