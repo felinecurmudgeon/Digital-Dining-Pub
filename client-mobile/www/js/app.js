@@ -45,59 +45,59 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalD
     }
   })
 
-  .state('menu', {
-    url: '/menu',
+  .state('nav', {
+    url: '/nav',
     abstract: true,
-    templateUrl: 'templates/menu.html',
+    templateUrl: 'templates/nav.html',
     controller: 'AppCtrl'
   })
 
-  .state('menu.search', {
+  .state('nav.search', {
     url: '/search',
     views: {
-      'menuContent': {
+      'navContent': {
         templateUrl: 'templates/search.html'
       }
     }
   })
 
-  .state('menu.restaurantMenu', {
+  .state('nav.restaurantMenu', {
       url: '/restaurantMenu',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/restaurantMenu.html',
           controller: 'RestaurantMenuCtrl'
         }
       }
     })
-    .state('menu.playlists', {
+    .state('nav.playlists', {
       url: '/playlists',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/playlists.html',
           controller: 'PlaylistsCtrl'
         }
       }
     })
-    .state('menu.home', {
+    .state('nav.home', {
       url: '/home',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/home.html',
           controller: 'HomeCtrl'
         }
       }
     })
-    .state('menu.checkIn', {
+    .state('nav.checkIn', {
       url: '/checkIn',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/checkIn.html',
           controller: 'CheckInCtrl'
         }
       }
     })
-    .state('menu.success', {
+    .state('nav.success', {
       url: '/success',
       views: {
         '': {
@@ -105,32 +105,32 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalD
         }
       }
     })
-    .state('menu.currentCheck', {
+    .state('nav.currentCheck', {
       url: '/currentCheck',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/currentCheck.html'
         }
       }
     })
-    .state('menu.settings', {
+    .state('nav.settings', {
       url: '/settings',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/settings.html'
         }
       }
     })
-    .state('menu.aboutUs', {
+    .state('nav.aboutUs', {
       url: '/aboutUs',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/aboutUs.html'
         }
       }
     })
 
-  .state('menu.single', {
+  .state('nav.single', {
     url: '/playlists/:playlistId',
     views: {
       'menuContent': {

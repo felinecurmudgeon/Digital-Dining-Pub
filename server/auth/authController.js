@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-var Users = require('../users/usersModel.js').user;
+var Users = require('./../users/usersModel.js').user;
 var bcrypt = require('bcryptjs');
 
 module.exports = {

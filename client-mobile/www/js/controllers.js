@@ -12,17 +12,6 @@ angular.module('digitalDining.controllers', [])
     $state.go('app');
   };
 
-  $scope.getRestaurants = function () {
-    $http({
-      method: 'GET',
-      url: 'http://localhost:8000/api/users'
-    }).then(function (resp) {
-      console.log('got response of ', resp);
-    }).catch(function (err) {
-      console.log('got err: ', err);
-    });
-  };
-
   $scope.doLogin = function () {
     $scope.invalidLogin = false;
     $http({
@@ -37,7 +26,7 @@ angular.module('digitalDining.controllers', [])
       $window.localStorage.setItem('digitaldining', resp.data.token);
       $scope.loginData.username = '';
       $scope.loginData.password = '';
-      $state.go('menu.home');
+      $state.go('nav.home');
     })
     .catch(function (err) {
       if (err) {
@@ -145,7 +134,7 @@ angular.module('digitalDining.controllers', [])
     })
     .then(function (resp) {
       $window.localStorage.setItem('digitaldining', resp.data.token);
-      $state.go('menu.home');
+      $state.go('nav.home');
     })
     .catch(function (err) {
       if (err.status === 409) {

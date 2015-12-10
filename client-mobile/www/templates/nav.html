@@ -9,7 +9,7 @@
         </button>
       </ion-nav-buttons>
     </ion-nav-bar>
-    <ion-nav-view name="menuContent"></ion-nav-view>
+    <ion-nav-view name="navContent"></ion-nav-view>
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
@@ -18,32 +18,29 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close href="#/app/auth/home">
+        <ion-item menu-close href="#/nav/home">
           Home
         </ion-item>
-        <ion-item menu-close href="#/app/auth/checkIn">
+        <ion-item menu-close href="#/nav/checkIn">
           Check In
         </ion-item>
-        <ion-item menu-close href="#/app/auth/restaurantMenu">
+        <ion-item menu-close href="#/nav/restaurantMenu">
           Restaurant Menu
         </ion-item>
-        <ion-item menu-close href="#/app/auth/currentCheck">
+        <ion-item menu-close href="#/nav/currentCheck">
           Current Check
         </ion-item>
-        <ion-item menu-close href="#/app/auth/settings">
+        <ion-item menu-close href="#/nav/settings">
           Settings
         </ion-item>
-        <ion-item menu-close href="#/app/auth/aboutUs">
+        <ion-item menu-close href="#/nav/aboutUs">
           About Us
         </ion-item>
-        <ion-item menu-close href="#/app/auth/success">
+        <ion-item menu-close href="#/nav/success">
           Success
         </ion-item>
         <ion-item menu-close ng-click="logout()">
           Logout
-        </ion-item>
-        <ion-item menu-close ng-click="getRestaurants()">
-          Get Restaurants
         </ion-item>
         <img class = 'logo' src = 'http://logoholic.org/wp-content/uploads/2012/10/D.jpg'>
       </ion-list>
