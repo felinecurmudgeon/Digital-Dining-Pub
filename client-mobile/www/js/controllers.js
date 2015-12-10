@@ -1,45 +1,46 @@
 angular.module('digitalDining.controllers', [])
 
-.controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
+//This is currently 'AppCtrl' but really only deals with login -- should probably update naming
+.controller('AppCtrl', ['$state', '$scope', '$http', '$window', function ($state, $scope, $http, $window) {
 
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  // Form data for the login modal
   $scope.loginData = {};
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function (modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function () {
-    $scope.modal.hide();
+  $scope.logout = function () {
+    if ($window.localStorage.getItem('digitaldining')) {
+      $window.localStorage.removeItem('digitaldining');
+    }
+    $state.go('app');
   };
 
-  // Open the login modal
-  $scope.login = function () {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
   $scope.doLogin = function () {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function () {
-      $scope.closeLogin();
-    }, 1000);
+    $scope.invalidLogin = false;
+    $http({
+      method: 'POST',
+      url: 'http://localhost:8000/api/signin',
+      data: {
+        username: $scope.loginData.username,
+        password: $scope.loginData.password
+      }
+    })
+    .then(function (resp) {
+      $window.localStorage.setItem('digitaldining', resp.data.token);
+      $scope.loginData.username = '';
+      $scope.loginData.password = '';
+      $state.go('nav.home');
+    })
+    .catch(function (err) {
+      if (err) {
+        $scope.loginData.username = '';
+        $scope.loginData.password = '';
+        $scope.invalidLogin = true;
+      }
+    });
   };
-})
+
+  $scope.signUp = function () {
+    $state.go('signup');
+  };
+}])
 
 .controller('RestaurantMenuCtrl', ['$scope', function ($scope) {
   $scope.menuItemsSample = [
@@ -66,7 +67,7 @@ angular.module('digitalDining.controllers', [])
   ];
 }])
 
-.controller('HomeCtrl', ['$scope', function ($scope) {
+.controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {
   $scope.restaurantList = [
   {restaurantName: 'Olive Garden',
     restaurantImg: 'http://i.kinja-img.com/gawker-media/image/upload/sgqboy3tw4sxzqojvkfj.jpg'
@@ -101,8 +102,20 @@ angular.module('digitalDining.controllers', [])
           'message: ' + error.message + '\n');
   };
 
-  window.navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  // window.navigator.geolocation.getCurrentPosition(onSuccess, onError);
 
+  $scope.displayRestaurants = function () {
+    HomeFactory.getAllRestaurants().then(function (restaurants) {
+      console.log('here', restaurants.data);
+      $scope.restaurants = restaurants;
+    });
+  };
+  $scope.displayRestaurants();
+  $scope.test = [1];
+
+  $scope.focusRestaurant = function(rest) {
+    HomeFactory.focusRestaurant(rest);
+  };
 }])
 
 .controller('CheckInCtrl', ['$scope', '$stateParams', function ($scope) {
@@ -111,6 +124,54 @@ angular.module('digitalDining.controllers', [])
     //add to checked in to restaurant
     //assign table number
     $scope.currentWait = 15 + ' minutes';
-    console.log('hit');
+  };
+}])
+.controller('SignUpCtrl', ['$scope', '$state', '$http', '$window', function ($scope, $state, $http, $window) {
+  $scope.signupData = {};
+
+  $scope.goToLogin = function () {
+    $state.go('app');
+  };
+
+  $scope.doSignUp = function () {
+    $http({
+      method: 'POST',
+      url: 'http://localhost:8000/api/signup',
+      data: {
+        username: $scope.signupData.username,
+        password: $scope.signupData.password
+      }
+    })
+    .then(function (resp) {
+      $window.localStorage.setItem('digitaldining', resp.data.token);
+      $state.go('nav.home');
+    })
+    .catch(function (err) {
+      if (err.status === 409) {
+        $scope.invalidUsername = true;
+      }
+    });
+  };
+}])
+.controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory',  function ($scope, HomeFactory) {
+  $scope.focusedRestaurant = {};
+  $scope.getFocusedRestaurant = function () {
+    $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
+  };
+  $scope.getFocusedRestaurant();
+}])
+.controller('PaymentsCtrl', ['$scope', function ($scope) {
+  $scope.testingTotalForTaxAndTip = 140;
+  $scope.totalWithTax = 0;
+  $scope.taxAmount = 0;
+  $scope.totalWithTaxAndTip = 0;
+  $scope.taxCalculator = function (total) {
+    $scope.taxAmount = total * 0.08;
+    $scope.totalWithTax = total + $scope.taxAmount;
+  };
+  $scope.tipCalculator = function (total, percentage) {
+    $scope.tipAmount = total * percentage;
+    $scope.totalWithTaxAndTip = total + $scope.tipAmount;
   };
 }]);
+

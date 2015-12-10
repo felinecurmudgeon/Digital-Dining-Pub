@@ -26,7 +26,27 @@ angular.module('digitalDining.services', [])
     addMenuItemToOrder: addMenuItemToOrder
   };
 })
-
+.factory('HomeFactory', function ($http) {
+  var getAllRestaurants = function () {
+    return $http({
+      url: 'http://localhost:8000/api/restaurants',
+      method: 'GET'
+    });
+  };
+  var focusedRestaurant = {};
+  var focusRestaurant = function (rest) {
+    focusedRestaurant = rest;
+  };
+  var getFocusedRestaurant = function () {
+    return focusedRestaurant;
+  };
+  return {
+    getAllRestaurants: getAllRestaurants,
+    focusedRestaurant: focusedRestaurant,
+    focusRestaurant: focusRestaurant,
+    getFocusedRestaurant: getFocusedRestaurant
+  };
+})
 .factory('CheckFactory', function ($http) {
   var getCheckItems = function () {
     return $http({
@@ -49,5 +69,18 @@ angular.module('digitalDining.services', [])
   return {
     getAllRestaurants: getAllRestaurants
   };
-});
+})
 
+//adds the JWT to all outgoing http requests
+.factory('AttachTokens', function ($window) {
+  var attach = {
+    request: function (object) {
+      var jwt = $window.localStorage.getItem('digitaldining');
+      if (jwt) {
+        object.headers.authorization = 'Bearer ' + jwt;
+      }
+      return object;
+    }
+  };
+  return attach;
+});

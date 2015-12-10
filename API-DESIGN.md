@@ -39,15 +39,25 @@ TBD
 ### Example POST
 TBD
 
+## RestaurantUsers API
+| HTTP Method   | URL           | Description
+| ------------- | ------------- | ---------------------------------
+| GET           | /restaurants       | Gets all restaurants
+| GET           | /restaurants/:id   | Gets a specific restaurant user
+| POST          | /restaurants       | Creates an restaurant
+
+### Example POST
+`{username: "Timmy", password:'12345'}`
+
 
 ## Restaurants API
 | HTTP Method   | URL           | Description
 | ------------- | ------------- | ---------------------------------
 | GET           | /restaurants       | Gets all restaurants
-| GET           | /restaurants/:rid   | Gets a specific restaurant
+| GET           | /restaurants/:id   | Gets a specific restaurant
 | POST          | /restaurants       | Creates an restaurant
-| PUT           | /restaurants/:rid   | Updates an restaurant
-| DELETE        | /restaurants/:rid   | Deletes an restaurant
+| PUT           | /restaurants/:id   | Updates an restaurant
+| DELETE        | /restaurants/:id   | Deletes an restaurant
 
 ### Restaurants API GET query string parameters
 | Parameter     | Values           |
@@ -57,19 +67,22 @@ TBD
 TBD
 
 
-## Menus API
+## MenusCategories API
 | HTTP Method   | URL           | Description
 | ------------- | ------------- | ---------------------------------
-| GET           | /menus       | Gets all menus
-| GET           | /menus/:mid   | Gets a specific menu
-| POST          | /menus       | Creates an menu
-| PUT           | /menus/:mid   | Updates an menu
-| DELETE        | /menus/:mid   | Deletes an menu
+| GET           | /menucategories       | Gets all menucategories
+| POST          | /menucategories       | Creates an menucategories
 
-### Menus API GET query string parameters
-| Parameter     | Values           |
-| ------------- | -------------    | 
-| restaurantsid | rid (i.e. 123)  |
+### Example POST
+`{"restaurant_id": 185, "category_name" : "brunch"}`
+
+## MenuItems API
+| HTTP Method   | URL           | Description
+| ------------- | ------------- | ---------------------------------
+| GET           | /menuitems/:rid   | Gets all menuitems for a given restaurant
+| POST          | /menuitems       | Creates a menuitems
+| PUT           | /menuitems/:id       | Updates a menuitems
+| DELETE          | /menuitems/:id       | Deletes a menuitems
 
 ### Example POST
 TBD

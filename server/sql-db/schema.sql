@@ -19,7 +19,7 @@ CREATE TABLE restaurants (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   restaurant_name VARCHAR(40) NOT NULL,
   restaurant_owner_id INT NOT NULL,
-  restaurant_adress VARCHAR(255) NOT NULL,
+  restaurant_address VARCHAR(255) NOT NULL,
   restaurant_city VARCHAR(40) NOT NULL,
   restaurant_state VARCHAR(40) NOT NULL,
   restaurant_zip_code INT NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   username VARCHAR(20) NOT NULL,
-  password CHAR(32),
+  password CHAR(60),
   facebook_id CHAR(32),
 
   UNIQUE(username)
@@ -122,7 +122,7 @@ CREATE TABLE parties (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   restaurant_id INT NOT NULL,
-  table_id INT NOT NULL,
+  table_id INT,
   party_size INT NOT NULL,
   checkedin_at TIMESTAMP,
   seated_at TIMESTAMP,

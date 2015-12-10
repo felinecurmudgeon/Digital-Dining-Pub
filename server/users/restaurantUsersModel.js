@@ -7,9 +7,10 @@ module.exports = {
     get: function (id) {
       return new Promise( function (resolve, reject) {
         var query = '';
+
         if (id) {
-          query = "SELECT * FROM restaurant_users \
-                      WHERE id = '" + id + "'";
+          query = 'SELECT * FROM restaurant_users \
+                      WHERE id = ' + id;
         } else {
           query = 'SELECT * FROM restaurant_users';
         }
@@ -29,7 +30,8 @@ module.exports = {
           if (err) {
             reject(err);
           } else {
-            resolve(data);
+            restaurantUser.id = data.insertId;
+            resolve(restaurantUser);
           }
         });
       });

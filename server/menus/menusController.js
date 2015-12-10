@@ -1,36 +1,88 @@
+/*jshint camelcase: false */
 var menusModel = require('./menusModel.js');
+var JsonResponseObj = require('../JsonResponseObject.js');
+var JsonDataObj = require('../JsonDataObject.js');
 
 module.exports = {
-  getAllMenus : function (req, res) {
-    console.log('getting menu');
-    menusModel.menuCategory.getAll()
-      .then(function (menuItems) {
+
+  //menu categories
+  getMenuCategories : function (req, res) {
+    console.log('getting menu categories');
+    var JsonResponseObject = new JsonResponseObj();
+    menusModel.menuCategory.get()
+      .then(function (menuCats) {
+        for (var i = 0; i < menuCats.length; i++) {
+          var JsonDataObject = new JsonDataObj();
+          JsonDataObject.type = 'menuCategory';
+          JsonDataObject.id = menuCats[i].id;
+          JsonDataObject.attributes = {
+            restaurant_id : menuCats[i].restaurant_id,
+            category_name : menuCats[i].category_name
+          };
+          JsonResponseObject.data.push(JsonDataObject);
+        }
         res.status(200);
-        res.send(menuItems);
+        res.send(JsonResponseObject);
       });
   },
 
-  getMenu : function (req, res) {
-    console.log('getting menu ', req.params.id);
-    res.status(200);
-    res.send('stub success');
+  createMenuCategories : function (req, res) {
+    console.log('creating menu category');
+     menusModel.menuCategory.post(req.body)
+      .then(function (menuCat) {
+        res.status(201);
+        res.send(menuCat);
+      });
   },
 
-  createMenu : function (req, res) {
+  ///menu items
+  getMenuItems : function (req, res) {
+    console.log('getting menu');
+    var JsonResponseObject = new JsonResponseObj();
+    menusModel.menuItems.get(req.params.rid)
+      .then(function (menuItems) {
+        for (var i = 0; i < menuItems.length; i++) {
+          var JsonDataObject = new JsonDataObj();
+          JsonDataObject.type = 'menuItem';
+          JsonDataObject.id = menuItems[i].id;
+          JsonDataObject.attributes = {
+            restaurant_id : menuItems[i].restaurant_id,
+            title : menuItems[i].title,
+            description : menuItems[i].description,
+            price : menuItems[i].price,
+            menu_category_id : menuItems[i].menu_category_id
+          };
+          JsonResponseObject.data.push(JsonDataObject);
+        }
+        res.status(200);
+        res.send(JsonResponseObject);
+      });
+  },
+
+  createMenuItems : function (req, res) {
     console.log('creating menu ');
-    res.status(201);
-    res.send('stub success');
+     menusModel.menuItems.post(req.body)
+      .then(function (createdItem) {
+        res.status(201);
+        res.send(createdItem);
+      });
   },
 
-  updateMenu : function (req, res) {
+  updateMenuItems : function (req, res) {
     console.log('updating menu ', req.params.id);
-    res.status(200);
-    res.send('stub success');
+    menusModel.menuItems.put(req.body, req.params.id)
+      .then(function (updatedItem) {
+        res.status(201);
+        res.send(updatedItem);
+      });
   },
 
-  deleteMenu : function (req, res) {
+  deleteMenuItems : function (req, res) {
     console.log('delete menu ', req.params.id);
-    res.status(200);
-    res.send('stub success');
+    menusModel.menuItems.delete(req.params.id)
+     .then(function (deletedItemId) {
+       res.status(204);
+       res.send(deletedItemId);
+     });
   }
 };
