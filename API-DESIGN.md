@@ -33,8 +33,8 @@ TBD
 ## Charge API
 | HTTP Method   | URL                   | Description
 | ------------- | -------------------   | ---------------------------------
-| POST          | /user/:uid/charge/:cid | Updates the order + charges the customer CC via Stripe APIs
-| DELETE        | /user/:uid/charge/:cid | Refunds the charges the customer CC via Stripe APIs
+| POST          | /users/:uid/charge/:cid | Updates the order + charges the customer CC via Stripe APIs
+| DELETE        | /users/:uid/charge/:cid | Refunds the charges the customer CC via Stripe APIs
 
 ### Example POST
 TBD
@@ -42,9 +42,9 @@ TBD
 ## RestaurantUsers API
 | HTTP Method   | URL           | Description
 | ------------- | ------------- | ---------------------------------
-| GET           | /restaurants       | Gets all restaurants
-| GET           | /restaurants/:id   | Gets a specific restaurant user
-| POST          | /restaurants       | Creates an restaurant
+| GET           | /restaurantusers       | Gets all restaurant user
+| GET           | /restaurantusers/:id   | Gets a specific restaurant user
+| POST          | /restaurantusers       | Creates an restaurant user
 
 ### Example POST
 `{username: "Timmy", password:'12345'}`
@@ -82,7 +82,7 @@ TBD
 | GET           | /menuitems/:rid   | Gets all menuitems for a given restaurant
 | POST          | /menuitems       | Creates a menuitems
 | PUT           | /menuitems/:id       | Updates a menuitems
-| DELETE          | /menuitems/:id       | Deletes a menuitems
+| DELETE        | /menuitems/:id       | Deletes a menuitems
 
 ### Example POST
 TBD
@@ -90,7 +90,7 @@ TBD
 ## Party API
 | HTTP Method   | URL           | Description
 | ------------- | ------------- | ---------------------------------
-| GET           | /parties       | Gets all parties
+| GET           | /parties?rid=restaurantid&status=status       | Gets all parties
 | GET           | /parties/:pid   | Gets a specific party
 | POST          | /parties       | Creates a party
 | PUT           | /parties/:pid?event=nameofevent   | Updates a party
@@ -100,6 +100,8 @@ TBD
 | Parameter     | Values          |
 | ------------- | -------------   | 
 | restaurantsid | rid (i.e. 123)  |
+| partyid | pid (i.e. 123)  |
+| status | optionnal: 'waiting','seated', 'canceled','ended'  |
 
 ### Example POST
 TBD
@@ -118,21 +120,6 @@ TBD
 ### Example POST
 TBD
 
-
-## Reservations API
-| HTTP Method   | URL                    | Description
-| ------------- | ---------------------- | ---------------------------------
-| GET           | /reservations           | Gets all reservations
-| GET           | /reservations/:resid       | Gets a specific reservations
-| POST          | /reservations           | Creates a new reservation
-| PUT           | /reservations/:resid       | Updates a existing reservation
-| DELETE        | /reservations/:resid       | Deletes an existing reservation
-
-### Reservation API GET query string parameters
-| Parameter     | Values          |
-| ------------- | -------------  | 
-| restaurantsid | rid (i.e. 123)  |
-| usersid | uid (i.e. 123)  |
 
 ### Example POST
 TBD

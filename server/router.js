@@ -26,6 +26,8 @@ module.exports = function (router) {
 
   router.post('/api/parties', partiesController.checkInAndCreateParty);
   router.put('/api/parties/:id', partiesController.editParty);
+  router.get('/api/parties', partiesController.get);
+  router.get('/api/parties/:id', partiesController.get);
 
   router.get('/api/menuCategories', menusController.getMenuCategories);
   router.post('/api/menuCategories', menusController.createMenuCategories);
