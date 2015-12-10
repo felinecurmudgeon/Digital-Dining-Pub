@@ -209,13 +209,11 @@ var menuItems = [ /*each subArray will be affected to the corresponding restaura
 ];
 
 module.exports = {
-  run: function (){
+  createCompleteRestaurantsInDB: function (){
     //TODO: either run test in gulp or make this function actually create dummy data
-    console.log("creating dummy data");
-    console.log("creating restaurantUsers");
-
-    restaurantUsers.forEach(function (restaurantUser, index) {
-      insertOrUpdateUser('restaurant_users', restaurantUser)
+    console.log("creating dummy complete restaurants");
+    return Promise.all(restaurantUsers.map(function (restaurantUser, index) {
+      return insertOrUpdateUser('restaurant_users', restaurantUser)
         .then(function (createdRestaurantUser) {
           restaurants[index].restaurant_owner_id = createdRestaurantUser.id
           return insertData('restaurants', restaurants[index]);
@@ -241,15 +239,73 @@ module.exports = {
             }));
           }));
         })
-        .then(function (data) {
-          console.log('restaurant created: ', data);
+        .then(function () {
+          console.log('"' + restaurants[index].restaurant_name + '" restaurant created with restaurant_owner, tables and menus');
         });
-    });
+    }));
+  },
 
-    users.forEach(function (user, index) {
-      insertOrUpdateUser('users', user)
-    });
+  createUsersInDB: function (){
+    console.log("creating dummy users");
+    return Promise.all(users.map(function (user, index) {
+      return insertOrUpdateUser('users', user)
+        .then(function() {
+          console.log('"' + user.username + '" user created');
+        })
+    }));
+  },
+
+  flushAllData: function (){
+    return deleteWholeDataFromTable('payments')
+      .then(function() {
+        deleteWholeDataFromTable('party_participants');
+      })
+      .then(function() {
+        deleteWholeDataFromTable('menu_items_ordered');
+      })
+      .then(function() {
+        deleteWholeDataFromTable('parties');
+      })
+      .then(function() {
+        deleteWholeDataFromTable('payment_info');
+      })
+      .then(function() {
+        deleteWholeDataFromTable('users');
+      })
+      .then(function() {
+        deleteWholeDataFromTable('menu_items');
+      })
+      .then(function() {
+        deleteWholeDataFromTable('menu_categories');
+      })
+      .then(function() {
+        deleteWholeDataFromTable('tables');
+      })
+      .then(function() {
+        deleteWholeDataFromTable('restaurant_employees');
+      })
+      .then(function() {
+        deleteWholeDataFromTable('restaurants');
+      })
+      .then(function() {
+        deleteWholeDataFromTable('restaurant_users');
+      })
+      .then(function() {
+        console.log('DB emptied!');
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  },
+
+  emptyAndRepopulateDB: function() {
+    return module.exports.flushAllData()
+      .then(function() {
+        return module.exports.createCompleteRestaurantsInDB();
+      })
+      .then(function() {
+        return module.exports.createUsersInDB();
+      });    
   }
 };
 
-module.exports.run();
