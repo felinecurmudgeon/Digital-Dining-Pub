@@ -1,3 +1,4 @@
+/*jshint camelcase: false */
 var menusModel = require('./menusModel.js');
 var JsonResponseObj = require('../JsonResponseObject.js');
 var JsonDataObj = require('../JsonDataObject.js');

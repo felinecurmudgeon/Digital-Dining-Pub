@@ -1,8 +1,8 @@
+/*jshint camelcase: false */
 var restaurantsModel = require('./restaurantsModel.js');
 var JsonResponseObj = require('../JsonResponseObject.js');
 var JsonDataObj = require('../JsonDataObject.js');
 var JsonResponseObject = new JsonResponseObj();
-
 
 module.exports = {
   getRestaurants : function (req, res) {
