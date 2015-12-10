@@ -152,6 +152,7 @@ angular.module('digitalDining.controllers', [])
       }
     });
   };
+}])
 .controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory',  function ($scope, HomeFactory) {
   $scope.focusedRestaurant = {};
   $scope.getFocusedRestaurant = function () {

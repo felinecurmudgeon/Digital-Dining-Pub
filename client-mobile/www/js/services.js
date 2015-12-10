@@ -37,7 +37,7 @@ angular.module('digitalDining.services', [])
   var focusRestaurant = function (rest) {
     focusedRestaurant = rest;
   };
-  var getFocusedRestaurant = function() {
+  var getFocusedRestaurant = function () {
     return focusedRestaurant;
   };
   return {
