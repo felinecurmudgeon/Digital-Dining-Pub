@@ -2,7 +2,7 @@
 var db = require('../server/sql-db/index.js');
 var Promise = require('bluebird');
 
-var deleteWholeDataFromTable = function (table) {
+var deleteAllDataFromTable = function (table) {
   return new Promise( function (resolve, reject) {
     db.con.query('DELETE FROM ??', table, function (err, data) {
       if (err) {
@@ -256,39 +256,39 @@ module.exports = {
   },
 
   flushAllData: function (){
-    return deleteWholeDataFromTable('payments')
+    return deleteAllDataFromTable('payments')
       .then(function() {
-        deleteWholeDataFromTable('party_participants');
+        deleteAllDataFromTable('party_participants');
       })
       .then(function() {
-        deleteWholeDataFromTable('menu_items_ordered');
+        deleteAllDataFromTable('menu_items_ordered');
       })
       .then(function() {
-        deleteWholeDataFromTable('parties');
+        deleteAllDataFromTable('parties');
       })
       .then(function() {
-        deleteWholeDataFromTable('payment_info');
+        deleteAllDataFromTable('payment_info');
       })
       .then(function() {
-        deleteWholeDataFromTable('users');
+        deleteAllDataFromTable('users');
       })
       .then(function() {
-        deleteWholeDataFromTable('menu_items');
+        deleteAllDataFromTable('menu_items');
       })
       .then(function() {
-        deleteWholeDataFromTable('menu_categories');
+        deleteAllDataFromTable('menu_categories');
       })
       .then(function() {
-        deleteWholeDataFromTable('tables');
+        deleteAllDataFromTable('tables');
       })
       .then(function() {
-        deleteWholeDataFromTable('restaurant_employees');
+        deleteAllDataFromTable('restaurant_employees');
       })
       .then(function() {
-        deleteWholeDataFromTable('restaurants');
+        deleteAllDataFromTable('restaurants');
       })
       .then(function() {
-        deleteWholeDataFromTable('restaurant_users');
+        deleteAllDataFromTable('restaurant_users');
       })
       .then(function() {
         console.log('DB emptied!');
