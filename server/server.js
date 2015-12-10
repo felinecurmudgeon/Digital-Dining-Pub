@@ -2,7 +2,7 @@ var express = require('express');
 var session = require('express-session');
 var router = require('./router.js');
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser'); 
+var cookieParser = require('cookie-parser');
 var logger = require('./middleware/logger');
 
 var app = express();

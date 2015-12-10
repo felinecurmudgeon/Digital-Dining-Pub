@@ -8,7 +8,6 @@ var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
 var jscs = require('gulp-jscs');
-var bg = require('gulp-bg');
 var dummydata = require('./spec/dummyData.js');
 
 var paths = {
@@ -71,7 +70,7 @@ gulp.task('style', function() {
 });
 
 gulp.task('jasmine', function () {
-  return gulp.src('spec/server/spec.js')
+  return gulp.src('spec/server/restaurantMenuSpec.js')
     .pipe(jasmine());
 });
 

@@ -1,14 +1,27 @@
 var menusModel = require('./menusModel.js');
+var JsonResponseObj = require('../JsonResponseObject.js');
+var JsonDataObj = require('../JsonDataObject.js');
 
 module.exports = {
 
   //menu categories
   getMenuCategories : function (req, res) {
     console.log('getting menu categories');
+    var JsonResponseObject = new JsonResponseObj();
     menusModel.menuCategory.get()
       .then(function (menuCats) {
+        for (var i = 0; i < menuCats.length; i++) {
+          var JsonDataObject = new JsonDataObj();
+          JsonDataObject.type = 'menuCategory';
+          JsonDataObject.id = menuCats[i].id;
+          JsonDataObject.attributes = {
+            restaurant_id : menuCats[i].restaurant_id,
+            category_name : menuCats[i].category_name
+          };
+          JsonResponseObject.data.push(JsonDataObject);
+        }
         res.status(200);
-        res.send(menuCats);
+        res.send(JsonResponseObject);
       });
   },
 
@@ -24,10 +37,24 @@ module.exports = {
   ///menu items
   getMenuItems : function (req, res) {
     console.log('getting menu');
+    var JsonResponseObject = new JsonResponseObj();
     menusModel.menuItems.get(req.params.rid)
       .then(function (menuItems) {
+        for (var i = 0; i < menuItems.length; i++) {
+          var JsonDataObject = new JsonDataObj();
+          JsonDataObject.type = 'menuItem';
+          JsonDataObject.id = menuItems[i].id;
+          JsonDataObject.attributes = {
+            restaurant_id : menuItems[i].restaurant_id,
+            title : menuItems[i].title,
+            description : menuItems[i].description,
+            price : menuItems[i].price,
+            menu_category_id : menuItems[i].menu_category_id
+          };
+          JsonResponseObject.data.push(JsonDataObject);
+        }
         res.status(200);
-        res.send(menuItems);
+        res.send(JsonResponseObject);
       });
   },
 
