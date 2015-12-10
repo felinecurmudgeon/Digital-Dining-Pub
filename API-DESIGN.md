@@ -93,7 +93,7 @@ TBD
 | GET           | /parties       | Gets all parties
 | GET           | /parties/:pid   | Gets a specific party
 | POST          | /parties       | Creates a party
-| PUT           | /parties/:pid   | Updates a party
+| PUT           | /parties/:pid?event=nameofevent   | Updates a party
 | DELETE        | /parties/:pid   | Deletes a party
 
 ### Party API GET query string parameters
