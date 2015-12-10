@@ -4,7 +4,6 @@ var JsonResponseObj = require('../JsonResponseObject.js');
 var JsonDataObj = require('../JsonDataObject.js');
 
 module.exports = {
-
   //menu categories
   getMenuCategories : function (req, res) {
     console.log('getting menu categories');
