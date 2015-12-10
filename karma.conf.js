@@ -15,7 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: require('./include.conf.js').concat([
-        'spec/client/*.js'
+        'spec/client/client-mobile/*.js'
     ]),
 
 
@@ -57,7 +57,7 @@ module.exports = function(config) {
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
 
-    plugins: ['karma-jasmine'],
+    plugins: ['karma-jasmine', 'karma-chrome-launcher'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

@@ -1,6 +1,4 @@
 var mysql = require('mysql');
-
-//adding helper function to translate a Date object in mysql format
 var twoDigits = function (d) {
     if (0 <= d && d < 10) {
       return '0' + d.toString();

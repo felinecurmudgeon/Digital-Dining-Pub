@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
+angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalDining.services'])
 
 .run(function ($ionicPlatform) {
   $ionicPlatform.ready(function () {
@@ -22,95 +22,115 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
   });
 })
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider
 
-    .state('app', {
+  .state('app', {
     url: '/app',
+    views: {
+      '': {
+        templateUrl: 'templates/login.html',
+        controller: 'AppCtrl'
+      }
+    }
+  })
+
+  .state('signup', {
+    url: '/signup',
+    views: {
+      '': {
+        templateUrl: 'templates/signup.html',
+        controller: 'SignUpCtrl'
+      }
+    }
+  })
+
+  .state('nav', {
+    url: '/nav',
     abstract: true,
-    templateUrl: 'templates/menu.html',
+    templateUrl: 'templates/nav.html',
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
+  .state('nav.search', {
     url: '/search',
     views: {
-      'menuContent': {
+      'navContent': {
         templateUrl: 'templates/search.html'
       }
     }
   })
 
-  .state('app.restaurantMenu', {
+  .state('nav.restaurantMenu', {
       url: '/restaurantMenu',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/restaurantMenu.html',
           controller: 'RestaurantMenuCtrl'
         }
       }
     })
-    .state('app.playlists', {
+    .state('nav.playlists', {
       url: '/playlists',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/playlists.html',
           controller: 'PlaylistsCtrl'
         }
       }
     })
-    .state('app.home', {
+    .state('nav.home', {
       url: '/home',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/home.html',
           controller: 'HomeCtrl'
         }
       }
     })
-    .state('app.checkIn', {
+    .state('nav.checkIn', {
       url: '/checkIn',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/checkIn.html',
           controller: 'CheckInCtrl'
         }
       }
     })
-    .state('app.success', {
+    .state('nav.success', {
       url: '/success',
       views: {
-        'menuContent': {
+        '': {
           templateUrl: 'templates/success.html'
         }
       }
     })
-    .state('app.currentCheck', {
+    .state('nav.currentCheck', {
       url: '/currentCheck',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/currentCheck.html'
         }
       }
     })
-    .state('app.settings', {
+    .state('nav.settings', {
       url: '/settings',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/settings.html'
         }
       }
     })
-    .state('app.aboutUs', {
+    .state('nav.aboutUs', {
       url: '/aboutUs',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/aboutUs.html'
         }
       }
     })
 
-  .state('app.single', {
+  .state('nav.single', {
     url: '/playlists/:playlistId',
     views: {
       'menuContent': {
@@ -120,5 +140,6 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/home');
-});
+  $urlRouterProvider.otherwise('/app');
+  $httpProvider.interceptors.push('AttachTokens');
+}]);

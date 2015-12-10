@@ -100,7 +100,7 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   username VARCHAR(20) NOT NULL,
-  password CHAR(32),
+  password CHAR(60),
   facebook_id CHAR(32),
 
   UNIQUE(username)

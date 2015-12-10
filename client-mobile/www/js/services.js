@@ -49,5 +49,18 @@ angular.module('digitalDining.services', [])
   return {
     getAllRestaurants: getAllRestaurants
   };
-});
+})
 
+//adds the JWT to all outgoing http requests
+.factory('AttachTokens', function ($window) {
+  var attach = {
+    request: function (object) {
+      var jwt = $window.localStorage.getItem('digitaldining');
+      if (jwt) {
+        object.headers.authorization = 'Bearer ' + jwt;
+      }
+      return object;
+    }
+  };
+  return attach;
+});

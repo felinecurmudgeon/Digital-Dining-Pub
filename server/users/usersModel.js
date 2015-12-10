@@ -23,6 +23,18 @@ module.exports = {
         });
       });
     },
+    getByUsername: function (username) {
+      return new Promise( function (resolve, reject) {
+        db.con.query('SELECT * FROM users \
+                                 WHERE username = ?', username, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
     post: function (user) {
       return new Promise(function (resolve, reject) {
         db.con.query('INSERT into users set ?', user, function (err, data) {
