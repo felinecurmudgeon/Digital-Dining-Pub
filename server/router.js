@@ -3,7 +3,7 @@ var restaurantUsersController = require('./users/restaurantUsersController');
 var restaurantsController = require('./restaurants/restaurantsController');
 var menusController = require('./menus/menusController');
 var partiesController = require('./parties/partiesController');
-var ordersController = require('./parties/ordersController');
+var ordersController = require('./orders/ordersController');
 var authController = require('./auth/authController');
 
 module.exports = function (router) {
