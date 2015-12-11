@@ -5,7 +5,6 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('./middleware/logger');
 var expressJwt = require('express-jwt');
-var dummy = require('../spec/dummyData.js');
 
 var app = express();
 var expressRouter = express.Router();
@@ -40,8 +39,6 @@ app.use('/', expressRouter);
 router(expressRouter);
 
 app.listen(8000);
-
-dummy.emptyAndRepopulateDB();
 
 module.exports = app;
 
