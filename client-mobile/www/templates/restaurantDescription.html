@@ -1,5 +1,35 @@
 <ion-view>
   <ion-content>
-    <h1>{{focusedRestaurant}}</h1>
+ <!--    <h1>{{focusedRestaurant}}</h1> -->
+
+    <div>
+      {{focusedRestaurant.attributes.restaurantName}}
+    </div>
+    <div class ='hours'> Open Hours
+      <li>{{focusedRestaurant.attributes.openingHourMonday}}-{{focusedRestaurant.attributes.closingHourMonday}}</li>
+      <li>{{focusedRestaurant.attributes.openingHourTuesday}}-{{focusedRestaurant.attributes.closingHourTuesday}}</li>
+      <li>{{focusedRestaurant.attributes.openingHourWednesday}}-{{focusedRestaurant.attributes.closingHourWednesday}}</li>
+      <li>{{focusedRestaurant.attributes.openingHourThursday}}-{{focusedRestaurant.attributes.closingHourThursday}}</li>
+      <li>{{focusedRestaurant.attributes.openingHourFriday}}-{{focusedRestaurant.attributes.closingHourFriday}}</li>
+      <li>{{focusedRestaurant.attributes.openingHourSatday}}-{{focusedRestaurant.attributes.closingHourSatday}}</li>
+      <li>{{focusedRestaurant.attributes.openingHourSunday}}-{{focusedRestaurant.attributes.closingHourSunday}}</li>
+    </div>
+    <div class = 'address'> Address
+      <p>{{focusedRestaurant.attributes.restaurantAddress}}</p>
+      <p>{{focusedRestaurant.attributes.restaurantCity}}</p>
+      <p>{{focusedRestaurant.attributes.restaurantState}}</p>
+      <p>{{focusedRestaurant.attributes.restaurantZipCode}}</p>
+    </div>
+    <div class="tabs">
+      <a class="tab-item" href='#/nav/restaurantMenu'>
+        Restaurant Menu
+      </a>
+      <a class="tab-item">
+        
+      </a>
+      <a class="tab-item">
+        Check In
+      </a>
+    </div>
   </ion-content>
 </ion-view>

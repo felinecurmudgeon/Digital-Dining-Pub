@@ -42,50 +42,40 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('RestaurantMenuCtrl', ['$scope', function ($scope) {
-  $scope.menuItemsSample = [
-    {name: 'Pizza',
-      ingredients: 'Crust, Cheese',
-      image: 'https://d2nyfqh3g1stw3.cloudfront.net/photos/pizza_19231.jpg'
-    },
-    {name: 'Spaghetti',
-      ingredients: 'Pasta, Sauce',
-      image: 'http://cdn.recipes100.com/v/726fc7d177b8d9598bc7927a21969024.jpg'
-    },
-    {name: 'Salad',
-      ingredients: 'Lettuce, Dressing',
-      image: 'http://www.beaconriverterrace.com/Salad1.jpg'
-    },
-    {name: 'Sushi',
-      ingredients: 'Fish, Rice',
-      image: 'http://iluvtokyosushi.net/images/home_l.png'
-    },
-    {name: 'Sandwich',
-      ingredients: 'Bread, Meat',
-      image: 'http://blogs.plos.org/obesitypanacea/files/2014/10/sandwich.jpg'
-    }
-  ];
+.controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', function ($scope, MenuFactory) {
+  // $scope.menuItemsSample = [
+  //   {name: 'Pizza',
+  //     ingredients: 'Crust, Cheese',
+  //     image: 'https://d2nyfqh3g1stw3.cloudfront.net/photos/pizza_19231.jpg'
+  //   },
+  //   {name: 'Spaghetti',
+  //     ingredients: 'Pasta, Sauce',
+  //     image: 'http://cdn.recipes100.com/v/726fc7d177b8d9598bc7927a21969024.jpg'
+  //   },
+  //   {name: 'Salad',
+  //     ingredients: 'Lettuce, Dressing',
+  //     image: 'http://www.beaconriverterrace.com/Salad1.jpg'
+  //   },
+  //   {name: 'Sushi',
+  //     ingredients: 'Fish, Rice',
+  //     image: 'http://iluvtokyosushi.net/images/home_l.png'
+  //   },
+  //   {name: 'Sandwich',
+  //     ingredients: 'Bread, Meat',
+  //     image: 'http://blogs.plos.org/obesitypanacea/files/2014/10/sandwich.jpg'
+  //   }
+  // ];
+  $scope.menu;
+  $scope.getMenuItems = function (menuId) {
+    MenuFactory.getMenuItems(menuId).then(function (menu) {
+      $scope.menu = menu;
+      console.log(menu);
+    })
+  };
+  $scope.getMenuItems();
 }])
 
 .controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {
-  $scope.restaurantList = [
-  {restaurantName: 'Olive Garden',
-    restaurantImg: 'http://i.kinja-img.com/gawker-media/image/upload/sgqboy3tw4sxzqojvkfj.jpg'
-  },
-  {restaurantName: 'Applebees',
-    restaurantImg: 'http://media-cdn.tripadvisor.com/media/photo-s/02/c3/e2/35/applebee-s-loop-410-nw.jpg'
-  },
-  {restaurantName: "Chili's",
-    restaurantImg: 'http://cdn2.moneysavingmom.com/wp-content/uploads/2013/02/Chilis.jpg'
-  },
-  {restaurantName: "Chevy's",
-    restaurantImg: 'http://www.jobapplicationform.us/wp-content/uploads/2014/09/chevys-fresh-mex-job-application-form.jpg'
-  },
-  {restaurantName: 'Sizzler',
-    restaurantImg: 'http://capcityradio.net/b945live/wp-content/uploads/sites/7/2015/04/02Natomas-02.jpg'
-  }
-  ];
-
   // var onSuccess = function (position) {
   //   window.alert('Latitude: ' + position.coords.latitude + '\n' +
   //         'Longitude: ' + position.coords.longitude + '\n' +
@@ -106,14 +96,17 @@ angular.module('digitalDining.controllers', [])
 
   $scope.displayRestaurants = function () {
     HomeFactory.getAllRestaurants().then(function (restaurants) {
-      console.log('here', restaurants.data);
-      $scope.restaurants = restaurants;
+      $scope.restaurants = restaurants.data.data;
+      $scope.restaurants.forEach(function (rest) {
+        console.log(rest.attributes);
+      });
     });
+
   };
   $scope.displayRestaurants();
   $scope.test = [1];
 
-  $scope.focusRestaurant = function(rest) {
+  $scope.focusRestaurant = function (rest) {
     HomeFactory.focusRestaurant(rest);
   };
 }])
@@ -153,7 +146,7 @@ angular.module('digitalDining.controllers', [])
     });
   };
 }])
-.controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory',  function ($scope, HomeFactory) {
+.controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory', function ($scope, HomeFactory) {
   $scope.focusedRestaurant = {};
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
