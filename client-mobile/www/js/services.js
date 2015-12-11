@@ -51,6 +51,19 @@ angular.module('digitalDining.services', [])
   };
 })
 
+.factory('PaymentFactory', function ($http) {
+  var submitCharge = function (token) {
+    return $http({
+      url: 'http://localhost:8000/api/charges',
+      method: 'POST',
+      data: {'amount' : '1000', 'stripeToken' : token }
+    });
+  };
+  return {
+    submitCharge: submitCharge
+  };
+})
+
 //adds the JWT to all outgoing http requests
 .factory('AttachTokens', function ($window) {
   var attach = {

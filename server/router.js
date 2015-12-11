@@ -4,6 +4,7 @@ var restaurantsController = require('./restaurants/restaurantsController');
 var menusController = require('./menus/menusController');
 var partiesController = require('./parties/partiesController');
 var authController = require('./auth/authController');
+var chargesController = require('./charges/chargesController');
 
 module.exports = function (router) {
   router.get('/api/users', usersController.getAllUsers);
@@ -34,4 +35,7 @@ module.exports = function (router) {
   router.post('/api/menuItems', menusController.createMenuItems);
   router.put('/api/menuItems/:id', menusController.updateMenuItems);
   router.delete('/api/menuItems/:id', menusController.deleteMenuItems);
+
+  router.post('/api/charges', chargesController.chargeCard);
+
 };

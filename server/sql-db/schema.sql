@@ -102,6 +102,7 @@ CREATE TABLE users (
   username VARCHAR(20) NOT NULL,
   password CHAR(60),
   facebook_id CHAR(32),
+  stripe_id VARCHAR(100),
 
   UNIQUE(username)
 );

@@ -32,3 +32,8 @@ h1 {
   display: block;
   margin: 0 auto;
 }
+
+input {
+  border: 1px black solid !important;
+}
+

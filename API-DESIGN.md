@@ -33,7 +33,7 @@ TBD
 ## Charge API
 | HTTP Method   | URL                   | Description
 | ------------- | -------------------   | ---------------------------------
-| POST          | /user/:uid/charge/:cid | Updates the order + charges the customer CC via Stripe APIs
+| POST          | /user/:uid/charge | Updates the order + charges the customer CC via Stripe APIs
 | DELETE        | /user/:uid/charge/:cid | Refunds the charges the customer CC via Stripe APIs
 
 ### Example POST

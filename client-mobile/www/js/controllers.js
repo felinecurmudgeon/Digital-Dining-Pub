@@ -40,7 +40,26 @@ angular.module('digitalDining.controllers', [])
   $scope.signUp = function () {
     $state.go('signup');
   };
+
 }])
+
+.controller('AccountCtrl', ['$state', '$scope', '$http', '$window', 'PaymentFactory', function ($state, $scope, $http, $window, PaymentFactory) {
+
+  $scope.handleStripe = function (status, response){
+    console.log(status);
+    console.log(response);
+    if(response.error) {
+      $scope.stripeError = response.error;
+      // there was an error. Fix it.
+    } else {
+      // got stripe token, now charge it or smt
+      console.log(response.id);
+      PaymentFactory.submitCharge(response.id);
+    }
+  };
+
+}])
+
 
 .controller('RestaurantMenuCtrl', ['$scope', function ($scope) {
   $scope.menuItemsSample = [
