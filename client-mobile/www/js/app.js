@@ -140,7 +140,7 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalD
     .state('nav.restaurantDescription', {
       url: '/restaurantDescription',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/restaurantDescription.html',
           controller: 'RestaurantDisplayCtrl'
         }
