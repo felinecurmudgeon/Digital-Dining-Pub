@@ -21,6 +21,28 @@ module.exports = {
           }
         });
       });
+    },
+    get: function (partyId) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('SELECT * FROM menu_items_ordered WHERE party_id = ?', partyId, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
+    delete: function (id) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('DELETE FROM menu_items_ordered WHERE id = ?', id, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
     }
   }
 };

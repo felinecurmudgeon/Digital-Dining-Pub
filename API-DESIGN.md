@@ -111,7 +111,6 @@ TBD
 | HTTP Method   | URL                   | Description
 | ------------- | -------------------   | ---------------------------------
 | GET           | /parties/:pid/menuitems     | Gets all menu items for a given party
-| GET           | /parties/:pid/menuitems/:mid | Gets a specific item on a given party
 | POST          | /parties/:pid/menuitems     | Adds item(s) to a specific party
 | DELETE        | /parties/:pid/menuitems/:mid | Removes an item from a specific party    
 
