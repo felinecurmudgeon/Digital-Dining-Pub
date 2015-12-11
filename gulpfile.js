@@ -8,7 +8,6 @@ var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
 var jscs = require('gulp-jscs');
-// var dummydata = require('./spec/dummyData.js');
 
 var paths = {
   clientScripts: ['client-mobile/www/js/*.js'],
@@ -74,9 +73,13 @@ gulp.task('jasmine', function () {
     .pipe(jasmine());
 });
 
-// gulp.task('dummydata', function () {
-//   return dummydata.run();
-// });
+gulp.task('dummydata', function () {
+  var dummydata = require('./spec/dummyData.js');
+  return dummydata.emptyAndRepopulateDB()
+    .then(function () {
+      dummydata.endDBConnexion();
+    });
+});
 
 gulp.task('uglify', ['compress', 'concat', 'cleanMin']);
 gulp.task('test', ['jasmine']);
