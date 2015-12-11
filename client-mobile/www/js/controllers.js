@@ -65,12 +65,12 @@ angular.module('digitalDining.controllers', [])
   //     image: 'http://blogs.plos.org/obesitypanacea/files/2014/10/sandwich.jpg'
   //   }
   // ];
-  $scope.menu;
+  $scope.menu = {};
   $scope.getMenuItems = function (menuId) {
     MenuFactory.getMenuItems(menuId).then(function (menu) {
       $scope.menu = menu;
       console.log(menu);
-    })
+    });
   };
   $scope.getMenuItems();
 }])
