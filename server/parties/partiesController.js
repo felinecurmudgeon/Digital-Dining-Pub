@@ -100,7 +100,7 @@ module.exports = {
     } else {
       var query = url.parse(req.url, true).query;
       if (query.rid) {
-        var sendAnswer = function(callback) {
+        var sendAnswer = function (callback) {
           callback(+query.rid)
             .then(function (data) {
               var response = createJsonResponseForParty(data);
@@ -108,11 +108,17 @@ module.exports = {
               res.send(response);
             });
         };
-        if (query.status === 'waiting') { sendAnswer(partiesModel.party.getCheckedInParties); }
-        else if (query.status === 'seated') { sendAnswer(partiesModel.party.getCurrentParties); }
-        else if (query.status === 'canceled') { sendAnswer(partiesModel.party.getCanceledParties); }
-        else if (query.status === 'ended') { sendAnswer(partiesModel.party.getFinishedParties); }
-        else { sendAnswer(partiesModel.party.getAllParties); }
+        if (query.status === 'waiting') {
+          sendAnswer(partiesModel.party.getCheckedInParties);
+        } else if (query.status === 'seated') {
+          sendAnswer(partiesModel.party.getCurrentParties);
+        } else if (query.status === 'canceled') {
+          sendAnswer(partiesModel.party.getCanceledParties);
+        } else if (query.status === 'ended') {
+          sendAnswer(partiesModel.party.getFinishedParties);
+        } else {
+          sendAnswer(partiesModel.party.getAllParties);
+        }
       } else {
         res.status(400);
         res.send();
