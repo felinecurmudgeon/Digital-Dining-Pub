@@ -70,15 +70,6 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalD
         }
       }
     })
-    .state('nav.playlists', {
-      url: '/playlists',
-      views: {
-        'navContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
-        }
-      }
-    })
     .state('nav.home', {
       url: '/home',
       views: {
@@ -140,21 +131,12 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalD
     .state('nav.restaurantDescription', {
       url: '/restaurantDescription',
       views: {
-        'menuContent': {
+        'navContent': {
           templateUrl: 'templates/restaurantDescription.html',
           controller: 'RestaurantDisplayCtrl'
         }
       }
-    })
-    .state('nav.single', {
-     url: '/playlists/:playlistId',
-     views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
-  });
+    });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app');
   $httpProvider.interceptors.push('AttachTokens');
