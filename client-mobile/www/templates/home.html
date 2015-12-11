@@ -1,10 +1,14 @@
 <ion-view view-title="Home">
   <ion-content>
-    <h1>Restaurants In Your Location</h1>
-    <div collection-repeat = 'restaurant in restaurantList'>
-      <ion-item class = 'restaurantContainer'>
-      <img src = "{{restaurant.restaurantImg}}">
-      <span class = 'restaurantName'>{{restaurant.restaurantName}} </span>
+    <h4>Restaurants In Your Location</h4>
+    <div collection-repeat = 'rest in restaurants'>
+      <ion-item class="" href='#/nav/restaurantDescription'>
+        <h2>{{rest}} </h2>
+        <div class="item item-image restaurantContainer">
+        
+          <img src="{{rest.restaurantImg}}" ng-click='focusRestaurant(rest)'>
+        </div>
+        <br>
       </ion-item>
     </div>
     
