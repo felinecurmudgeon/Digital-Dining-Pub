@@ -3,7 +3,7 @@ angular.module('digitalDining.services', [])
 .factory('MenuFactory', function ($http) {
   var getMenuItems = function () {
     return $http({
-      url: 'TBD',
+      url: 'http://localhost:8000/api/menuitems',
       method: 'GET'
     });
   };
