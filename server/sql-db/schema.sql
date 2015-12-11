@@ -11,6 +11,7 @@ CREATE TABLE restaurant_users (
   password CHAR(60) NOT NULL,
 
   UNIQUE(username)
+
 );
 
 CREATE TABLE restaurants (
@@ -101,9 +102,9 @@ CREATE TABLE users (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   username VARCHAR(20) NOT NULL,
   password CHAR(60),
-  facebook_id CHAR(32),
+  facebook_id CHAR(32) DEFAULT 'null',
 
-  UNIQUE(username)
+  CONSTRAINT unique_user UNIQUE (username, facebook_id)
 );
 
 CREATE TABLE payment_info (
