@@ -17,6 +17,10 @@ var paths = {
   test: []
 };
 
+gulp.doneCallback = function (err) {
+  process.exit(err ? 1 : 0);
+};
+
 gulp.task('karmaRaw', function(done) {
   return karma.start({
       configFile: __dirname + '/karma.conf.js',
