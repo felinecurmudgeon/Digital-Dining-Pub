@@ -117,7 +117,7 @@ TBD
 - Note: this API follows a nested pattern due to the tight coupling of parties and menu items.
 
 ### Example POST
-`{party_id: 109, menu_items [{menu_item_id: 12, quantity: 1}, {menu_item_id: 17, quantity: 10}]`
+`{party_id: 109, user_id: 32, menu_items [{menu_item_id: 12, quantity: 1}, {menu_item_id: 17, quantity: 10}]`
 
 
 ### Example POST

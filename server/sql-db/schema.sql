@@ -142,6 +142,7 @@ CREATE TABLE menu_items_ordered (
   party_id INT NOT NULL,
   menu_item_id INT NOT NULL,
   quantity INT NOT NULL DEFAULT 1,
+  user_id INT NOT NULL,
   total_paid INT NOT NULL DEFAULT 0,
   ordered_at TIMESTAMP,
   served_at TIMESTAMP,

@@ -38,9 +38,8 @@ module.exports = {
     ordersModel.order.post({party_id: req.params.pid,
       menu_items: req.body})
       .then(function (data) {
-        var response = createJsonResponseForPartyItems(data);
         res.status(201);
-        res.send(response);
+        res.send(data);
       });
   },
   deleteItemsOrdered : function (req, res) {
