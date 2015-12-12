@@ -3,6 +3,7 @@ var restaurantUsersController = require('./users/restaurantUsersController');
 var restaurantsController = require('./restaurants/restaurantsController');
 var menusController = require('./menus/menusController');
 var partiesController = require('./parties/partiesController');
+var ordersController = require('./orders/ordersController');
 var authController = require('./auth/authController');
 
 module.exports = function (router) {
@@ -24,9 +25,6 @@ module.exports = function (router) {
   router.put('/api/restaurants/:id', restaurantsController.updateRestaurant);
   router.delete('/api/restaurants/:id', restaurantsController.deleteRestaurant);
 
-  router.post('/api/parties', partiesController.checkInAndCreateParty);
-  router.put('/api/parties/:id', partiesController.editParty);
-
   router.get('/api/menuCategories', menusController.getMenuCategories);
   router.post('/api/menuCategories', menusController.createMenuCategories);
 
@@ -34,4 +32,13 @@ module.exports = function (router) {
   router.post('/api/menuItems', menusController.createMenuItems);
   router.put('/api/menuItems/:id', menusController.updateMenuItems);
   router.delete('/api/menuItems/:id', menusController.deleteMenuItems);
+
+  router.post('/api/parties', partiesController.checkInAndCreateParty);
+  router.put('/api/parties/:id', partiesController.editParty);
+  router.get('/api/parties', partiesController.get);
+  router.get('/api/parties/:id', partiesController.get);
+
+  router.get('/api/parties/:pid/menuitems', ordersController.getItemsOrdered);
+  router.post('/api/parties/:pid/menuitems', ordersController.getItemsOrdered);
+  router.delete('/api/parties/:pid/menuitems/:mid', ordersController.deleteItemsOrdered);
 };

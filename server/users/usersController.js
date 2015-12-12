@@ -7,6 +7,10 @@ module.exports = {
       .then(function (users) {
         res.status(200);
         res.send(users);
+      })
+      .catch(function (err) {
+        res.status(500);
+        res.send(err);
       });
   },
 
@@ -16,6 +20,10 @@ module.exports = {
       .then(function (users) {
         res.status(200);
         res.send(users);
+      })
+      .catch(function (err) {
+        res.status(500);
+        res.send(err);
       });
   },
 
@@ -25,6 +33,10 @@ module.exports = {
       .then(function (data) {
         res.status(201);
         res.send(data);
+      })
+      .catch(function (err) {
+        res.status(500);
+        res.send(err);
       });
   },
 
@@ -34,6 +46,10 @@ module.exports = {
       .then(function (data) {
         res.status(200);
         res.send(data);
+      })
+      .catch(function (err) {
+        res.status(500);
+        res.send(err);
       });
   }
 };

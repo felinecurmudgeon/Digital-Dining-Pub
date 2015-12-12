@@ -11,9 +11,31 @@ module.exports = {
       return new Promise(function (resolve, reject) {
         var ordered_at = new Date().toMysqlFormat();
         var menu_items = parameters.menu_items.map(function (el) {
-          return [parameters.party_id, el.menu_item_id, el.quantity, ordered_at];
+          return [parameters.party_id, el.menu_item_id, el.quantity, parameters.user_id, ordered_at];
         });
         db.con.query('INSERT INTO menu_items_ordered (party_id, menu_item_id, quantity, ordered_at) VALUES ?', menu_items, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
+    get: function (partyId) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('SELECT * FROM menu_items_ordered WHERE party_id = ?', partyId, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
+    delete: function (id) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('DELETE FROM menu_items_ordered WHERE id = ?', id, function (err, data) {
           if (err) {
             reject(err);
           } else {
