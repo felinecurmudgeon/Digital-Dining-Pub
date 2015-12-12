@@ -53,7 +53,7 @@ module.exports = {
       });
     },
     getFinishedParties: function (restaurantId) {
-      //retrieves all finsihed parties (that really took place) for a given restaurantId
+      //retrieves all finished parties (that really took place) for a given restaurantId
       return new Promise(function (resolve, reject) {
         db.con.query('SELECT * FROM parties \
                       WHERE restaurant_id = ? \
