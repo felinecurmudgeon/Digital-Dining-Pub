@@ -6,7 +6,7 @@ var partiesController = require('./parties/partiesController');
 var ordersController = require('./orders/ordersController');
 var authController = require('./auth/authController');
 
-module.exports = function (router, passport) {
+module.exports = function (router) {
   router.get('/api/users', usersController.getAllUsers);
   router.get('/api/users/:id', usersController.getUser);
   router.post('/api/users', usersController.createUser);
@@ -14,7 +14,8 @@ module.exports = function (router, passport) {
 
   router.post('/api/signin', authController.signin);
   router.post('/api/signup', authController.signup);
-  router.get('/api/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+  router.get('/api/auth/facebook', authController.facebookLogin());
+  router.get('/api/auth/callback', authController.facebookCallback);
 
   router.get('/api/restaurantusers', restaurantUsersController.getUser);
   router.get('/api/restaurantusers/:id', restaurantUsersController.getUser);

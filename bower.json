@@ -1,0 +1,21 @@
+{
+  "name": "digital-dining",
+  "description": "The modern way to order and pay at restaurants",
+  "main": "./server/server.js",
+  "authors": [
+    "The feline curmudgeon team"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Eating",
+    "restaurants",
+    "mobile",
+    "bill",
+    "splitting"
+  ],
+  "homepage": "https://github.com/AdamTobias/Digital-Dining",
+  "moduleType": [
+    "node"
+  ],
+  "private": true
+}

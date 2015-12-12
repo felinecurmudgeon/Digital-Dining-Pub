@@ -137,7 +137,17 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalD
           controller: 'RestaurantDisplayCtrl'
         }
       }
-    });
+  })
+  .state('successFBLogin', {
+    url: '/successFBLogin',
+    views: {
+      '': {
+      templateUrl: 'templates/success.html',
+      controller: 'AppCtrl'
+      }
+    }
+  });
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app');
   $httpProvider.interceptors.push('AttachTokens');

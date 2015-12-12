@@ -4,5 +4,7 @@ bower_components/
 
 build/
 dist/
+server/config.js
+client-mobile/www/lib
 
 .DS_Store

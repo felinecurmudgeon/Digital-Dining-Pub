@@ -2,7 +2,7 @@
   <ion-header-bar class='bar bar-header bar-dark'>
     <h1 class="title">Login</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="signUp()">Create a new account</button>
+      <button class="button button-clear" ng-click="goToSignUp()">Create a new account</button>
     </div>
   </ion-header-bar>
   <ion-content>
@@ -22,7 +22,7 @@
       </div>
     </form>
     <div ng-show="invalidLogin">Invalid login information.  Please try again.</div>
-    <a href='/api/auth/facebook'><img src="https://scontent-sjc2-1.xx.fbcdn.net/hphotos-xaf1/t39.2178-6/851579_209602122530903_1060396115_n.png"></a>
+    <a href='http://localhost:8000/api/auth/facebook'><img src="https://scontent-sjc2-1.xx.fbcdn.net/hphotos-xaf1/t39.2178-6/851579_209602122530903_1060396115_n.png"></a>
     <img class = 'buttonLogo' src = 'http://logoholic.org/wp-content/uploads/2012/10/D.jpg'>
   </ion-content>
 </ion-view>
