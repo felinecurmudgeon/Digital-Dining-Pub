@@ -61,7 +61,7 @@ module.exports = {
 
           JsonResponseObject.data.push(JsonDataObject);
           JsonResponseObject.included.push(JsonDataObjectIncluded);
-        };
+        }
         res.status(200);
         res.send(JsonResponseObject);
       });
