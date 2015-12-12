@@ -7,3 +7,8 @@ dist/
 
 .DS_Store
 nohup.out
+
+client-mobile/node_modules/
+client-mobile/platforms/
+client-mobile/plugins/
+client-mobile/www/lib/

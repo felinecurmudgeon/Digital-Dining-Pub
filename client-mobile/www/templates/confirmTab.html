@@ -2,7 +2,7 @@
   <ion-content>
     <h1>Confirm Checkout</h1>
     <!-- dummy data -->
-    <ion-item ng-repeat="food in menuItemsSample" href="#/app/playlists/{{playlist.id}}" class = 'menuItem'>
+    <ion-item ng-repeat="food in menuItemsSample" class = 'menuItem'>
         <span class = 'foodName'>{{food.name}}</span>
         <span class = 'price'> {{food.price}} </span>
     </ion-item>
@@ -12,6 +12,14 @@
     </div>
     <div class="item item-divider">
       Total
+      <span class='num'>{{testingTotalForTaxAndTip}}</span>
+    </div>
+    <div>
+    {{totalWithTaxAndTip}}
+      <input type='number' placeholder='{{tipAmount}}' value='{{tipAmount}}' ng-model='tipAmount'>
+      <button class="button button-stable" ng-click='tipCalculator(testingTotalForTaxAndTip, .15)'>15%</button>
+      <button class="button button-stable" ng-click='tipCalculator(testingTotalForTaxAndTip, .18)'>18%</button>
+      <button class="button button-stable" ng-click='tipCalculator(testingTotalForTaxAndTip, .20)'>20%</button>
     </div>
   </ion-content>
 </ion-view>

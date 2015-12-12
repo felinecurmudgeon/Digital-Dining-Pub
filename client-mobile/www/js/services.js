@@ -3,7 +3,7 @@ angular.module('digitalDining.services', [])
 .factory('MenuFactory', function ($http) {
   var getMenuItems = function () {
     return $http({
-      url: 'TBD',
+      url: 'http://localhost:8000/api/menuitems',
       method: 'GET'
     });
   };
@@ -26,7 +26,27 @@ angular.module('digitalDining.services', [])
     addMenuItemToOrder: addMenuItemToOrder
   };
 })
-
+.factory('HomeFactory', function ($http) {
+  var getAllRestaurants = function () {
+    return $http({
+      url: 'http://localhost:8000/api/restaurants',
+      method: 'GET'
+    });
+  };
+  var focusedRestaurant = {};
+  var focusRestaurant = function (rest) {
+    focusedRestaurant = rest;
+  };
+  var getFocusedRestaurant = function () {
+    return focusedRestaurant;
+  };
+  return {
+    getAllRestaurants: getAllRestaurants,
+    focusedRestaurant: focusedRestaurant,
+    focusRestaurant: focusRestaurant,
+    getFocusedRestaurant: getFocusedRestaurant
+  };
+})
 .factory('CheckFactory', function ($http) {
   var getCheckItems = function () {
     return $http({

@@ -26,7 +26,7 @@ module.exports = {
           })
           .then(function (charge){
             console.log("sucessful charge ", charge);
-          })
+          });
         } else {
           //create user 
           stripe.customers.create({

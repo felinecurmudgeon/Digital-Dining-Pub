@@ -19,7 +19,7 @@ h1 {
 
 .restaurantContainer {
   height: 300px;
-  width: 350px;
+  width: 100%;
 }
 .restaurantContainer img {
   height: 100%;
@@ -37,3 +37,6 @@ input {
   border: 1px black solid !important;
 }
 
+.num {
+  float:right;
+}
