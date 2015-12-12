@@ -1,8 +1,8 @@
 var jwt = require('jsonwebtoken');
 var url = require('url');
-var config = require('./../config.js');
 
 var unprotectedEndpoints = ['/api/signin', '/api/signup', '/api/auth/facebook', '/api/auth/callback'];
+var protectEndpoints = false;  //for development purposes.  Eventually we need to make this true
 
 module.exports = function (req, res, next) {
   var protectedRoute = (unprotectedEndpoints.indexOf(url.parse(req.url).pathname) === -1);
@@ -10,8 +10,8 @@ module.exports = function (req, res, next) {
   if (req.method === 'OPTIONS') {
     next();
   } else {
-    jwt.verify(req.headers.authorization, config.jwtSecret, function (err, profile) { //TODO: make secret private
-      if (err && protectedRoute) {
+    jwt.verify(req.headers.authorization, process.env.DDJWTSECRET, function (err, profile) {
+      if (err && (protectedRoute && !protectEndpoints)) {
         res.status(401).send('invalid token');
       } else if (!err) {
         req.user = {};
