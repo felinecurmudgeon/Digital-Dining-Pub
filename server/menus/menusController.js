@@ -41,7 +41,6 @@ module.exports = {
     menusModel.menuItems.get(req.query.rid)
       .then(function (menuItems) {
         for (var i = 0; i < menuItems.length; i++) {
-          console.log(menuItems[i]);
           var JsonDataObject = new JsonDataObj();
           var JsonDataObjectIncluded = new JsonDataObj();
           JsonDataObject.type = 'menuItem';

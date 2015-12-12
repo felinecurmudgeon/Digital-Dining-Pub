@@ -17,12 +17,16 @@ module.exports = {
     usersModel.user.get('3')
       .then(function (user) {
         if(user[0].stripe_id){
+          console.log("charing exising cust");
           //charge
-          stripe.charges.create({
+          return stripe.charges.create({
             amount: amount, // amount in cents
             currency: "usd",
             customer: user[0].stripe_id // from DB
-          });
+          })
+          .then(function (charge){
+            console.log("sucessful charge ", charge);
+          })
         } else {
           //create user 
           stripe.customers.create({
@@ -38,7 +42,7 @@ module.exports = {
               currency: "usd",
               customer: stripeCustomer.id
             });
-          }).then(function(charge) {
+          }).then(function (charge) {
             console.log("sucessful charge ", charge);
           });
         }
