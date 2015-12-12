@@ -4,7 +4,6 @@ var Users = require('./../users/usersModel.js').user;
 var bcrypt = require('bcryptjs');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var passport = require('passport');
-var config = require('./../config.js');
 
 module.exports = {
   //check username and password in the DB.  If no match, send 401. If there is a match, send the client back a JWT.
@@ -21,7 +20,7 @@ module.exports = {
               username: user[0].username,
               userID: user[0].id
             };
-            var token = jwt.sign(profile, config.jwtSecret);
+            var token = jwt.sign(profile, process.env.DDJWTSECRET);
             res.status(200).json({token: token});
           } else {
             res.status(401).send('Wrong username or password');
@@ -48,7 +47,7 @@ module.exports = {
                 username: retrievedUser[0].username,
                 userID: retrievedUser[0].id
               };
-              var token = jwt.sign(profile, config.jwtSecret);
+              var token = jwt.sign(profile, process.env.DDJWTSECRET);
               res.status(201).json({token: token});
             });
           });
@@ -60,8 +59,8 @@ module.exports = {
   },
   initializePassportFB: function () {
     passport.use(new FacebookStrategy({
-      clientID : config.fbClientID,
-      clientSecret : config.fbClientSecret,
+      clientID : process.env.DDFBCLIENTID,
+      clientSecret : process.env.DDFBCLIENTSECRET,
       callbackURL : '/api/auth/callback'
     },
     // facebook will send back the token and profile
@@ -116,7 +115,7 @@ module.exports = {
         username: user.username,
         userID: user.id
       };
-      var token = jwt.sign(profile, config.jwtSecret);
+      var token = jwt.sign(profile, process.env.DDJWTSECRET);
       res.redirect('http://localhost:8100/#/successFBLogin?token=' + token);
     })(req, res, next);
   }
