@@ -26,7 +26,6 @@ angular.module('digitalDining.controllers', [])
   $scope.goToSignUp = function () {
     $state.go('signup');
   };
-  
   //when redirected here from facebook auth callback, grab the token from the query and store it
   if ($location.path().match(/successFBLogin/)) {
     $window.localStorage.setItem('digitaldining', $location.search().token);
