@@ -76,7 +76,10 @@ angular.module('digitalDining.services', [])
     return $http({
       url: 'http://localhost:8000/api/charges',
       method: 'POST',
-      data: {'amount' : '1000', 'stripeToken' : token }
+      data: {
+        'amount' : '1000',
+        'stripeToken' : token
+      }
     });
   };
   return {

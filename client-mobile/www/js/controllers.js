@@ -45,10 +45,10 @@ angular.module('digitalDining.controllers', [])
 
 .controller('AccountCtrl', ['$state', '$scope', '$http', '$window', 'PaymentFactory', function ($state, $scope, $http, $window, PaymentFactory) {
 
-  $scope.handleStripe = function (status, response){
+  $scope.handleStripe = function (status, response) {
     console.log(status);
     console.log(response);
-    if(response.error) {
+    if (response.error) {
       $scope.stripeError = response.error;
       // there was an error. Fix it.
     } else {
@@ -186,4 +186,4 @@ angular.module('digitalDining.controllers', [])
     $scope.tipAmount = total * percentage;
     $scope.totalWithTaxAndTip = total + $scope.tipAmount;
   };
-}])
+}]);
