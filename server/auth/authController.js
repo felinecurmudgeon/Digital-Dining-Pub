@@ -53,7 +53,7 @@ module.exports = {
           });
         });
       } else {
-        res.send(409);
+        res.sendStatus(409);
       }
     });
   },
