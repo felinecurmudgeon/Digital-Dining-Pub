@@ -1,6 +1,6 @@
-DROP DATABASE digitaldining;
+DROP DATABASE IF EXISTS digitaldining;
 CREATE DATABASE digitaldining;
-
+  
 USE digitaldining;
 
 CREATE TABLE restaurant_users (

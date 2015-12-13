@@ -14,6 +14,8 @@ module.exports = function (router) {
 
   router.post('/api/signin', authController.signin);
   router.post('/api/signup', authController.signup);
+  router.get('/api/auth/facebook', authController.facebookLogin());
+  router.get('/api/auth/callback', authController.facebookCallback);
 
   router.get('/api/restaurantusers', restaurantUsersController.getUser);
   router.get('/api/restaurantusers/:id', restaurantUsersController.getUser);

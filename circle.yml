@@ -5,6 +5,9 @@ dependencies:
       main'
     - sudo apt-get update; sudo DEBIAN_FRONTEND=noninteractive apt-get
       install -y mysql-server-5.6
+database:
+  override:
+    - mysql -u ubuntu circle_test < server/sql-db/schema.sql
 test:
   override:
     - ./node_modules/.bin/gulp jasmine

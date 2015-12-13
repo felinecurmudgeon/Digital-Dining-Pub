@@ -1,7 +1,7 @@
 angular.module('digitalDining.controllers', [])
 
 //This is currently 'AppCtrl' but really only deals with login -- should probably update naming
-.controller('AppCtrl', ['$state', '$scope', '$http', '$window', function ($state, $scope, $http, $window) {
+.controller('AppCtrl', ['$state', '$scope', '$window', '$location', 'AuthFactory', function ($state, $scope, $window, $location, AuthFactory) {
 
   $scope.loginData = {};
 
@@ -14,32 +14,27 @@ angular.module('digitalDining.controllers', [])
 
   $scope.doLogin = function () {
     $scope.invalidLogin = false;
-    $http({
-      method: 'POST',
-      url: 'http://localhost:8000/api/signin',
-      data: {
-        username: $scope.loginData.username,
-        password: $scope.loginData.password
-      }
-    })
-    .then(function (resp) {
-      $window.localStorage.setItem('digitaldining', resp.data.token);
-      $scope.loginData.username = '';
-      $scope.loginData.password = '';
-      $state.go('nav.home');
-    })
-    .catch(function (err) {
-      if (err) {
-        $scope.loginData.username = '';
-        $scope.loginData.password = '';
+    AuthFactory.signin($scope.loginData).then(function (verified) {
+      if (!verified) {
         $scope.invalidLogin = true;
       }
     });
+    $scope.loginData.username = '';
+    $scope.loginData.password = '';
   };
 
-  $scope.signUp = function () {
+  $scope.goToSignUp = function () {
     $state.go('signup');
   };
+
+  //when redirected here from facebook auth callback, grab the token from the query and store it
+  if ($location.path().match(/successFBLogin/)) {
+    $window.localStorage.setItem('digitaldining', $location.search().token);
+    setTimeout(function () {
+      $state.go('nav.home');
+    }, 2000);
+  }
+
 }])
 
 .controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', function ($scope, MenuFactory) {
@@ -119,7 +114,8 @@ angular.module('digitalDining.controllers', [])
     $scope.currentWait = 15 + ' minutes';
   };
 }])
-.controller('SignUpCtrl', ['$scope', '$state', '$http', '$window', function ($scope, $state, $http, $window) {
+
+.controller('SignUpCtrl', ['$scope', '$state', '$window', 'AuthFactory', function ($scope, $state, $window, AuthFactory) {
   $scope.signupData = {};
 
   $scope.goToLogin = function () {
@@ -127,23 +123,13 @@ angular.module('digitalDining.controllers', [])
   };
 
   $scope.doSignUp = function () {
-    $http({
-      method: 'POST',
-      url: 'http://localhost:8000/api/signup',
-      data: {
-        username: $scope.signupData.username,
-        password: $scope.signupData.password
-      }
-    })
-    .then(function (resp) {
-      $window.localStorage.setItem('digitaldining', resp.data.token);
-      $state.go('nav.home');
-    })
-    .catch(function (err) {
-      if (err.status === 409) {
+    AuthFactory.signup($scope.signupData).then(function (verified) {
+      if (!verified) {
         $scope.invalidUsername = true;
       }
     });
+    $scope.signupData.username = '';
+    $scope.signupData.password = '';
   };
 }])
 .controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory', function ($scope, HomeFactory) {
