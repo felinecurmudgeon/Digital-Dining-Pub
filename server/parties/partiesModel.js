@@ -7,12 +7,12 @@ module.exports = {
   party: {
     getCheckedInParties: function (restaurantId) {
       //retrieves all checked_in parties that are not started yet for a given restaurantId
-      return new Promise( function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
         db.con.query('SELECT * FROM parties \
-                      WHERE id = ' + restaurantId +
-                      'AND checkedin_at IS NOT NULL \
+                      WHERE restaurant_id = ? \
+                      AND checkedin_at IS NOT NULL \
                       AND seated_at IS NULL \
-                      AND closed_at IS NULL', function (err, data) {
+                      AND closed_at IS NULL', restaurantId, function (err, data) {
           if (err) {
             reject(err);
           } else {
@@ -23,12 +23,65 @@ module.exports = {
     },
     getCurrentParties: function (restaurantId) {
       //retrieves all seated parties that are not finished yet for a given restaurantId
-      return new Promise( function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
         db.con.query('SELECT * FROM parties \
-                      WHERE id = ' + restaurantId +
-                      'AND checkedin_at IS NOT NULL \
+                      WHERE restaurant_id = ? \
+                      AND checkedin_at IS NOT NULL \
                       AND seated_at IS NOT NULL \
-                      AND closed_at IS NULL', function (err, data) {
+                      AND closed_at IS NULL', restaurantId, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
+    getCanceledParties: function (restaurantId) {
+      //retrieves all cancelled parties (that have never started) for a given restaurantId
+      return new Promise(function (resolve, reject) {
+        db.con.query('SELECT * FROM parties \
+                      WHERE restaurant_id = ? \
+                      AND seated_at IS NULL \
+                      AND closed_at IS NOT NULL', restaurantId, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
+    getFinishedParties: function (restaurantId) {
+      //retrieves all finished parties (that really took place) for a given restaurantId
+      return new Promise(function (resolve, reject) {
+        db.con.query('SELECT * FROM parties \
+                      WHERE restaurant_id = ? \
+                      AND seated_at IS NOT NULL \
+                      AND closed_at IS NOT NULL', restaurantId, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
+    getAllParties: function (restaurantId) {
+      //retrieves all seated parties that are not finished yet for a given restaurantId
+      return new Promise(function (resolve, reject) {
+        db.con.query('SELECT * FROM parties WHERE restaurant_id = ?', restaurantId, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
+    getParty: function (partyId) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('SELECT * FROM parties WHERE id = ?', partyId, function (err, data) {
           if (err) {
             reject(err);
           } else {
@@ -51,18 +104,18 @@ module.exports = {
             party_size: parameters.party_size,
             checkedin_at: new Date().toMysqlFormat()
           };
-          db.con.query('INSERT INTO parties SET ?', partyParameters, function (err, party) {
+          db.con.query('INSERT INTO parties SET ?', partyParameters, function (err, createdParty) {
             if (err) {
               return db.con.rollback(function () {
                 reject(err);
               });
             }
-
-            var partyParticipantsParameters = {
-              party_id: party.insertId,
+            partyParameters.id = createdParty.insertId;
+            var partyParticipantParameters = {
+              party_id: createdParty.insertId,
               user_id: parameters.user_id
             };
-            db.con.query('INSERT INTO party_participants SET ?', partyParticipantsParameters, function (err) {
+            db.con.query('INSERT INTO party_participants SET ?', partyParticipantParameters, function (err, createdParticipant) {
               if (err) {
                 return db.con.rollback(function () {
                   reject(err);
@@ -74,8 +127,9 @@ module.exports = {
                     reject(err);
                   });
                 }
-                party.participants = [partyParticipantsParameters];
-                resolve(party);
+                partyParticipantParameters.id = createdParticipant.insertId;
+                partyParameters.participants = [partyParticipantParameters];
+                resolve(partyParameters);
               });
             });
           });
@@ -94,7 +148,7 @@ module.exports = {
             table_id: parameters.table_id,
             seated_at: new Date().toMysqlFormat()
           };
-          db.con.query('UPDATE parties SET ? WHERE party_id = ?', [partyParameters, partyId], function (err, party) {
+          db.con.query('UPDATE parties SET ? WHERE party_id = ?', [partyParameters, partyId], function (err) {
             if (err) {
               return db.con.rollback(function () {
                 reject(err);
@@ -112,10 +166,26 @@ module.exports = {
                     reject(err);
                   });
                 }
-                resolve(party);
+                partyParameters.id = partyId;
+                resolve(partyParameters);
               });
             });
           });
+        });
+      });
+    },
+    closeParty: function (partyId) {
+      return new Promise(function (resolve, reject) {
+        var partyParameters = {
+          closed_at: new Date().toMysqlFormat()
+        };
+        db.con.query('UPDATE parties SET ? WHERE party_id = ?', [partyParameters, partyId], function (err) {
+          if (err) {
+            reject(err);
+          } else {
+            partyParameters.id = partyId;
+            resolve(partyParameters);
+          }
         });
       });
     },
@@ -130,7 +200,8 @@ module.exports = {
           if (err) {
             reject(err);
           } else {
-            resolve(data);
+            partyParticipantsParameters.id = data.insertId;
+            resolve(partyParticipantsParameters);
           }
         });
       });

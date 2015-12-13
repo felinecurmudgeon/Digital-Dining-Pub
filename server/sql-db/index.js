@@ -16,7 +16,7 @@ var con = mysql.createConnection({
   host: 'localhost',
   user: process.env.MYSQL_DDUSER, //set this in your bash profile
   password: process.env.MYSQL_DDPASSWORD, //set this in your bash profile
-  database: 'digitaldining'
+  database: process.env.MYSQL_DDDATABASE //set this in your bash profile
 });
 
 con.connect(function (err) {

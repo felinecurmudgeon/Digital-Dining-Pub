@@ -3,6 +3,7 @@ var restaurantUsersController = require('./users/restaurantUsersController');
 var restaurantsController = require('./restaurants/restaurantsController');
 var menusController = require('./menus/menusController');
 var partiesController = require('./parties/partiesController');
+var ordersController = require('./orders/ordersController');
 var authController = require('./auth/authController');
 var chargesController = require('./charges/chargesController');
 
@@ -14,6 +15,8 @@ module.exports = function (router) {
 
   router.post('/api/signin', authController.signin);
   router.post('/api/signup', authController.signup);
+  router.get('/api/auth/facebook', authController.facebookLogin());
+  router.get('/api/auth/callback', authController.facebookCallback);
 
   router.get('/api/restaurantusers', restaurantUsersController.getUser);
   router.get('/api/restaurantusers/:id', restaurantUsersController.getUser);
@@ -25,9 +28,6 @@ module.exports = function (router) {
   router.put('/api/restaurants/:id', restaurantsController.updateRestaurant);
   router.delete('/api/restaurants/:id', restaurantsController.deleteRestaurant);
 
-  router.post('/api/parties', partiesController.checkInAndCreateParty);
-  router.put('/api/parties/:id', partiesController.editParty);
-
   router.get('/api/menuCategories', menusController.getMenuCategories);
   router.post('/api/menuCategories', menusController.createMenuCategories);
 
@@ -38,4 +38,12 @@ module.exports = function (router) {
 
   router.post('/api/charges', chargesController.chargeCard);
 
+  router.post('/api/parties', partiesController.checkInAndCreateParty);
+  router.put('/api/parties/:id', partiesController.editParty);
+  router.get('/api/parties', partiesController.get);
+  router.get('/api/parties/:id', partiesController.get);
+
+  router.get('/api/parties/:pid/menuitems', ordersController.getItemsOrdered);
+  router.post('/api/parties/:pid/menuitems', ordersController.getItemsOrdered);
+  router.delete('/api/parties/:pid/menuitems/:mid', ordersController.deleteItemsOrdered);
 };

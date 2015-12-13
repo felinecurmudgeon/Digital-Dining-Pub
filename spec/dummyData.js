@@ -278,7 +278,7 @@ module.exports = {
       });
   },
 
-  emptyAndRepopulateDB: function() {
+  emptyAndRepopulateDB: function () {
     return module.exports.flushAllData()
       .then(function() {
         return module.exports.createCompleteRestaurantsInDB();
@@ -286,5 +286,9 @@ module.exports = {
       .then(function() {
         return module.exports.createUsersInDB();
       });    
+  },
+
+  endDBConnexion: function () {
+    db.con.end();
   }
 };

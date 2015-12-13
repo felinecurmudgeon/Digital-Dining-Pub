@@ -32,27 +32,38 @@ describe('Restaurant and Menu Test Suite', function() {
 
   beforeAll(function (done) {
     db.con.query('DELETE FROM menu_items', function (err, data){
+      if (err) {console.log(err);}
       db.con.query('DELETE FROM menu_categories', function (err, data){
-        db.con.query('DELETE FROM restaurants', function (err, data){
-          db.con.query('DELETE FROM restaurant_users', function (err, data){
+        if (err) {console.log(err);}
+        db.con.query('DELETE FROM tables', function (err, data){
+          if (err) {console.log(err);}
+          db.con.query('DELETE FROM restaurants', function (err, data){
+            if (err) {console.log(err);}
+            db.con.query('DELETE FROM restaurant_users', function (err, data){
+              if (err) {console.log(err);}
               db.con.query('INSERT INTO restaurant_users (username, password) VALUES ("Sarah","54321")', function (err, data){
-                  testRestaurant.restaurant_owner_id = data.insertId;
-                  db.con.query('INSERT INTO restaurants SET ?', testRestaurant, function (err, data){
-                    testMenuItem.restaurant_id = data.insertId;
-                    db.con.query('INSERT INTO menu_categories (restaurant_id, category_name) VALUES ('+data.insertId+', "brunch")', function (err, data){
-                        testMenuItem.menu_category_id = data.insertId;
-                        db.con.query('INSERT INTO menu_items SET ?', testMenuItem, function (err, data){
-                          console.log("data inserted sucessfully");
-                          done();
-                        });
+                if (err) {console.log(err);}
+                testRestaurant.restaurant_owner_id = data.insertId;
+                db.con.query('INSERT INTO restaurants SET ?', testRestaurant, function (err, data){
+                  if (err) {console.log(err);}
+                  testMenuItem.restaurant_id = data.insertId;
+                  db.con.query('INSERT INTO menu_categories (restaurant_id, category_name) VALUES ('+data.insertId+', "brunch")', function (err, data){
+                    if (err) {console.log(err);}
+                    testMenuItem.menu_category_id = data.insertId;
+                    db.con.query('INSERT INTO menu_items SET ?', testMenuItem, function (err, data){
+                      if (err) {console.log(err);}
+                      console.log("data inserted sucessfully");
+                      done();
                     });
                   });
                 });
               });
+            });
           });
         });
       });
     });
+  });
 
   ///////////////////////////////////////////
   ////////////RESTAURANT USER TESTS//////////

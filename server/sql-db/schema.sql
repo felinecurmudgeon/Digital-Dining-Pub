@@ -1,6 +1,6 @@
-DROP DATABASE digitaldining;
+DROP DATABASE IF EXISTS digitaldining;
 CREATE DATABASE digitaldining;
-
+  
 USE digitaldining;
 
 CREATE TABLE restaurant_users (
@@ -11,6 +11,7 @@ CREATE TABLE restaurant_users (
   password CHAR(60) NOT NULL,
 
   UNIQUE(username)
+
 );
 
 CREATE TABLE restaurants (
@@ -101,10 +102,10 @@ CREATE TABLE users (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   username VARCHAR(20) NOT NULL,
   password CHAR(60),
-  facebook_id CHAR(32),
   stripe_id VARCHAR(100),
+  facebook_id CHAR(32) DEFAULT 'null',
 
-  UNIQUE(username)
+  CONSTRAINT unique_user UNIQUE (username, facebook_id)
 );
 
 CREATE TABLE payment_info (
@@ -142,6 +143,7 @@ CREATE TABLE menu_items_ordered (
   party_id INT NOT NULL,
   menu_item_id INT NOT NULL,
   quantity INT NOT NULL DEFAULT 1,
+  user_id INT NOT NULL,
   total_paid INT NOT NULL DEFAULT 0,
   ordered_at TIMESTAMP,
   served_at TIMESTAMP,

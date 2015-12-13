@@ -25,6 +25,7 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
 .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $stateProvider
 
+  //login view.  should probably not be called '/app'.
   .state('app', {
     url: '/app',
     views: {
@@ -137,7 +138,17 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
           controller: 'RestaurantDisplayCtrl'
         }
       }
-    });
+  })
+  .state('successFBLogin', {
+    url: '/successFBLogin',
+    views: {
+      '': {
+      templateUrl: 'templates/success.html',
+      controller: 'AppCtrl'
+      }
+    }
+  });
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app');
   $httpProvider.interceptors.push('AttachTokens');
