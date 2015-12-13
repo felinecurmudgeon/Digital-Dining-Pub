@@ -7,14 +7,14 @@ module.exports = {
   chargeCard : function (req) {
 
     //TODO: update user account with payment history info
-    console.log('user id:', req.user); //currently undefined!!
+    console.log('user id:', req.user.id); //currently undefined!!
 
     // Get the credit card details submitted by the form
     var stripeToken = req.body.stripeToken;
     var amount = req.body.amount;
 
     //look up current cust, get stripe id
-    usersModel.user.get('3')
+    usersModel.user.get(req.user.id)
       .then(function (user) {
         if (user[0].stripe_id) {
           //charge

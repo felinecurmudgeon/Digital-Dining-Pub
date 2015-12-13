@@ -26,7 +26,14 @@ angular.module('digitalDining.controllers', [])
   $scope.goToSignUp = function () {
     $state.go('signup');
   };
-
+  
+  //when redirected here from facebook auth callback, grab the token from the query and store it
+  if ($location.path().match(/successFBLogin/)) {
+    $window.localStorage.setItem('digitaldining', $location.search().token);
+    setTimeout(function () {
+      $state.go('nav.home');
+    }, 2000);
+  }
 }])
 
 .controller('AccountCtrl', ['$state', '$scope', '$http', '$window', 'PaymentFactory', function ($state, $scope, $http, $window, PaymentFactory) {
@@ -43,13 +50,6 @@ angular.module('digitalDining.controllers', [])
       PaymentFactory.submitCharge(response.id);
     }
   };
-  //when redirected here from facebook auth callback, grab the token from the query and store it
-  if ($location.path().match(/successFBLogin/)) {
-    $window.localStorage.setItem('digitaldining', $location.search().token);
-    setTimeout(function () {
-      $state.go('nav.home');
-    }, 2000);
-  }
 
 }])
 
