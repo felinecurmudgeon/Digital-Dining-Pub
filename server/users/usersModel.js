@@ -26,11 +26,10 @@ module.exports = {
     //getByUsername is for non-FB auth.  It does not return users with Facebook IDs in case there is a conflict
     getByUsername: function (username) {
       return new Promise( function (resolve, reject) {
-        // db.con.query("SELECT * FROM users \
-        //                          WHERE username = ? AND facebook_id = 'null'", username, function (err, data) {
-          db.con.query('SELECT * FROM users \
-                                  WHERE username = ?', username, function (err, data) {
+        db.con.query("SELECT * FROM users \
+                                WHERE username = ? AND facebook_id = 'null'", username, function (err, data) {
           if (err) {
+            console.log('user not found');
             reject(err);
           } else {
             resolve(data);

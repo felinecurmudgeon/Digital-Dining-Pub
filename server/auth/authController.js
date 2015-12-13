@@ -86,7 +86,7 @@ module.exports = {
                 //the return of the post is not the user, but metadata about the insertion of the user into the db
                 //we must do a 'get' to get the true user information
                 Users.get(insertedUser.insertId).then(function (retrievedUser) {
-                  return done(null, retrievedUser);
+                  return done(null, retrievedUser[0]);
                 });
               });
             }
