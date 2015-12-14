@@ -52,37 +52,20 @@ angular.module('digitalDining.controllers', [])
 
 }])
 
-.controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', function ($scope, MenuFactory) {
-  // $scope.menuItemsSample = [
-  //   {name: 'Pizza',
-  //     ingredients: 'Crust, Cheese',
-  //     image: 'https://d2nyfqh3g1stw3.cloudfront.net/photos/pizza_19231.jpg'
-  //   },
-  //   {name: 'Spaghetti',
-  //     ingredients: 'Pasta, Sauce',
-  //     image: 'http://cdn.recipes100.com/v/726fc7d177b8d9598bc7927a21969024.jpg'
-  //   },
-  //   {name: 'Salad',
-  //     ingredients: 'Lettuce, Dressing',
-  //     image: 'http://www.beaconriverterrace.com/Salad1.jpg'
-  //   },
-  //   {name: 'Sushi',
-  //     ingredients: 'Fish, Rice',
-  //     image: 'http://iluvtokyosushi.net/images/home_l.png'
-  //   },
-  //   {name: 'Sandwich',
-  //     ingredients: 'Bread, Meat',
-  //     image: 'http://blogs.plos.org/obesitypanacea/files/2014/10/sandwich.jpg'
-  //   }
-  // ];
+.controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', 'HomeFactory', function ($scope, MenuFactory, HomeFactory) {
   $scope.menu = {};
-  $scope.getMenuItems = function (menuId) {
-    MenuFactory.getMenuItems(menuId).then(function (menu) {
+  $scope.getMenuItems = function () {
+    var restID = HomeFactory.getFocusedRestaurant();
+    console.log('here', restID)
+    MenuFactory.getMenuItems(restID.id).then(function (menu) {
       $scope.menu = menu;
-      console.log(menu);
     });
   };
   $scope.getMenuItems();
+
+  $scope.focusMenuItem = function (item) {
+    MenuFactory.focusMenuItem(item);
+  };
 }])
 
 .controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {
@@ -119,6 +102,13 @@ angular.module('digitalDining.controllers', [])
   $scope.focusRestaurant = function (rest) {
     HomeFactory.focusRestaurant(rest);
   };
+}])
+.controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', function ($scope, MenuFactory) {
+  $scope.focusedMenuItem = {};
+  $scope.getFocusedMenuItem = function () {
+    $scope.focusedMenuItem = MenuFactory.getFocusedMenuItem();
+  };
+  $scope.getFocusedMenuItem();
 }])
 
 .controller('CheckInCtrl', ['$scope', '$stateParams', function ($scope) {

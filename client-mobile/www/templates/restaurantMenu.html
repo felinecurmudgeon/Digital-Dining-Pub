@@ -8,11 +8,15 @@
         <span class = 'foodImg'> <img src = '{{food.image}}'></span>
     </ion-item> -->
     <div>
-    hi{{menu}}
     </div>
     <!-- these will be for actual food categories on the menu -->
     <div class="item item-divider">
       Appetizers
+    </div>
+    <div class='appItems' collection-repeat='item in menu.data.data'>
+      <ion-item href='#/nav/menuItemDescription' ng-click='focusMenuItem(item)'>
+        <span>{{item.attributes.title}}</span><span class = 'itemPrice'>${{item.attributes.price}}</span>
+      </ion-item>
     </div>
     <div class="item item-divider">
       Entrees

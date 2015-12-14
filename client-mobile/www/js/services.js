@@ -1,9 +1,9 @@
 angular.module('digitalDining.services', [])
 
 .factory('MenuFactory', ['$http', function ($http) {
-  var getMenuItems = function () {
+  var getMenuItems = function (restID) {
     return $http({
-      url: 'http://localhost:8000/api/menuitems',
+      url: 'http://localhost:8000/api/menuitems/' + restID,
       method: 'GET'
     });
   };
@@ -20,10 +20,20 @@ angular.module('digitalDining.services', [])
       data: {item: item}
     });
   };
+  var focusedMenuItem = {};
+  var focusMenuItem = function (item) {
+    focusedMenuItem = item;
+  };
+  var getFocusedMenuItem = function () {
+    return focusedMenuItem;
+  };
   return {
     getMenuItems: getMenuItems,
     getSpecificMenu: getSpecificMenu,
-    addMenuItemToOrder: addMenuItemToOrder
+    addMenuItemToOrder: addMenuItemToOrder,
+    focusedMenuItem: focusedMenuItem,
+    focusMenuItem: focusMenuItem,
+    getFocusedMenuItem: getFocusedMenuItem
   };
 }])
 
