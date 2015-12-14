@@ -26,7 +26,6 @@ angular.module('digitalDining.controllers', [])
   $scope.goToSignUp = function () {
     $state.go('signup');
   };
-
   //when redirected here from facebook auth callback, grab the token from the query and store it
   if ($location.path().match(/successFBLogin/)) {
     $window.localStorage.setItem('digitaldining', $location.search().token);
@@ -34,6 +33,22 @@ angular.module('digitalDining.controllers', [])
       $state.go('nav.home');
     }, 2000);
   }
+}])
+
+.controller('AccountCtrl', ['$scope', 'PaymentFactory', function ($scope, PaymentFactory) {
+
+  $scope.handleStripe = function (status, response) {
+    console.log(status);
+    console.log(response);
+    if (response.error) {
+      $scope.stripeError = response.error;
+      // there was an error. Fix it.
+    } else {
+      // got stripe token, now charge it or smt
+      console.log(response.id);
+      PaymentFactory.submitCharge(response.id);
+    }
+  };
 
 }])
 
@@ -132,6 +147,7 @@ angular.module('digitalDining.controllers', [])
     $scope.signupData.password = '';
   };
 }])
+
 .controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory', function ($scope, HomeFactory) {
   $scope.focusedRestaurant = {};
   $scope.getFocusedRestaurant = function () {
@@ -139,6 +155,7 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.getFocusedRestaurant();
 }])
+
 .controller('PaymentsCtrl', ['$scope', function ($scope) {
   $scope.testingTotalForTaxAndTip = 140;
   $scope.totalWithTax = 0;
@@ -153,4 +170,3 @@ angular.module('digitalDining.controllers', [])
     $scope.totalWithTaxAndTip = total + $scope.tipAmount;
   };
 }]);
-

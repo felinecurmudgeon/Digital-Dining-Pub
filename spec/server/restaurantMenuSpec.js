@@ -174,7 +174,7 @@ describe('Restaurant and Menu Test Suite', function() {
 
   describe('Menu API Suite', function() {
       it('Should be able to get a menuitem', function (done){
-        request.get('/api/menuitems/'+testMenuItem.restaurant_id)
+        request.get('/api/menuitems?rid='+testMenuItem.restaurant_id)
           .expect(200)
           .end(function (err, res){
               if (err) {

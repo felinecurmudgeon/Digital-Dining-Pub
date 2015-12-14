@@ -3,7 +3,6 @@ var restaurantsModel = require('./restaurantsModel.js');
 var JsonResponseObj = require('../JsonResponseObject.js');
 var JsonDataObj = require('../JsonDataObject.js');
 
-
 module.exports = {
   getRestaurants : function (req, res) {
     var JsonResponseObject = new JsonResponseObj();

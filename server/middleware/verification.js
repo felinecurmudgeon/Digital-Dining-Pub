@@ -11,7 +11,7 @@ module.exports = function (req, res, next) {
     next();
   } else {
     jwt.verify(req.headers.authorization, process.env.DDJWTSECRET, function (err, profile) {
-      if (err && (protectedRoute && !protectEndpoints)) {
+      if (err && (protectedRoute && protectEndpoints)) {
         res.status(401).send('invalid token');
       } else if (!err) {
         req.user = {};

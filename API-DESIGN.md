@@ -33,8 +33,8 @@ TBD
 ## Charge API
 | HTTP Method   | URL                   | Description
 | ------------- | -------------------   | ---------------------------------
-| POST          | /users/:uid/charge/:cid | Updates the order + charges the customer CC via Stripe APIs
-| DELETE        | /users/:uid/charge/:cid | Refunds the charges the customer CC via Stripe APIs
+| POST          | /charge | Updates the order + charges the customer CC via Stripe APIs
+| DELETE        | /charge/:cid | Refunds the charges the customer CC via Stripe APIs
 
 ### Example POST
 TBD
@@ -47,7 +47,12 @@ TBD
 | POST          | /restaurantusers       | Creates an restaurant user
 
 ### Example POST
-`{username: "Timmy", password:'12345'}`
+`
+{
+  username: "Timmy", 
+  password:'12345'
+}
+`
 
 
 ## Restaurants API
@@ -59,12 +64,18 @@ TBD
 | PUT           | /restaurants/:id   | Updates an restaurant
 | DELETE        | /restaurants/:id   | Deletes an restaurant
 
-### Restaurants API GET query string parameters
-| Parameter     | Values           |
-| ------------- | -------------    | 
 
 ### Example POST
-TBD
+`
+{ 
+  restaurant_name: 'Carls Cake',
+  restaurant_owner_id: 33, <==must be valid restaurant_owner_id
+  restaurant_address: '1234 Pine St.',
+  restaurant_city: 'Tuscon', 
+  restaurant_state: 'AZ', 
+  restaurant_zip_code: '75111'
+}
+`
 
 
 ## MenusCategories API
@@ -74,18 +85,36 @@ TBD
 | POST          | /menucategories       | Creates an menucategories
 
 ### Example POST
-`{"restaurant_id": 185, "category_name" : "brunch"}`
+`
+{ 
+  "restaurant_id": 185, <==must be valid restaurant_id
+  "category_name" : "brunch"
+}
+`
 
 ## MenuItems API
 | HTTP Method   | URL           | Description
 | ------------- | ------------- | ---------------------------------
-| GET           | /menuitems/:rid   | Gets all menuitems for a given restaurant
+| GET           | /menuitems?rid=restaurantid   | Gets all menuitems for a given restaurant
 | POST          | /menuitems       | Creates a menuitems
 | PUT           | /menuitems/:id       | Updates a menuitems
 | DELETE        | /menuitems/:id       | Deletes a menuitems
 
+### Party API GET query string parameters
+| Parameter     | Values          |
+| ------------- | -------------   | 
+| rid | restaurantsid (i.e. 123)  |
+
+
 ### Example POST
-TBD
+`{
+  restaurant_id : 31 <==must be valid restaurant_id 
+  title : 'hot soup',
+  description : 'More delicious turtle soup',
+  price: '10.99',
+  menu_category_id : 7 <==must be valid menu_category_id
+}
+`
 
 ## Party API
 | HTTP Method   | URL           | Description

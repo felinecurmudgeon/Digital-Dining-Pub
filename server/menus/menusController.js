@@ -4,7 +4,6 @@ var JsonResponseObj = require('../JsonResponseObject.js');
 var JsonDataObj = require('../JsonDataObject.js');
 
 module.exports = {
-
   //menu categories
   getMenuCategories : function (req, res) {
     console.log('getting menu categories');
@@ -39,20 +38,28 @@ module.exports = {
   getMenuItems : function (req, res) {
     console.log('getting menu');
     var JsonResponseObject = new JsonResponseObj();
-    menusModel.menuItems.get(req.params.rid)
+    menusModel.menuItems.get(req.query.rid)
       .then(function (menuItems) {
         for (var i = 0; i < menuItems.length; i++) {
           var JsonDataObject = new JsonDataObj();
+          var JsonDataObjectIncluded = new JsonDataObj();
           JsonDataObject.type = 'menuItem';
           JsonDataObject.id = menuItems[i].id;
           JsonDataObject.attributes = {
-            restaurant_id : menuItems[i].restaurant_id,
+            restaurantId : menuItems[i].restaurant_id,
             title : menuItems[i].title,
             description : menuItems[i].description,
             price : menuItems[i].price,
-            menu_category_id : menuItems[i].menu_category_id
+            menuCategoryId : menuItems[i].menu_category_id
           };
+          JsonDataObjectIncluded.type = 'menuCategory';
+          JsonDataObjectIncluded.id = menuItems[i].menu_category_id;
+          JsonDataObjectIncluded.attributes = {
+            categoryName: menuItems[i].category_name
+          };
+
           JsonResponseObject.data.push(JsonDataObject);
+          JsonResponseObject.included.push(JsonDataObjectIncluded);
         }
         res.status(200);
         res.send(JsonResponseObject);

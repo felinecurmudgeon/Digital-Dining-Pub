@@ -7,3 +7,4 @@ dist/
 server/config.js
 
 .DS_Store
+nohup.out

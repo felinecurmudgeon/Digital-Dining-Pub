@@ -33,6 +33,10 @@ h1 {
   margin: 0 auto;
 }
 
+.accountInput {
+  border: 1px black solid !important;
+}
+
 .num {
   float:right;
 }

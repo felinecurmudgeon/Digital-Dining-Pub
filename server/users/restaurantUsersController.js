@@ -1,14 +1,14 @@
 var restaurantUsersModel = require('./restaurantUsersModel.js');
 var JsonResponseObj = require('../JsonResponseObject.js');
-var JsonResponseObject = new JsonResponseObj();
 var JsonDataObj = require('../JsonDataObject.js');
-var JsonDataObject = new JsonDataObj();
 
 module.exports = {
   getUser : function (req, res) {
+    var JsonResponseObject = new JsonResponseObj();
     restaurantUsersModel.restaurantUser.get(req.params.id)
       .then(function (data) {
         for (var i = 0; i < data.length; i++) {
+          var JsonDataObject = new JsonDataObj();
           JsonDataObject.type = 'restaurantUsers';
           JsonDataObject.id = data[i].id;
           JsonDataObject.attributes = {

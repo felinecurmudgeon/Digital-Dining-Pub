@@ -102,6 +102,7 @@ CREATE TABLE users (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   username VARCHAR(20) NOT NULL,
   password CHAR(60),
+  stripe_id VARCHAR(100),
   facebook_id CHAR(32) DEFAULT 'null',
 
   CONSTRAINT unique_user UNIQUE (username, facebook_id)

@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalDining.services'])
+angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.controllers', 'digitalDining.services'])
 
 .run(function ($ionicPlatform) {
   $ionicPlatform.ready(function () {
@@ -113,11 +113,12 @@ angular.module('digitalDining', ['ionic', 'digitalDining.controllers', 'digitalD
         }
       }
     })
-    .state('nav.settings', {
-      url: '/settings',
+    .state('nav.account', {
+      url: '/account',
       views: {
         'navContent': {
-          templateUrl: 'templates/settings.html'
+          templateUrl: 'templates/account.html',
+          controller: 'AccountCtrl'
         }
       }
     })
