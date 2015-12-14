@@ -56,7 +56,7 @@ angular.module('digitalDining.controllers', [])
   $scope.menu = {};
   $scope.getMenuItems = function () {
     var restID = HomeFactory.getFocusedRestaurant();
-    console.log('here', restID)
+    console.log('here', restID);
     MenuFactory.getMenuItems(restID.id).then(function (menu) {
       $scope.menu = menu;
     });
