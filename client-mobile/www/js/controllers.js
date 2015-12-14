@@ -35,7 +35,7 @@ angular.module('digitalDining.controllers', [])
   }
 }])
 
-.controller('AccountCtrl', ['$state', '$scope', '$http', '$window', 'PaymentFactory', function ($state, $scope, $http, $window, PaymentFactory) {
+.controller('AccountCtrl', ['$scope', 'PaymentFactory', function ($scope, PaymentFactory) {
 
   $scope.handleStripe = function (status, response) {
     console.log(status);

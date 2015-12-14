@@ -1,13 +1,12 @@
 /*jshint camelcase: false */
-// TODO: change to env variable
-var stripe = require('stripe')('sk_test_uJRTtfhOGyeUCoDUVrT5Ko6D');
+var stripe = require('stripe')(process.env.STRIPESECRET);
 var usersModel = require('../users/usersModel.js');
 
 module.exports = {
-  chargeCard : function (req) {
+  chargeCard : function (req, res) {
 
     //TODO: update user account with payment history info
-    console.log('user id:', req.user.id); //currently undefined!!
+    console.log('user id:', req.user.id);
 
     // Get the credit card details submitted by the form
     var stripeToken = req.body.stripeToken;
@@ -25,10 +24,11 @@ module.exports = {
           })
           .then(function () {
             console.log('sucessful charge ');
+            res.send(200);
           });
         } else {
           //create user
-          stripe.customers.create({
+          return stripe.customers.create({
             source: stripeToken,
             description: 'payinguser@example.com'
           }).then(function (stripeCustomer) {
@@ -43,6 +43,7 @@ module.exports = {
             });
           }).then(function () {
             console.log('sucessful charge ');
+            res.send(200);
           });
         }
       });

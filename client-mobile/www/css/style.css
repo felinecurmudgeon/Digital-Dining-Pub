@@ -33,7 +33,7 @@ h1 {
   margin: 0 auto;
 }
 
-input {
+.accountInput {
   border: 1px black solid !important;
 }
 

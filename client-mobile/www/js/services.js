@@ -1,6 +1,6 @@
 angular.module('digitalDining.services', [])
 
-.factory('MenuFactory', function ($http) {
+.factory('MenuFactory', ['$http', function ($http) {
   var getMenuItems = function () {
     return $http({
       url: 'http://localhost:8000/api/menuitems',
@@ -25,8 +25,9 @@ angular.module('digitalDining.services', [])
     getSpecificMenu: getSpecificMenu,
     addMenuItemToOrder: addMenuItemToOrder
   };
-})
-.factory('HomeFactory', function ($http) {
+}])
+
+.factory('HomeFactory', ['$http', function ($http) {
   var getAllRestaurants = function () {
     return $http({
       url: 'http://localhost:8000/api/restaurants',
@@ -46,8 +47,9 @@ angular.module('digitalDining.services', [])
     focusRestaurant: focusRestaurant,
     getFocusedRestaurant: getFocusedRestaurant
   };
-})
-.factory('CheckFactory', function ($http) {
+}])
+
+.factory('CheckFactory', ['$http', function ($http) {
   var getCheckItems = function () {
     return $http({
       url: 'TBD',
@@ -57,9 +59,9 @@ angular.module('digitalDining.services', [])
   return {
     getCheckItems: getCheckItems
   };
-})
+}])
 
-.factory('RestaurantFactory', function ($http) {
+.factory('RestaurantFactory', ['$http', function ($http) {
   var getAllRestaurants = function () {
     return $http({
       url: 'TBD',
@@ -69,15 +71,15 @@ angular.module('digitalDining.services', [])
   return {
     getAllRestaurants: getAllRestaurants
   };
-})
+}])
 
-.factory('PaymentFactory', function ($http) {
+.factory('PaymentFactory', ['$http', function ($http) {
   var submitCharge = function (token) {
     return $http({
       url: 'http://localhost:8000/api/charges',
       method: 'POST',
       data: {
-        'amount' : '1000',
+        'amount' : '50',
         'stripeToken' : token
       }
     });
@@ -85,10 +87,10 @@ angular.module('digitalDining.services', [])
   return {
     submitCharge: submitCharge
   };
-})
+}])
 
 //adds the JWT to all outgoing http requests
-.factory('AttachTokens', function ($window) {
+.factory('AttachTokens', ['$window', function ($window) {
   var attach = {
     request: function (object) {
       var jwt = $window.localStorage.getItem('digitaldining');
@@ -99,7 +101,7 @@ angular.module('digitalDining.services', [])
     }
   };
   return attach;
-})
+}])
 
 .factory('AuthFactory', ['$state', '$window', '$http', function ($state, $window, $http) {
   var signin = function (loginData) {
