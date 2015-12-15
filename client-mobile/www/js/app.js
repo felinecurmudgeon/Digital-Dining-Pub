@@ -79,14 +79,6 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
           controller: 'HomeCtrl'
         }
       }
-    }).state('nav.confirmTab', {
-      url: '/confirmTab',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/confirmTab.html',
-          controller: 'PaymentsCtrl'
-        }
-      }
     })
     .state('nav.checkIn', {
       url: '/checkIn',
@@ -109,7 +101,8 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
       url: '/currentCheck',
       views: {
         'navContent': {
-          templateUrl: 'templates/currentCheck.html'
+          templateUrl: 'templates/currentCheck.html',
+          controller: 'PaymentsCtrl'
         }
       }
     })

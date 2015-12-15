@@ -102,6 +102,7 @@ module.exports = {
           var partyParameters = {
             restaurant_id: parameters.restaurant_id,
             party_size: parameters.party_size,
+            table_id: null,
             checkedin_at: new Date().toMysqlFormat()
           };
           db.con.query('INSERT INTO parties SET ?', partyParameters, function (err, createdParty) {

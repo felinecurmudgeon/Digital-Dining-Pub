@@ -33,6 +33,7 @@ TBD
 ## Charge API
 | HTTP Method   | URL                   | Description
 | ------------- | -------------------   | ---------------------------------
+| POST          | /charge/addcard | Updates the order + charges the customer CC via Stripe APIs
 | POST          | /charge | Updates the order + charges the customer CC via Stripe APIs
 | DELETE        | /charge/:cid | Refunds the charges the customer CC via Stripe APIs
 
@@ -130,10 +131,16 @@ TBD
 | ------------- | -------------   | 
 | restaurantsid | rid (i.e. 123)  |
 | partyid | pid (i.e. 123)  |
-| status | optionnal: 'waiting','seated', 'canceled','ended'  |
+| status | optional: 'waiting','seated', 'canceled','ended'  |
 
 ### Example POST
-TBD
+`
+{
+  "restaurant_id" : "337", 
+  "party_size" : "5", 
+  "user_id" : "96"
+}
+`
 
 
 ## OrdersItems API

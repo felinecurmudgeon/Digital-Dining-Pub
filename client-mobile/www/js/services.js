@@ -76,10 +76,9 @@ angular.module('digitalDining.services', [])
 .factory('PaymentFactory', ['$http', function ($http) {
   var submitCharge = function (token) {
     return $http({
-      url: 'http://localhost:8000/api/charges',
+      url: 'http://localhost:8000/api/charges/addcard',
       method: 'POST',
       data: {
-        'amount' : '50',
         'stripeToken' : token
       }
     });

@@ -278,6 +278,19 @@ module.exports = {
       });
   },
 
+  insertPartyandOrder: function () {
+      //sql select query for user_ids, rest_ids and table_ids 
+
+      //insert into party and party_participants table with above data 
+
+      //sql select query for menu_item_ids
+
+      //insert into menu_items_ordered with promise returned from above (could break into 2 as well)
+
+      console.log("gonna insert my biz here");
+
+  },
+
   emptyAndRepopulateDB: function () {
     return module.exports.flushAllData()
       .then(function() {
@@ -285,7 +298,10 @@ module.exports = {
       })
       .then(function() {
         return module.exports.createUsersInDB();
-      });    
+      })
+      .then(function (){
+        return module.exports.insertPartyandOrder();
+      })    
   },
 
   endDBConnexion: function () {

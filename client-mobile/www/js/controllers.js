@@ -157,7 +157,6 @@ angular.module('digitalDining.controllers', [])
 }])
 
 .controller('PaymentsCtrl', ['$scope', function ($scope) {
-  $scope.testingTotalForTaxAndTip = 140;
   $scope.totalWithTax = 0;
   $scope.taxAmount = 0;
   $scope.totalWithTaxAndTip = 0;

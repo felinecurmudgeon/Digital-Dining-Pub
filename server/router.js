@@ -36,6 +36,7 @@ module.exports = function (router) {
   router.put('/api/menuItems/:id', menusController.updateMenuItems);
   router.delete('/api/menuItems/:id', menusController.deleteMenuItems);
 
+  router.post('/api/charges/addcard', chargesController.createStripeCustomer);
   router.post('/api/charges', chargesController.chargeCard);
 
   router.post('/api/parties', partiesController.checkInAndCreateParty);
@@ -44,6 +45,6 @@ module.exports = function (router) {
   router.get('/api/parties/:id', partiesController.get);
 
   router.get('/api/parties/:pid/menuitems', ordersController.getItemsOrdered);
-  router.post('/api/parties/:pid/menuitems', ordersController.getItemsOrdered);
+  router.post('/api/parties/:pid/menuitems', ordersController.postItemsOrdered);
   router.delete('/api/parties/:pid/menuitems/:mid', ordersController.deleteItemsOrdered);
 };
