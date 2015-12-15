@@ -35,8 +35,11 @@ module.exports = {
       });
   },
   postItemsOrdered: function (req, res) { // expecting an array of items in the body
-    ordersModel.order.post({user_id: 95, party_id: req.params.pid,
-      menu_items: req.body})
+    ordersModel.order.post({
+        user_id: 95,
+        party_id: req.params.pid,
+        menu_items: req.body
+      })
       .then(function (data) {
         res.status(201);
         res.send(data);

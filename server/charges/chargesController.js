@@ -5,8 +5,7 @@ var usersModel = require('../users/usersModel.js');
 module.exports = {
   chargeCard : function (req, res) {
 
-    // Get the credit card details submitted by the form
-    var stripeToken = req.body.stripeToken;
+    // Get the amount submitted by the form
     var amount = req.body.amount;
 
     //look up current cust, get stripe id
@@ -53,7 +52,7 @@ module.exports = {
 
         }
       });
-  }, 
+  },
 
   createStripeCustomer : function (req, res) {
     // Get the credit card details submitted by the form
@@ -70,9 +69,7 @@ module.exports = {
           usersModel.user.put(user[0].id, user[0]);
           console.log('card added');
           res.send(201);
-        })
-      })
-
-      
+        });
+      });
   }
 };
