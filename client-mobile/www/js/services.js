@@ -59,15 +59,31 @@ angular.module('digitalDining.services', [])
   };
 }])
 
-.factory('CheckFactory', ['$http', function ($http) {
-  var getCheckItems = function () {
-    return $http({
-      url: 'TBD',
-      method: 'GET'
-    });
+.factory('OrderFactory', ['$http', function ($http) {
+  
+  var order = {
+    party_id: 1,
+    user_id: 0,
+    menu_items: []
   };
+
+  var addItemToOrder = function (item, quantity) {
+    order.menu_items.push({menu_item_id: item.id, quantity: 1})
+    console.log('item', order);
+  };
+  var sendOrder = function (pid) {
+    pid = pid || 1;
+    console.log('hit');
+    return $http({
+      url: 'http://localhost:8000/api/parties/'+pid+'/menuitems',
+      method: 'POST',
+      data: order
+    });
+  }
   return {
-    getCheckItems: getCheckItems
+    sendOrder: sendOrder,
+    order: order,
+    addItemToOrder: addItemToOrder
   };
 }])
 

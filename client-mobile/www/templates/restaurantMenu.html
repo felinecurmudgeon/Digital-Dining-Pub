@@ -15,7 +15,12 @@
     </div>
     <div class='appItems' collection-repeat='item in menu.data.data'>
       <ion-item href='#/nav/menuItemDescription' ng-click='focusMenuItem(item)'>
-        <span>{{item.attributes.title}}</span><span class = 'itemPrice'>${{item.attributes.price}}</span>
+        <ion-checkbox>
+        </ion-checkbox>
+        <span>{{item.attributes.title}}</span>
+        <button ng-click='addItemToOrder(item)'>Add</button>
+        <span class = 'itemPrice'>${{item.attributes.price}}</span>
+
       </ion-item>
     </div>
     <div class="item item-divider">
@@ -40,8 +45,8 @@
       <a class="tab-item" href='#/app/currentCheck'>
         Current Check
       </a>
-      <a class="tab-item">
-        Favorites
+      <a class="tab-item" ng-click='sendOrder()'>
+        Place Order
       </a>
       <a class="tab-item">
         Call Waiter

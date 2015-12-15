@@ -52,7 +52,7 @@ angular.module('digitalDining.controllers', [])
 
 }])
 
-.controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', 'HomeFactory', function ($scope, MenuFactory, HomeFactory) {
+.controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, MenuFactory, HomeFactory, OrderFactory) {
   $scope.menu = {};
   $scope.getMenuItems = function () {
     var restID = HomeFactory.getFocusedRestaurant();
@@ -66,6 +66,12 @@ angular.module('digitalDining.controllers', [])
   $scope.focusMenuItem = function (item) {
     MenuFactory.focusMenuItem(item);
   };
+  $scope.sendOrder = function () {
+    OrderFactory.sendOrder();
+  };
+  $scope.addItemToOrder = function (item) {
+    OrderFactory.addItemToOrder(item);
+  }
 }])
 
 .controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {
@@ -103,12 +109,15 @@ angular.module('digitalDining.controllers', [])
     HomeFactory.focusRestaurant(rest);
   };
 }])
-.controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', function ($scope, MenuFactory) {
+.controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', function ($scope, MenuFactory, OrderFactory) {
   $scope.focusedMenuItem = {};
   $scope.getFocusedMenuItem = function () {
     $scope.focusedMenuItem = MenuFactory.getFocusedMenuItem();
   };
   $scope.getFocusedMenuItem();
+  $scope.addItemToOrder = function (item) {
+    OrderFactory.addItemToOrder(item);
+  };
 }])
 
 .controller('CheckInCtrl', ['$scope', '$stateParams', function ($scope) {
