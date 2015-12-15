@@ -25,7 +25,10 @@ var createJsonResponseForParty = function (data) {
 
 module.exports = {
   checkInAndCreateParty: function (req, res) {
-    partiesModel.party.checkInAndCreateParty(req.body)
+    partiesModel.party.checkInAndCreateParty({
+      restaurant_id: req.body.restaurant_id,
+      party_size: req.body.party_size,
+      user_id: req.user.id})
       .then(function (data) {
         res.status(201);
         res.send(data);

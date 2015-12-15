@@ -36,6 +36,7 @@ module.exports = {
   },
   postItemsOrdered: function (req, res) { // expecting an array of items in the body
     ordersModel.order.post({party_id: req.params.pid,
+      user_id: req.user.id,
       menu_items: req.body})
       .then(function (data) {
         res.status(201);
