@@ -1,3 +1,4 @@
+/*jshint camelcase: false */
 angular.module('digitalDining.services', [])
 
 .factory('MenuFactory', ['$http', function ($http) {
@@ -60,7 +61,6 @@ angular.module('digitalDining.services', [])
 }])
 
 .factory('OrderFactory', ['$http', function ($http) {
-  
   var order = {
     party_id: 1,
     user_id: 0,
@@ -68,18 +68,22 @@ angular.module('digitalDining.services', [])
   };
 
   var addItemToOrder = function (item, quantity) {
-    order.menu_items.push({menu_item_id: item.id, quantity: 1})
+    quantity = quantity || 1;
+    order.menu_items.push({
+      menu_item_id: item.id,
+      quantity: quantity
+    });
     console.log('item', order);
   };
   var sendOrder = function (pid) {
     pid = pid || 1;
     console.log('hit');
     return $http({
-      url: 'http://localhost:8000/api/parties/'+pid+'/menuitems',
+      url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
       method: 'POST',
-      data: order
+      data: order.menu_items
     });
-  }
+  };
   return {
     sendOrder: sendOrder,
     order: order,

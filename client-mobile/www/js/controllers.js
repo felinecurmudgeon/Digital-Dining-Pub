@@ -56,7 +56,6 @@ angular.module('digitalDining.controllers', [])
   $scope.menu = {};
   $scope.getMenuItems = function () {
     var restID = HomeFactory.getFocusedRestaurant();
-    console.log('here', restID);
     MenuFactory.getMenuItems(restID.id).then(function (menu) {
       $scope.menu = menu;
     });
@@ -71,7 +70,7 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.addItemToOrder = function (item) {
     OrderFactory.addItemToOrder(item);
-  }
+  };
 }])
 
 .controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {

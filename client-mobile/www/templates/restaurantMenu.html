@@ -15,12 +15,9 @@
     </div>
     <div class='appItems' collection-repeat='item in menu.data.data'>
       <ion-item href='#/nav/menuItemDescription' ng-click='focusMenuItem(item)'>
-        <ion-checkbox>
-        </ion-checkbox>
         <span>{{item.attributes.title}}</span>
         <button ng-click='addItemToOrder(item)'>Add</button>
         <span class = 'itemPrice'>${{item.attributes.price}}</span>
-
       </ion-item>
     </div>
     <div class="item item-divider">
