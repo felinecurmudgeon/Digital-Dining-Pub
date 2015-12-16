@@ -31,6 +31,7 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
 
   $scope.signout = function () {
     Auth.signout();
+    $location.path('/login');
   };
 
 });

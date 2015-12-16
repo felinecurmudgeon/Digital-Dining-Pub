@@ -3,8 +3,8 @@ angular.module('digitalDining', [
   'digitalDining.services',
   'digitalDining.auth'])
 
-.config(function ($stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/reserations');
+.config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+  $urlRouterProvider.otherwise('/reservations');
   $stateProvider
     .state('login', {
       url:'/login',
@@ -20,8 +20,8 @@ angular.module('digitalDining', [
       url: '/kitchen',
       templateUrl: './app/dummy.html' // TODO add controller
     })
-    .state('reserations', {
-      url: '/reserations',
+    .state('reservations', {
+      url: '/reservations',
       templateUrl: './app/dummy.html' // TODO
     })
     .state('menuCreator', {
@@ -32,8 +32,21 @@ angular.module('digitalDining', [
       url: '/restaurantSettings',
       templateUrl: './app/dummy.html' // TODO
     });
+  $httpProvider.interceptors.push('AttachTokens');
 })
-
+.factory('AttachTokens', function ($window) {
+  var attach = {
+    request: function (object) {
+      var jwt = $window.localStorage.getItem('com.digitalDining');
+      if (jwt) {
+        object.headers['x-access-token'] = jwt;
+      }
+      object.headers['Allow-Control-Allow-Origin'] = '*';
+      return object;
+    }
+  };
+  return attach;
+})
 .run(function($rootScope, $location, $state, Auth) {
     $rootScope.$on('$stateChangeStart', function (e, toState  , toParams, fromState, fromParams) {
         var isLogin = (toState.name === 'login' || toState.name === 'signup');
