@@ -130,6 +130,15 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
         }
       }
     })
+    .state('nav.menuItemDescription', {
+      url: '/menuItemDescription',
+      views: {
+        'navContent': {
+          templateUrl: 'templates/menuItemDescription.html',
+          controller: 'MenuItemDisplayCtrl'
+        }
+      }
+    })
     .state('nav.restaurantDescription', {
       url: '/restaurantDescription',
       views: {

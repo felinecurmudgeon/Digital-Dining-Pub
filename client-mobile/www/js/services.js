@@ -1,9 +1,10 @@
+/*jshint camelcase: false */
 angular.module('digitalDining.services', [])
 
 .factory('MenuFactory', ['$http', function ($http) {
-  var getMenuItems = function () {
+  var getMenuItems = function (restID) {
     return $http({
-      url: 'http://localhost:8000/api/menuitems',
+      url: 'http://localhost:8000/api/menuitems/?rid=' + restID,
       method: 'GET'
     });
   };
@@ -20,10 +21,20 @@ angular.module('digitalDining.services', [])
       data: {item: item}
     });
   };
+  var focusedMenuItem = {};
+  var focusMenuItem = function (item) {
+    focusedMenuItem = item;
+  };
+  var getFocusedMenuItem = function () {
+    return focusedMenuItem;
+  };
   return {
     getMenuItems: getMenuItems,
     getSpecificMenu: getSpecificMenu,
-    addMenuItemToOrder: addMenuItemToOrder
+    addMenuItemToOrder: addMenuItemToOrder,
+    focusedMenuItem: focusedMenuItem,
+    focusMenuItem: focusMenuItem,
+    getFocusedMenuItem: getFocusedMenuItem
   };
 }])
 
@@ -49,27 +60,33 @@ angular.module('digitalDining.services', [])
   };
 }])
 
-.factory('CheckFactory', ['$http', function ($http) {
-  var getCheckItems = function () {
-    return $http({
-      url: 'TBD',
-      method: 'GET'
-    });
+.factory('OrderFactory', ['$http', function ($http) {
+  var order = {
+    menu_items: []
   };
-  return {
-    getCheckItems: getCheckItems
-  };
-}])
 
-.factory('RestaurantFactory', ['$http', function ($http) {
-  var getAllRestaurants = function () {
+  var addItemToOrder = function (item, quantity) {
+    console.log(item);
+    quantity = quantity || 1;
+    order.menu_items.push({
+      menu_item_id: item.menuID,
+      quantity: quantity
+    });
+    console.log('item', order);
+  };
+  var sendOrder = function (pid) {
+    pid = pid || 1;
+    console.log('hit');
     return $http({
-      url: 'TBD',
-      method: 'GET'
+      url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
+      method: 'POST',
+      data: order.menu_items
     });
   };
   return {
-    getAllRestaurants: getAllRestaurants
+    sendOrder: sendOrder,
+    order: order,
+    addItemToOrder: addItemToOrder
   };
 }])
 
@@ -101,6 +118,26 @@ angular.module('digitalDining.services', [])
     }
   };
   return attach;
+}])
+.factory('CheckInFactory', ['$http', function ($http) {
+  var partyInfo = {};
+  var doCheckIn = function (data) {
+    return $http({
+      url: 'http://localhost:8000/api/parties',
+      method: 'POST',
+      data: data
+    }).then( function (response) {
+      partyInfo = response;
+    });
+  };
+  var getPartyInfo = function () {
+    return partyInfo;
+  };
+  return {
+    doCheckIn: doCheckIn,
+    partyInfo: partyInfo,
+    getPartyInfo: getPartyInfo
+  };
 }])
 
 .factory('AuthFactory', ['$state', '$window', '$http', function ($state, $window, $http) {

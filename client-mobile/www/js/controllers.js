@@ -1,3 +1,4 @@
+/*jshint camelcase: false */
 angular.module('digitalDining.controllers', [])
 
 //This is currently 'AppCtrl' but really only deals with login -- should probably update naming
@@ -52,37 +53,38 @@ angular.module('digitalDining.controllers', [])
 
 }])
 
-.controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', function ($scope, MenuFactory) {
-  // $scope.menuItemsSample = [
-  //   {name: 'Pizza',
-  //     ingredients: 'Crust, Cheese',
-  //     image: 'https://d2nyfqh3g1stw3.cloudfront.net/photos/pizza_19231.jpg'
-  //   },
-  //   {name: 'Spaghetti',
-  //     ingredients: 'Pasta, Sauce',
-  //     image: 'http://cdn.recipes100.com/v/726fc7d177b8d9598bc7927a21969024.jpg'
-  //   },
-  //   {name: 'Salad',
-  //     ingredients: 'Lettuce, Dressing',
-  //     image: 'http://www.beaconriverterrace.com/Salad1.jpg'
-  //   },
-  //   {name: 'Sushi',
-  //     ingredients: 'Fish, Rice',
-  //     image: 'http://iluvtokyosushi.net/images/home_l.png'
-  //   },
-  //   {name: 'Sandwich',
-  //     ingredients: 'Bread, Meat',
-  //     image: 'http://blogs.plos.org/obesitypanacea/files/2014/10/sandwich.jpg'
-  //   }
-  // ];
-  $scope.menu = {};
-  $scope.getMenuItems = function (menuId) {
-    MenuFactory.getMenuItems(menuId).then(function (menu) {
-      $scope.menu = menu;
-      console.log(menu);
+.controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', 'HomeFactory', 'OrderFactory', 'CheckInFactory', function ($scope, MenuFactory, HomeFactory, OrderFactory, CheckInFactory) {
+  $scope.getMenuItems = function () {
+    var restID = HomeFactory.getFocusedRestaurant();
+    MenuFactory.getMenuItems(restID.id).then(function (dataObject) {
+      $scope.menu = {};
+      for (var itemIndex = 0; itemIndex < dataObject.data.data.length; itemIndex++) {
+        if (!$scope.menu[dataObject.data.data[itemIndex].attributes.menuCategoryId]) {
+          dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
+          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName] = [dataObject.data.data[itemIndex].attributes];
+        } else {
+          dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
+          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].push(dataObject.data.data[itemIndex].attributes);
+        }
+      }
     });
   };
   $scope.getMenuItems();
+
+  $scope.getPartyInfo = function () {
+    $scope.partyInfo = CheckInFactory.getPartyInfo();
+  };
+  $scope.getPartyInfo();
+
+  $scope.focusMenuItem = function (item) {
+    MenuFactory.focusMenuItem(item);
+  };
+  $scope.sendOrder = function () {
+    OrderFactory.sendOrder($scope.partyInfo.data.id);
+  };
+  $scope.addItemToOrder = function (item) {
+    OrderFactory.addItemToOrder(item);
+  };
 }])
 
 .controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {
@@ -107,9 +109,6 @@ angular.module('digitalDining.controllers', [])
   $scope.displayRestaurants = function () {
     HomeFactory.getAllRestaurants().then(function (restaurants) {
       $scope.restaurants = restaurants.data.data;
-      $scope.restaurants.forEach(function (rest) {
-        console.log(rest.attributes);
-      });
     });
 
   };
@@ -121,12 +120,29 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('CheckInCtrl', ['$scope', '$stateParams', function ($scope) {
-  $scope.currentWait = '';
+.controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', function ($scope, MenuFactory, OrderFactory) {
+  $scope.focusedMenuItem = {};
+  $scope.getFocusedMenuItem = function () {
+    $scope.focusedMenuItem = MenuFactory.getFocusedMenuItem();
+  };
+  $scope.getFocusedMenuItem();
+  $scope.addItemToOrder = function (item) {
+    OrderFactory.addItemToOrder(item);
+  };
+}])
+
+.controller('CheckInCtrl', ['$scope', 'HomeFactory', 'CheckInFactory', function ($scope, HomeFactory, CheckInFactory) {
+  $scope.focusedRestaurant = {};
+  $scope.getFocusedRestaurant = function () {
+    $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
+  };
+  $scope.getFocusedRestaurant();
+  $scope.partyInfo = {
+    restaurant_id: $scope.focusedRestaurant.id,
+    party_size: ''
+  };
   $scope.doCheckIn = function () {
-    //add to checked in to restaurant
-    //assign table number
-    $scope.currentWait = 15 + ' minutes';
+    CheckInFactory.doCheckIn($scope.partyInfo);
   };
 }])
 
@@ -148,12 +164,15 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory', function ($scope, HomeFactory) {
+.controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory', 'CheckInFactory', function ($scope, HomeFactory, CheckInFactory) {
   $scope.focusedRestaurant = {};
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
   $scope.getFocusedRestaurant();
+  $scope.doCheckIn = function () {
+    CheckInFactory.doCheckIn();
+  };
 }])
 
 .controller('PaymentsCtrl', ['$scope', function ($scope) {

@@ -44,6 +44,6 @@ module.exports = function (router) {
   router.get('/api/parties/:id', partiesController.get);
 
   router.get('/api/parties/:pid/menuitems', ordersController.getItemsOrdered);
-  router.post('/api/parties/:pid/menuitems', ordersController.getItemsOrdered);
+  router.post('/api/parties/:pid/menuitems', ordersController.postItemsOrdered);
   router.delete('/api/parties/:pid/menuitems/:mid', ordersController.deleteItemsOrdered);
 };
