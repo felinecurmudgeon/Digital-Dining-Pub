@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Digital Dining</title>
+<!--     <link rel="stylesheet" type="text/css" href="styles/style.css" />  -->  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="./app/app.js"></script>
+    <script src="./app/auth/auth.js"></script>
+    <script src="./app/services/services.js"></script>
+  </head>
+  <body ng-app="digitalDining">
+    <!-- the ng-view directive is where our templates will be loaded into when naviagted to -->
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" ui-sref="#">Digital Dining</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a ui-sref="reservations">Reservations</a></li>
+          <li><a ui-sref="kitchen">Kitchen</a></li>
+          <li><a ui-sref="menuCreator">Menu Creator</a></li> 
+          <li><a ui-sref="restaurantSettings">Restaurant Settings</a></li> 
+        </ul>
+        <ul class="nav navbar-nav navbar-right" ng-controller="AuthController">
+          <li><a ng-click="signout()" href="#">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div ui-view></div>
+    </div>
+  </body>
+</html>
