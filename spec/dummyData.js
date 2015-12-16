@@ -69,23 +69,27 @@ var insertOrUpdateUser = function (table, user) { //only for unique key constrai
   });
 };
 
-var restaurantUsers = [
-  {username: 'toto',
-  password: 'pwd'},
+var restaurantOwners = [
+  {username: 'EmilioPizzaiolo',
+  password: 'pwd',
+  is_restaurant_user: true},
   
-  {username: 'emilio',
-  password: 'qwerty'},
+  {username: 'Sam',
+  password: 'qwerty',
+  is_restaurant_user: true},
   
-  {username: 'ZinedineZidane',
-  password: 'france98'},
+  {username: 'Germaine',
+  password: 'france98',
+  is_restaurant_user: true},
   
-  {username: 'tobias',
-  password: '123456'}
+  {username: 'Hans',
+  password: '123456',
+  is_restaurant_user: true}
 ];
 
 var users = [
   {username: 'toto',
-  password: 'pwd'},
+  password: 'pwd',},
   
   {username: 'emilio',
   password: 'qwerty'},
@@ -204,8 +208,8 @@ module.exports = {
   createCompleteRestaurantsInDB: function (){
     //TODO: either run test in gulp or make this function actually create dummy data
     console.log("creating dummy complete restaurants");
-    return Promise.all(restaurantUsers.map(function (restaurantUser, index) {
-      return insertOrUpdateUser('restaurant_users', restaurantUser)
+    return Promise.all(restaurantOwners.map(function (restaurantUser, index) {
+      return insertOrUpdateUser('users', restaurantUser)
         .then(function (createdRestaurantUser) {
           restaurants[index].restaurant_owner_id = createdRestaurantUser.id
           return insertData('restaurants', restaurants[index]);
@@ -262,9 +266,6 @@ module.exports = {
         deleteAllDataFromTable('payment_info');
       })
       .then(function() {
-        deleteAllDataFromTable('users');
-      })
-      .then(function() {
         deleteAllDataFromTable('menu_items');
       })
       .then(function() {
@@ -280,7 +281,7 @@ module.exports = {
         deleteAllDataFromTable('restaurants');
       })
       .then(function() {
-        deleteAllDataFromTable('restaurant_users');
+        deleteAllDataFromTable('users');
       })
       .then(function() {
         console.log('DB emptied!');

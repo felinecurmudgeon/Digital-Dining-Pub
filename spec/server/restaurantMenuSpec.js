@@ -39,9 +39,9 @@ describe('Restaurant and Menu Test Suite', function() {
           if (err) {console.log(err);}
           db.con.query('DELETE FROM restaurants', function (err, data){
             if (err) {console.log(err);}
-            db.con.query('DELETE FROM restaurant_users', function (err, data){
+            db.con.query('DELETE FROM users', function (err, data){
               if (err) {console.log(err);}
-              db.con.query('INSERT INTO restaurant_users (username, password) VALUES ("Sarah","54321")', function (err, data){
+              db.con.query('INSERT INTO users (username, password, is_restaurant_user) VALUES ("Sarah","54321", TRUE)', function (err, data){
                 if (err) {console.log(err);}
                 testRestaurant.restaurant_owner_id = data.insertId;
                 db.con.query('INSERT INTO restaurants SET ?', testRestaurant, function (err, data){
@@ -71,13 +71,13 @@ describe('Restaurant and Menu Test Suite', function() {
 
   describe('Restaurant User API Suite', function() {
     it('Should be able to get a restaurant user', function (done){
-      request.get('/api/restaurantUsers')
+      request.get('/api/users')
         .expect(200)
         .end(function (err, res){
             if (err) {
               done.fail(err);
             } else {
-              console.log('/restaurantsUsers GET run');
+              console.log('/users GET for restaurant users run');
               expect(res.body.data[res.body.data.length-1].attributes.username).toBe('Sarah');
               done();
             }
@@ -88,20 +88,21 @@ describe('Restaurant and Menu Test Suite', function() {
     it('Should be able to save a restaurant user', function (done){
       var testUserPost = {
         username: 'Jimmy',
-        password: '1234'
+        password: '1234',
+        is_restaurant_user: true
       };
 
-      request.post('/api/restaurantUsers')
+      request.post('/api/users')
         .send(testUserPost)
         .expect(201)
         .end(function (err, res){
           if (err) {
             done.fail(err);
           } else {
-            console.log('/restaurantsUsers POST run');
-            db.con.query('SELECT * FROM restaurant_users WHERE username="Jimmy"', function (err, data){
+            console.log('/users POST for restaurant users run');
+            db.con.query('SELECT * FROM users WHERE username="Jimmy" AND is_restaurant_user=TRUE', function (err, data){
               expect(data[0].username).toBe('Jimmy');
-              db.con.query('DELETE FROM restaurant_users WHERE username="Jimmy"', function (err, data){
+              db.con.query('DELETE FROM users WHERE username="Jimmy" AND is_restaurant_user=TRUE', function (err, data){
                 if(err){
                   console.log(err);
                 }
