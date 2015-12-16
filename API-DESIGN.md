@@ -13,8 +13,13 @@
 | ------------- | -------------    | 
 
 ### Example POST
-TBD
-
+`
+{
+  username: "Timmy", 
+  password:'12345',
+  is_restaurant_user: true
+}
+`
 
 ## Payments API
 | HTTP Method   | URL                   | Description
@@ -39,21 +44,6 @@ TBD
 
 ### Example POST
 TBD
-
-## RestaurantUsers API
-| HTTP Method   | URL           | Description
-| ------------- | ------------- | ---------------------------------
-| GET           | /restaurantusers       | Gets all restaurant user
-| GET           | /restaurantusers/:id   | Gets a specific restaurant user
-| POST          | /restaurantusers       | Creates an restaurant user
-
-### Example POST
-`
-{
-  username: "Timmy", 
-  password:'12345'
-}
-`
 
 
 ## Restaurants API
