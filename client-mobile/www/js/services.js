@@ -62,15 +62,14 @@ angular.module('digitalDining.services', [])
 
 .factory('OrderFactory', ['$http', function ($http) {
   var order = {
-    party_id: 1,
-    user_id: 0,
     menu_items: []
   };
 
   var addItemToOrder = function (item, quantity) {
+    console.log(item);
     quantity = quantity || 1;
     order.menu_items.push({
-      menu_item_id: item.id,
+      menu_item_id: item.menuID,
       quantity: quantity
     });
     console.log('item', order);
@@ -88,18 +87,6 @@ angular.module('digitalDining.services', [])
     sendOrder: sendOrder,
     order: order,
     addItemToOrder: addItemToOrder
-  };
-}])
-
-.factory('RestaurantFactory', ['$http', function ($http) {
-  var getAllRestaurants = function () {
-    return $http({
-      url: 'TBD',
-      method: 'GET'
-    });
-  };
-  return {
-    getAllRestaurants: getAllRestaurants
   };
 }])
 
@@ -131,6 +118,20 @@ angular.module('digitalDining.services', [])
     }
   };
   return attach;
+}])
+.factory('CheckInFactory', ['$http', function ($http) {
+  var doCheckIn = function (data) {
+    return $http({
+      url: 'http://localhost:8000/api/parties',
+      method: 'POST',
+      data: data
+    }).then( function (response) {
+      console.log(response);
+    });
+  };
+  return {
+    doCheckIn: doCheckIn
+  };
 }])
 
 .factory('AuthFactory', ['$state', '$window', '$http', function ($state, $window, $http) {

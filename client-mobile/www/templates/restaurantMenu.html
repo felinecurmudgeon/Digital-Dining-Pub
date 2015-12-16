@@ -1,52 +1,25 @@
 <ion-view view-title="Menu">
   <ion-content>
     <h1>Menu</h1>
-    <!-- dummy data -->
-    <!-- <ion-item ng-repeat="food in menuItemsSample" href="#/app/restaurantMenu/{{restaurant.id}}" class = 'menuItem'>
-        <span class = 'foodName'>{{food.name}}</span>
-        <span class = 'indgredients'> {{food.ingredients}} </span>
-        <span class = 'foodImg'> <img src = '{{food.image}}'></span>
-    </ion-item> -->
     <div>
+     <div ng-repeat="(category, menuItems) in menu">
+       <div class="item item-divider">{{category}}</div> 
+       <ion-item ng-repeat="menuItem in menuItems" href='#/nav/menuItemDescription' ng-click='focusMenuItem(menuItem)'>
+         <span class="itemTitle">{{menuItem.title}}</span>
+         <span class="itemPrice">{{menuItem.price}} </spa>
+       </ion-item>
+     </div>
     </div>
-    <!-- these will be for actual food categories on the menu -->
-    <div class="item item-divider">
-      Appetizers
-    </div>
-    <div class='appItems' collection-repeat='item in menu.data.data'>
-      <ion-item href='#/nav/menuItemDescription' ng-click='focusMenuItem(item)'>
-        <span>{{item.attributes.title}}</span>
-        <button ng-click='addItemToOrder(item)'>Add</button>
-        <span class = 'itemPrice'>${{item.attributes.price}}</span>
-      </ion-item>
-    </div>
-    <div class="item item-divider">
-      Entrees
-    </div>
-    <div class="item item-divider">
-      Desserts
-    </div>
-
-    
   </ion-content>
-  <!-- <ion-footer-bar align-title="left" class="bar-calm">
-      <div class="buttons">
-        <button class="button">Current Check</button>
-      </div>
-      <h1 class="title">Title!</h1>
-      <div class="buttons" ng-click="doSomething()">
-        <button class="button">Call a Server!</button>
-      </div>
-    </ion-footer-bar> -->
-    <div class="tabs">
-      <a class="tab-item" href='#/app/currentCheck'>
-        Current Check
-      </a>
-      <a class="tab-item" ng-click='sendOrder()'>
-        Place Order
-      </a>
-      <a class="tab-item">
-        Call Waiter
-      </a>
-    </div>
+  <div class="tabs">
+    <a class="tab-item" href='#/app/currentCheck'>
+      Current Check
+    </a>
+    <a class="tab-item" ng-click='sendOrder()'>
+      Place Order
+    </a>
+    <a class="tab-item">
+      Call Waiter
+    </a>
+  </div>
 </ion-view>

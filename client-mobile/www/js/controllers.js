@@ -1,3 +1,4 @@
+/*jshint camelcase: false */
 angular.module('digitalDining.controllers', [])
 
 //This is currently 'AppCtrl' but really only deals with login -- should probably update naming
@@ -53,11 +54,19 @@ angular.module('digitalDining.controllers', [])
 }])
 
 .controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, MenuFactory, HomeFactory, OrderFactory) {
-  $scope.menu = {};
   $scope.getMenuItems = function () {
     var restID = HomeFactory.getFocusedRestaurant();
-    MenuFactory.getMenuItems(restID.id).then(function (menu) {
-      $scope.menu = menu;
+    MenuFactory.getMenuItems(restID.id).then(function (dataObject) {
+      $scope.menu = {};
+      for (var itemIndex = 0; itemIndex < dataObject.data.data.length; itemIndex++) {
+        if (!$scope.menu[dataObject.data.data[itemIndex].attributes.menuCategoryId]) {
+          dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
+          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName] = [dataObject.data.data[itemIndex].attributes];
+        } else {
+          dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
+          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].push(dataObject.data.data[itemIndex].attributes);
+        }
+      }
     });
   };
   $scope.getMenuItems();
@@ -65,8 +74,8 @@ angular.module('digitalDining.controllers', [])
   $scope.focusMenuItem = function (item) {
     MenuFactory.focusMenuItem(item);
   };
-  $scope.sendOrder = function () {
-    OrderFactory.sendOrder();
+  $scope.sendOrder = function (pid) {
+    OrderFactory.sendOrder(pid);
   };
   $scope.addItemToOrder = function (item) {
     OrderFactory.addItemToOrder(item);
@@ -95,9 +104,6 @@ angular.module('digitalDining.controllers', [])
   $scope.displayRestaurants = function () {
     HomeFactory.getAllRestaurants().then(function (restaurants) {
       $scope.restaurants = restaurants.data.data;
-      $scope.restaurants.forEach(function (rest) {
-        console.log(rest.attributes);
-      });
     });
 
   };
@@ -108,6 +114,7 @@ angular.module('digitalDining.controllers', [])
     HomeFactory.focusRestaurant(rest);
   };
 }])
+
 .controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', function ($scope, MenuFactory, OrderFactory) {
   $scope.focusedMenuItem = {};
   $scope.getFocusedMenuItem = function () {
@@ -119,12 +126,18 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('CheckInCtrl', ['$scope', '$stateParams', function ($scope) {
-  $scope.currentWait = '';
+.controller('CheckInCtrl', ['$scope', 'HomeFactory', 'CheckInFactory', function ($scope, HomeFactory, CheckInFactory) {
+  $scope.focusedRestaurant = {};
+  $scope.getFocusedRestaurant = function () {
+    $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
+  };
+  $scope.getFocusedRestaurant();
+  $scope.partyInfo = {
+    restaurant_id: $scope.focusedRestaurant.id,
+    party_size: ''
+  };
   $scope.doCheckIn = function () {
-    //add to checked in to restaurant
-    //assign table number
-    $scope.currentWait = 15 + ' minutes';
+    CheckInFactory.doCheckIn($scope.partyInfo);
   };
 }])
 
@@ -146,12 +159,15 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory', function ($scope, HomeFactory) {
+.controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory', 'CheckInFactory', function ($scope, HomeFactory, CheckInFactory) {
   $scope.focusedRestaurant = {};
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
   $scope.getFocusedRestaurant();
+  $scope.doCheckIn = function () {
+    CheckInFactory.doCheckIn();
+  };
 }])
 
 .controller('PaymentsCtrl', ['$scope', function ($scope) {
