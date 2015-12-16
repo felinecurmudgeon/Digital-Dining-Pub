@@ -1,6 +1,5 @@
 /*jshint camelcase: false */
 var ordersModel = require('./ordersModel.js');
-var menuItemsModel = require('../menus/menusModel.js');
 var JsonResponse = require('../JsonResponseObject.js');
 var JsonData = require('../JsonDataObject.js');
 
@@ -36,7 +35,7 @@ var createJsonResponseForPartyItems = function (data) {
     };
 
     JsonResponseObject.included.push(JsonDataObjectIncluded);
-  
+
   }
   return JsonResponseObject;
 };

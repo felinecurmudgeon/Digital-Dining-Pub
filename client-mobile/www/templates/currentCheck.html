@@ -18,7 +18,7 @@
       <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .15)'>15%</button>
       <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .18)'>18%</button>
       <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .20)'>20%</button> <br>
-      Tip: <input name='tip' type='number' placeholder='{{tipAmount}}' value='{{tipAmount}}' ng-model='tipAmount'>
+      Tip: <input value='{{tipAmount}}' ng-model='tipAmount'>
     </div>
 
     <form ng-submit='doCharge()'>

@@ -46,7 +46,7 @@ angular.module('digitalDining.controllers', [])
     } else {
       // got stripe token, now charge it or smt
       console.log(response.id);
-      PaymentFactory.submitCharge(response.id);
+      PaymentFactory.addCard(response.id);
     }
   };
 
@@ -156,19 +156,27 @@ angular.module('digitalDining.controllers', [])
   $scope.getFocusedRestaurant();
 }])
 
-.controller('CheckCtrl', ['$scope', 'CheckFactory', function ($scope, CheckFactory) {
+.controller('CheckCtrl', ['$scope', '$filter', 'CheckFactory', function ($scope, $filter, CheckFactory) {
   var partyId = '366'; // will be CheckInFactory.partyId
   $scope.orderItems = [];
   $scope.subtotal = 0;
   $scope.totalWithTax = 0;
   $scope.taxAmount = 0;
   $scope.totalWithTaxAndTip = 0;
+
   var taxCalculator = function (total) {
      return total * 1.08;
   };
   $scope.tipCalculator = function (total, percentage) {
-    $scope.tipAmount = total * percentage;
-    $scope.totalWithTaxAndTip = total + $scope.tipAmount;
+    $scope.tipAmount = $filter('number')(total * percentage, 2);
+    $scope.totalWithTaxAndTip = Number($scope.tipAmount) + Number(total);
+  };
+  $scope.doCharge = function () {
+    //this should be broken out between tax amount and tip amounts and accounted for separtely in a production app
+    CheckFactory.chargeCard($scope.totalWithTaxAndTip)
+      .then(function () {
+        console.log('charged sucessfully');
+      });
   };
   $scope.getOrderItems = function () {
     CheckFactory.getCheckItems(partyId)
@@ -178,7 +186,7 @@ angular.module('digitalDining.controllers', [])
           $scope.orderItems.push(items.data.included[i].attributes);
           $scope.subtotal += items.data.included[i].attributes.price;
         }
-        $scope.totalWithTax = taxCalculator($scope.subtotal)
-      })
-  }
+        $scope.totalWithTax = $filter('number')(taxCalculator($scope.subtotal), 2);
+      });
+  };
 }]);

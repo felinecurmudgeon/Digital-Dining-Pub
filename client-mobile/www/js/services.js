@@ -52,12 +52,22 @@ angular.module('digitalDining.services', [])
 .factory('CheckFactory', ['$http', function ($http) {
   var getCheckItems = function (pid) {
     return $http({
-      url: 'http://localhost:8000/api/parties/'+pid+'/menuitems',
+      url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
       method: 'GET'
     });
   };
+  var chargeCard = function (amt) {
+    return $http({
+      url: 'http://localhost:8000/api/charges',
+      method: 'POST',
+      data: {
+        amount: amt
+      }
+    });
+  };
   return {
-    getCheckItems: getCheckItems
+    getCheckItems: getCheckItems,
+    chargeCard: chargeCard
   };
 }])
 
@@ -74,7 +84,7 @@ angular.module('digitalDining.services', [])
 }])
 
 .factory('PaymentFactory', ['$http', function ($http) {
-  var submitCharge = function (token) {
+  var addCard = function (token) {
     return $http({
       url: 'http://localhost:8000/api/charges/addcard',
       method: 'POST',
@@ -84,7 +94,7 @@ angular.module('digitalDining.services', [])
     });
   };
   return {
-    submitCharge: submitCharge
+    addCard: addCard
   };
 }])
 
