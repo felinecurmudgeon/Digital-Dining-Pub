@@ -120,17 +120,23 @@ angular.module('digitalDining.services', [])
   return attach;
 }])
 .factory('CheckInFactory', ['$http', function ($http) {
+  var partyInfo = {};
   var doCheckIn = function (data) {
     return $http({
       url: 'http://localhost:8000/api/parties',
       method: 'POST',
       data: data
     }).then( function (response) {
-      console.log(response);
+      partyInfo = response;
     });
   };
+  var getPartyInfo = function () {
+    return partyInfo;
+  };
   return {
-    doCheckIn: doCheckIn
+    doCheckIn: doCheckIn,
+    partyInfo: partyInfo,
+    getPartyInfo: getPartyInfo
   };
 }])
 

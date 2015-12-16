@@ -53,7 +53,7 @@ angular.module('digitalDining.controllers', [])
 
 }])
 
-.controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, MenuFactory, HomeFactory, OrderFactory) {
+.controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', 'HomeFactory', 'OrderFactory', 'CheckInFactory', function ($scope, MenuFactory, HomeFactory, OrderFactory, CheckInFactory) {
   $scope.getMenuItems = function () {
     var restID = HomeFactory.getFocusedRestaurant();
     MenuFactory.getMenuItems(restID.id).then(function (dataObject) {
@@ -71,11 +71,16 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.getMenuItems();
 
+  $scope.getPartyInfo = function () {
+    $scope.partyInfo = CheckInFactory.getPartyInfo();
+  };
+  $scope.getPartyInfo();
+
   $scope.focusMenuItem = function (item) {
     MenuFactory.focusMenuItem(item);
   };
-  $scope.sendOrder = function (pid) {
-    OrderFactory.sendOrder(pid);
+  $scope.sendOrder = function () {
+    OrderFactory.sendOrder($scope.partyInfo.data.id);
   };
   $scope.addItemToOrder = function (item) {
     OrderFactory.addItemToOrder(item);
