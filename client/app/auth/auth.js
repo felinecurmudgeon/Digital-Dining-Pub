@@ -1,7 +1,7 @@
 angular.module('digitalDining.auth', ['digitalDining.services'])
 
 .controller('AuthController', function ($scope, $window, $location, Auth) {
-  $scope.user = {};
+  $scope.user = {is_restaurant_user: true};
 
   $scope.authenticated = function () {
     return Auth.isAuth();
@@ -19,6 +19,7 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
   };
 
   $scope.signup = function () {
+    console.log($scope.user);
     Auth.signup($scope.user)
       .then(function (token) {
         $window.localStorage.setItem('com.digitalDining', token);

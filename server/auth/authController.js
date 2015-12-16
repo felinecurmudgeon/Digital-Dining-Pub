@@ -32,24 +32,23 @@ module.exports = {
 
   //check if username is taken.  if so, respond 401.  If not, create user in DB and send client back a JWT.
   signup: function (req, res) {
+    console.log(req.body.is_restaurant_user);
     Users.getByUsername(req.body.username)
     .then(function (user) {
       if (user.length === 0) {
         bcrypt.hash(req.body.password, 8, function (err, hash) {
           Users.post({
             username: req.body.username,
-            password: hash
+            password: hash,
+            is_restaurant_user: req.body.is_restaurant_user || false
           })
           .then(function (insertedUser) {
-            //post does not return the full user profile.  we must make a get to retrieve the info.
-            Users.get(insertedUser.insertId).then(function (retrievedUser) {
-              var profile = {
-                username: retrievedUser[0].username,
-                userID: retrievedUser[0].id
-              };
-              var token = jwt.sign(profile, process.env.DDJWTSECRET);
-              res.status(201).json({token: token});
-            });
+            var profile = {
+              username: req.body.username,
+              userID: insertedUser.insertId
+            };
+            var token = jwt.sign(profile, process.env.DDJWTSECRET);
+            res.status(201).json({token: token});
           });
         });
       } else {
