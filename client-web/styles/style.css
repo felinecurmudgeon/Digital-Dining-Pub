@@ -1,0 +1,35 @@
+.itemPrice {
+  float:right;
+}
+
+.priceEdit {
+  float:right;
+}
+
+.addItem {
+}
+
+.category {
+  display: inline-block;
+  margin-right: 25px;
+}
+
+.addItemForm {
+  overflow:auto;
+  position:relative;
+  height:100px;
+  width:100%;
+}
+
+.addItemForm input {
+  position:absolute;
+  left:200px;
+}
+
+.submitItem {
+  float:right;
+}
+
+.addItemForm div {
+  margin-top:5px;
+}

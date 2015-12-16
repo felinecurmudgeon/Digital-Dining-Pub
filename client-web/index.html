@@ -17,19 +17,17 @@
 
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="services/services.js"></script>
+    <script src="menu-creator/menu-creator.js"></script>
     <script>
-      var myApp = angular.module('dd-web', ['ui.router']);
+      var myApp = angular.module('dd-web', ['ui.router', 'menu-creator', 'dd-services']);
 
       myApp.config(function ($stateProvider) {
-      //
-      // For any unmatched url, redirect to /state1
-      //$urlRouterProvider.otherwise("/state1");
-      //
-      // Now set up the states
       $stateProvider
         .state('menu-creator', {
           url: '/menu-creator',
-          templateUrl: 'menu-creator/menu-creator.html'
+          templateUrl: 'menu-creator/menu-creator.html',
+          controller: 'MenuCtrl'
         });
     });
     </script>
