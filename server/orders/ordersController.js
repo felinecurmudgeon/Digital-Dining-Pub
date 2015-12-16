@@ -1,5 +1,6 @@
 /*jshint camelcase: false */
 var ordersModel = require('./ordersModel.js');
+var menuItemsModel = require('../menus/menusModel.js');
 var JsonResponse = require('../JsonResponseObject.js');
 var JsonData = require('../JsonDataObject.js');
 
@@ -20,7 +21,22 @@ var createJsonResponseForPartyItems = function (data) {
       paidAt: data[i].paid_at,
       canceledAt: data[i].canceled_at
     };
+
     JsonResponseObject.data.push(JsonDataObject);
+
+    var JsonDataObjectIncluded = new JsonData();
+    JsonDataObjectIncluded.type = 'menuItem';
+    JsonDataObjectIncluded.id = data[i].menu_item_id;
+    JsonDataObjectIncluded.attributes = {
+      restaurantId : data[i].restaurant_id,
+      title : data[i].title,
+      description : data[i].description,
+      price : data[i].price,
+      menuCategoryId : data[i].menu_category_id
+    };
+
+    JsonResponseObject.included.push(JsonDataObjectIncluded);
+  
   }
   return JsonResponseObject;
 };

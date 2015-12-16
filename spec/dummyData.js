@@ -351,9 +351,23 @@ module.exports = {
                   "user_id" : participant.user_id,
                   "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
                   "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
-                }
+                };
+                var menuItemOrderedObj2 = {
+                  "party_id" : participant.party_id,
+                  "user_id" : participant.user_id,
+                  "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
+                  "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                };
+                var menuItemOrderedObj3 = {
+                  "party_id" : participant.party_id,
+                  "user_id" : participant.user_id,
+                  "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
+                  "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                };
+                insertData('menu_items_ordered', menuItemOrderedObj);
+                insertData('menu_items_ordered', menuItemOrderedObj2);
                //insert into menu_items_ordered 
-                return insertData('menu_items_ordered', menuItemOrderedObj)
+               return insertData('menu_items_ordered', menuItemOrderedObj2);
               })
           }))
         })

@@ -102,7 +102,7 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
       views: {
         'navContent': {
           templateUrl: 'templates/currentCheck.html',
-          controller: 'PaymentsCtrl'
+          controller: 'CheckCtrl'
         }
       }
     })

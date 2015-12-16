@@ -1,31 +1,24 @@
 <ion-view view-title="Current Check">
   <ion-content>
-    <h4> Items Ordered </h4>
-    <div collection-repeat = 'item in orderItems'>
-      <li> <span class='itemName'> {{item.name}} </span> <span class = 'itemPrice'> {{item.price}} </span> </li>
+    <h4 ng-init='getOrderItems()'> Items Ordered </h4>
+    <div collection-repeat = 'item in orderItems' >
+      <li> <span class='itemName'> {{item.title}} </span> </li>
+      <li> <span class = 'itemPrice'> {{item.price}} </span> </li>
       <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
     </div>
-
-    <!-- dummy data -->
-    <ion-item ng-repeat="food in menuItemsSample" class = 'menuItem'>
-        <div class="item item-divider">
-        Item Ordered
-        <span class = 'foodName'>{{food.name}}</span>
-        <span class = 'price'> {{food.price}} </span>
-      </div>
-        <div class="item item-divider">
-        Item Ordered
-        <span class = 'foodName'>{{food.name}}</span>
-        <span class = 'price'> {{food.price}} </span>
-      </div>
-    </ion-item>
-    <!-- these will be for actual food categories on the menu -->
-   
+    <div class ='subtotal'>
+      Subtotal:
+      {{subtotal}}
+    </div>
+    <div class ='subtotal'>
+      Total with Tax:
+      {{totalWithTax}}
+    </div>
     <div>
-      <input type='number' placeholder='{{tipAmount}}' value='{{tipAmount}}' ng-model='tipAmount'>
-      <button class="button button-stable" ng-click='tipCalculator(testingTotalForTaxAndTip, .15)'>15%</button>
-      <button class="button button-stable" ng-click='tipCalculator(testingTotalForTaxAndTip, .18)'>18%</button>
-      <button class="button button-stable" ng-click='tipCalculator(testingTotalForTaxAndTip, .20)'>20%</button>
+      <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .15)'>15%</button>
+      <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .18)'>18%</button>
+      <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .20)'>20%</button> <br>
+      Tip: <input name='tip' type='number' placeholder='{{tipAmount}}' value='{{tipAmount}}' ng-model='tipAmount'>
     </div>
 
     <form ng-submit='doCharge()'>

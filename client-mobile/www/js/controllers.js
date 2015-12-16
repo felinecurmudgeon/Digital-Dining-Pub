@@ -156,16 +156,29 @@ angular.module('digitalDining.controllers', [])
   $scope.getFocusedRestaurant();
 }])
 
-.controller('PaymentsCtrl', ['$scope', function ($scope) {
+.controller('CheckCtrl', ['$scope', 'CheckFactory', function ($scope, CheckFactory) {
+  var partyId = '366'; // will be CheckInFactory.partyId
+  $scope.orderItems = [];
+  $scope.subtotal = 0;
   $scope.totalWithTax = 0;
   $scope.taxAmount = 0;
   $scope.totalWithTaxAndTip = 0;
-  $scope.taxCalculator = function (total) {
-    $scope.taxAmount = total * 0.08;
-    $scope.totalWithTax = total + $scope.taxAmount;
+  var taxCalculator = function (total) {
+     return total * 1.08;
   };
   $scope.tipCalculator = function (total, percentage) {
     $scope.tipAmount = total * percentage;
     $scope.totalWithTaxAndTip = total + $scope.tipAmount;
   };
+  $scope.getOrderItems = function () {
+    CheckFactory.getCheckItems(partyId)
+      .then(function (items) {
+        console.log(items);
+        for (var i = 0; i < items.data.included.length; i++) {
+          $scope.orderItems.push(items.data.included[i].attributes);
+          $scope.subtotal += items.data.included[i].attributes.price;
+        }
+        $scope.totalWithTax = taxCalculator($scope.subtotal)
+      })
+  }
 }]);

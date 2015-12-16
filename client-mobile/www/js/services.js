@@ -50,9 +50,9 @@ angular.module('digitalDining.services', [])
 }])
 
 .factory('CheckFactory', ['$http', function ($http) {
-  var getCheckItems = function () {
+  var getCheckItems = function (pid) {
     return $http({
-      url: 'TBD',
+      url: 'http://localhost:8000/api/parties/'+pid+'/menuitems',
       method: 'GET'
     });
   };
