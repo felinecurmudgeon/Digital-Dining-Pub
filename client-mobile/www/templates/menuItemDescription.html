@@ -6,7 +6,7 @@
         <h2>{{focusedMenuItem.title}}</h2>
         <p>{{focusedMenuItem.description}}</p>
       </div>
-      <button class='addToOrder' ng-click='addItemToOrder(focusedMenuItem)'>
+      <button ng-show='isCheckedIn' class='addToOrder' ng-click='addItemToOrder(focusedMenuItem)'>
       Add Item to Order
       </button>
     </div>

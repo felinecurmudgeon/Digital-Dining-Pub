@@ -60,6 +60,28 @@ angular.module('digitalDining.services', [])
   };
 }])
 
+.factory('CheckFactory', ['$http', function ($http) {
+  var getCheckItems = function (pid) {
+    return $http({
+      url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
+      method: 'GET'
+    });
+  };
+  var chargeCard = function (amt) {
+    return $http({
+      url: 'http://localhost:8000/api/charges',
+      method: 'POST',
+      data: {
+        amount: amt
+      }
+    });
+  };
+  return {
+    getCheckItems: getCheckItems,
+    chargeCard: chargeCard
+  };
+}])
+
 .factory('OrderFactory', ['$http', function ($http) {
   var order = {
     menu_items: []
@@ -74,6 +96,13 @@ angular.module('digitalDining.services', [])
     });
     console.log('item', order);
   };
+  var removeItemFromOrder = function (item) {
+    for (var i = 0; i < order.menu_items.length; i++) {
+      if (order.menu_items[i].menu_item_id === item.menuID) {
+        order.menu_items.splice(i, 1);
+      }
+    }
+  };
   var sendOrder = function (pid) {
     pid = pid || 1;
     console.log('hit');
@@ -86,23 +115,23 @@ angular.module('digitalDining.services', [])
   return {
     sendOrder: sendOrder,
     order: order,
-    addItemToOrder: addItemToOrder
+    addItemToOrder: addItemToOrder,
+    removeItemFromOrder: removeItemFromOrder
   };
 }])
 
 .factory('PaymentFactory', ['$http', function ($http) {
-  var submitCharge = function (token) {
+  var addCard = function (token) {
     return $http({
-      url: 'http://localhost:8000/api/charges',
+      url: 'http://localhost:8000/api/charges/addcard',
       method: 'POST',
       data: {
-        'amount' : '50',
         'stripeToken' : token
       }
     });
   };
   return {
-    submitCharge: submitCharge
+    addCard: addCard
   };
 }])
 
@@ -121,7 +150,12 @@ angular.module('digitalDining.services', [])
 }])
 .factory('CheckInFactory', ['$http', function ($http) {
   var partyInfo = {};
+  var isCheckedIn = false;
+  var getCheckInStatus = function () {
+    return isCheckedIn;
+  };
   var doCheckIn = function (data) {
+    isCheckedIn = true;
     return $http({
       url: 'http://localhost:8000/api/parties',
       method: 'POST',
@@ -134,6 +168,8 @@ angular.module('digitalDining.services', [])
     return partyInfo;
   };
   return {
+    getCheckInStatus: getCheckInStatus,
+    isCheckedIn: isCheckedIn,
     doCheckIn: doCheckIn,
     partyInfo: partyInfo,
     getPartyInfo: getPartyInfo

@@ -20,7 +20,22 @@ var createJsonResponseForPartyItems = function (data) {
       paidAt: data[i].paid_at,
       canceledAt: data[i].canceled_at
     };
+
     JsonResponseObject.data.push(JsonDataObject);
+
+    var JsonDataObjectIncluded = new JsonData();
+    JsonDataObjectIncluded.type = 'menuItem';
+    JsonDataObjectIncluded.id = data[i].menu_item_id;
+    JsonDataObjectIncluded.attributes = {
+      restaurantId : data[i].restaurant_id,
+      title : data[i].title,
+      description : data[i].description,
+      price : data[i].price,
+      menuCategoryId : data[i].menu_category_id
+    };
+
+    JsonResponseObject.included.push(JsonDataObjectIncluded);
+
   }
   return JsonResponseObject;
 };
@@ -35,9 +50,11 @@ module.exports = {
       });
   },
   postItemsOrdered: function (req, res) { // expecting an array of items in the body
-    ordersModel.order.post({party_id: req.params.pid,
-      user_id: req.user.id,
-      menu_items: req.body})
+    ordersModel.order.post({
+        party_id: req.params.pid,
+        user_id: req.user.id,
+        menu_items: req.body
+      })
       .then(function (data) {
         res.status(201);
         res.send(data);

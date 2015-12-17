@@ -1,21 +1,36 @@
 <ion-view view-title="Current Check">
   <ion-content>
-    <h1>Current Check</h1>
-    <h4> Orders </h4>
-    <div collection-repeat = 'item in orderItems'>
-      <li> <span class='itemName'> {{item.name}} </span> <span class = 'itemPrice'> {{item.price}} </span> </li>
+    <h4 ng-init='getOrderItems()'> Items Ordered </h4>
+    <div collection-repeat = 'item in orderItems' >
+      <li> <span class='itemName'> {{item.title}} </span> </li>
+      <li> <span class = 'itemPrice'> {{item.price}} </span> </li>
       <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
     </div>
-    <div class = 'total'>
-    Total:
-    {{total}}
+    <div class ='subtotal'>
+      Subtotal:
+      {{subtotal}}
     </div>
-    <div class = 'tax'> 
-    Tax:
+    <div class ='subtotal'>
+      Total with Tax:
+      {{totalWithTax}}
     </div>
-    <div class = 'tip'>
-    Tip:
-<!--     three buttons and a text field for custom tip, 15, 18 and 20% -->
+    <div>
+      <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .15)'>15%</button>
+      <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .18)'>18%</button>
+      <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .20)'>20%</button> <br>
+      Tip: <input value='{{tipAmount}}' ng-model='tipAmount'>
     </div>
+
+    <form ng-submit='doCharge()'>
+      <div class = 'total'>
+      Total:
+      {{totalWithTaxAndTip}}
+      </div>
+      <div class = 'submit'>
+        <button class='button button-balanced' type='submit'>
+          Submit Order
+        </button>
+      </div>
+    </form>
   </ion-content>
 </ion-view>

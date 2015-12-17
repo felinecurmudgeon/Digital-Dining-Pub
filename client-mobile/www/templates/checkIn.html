@@ -11,11 +11,8 @@
           <input type="number" ng-model="partyInfo.party_size">
         </label>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Check In to (restaurantName)</button>
+          <button class="button button-block button-positive" type="submit">Check In to {{focusedRestaurant.attributes.restaurantName}}</button>
         </label>
-        <div>
-          <h3>{{focusedRestaurant}} </h3>
-        </div>
       </div>
     </form>
   </ion-content>

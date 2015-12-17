@@ -24,7 +24,7 @@ module.exports = {
     },
     get: function (partyId) {
       return new Promise(function (resolve, reject) {
-        db.con.query('SELECT * FROM menu_items_ordered WHERE party_id = ?', partyId, function (err, data) {
+        db.con.query('SELECT * FROM menu_items_ordered mio INNER JOIN parties p ON mio.party_id = p.id INNER JOIN menu_items mi ON mi.id = mio.menu_item_id WHERE p.id = ?', partyId, function (err, data) {
           if (err) {
             reject(err);
           } else {

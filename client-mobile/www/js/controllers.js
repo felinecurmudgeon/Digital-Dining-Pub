@@ -47,13 +47,13 @@ angular.module('digitalDining.controllers', [])
     } else {
       // got stripe token, now charge it or smt
       console.log(response.id);
-      PaymentFactory.submitCharge(response.id);
+      PaymentFactory.addCard(response.id);
     }
   };
 
 }])
 
-.controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', 'HomeFactory', 'OrderFactory', 'CheckInFactory', function ($scope, MenuFactory, HomeFactory, OrderFactory, CheckInFactory) {
+.controller('RestaurantMenuCtrl', ['$scope', '$state', 'MenuFactory', 'HomeFactory', 'OrderFactory', 'CheckInFactory', function ($scope, $state, MenuFactory, HomeFactory, OrderFactory, CheckInFactory) {
   $scope.getMenuItems = function () {
     var restID = HomeFactory.getFocusedRestaurant();
     MenuFactory.getMenuItems(restID.id).then(function (dataObject) {
@@ -61,9 +61,11 @@ angular.module('digitalDining.controllers', [])
       for (var itemIndex = 0; itemIndex < dataObject.data.data.length; itemIndex++) {
         if (!$scope.menu[dataObject.data.data[itemIndex].attributes.menuCategoryId]) {
           dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
+          dataObject.data.data[itemIndex].attributes.isOrdered = false;
           $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName] = [dataObject.data.data[itemIndex].attributes];
         } else {
           dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
+          dataObject.data.data[itemIndex].attributes.isOrdered = false;
           $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].push(dataObject.data.data[itemIndex].attributes);
         }
       }
@@ -71,14 +73,25 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.getMenuItems();
 
+  $scope.clickLocationCheckingForOrder = function (event, item) {
+    if (event.srcElement.className === 'item activated') {
+      MenuFactory.focusMenuItem(item);
+      $state.go('nav.menuItemDescription');
+    } else if (event.srcElement.className === 'addButton icon ion-plus-circled') {
+      item.isOrdered = !item.isOrdered;
+      OrderFactory.addItemToOrder(item);
+    } else if (event.srcElement.className === 'removeButton icon ion-minus-circled') {
+      item.isOrdered = !item.isOrdered;
+      OrderFactory.removeItemFromOrder(item);
+    }
+  };
+
   $scope.getPartyInfo = function () {
     $scope.partyInfo = CheckInFactory.getPartyInfo();
+    $scope.isCheckedIn = CheckInFactory.getCheckInStatus();
   };
   $scope.getPartyInfo();
 
-  $scope.focusMenuItem = function (item) {
-    MenuFactory.focusMenuItem(item);
-  };
   $scope.sendOrder = function () {
     OrderFactory.sendOrder($scope.partyInfo.data.id);
   };
@@ -120,23 +133,30 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', function ($scope, MenuFactory, OrderFactory) {
+.controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', 'CheckInFactory', function ($scope, MenuFactory, OrderFactory, CheckInFactory) {
   $scope.focusedMenuItem = {};
   $scope.getFocusedMenuItem = function () {
     $scope.focusedMenuItem = MenuFactory.getFocusedMenuItem();
   };
   $scope.getFocusedMenuItem();
+
+  $scope.getCheckInStatus = function () {
+    $scope.isCheckedIn = CheckInFactory.getCheckInStatus();
+  };
+  $scope.getCheckInStatus();
+
   $scope.addItemToOrder = function (item) {
+    item.isOrdered = !item.isOrdered;
     OrderFactory.addItemToOrder(item);
   };
 }])
 
 .controller('CheckInCtrl', ['$scope', 'HomeFactory', 'CheckInFactory', function ($scope, HomeFactory, CheckInFactory) {
-  $scope.focusedRestaurant = {};
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
   $scope.getFocusedRestaurant();
+
   $scope.partyInfo = {
     restaurant_id: $scope.focusedRestaurant.id,
     party_size: ''
@@ -175,17 +195,48 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('PaymentsCtrl', ['$scope', function ($scope) {
-  $scope.testingTotalForTaxAndTip = 140;
+.controller('CheckCtrl', ['$scope', '$filter', 'CheckFactory', 'CheckInFactory', function ($scope, $filter, CheckFactory, CheckInFactory) {
+  $scope.getPartyInfo = function () {
+    $scope.partyInfo = CheckInFactory.getPartyInfo();
+  };
+  $scope.getPartyInfo();
+
+  var partyId = $scope.partyInfo.data.id; //hard code this to a valid partyId for testing
+  console.log(partyId);
+
+  $scope.orderItems = [];
+  $scope.subtotal = 0;
+  var subtotal = 0;
   $scope.totalWithTax = 0;
   $scope.taxAmount = 0;
   $scope.totalWithTaxAndTip = 0;
-  $scope.taxCalculator = function (total) {
-    $scope.taxAmount = total * 0.08;
-    $scope.totalWithTax = total + $scope.taxAmount;
+
+  var taxCalculator = function (total) {
+     return total * 1.08;
   };
   $scope.tipCalculator = function (total, percentage) {
-    $scope.tipAmount = total * percentage;
-    $scope.totalWithTaxAndTip = total + $scope.tipAmount;
+    $scope.tipAmount = $filter('number')(total * percentage, 2);
+    $scope.totalWithTaxAndTip = $filter('number')(Number($scope.tipAmount) + Number(total), 2);
   };
+  $scope.doCharge = function () {
+    //this should be broken out between tax amount and tip amounts and accounted for separtely in a production app
+    CheckFactory.chargeCard($scope.totalWithTaxAndTip)
+      .then(function () {
+        console.log('charged sucessfully');
+      });
+  };
+  $scope.getOrderItems = function () {
+    CheckFactory.getCheckItems(partyId)
+      .then(function (items) {
+        console.log(items);
+        for (var i = 0; i < items.data.included.length; i++) {
+          $scope.orderItems.push(items.data.included[i].attributes);
+          subtotal += items.data.included[i].attributes.price;
+        }
+        $scope.subtotal = $filter('number')(subtotal, 2);
+        $scope.totalWithTax = $filter('number')(taxCalculator($scope.subtotal), 2);
+        $scope.totalWithTaxAndTip = $scope.totalWithTax;
+      });
+  };
+  $scope.getOrderItems();
 }]);

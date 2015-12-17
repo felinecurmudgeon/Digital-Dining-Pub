@@ -45,3 +45,12 @@ h1 {
   float: right;
 }
 
+.addButton {
+  color: green;
+  font-size: 25px;
+  z-index: 100;
+}
+.removeButton {
+  color: red;
+  font-size: 25px;
+}
