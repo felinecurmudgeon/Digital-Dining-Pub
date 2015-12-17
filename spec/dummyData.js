@@ -14,6 +14,18 @@ var deleteAllDataFromTable = function (table) {
   });
 };
 
+var getAllDataFromTable = function (table) {
+  return new Promise(function (resolve, reject){
+    db.con.query('SELECT * FROM '+ table, function (err, data) {
+      if (err){
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+}
+
 var insertData = function (table, object) {
   return new Promise( function (resolve, reject) {
     db.con.query('INSERT INTO ?? SET ?', [table, object], function (err, data) {
@@ -278,6 +290,92 @@ module.exports = {
       });
   },
 
+  insertPartyandOrder: function () {
+      var testDataIds = {};
+      testDataIds.userIds = [];
+      testDataIds.restIds = [];
+      testDataIds.tableIds = [];
+      testDataIds.partyIds = [];
+
+      //sql select query for user_ids, rest_ids and table_ids 
+     return getAllDataFromTable('users')
+      .then(function (users) {
+        users.forEach(function (user) {
+          testDataIds.userIds.push(user.id);
+        })
+        return getAllDataFromTable('restaurants')
+      })
+      .then(function (restaurants) {
+        restaurants.forEach(function (restaurant) {
+          testDataIds.restIds.push(restaurant.id);
+        })
+        return getAllDataFromTable('tables')
+      })
+      .then(function (tables) {
+        return tables.forEach(function (table) {
+          testDataIds.tableIds.push({
+            "id" : table.id,
+            "rid": table.restaurant_id
+          })
+        })
+      })
+      //insert into party and party_participants 
+      .then(function () {
+        return Promise.all(testDataIds.tableIds.map(function (tableIds, index) {
+          var partyObj = {
+            "table_id" : testDataIds.tableIds[index].id,
+            "restaurant_id" : testDataIds.tableIds[index].rid,
+            "party_size" : Math.ceil(4 * Math.random())
+          }
+          return insertData('parties', partyObj);
+        }))
+
+      })
+      .then(function (parties) {
+        return Promise.all(parties.map(function (party, index) {
+          testDataIds.partyIds.push(party.id);
+          var participantsObj = {
+            "user_id": testDataIds.userIds[Math.floor(testDataIds.userIds.length * Math.random())],
+            "party_id": party.id
+          }
+          return insertData('party_participants', participantsObj)
+        }))
+      })
+      .then(function (partyParticipants){
+        //sql select query for menu_item_ids
+        return Promise.all(partyParticipants.map(function (participant, index) {
+            return getAllDataFromTable('menu_items')
+              .then(function (menuItems) {
+                var menuItemOrderedObj = {
+                  "party_id" : participant.party_id,
+                  "user_id" : participant.user_id,
+                  "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
+                  "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                };
+                var menuItemOrderedObj2 = {
+                  "party_id" : participant.party_id,
+                  "user_id" : participant.user_id,
+                  "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
+                  "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                };
+                var menuItemOrderedObj3 = {
+                  "party_id" : participant.party_id,
+                  "user_id" : participant.user_id,
+                  "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
+                  "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                };
+                insertData('menu_items_ordered', menuItemOrderedObj);
+                insertData('menu_items_ordered', menuItemOrderedObj2);
+               //insert into menu_items_ordered 
+               return insertData('menu_items_ordered', menuItemOrderedObj2);
+              })
+          }))
+        })
+      .catch(function (err) {
+        console.log(err);
+      })
+  },
+
   emptyAndRepopulateDB: function () {
     return module.exports.flushAllData()
       .then(function() {
@@ -285,7 +383,10 @@ module.exports = {
       })
       .then(function() {
         return module.exports.createUsersInDB();
-      });    
+      })
+      .then(function (){
+        return module.exports.insertPartyandOrder();
+      })    
   },
 
   endDBConnexion: function () {

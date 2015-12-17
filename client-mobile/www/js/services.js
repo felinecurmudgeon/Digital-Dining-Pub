@@ -60,6 +60,28 @@ angular.module('digitalDining.services', [])
   };
 }])
 
+.factory('CheckFactory', ['$http', function ($http) {
+  var getCheckItems = function (pid) {
+    return $http({
+      url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
+      method: 'GET'
+    });
+  };
+  var chargeCard = function (amt) {
+    return $http({
+      url: 'http://localhost:8000/api/charges',
+      method: 'POST',
+      data: {
+        amount: amt
+      }
+    });
+  };
+  return {
+    getCheckItems: getCheckItems,
+    chargeCard: chargeCard
+  };
+}])
+
 .factory('OrderFactory', ['$http', function ($http) {
   var order = {
     menu_items: []
@@ -91,18 +113,17 @@ angular.module('digitalDining.services', [])
 }])
 
 .factory('PaymentFactory', ['$http', function ($http) {
-  var submitCharge = function (token) {
+  var addCard = function (token) {
     return $http({
-      url: 'http://localhost:8000/api/charges',
+      url: 'http://localhost:8000/api/charges/addcard',
       method: 'POST',
       data: {
-        'amount' : '50',
         'stripeToken' : token
       }
     });
   };
   return {
-    submitCharge: submitCharge
+    addCard: addCard
   };
 }])
 
