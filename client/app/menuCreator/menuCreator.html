@@ -22,17 +22,17 @@
       <hr>
     </div>  
     <div ng-repeat="(index, menuItem) in menuItems.items">
-      <span class="itemTitle" ng-show="!menuItem.editable">{{menuItem.attributes.title}}</span>
-      <input class="titleEdit" ng-show="menuItem.editable" value="{{menuItem.attributes.title}}">
+      <span class="itemTitle" ng-show="!menuItem.editable" >{{menuItem.attributes.title}}</span>
+      <input class="titleEdit" ng-show="menuItem.editable" ng-model="menuItem.editedTitle">
       <span class="itemPrice" ng-show="!menuItem.editable">{{menuItem.attributes.price}} </span> 
-      <input class="priceEdit" ng-show="menuItem.editable" value="{{menuItem.attributes.price}}">
+      <input class="priceEdit" ng-show="menuItem.editable" ng-model="menuItem.editedPrice">
       <br>
       <span class="itemDescription" ng-show="!menuItem.editable">{{menuItem.attributes.description}}</span> 
-      <input class="descriptionEdit" ng-show="menuItem.editable" value="{{menuItem.attributes.description}}">
+      <input class="descriptionEdit" ng-show="menuItem.editable" ng-model="menuItem.editedDescription">
       <br>
       <button class="editItem" ng-click="editItem(menuItem)" ng-bind="editText(menuItem)"></button>
       <button class="cancelEdit" ng-show="menuItem.editable" ng-click="menuItem.editable = false">Cancel Edit</button>
-      <button class="deleteItem" ng-show="!menuItem.editable" ng-bind="deleteText(menuItem)" ng-click="deleteItem(menuItem)"></button>
+      <button class="deleteItem" ng-show="!menuItem.editable" ng-bind="deleteText(menuItem)" ng-click="deleteItem(menuItem, category, index)"></button>
       <button class="cancelEdit" ng-show="menuItem.deletable" ng-click="menuItem.deletable = false">Cancel Delete</button>
       <hr>
     </div>

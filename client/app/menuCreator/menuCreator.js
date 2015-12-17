@@ -9,47 +9,41 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
   $scope.catToAdd = '';
 
   $scope.addCategory = function () {
-    $http({
-      url: 'http://localhost:8000/api/menuCategories',
-      method: 'POST',
-      data: {
-        'restaurant_id' : 1, //ultimately this will be communicated in the JWT
-        'category_name' : $scope.catToAdd
-      }
-    }).then(function(result){
-      console.log('success! result: ', result);
-      $scope.catToAdd = '';
-      $scope.getMenu();
-    });
-  }
-
-  $scope.getMenu = function () {
-    //TODO: need to get and add all categories (including empty ones)
-    //right now, calls to restaurant menu API gives all categories.  Waiting for this to take an ID parameter before implementing
-
-    // MenuFactory.getMenuCategories(1).then( function (dataObject) {
-    //   console.log('categories object = ', dataObject);
-    // })
-    MenuFactory.getMenuItems(1).then(function (dataObject) {
-      $scope.menu = {};
-      console.log('got menu: ', dataObject);
-      for(var itemIndex = 0; itemIndex < dataObject.data.data.length; itemIndex++){
-        dataObject.data.data[itemIndex].editable = false;
-        dataObject.data.data[itemIndex].deletable = false;
-          if (!$scope.menu[dataObject.data.included[itemIndex].attributes.categoryName]) {
-          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName] = {
-            items: [dataObject.data.data[itemIndex]],
-            catId: dataObject.data.included[itemIndex].id
-          };
-          $scope.addItemForm[dataObject.data.included[itemIndex].attributes.categoryName] = false;
-          $scope.itemToAdd[dataObject.data.included[itemIndex].attributes.categoryName] = false;
-        } else {
-          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].items.push(dataObject.data.data[itemIndex]);         
-        }
-        console.log($scope.menu);
+    MenuFactory.postCategory($scope.catToAdd)
+    .then(function (result) {
+      $scope.menu[$scope.catToAdd] = {
+        items: [],
+        catId: result.data.insertId
       };
+      $scope.catToAdd = '';
     });
-  }
+  };
+  
+  $scope.getMenu = function () {
+    $scope.menu = {}; 
+
+    MenuFactory.getMenuCategories(1).then( function (dataObject) { //the 1 is the hardcoded restaurant ID. Eventually this will be removed.
+      for(var catIndex = 0; catIndex < dataObject.data.data.length; catIndex++){
+        $scope.menu[dataObject.data.data[catIndex].attributes.category_name] = {
+          items: [],
+          catId: dataObject.data.data[catIndex].id
+        }
+        $scope.addItemForm[dataObject.data.data[catIndex].attributes.category_name] = false;
+        $scope.itemToAdd[dataObject.data.data[catIndex].attributes.category_name] = false;
+      }
+    }).then(function(){
+      MenuFactory.getMenuItems(1).then(function (dataObject) { //the 1 is the hardcoded restaurant ID. Eventually this will be removed.
+        for(var itemIndex = 0; itemIndex < dataObject.data.data.length; itemIndex++){
+          dataObject.data.data[itemIndex].editable = false;
+          dataObject.data.data[itemIndex].deletable = false;
+          dataObject.data.data[itemIndex].editedPrice = dataObject.data.data[itemIndex].attributes.price;
+          dataObject.data.data[itemIndex].editedTitle = dataObject.data.data[itemIndex].attributes.title;
+          dataObject.data.data[itemIndex].editedDescription = dataObject.data.data[itemIndex].attributes.description;
+          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].items.push(dataObject.data.data[itemIndex]);         
+        };
+      });
+    });
+  };
 
   $scope.getMenu();
 
@@ -77,53 +71,53 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
   }
 
   $scope.postNewItem = function (category, categoryId) {
-    console.log('categoryID = ' + categoryId)
-    $http({
-          url: 'http://localhost:8000/api/menuItems',
-          method: 'POST',
-          data: {
-            'restaurant_id' : 1, //ultimately this will be communicated in the JWT
-            'title' : $scope.itemToAdd[category].title,
-            'description' : $scope.itemToAdd[category].description,
-            'price' : $scope.itemToAdd[category].price,
-            'menu_category_id' : categoryId
-          }
-        }).then(function(result){
-          console.log('success! result: ', result);
-          $scope.toggleAddItemForm(category);
-          $scope.getMenu();
-        });
+    var newItem = {
+      attributes: {
+        title: $scope.itemToAdd[category].title,
+        description: $scope.itemToAdd[category].description,
+        price: $scope.itemToAdd[category].price,
+        menuCategoryId: categoryId
+      },
+      editable: false,
+      deletable: false,
+      editedTitle: $scope.itemToAdd[category].title,
+      editedDescription: $scope.itemToAdd[category].description,
+      editedPrice: $scope.itemToAdd[category].price
+    };
+    MenuFactory.postMenuItem(newItem, categoryId)
+    .then(function (result) {
+      $scope.toggleAddItemForm(category);
+      newItem.id = result.data.insertId;
+      $scope.menu[category].items.push(newItem);
+    });
   };
 
-  $scope.editItem = function (menuItem) { //Need to implement this once I get menu item IDs
+  $scope.editItem = function (menuItem) { 
     menuItem.deletable = false;
-    if(!menuItem.editable){ //will need to bind data to the input fields on the DOM
+    if(!menuItem.editable){ 
       menuItem.editable = true;
+      menuItem.editedPrice = menuItem.attributes.price;
+      menuItem.editedTitle = menuItem.attributes.title;
+      menuItem.editedDescription = menuItem.attributes.description;
     } else {
-      // $http({
-      //     url: 'http://localhost:8000/api/menuItems/' + menuItem.id,
-      //     method: 'PUT',
-      //     data: {
-      //       'restaurant_id' : 1, //ultimately this will be communicated in the JWT
-      //       'title' : $scope.itemToAdd[category].title,
-      //       'description' : $scope.itemToAdd[category].description,
-      //       'price' : $scope.itemToAdd[category].price,
-      //       'menu_category_id' : categoryId
-      //     }
-      //   }).then(function(result){
-      //     console.log('success! result: ', result);
-      //     $scope.toggleAddItemForm(category);
-      //     $scope.getMenuItems();
-      //   });
-      menuItem.editable = false;
+      MenuFactory.editMenuItem(menuItem)
+      .then(function (result) {
+        menuItem.attributes.price = menuItem.editedPrice;
+        menuItem.attributes.title = menuItem.editedTitle;
+        menuItem.attributes.description = menuItem.editedDescription;
+        menuItem.editable = false;
+      });
     }
   };
 
-  $scope.deleteItem = function (menuItem) {
+  $scope.deleteItem = function (menuItem, category, index) {
     if(!menuItem.deletable){
       menuItem.deletable = true;
-    } else { //need to implement this once we get menu item IDs
-      
+    } else { 
+      MenuFactory.deleteMenuItem(menuItem)
+      .then(function (result) {
+        $scope.menu[category].items.splice(index, 1);
+      })
     }
   }
 

@@ -97,16 +97,57 @@ angular.module('digitalDining.services', [])
     });
   };
 
-  var postMenuItem = function () {
+  var postMenuItem = function (menuItem, categoryId) {
     return $http({
-      url: 'http://localhost:8000/api/menuitems/?rid=' + restID,
+      url: 'http://localhost:8000/api/menuItems',
       method: 'POST',
       data: {
+        'restaurant_id' : 1, //ultimately this will be communicated in the JWT
+        'title' : menuItem.attributes.title,
+        'description' : menuItem.attributes.description,
+        'price' : menuItem.attributes.price,
+        'menu_category_id' : menuItem.attributes.menuCategoryId
       }
-    });
+    })
   }
   
+  var editMenuItem = function (menuItem) {
+    return $http({
+      url: 'http://localhost:8000/api/menuItems/' + menuItem.id,
+      method: 'PUT',
+      data: {
+        'restaurant_id' : 1, //ultimately this will be communicated in the JWT
+        'title' : menuItem.editedTitle,
+        'description' : menuItem.editedDescription,
+        'price' : menuItem.editedPrice,
+        'menu_category_id' : menuItem.attributes.menuCategoryId
+      }
+    })
+  };
+
+  var deleteMenuItem = function (menuItem) {
+    return $http({
+      url: 'http://localhost:8000/api/menuItems/' + menuItem.id,
+      method: 'DELETE',
+    })
+  };
+
+  var postCategory = function (category) {
+    return $http({
+      url: 'http://localhost:8000/api/menuCategories',
+      method: 'POST',
+      data: {
+        'restaurant_id' : 1, //ultimately this will be communicated in the JWT
+        'category_name' : category
+      }
+    });
+  };
+  
   return {
+    postCategory: postCategory,
+    deleteMenuItem: deleteMenuItem,
+    editMenuItem: editMenuItem,
+    getMenuCategories: getMenuCategories,
     getMenuItems: getMenuItems,
     postMenuItem: postMenuItem
   };
