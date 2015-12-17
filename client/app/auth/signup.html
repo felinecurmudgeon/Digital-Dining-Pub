@@ -1,20 +1,20 @@
-<form class="form-signin" ng-submit='signup()'>
+<form class="form-signin" ng-submit="signup()">
   <div class="col-md-7">
     <h2 class="form-signin-heading">Create an account</h2>
     <div class="form-group">
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus ng-model='user.username'>
+      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus ng-model="user.username">
     </div>
     <div class="form-group">
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required ng-model='user.password'>
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required ng-model="user.password">
     </div>
     <div class="form-group">
-      <input type="password" id="inputPassword2" class="form-control" placeholder="Confirm password" required ng-model='user.password2'>
+      <input type="password" id="inputPassword2" class="form-control" placeholder="Confirm password" required ng-model="user.password2">
     </div>
     <div class="form-group">
       <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
       <a href="#/login">Already have an account? <strong>Login</strong> ...</a>
     </div>
-    <div class="alert alert-danger" ng-show='showPasswordMatch'>
+    <div class="alert alert-danger" ng-show="showPasswordMatch">
       <span class="glyphicon glyphicon-remove"></span><strong> Error! The two passwords don't match </strong>
     </div>
   </div>
