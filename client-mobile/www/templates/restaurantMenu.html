@@ -1,19 +1,27 @@
 <ion-view view-title="Menu">
+  <ion-header-bar class='bar bar-header bar-dark'>
+    <h1 class="title">Menu</h1>
+    <div class="buttons">
+      <button class="button button-clear">Check Order</button>
+    </div>
+  </ion-header-bar>
   <ion-content>
     <h1>Menu</h1>
     <div>
-     <div ng-repeat="(category, menuItems) in menu">
-       <div class="item item-divider">{{category}}</div> 
-       <ion-item ng-repeat="menuItem in menuItems" href='#/nav/menuItemDescription' ng-click='focusMenuItem(menuItem)'>
-         <span class="itemTitle">{{menuItem.title}}</span>
-         <span class="itemPrice">{{menuItem.price}} </spa>
+      <div ng-repeat="(category, menuItems) in menu">
+        <div class="item item-divider">{{category}}</div> 
+        <ion-item ng-repeat="menuItem in menuItems"   ng-click='clickLocationCheckingForOrder($event, menuItem)'>
+          <i ng-if='!menuItem.isOrdered && isCheckedIn' class="addButton icon ion-plus-circled"></i>
+          <i ng-if='menuItem.isOrdered' class="removeButton icon ion-minus-circled"></i>
+          <span class="itemTitle">{{menuItem.title}}</span>
+          <span class="itemPrice">{{menuItem.price}} </span>
        </ion-item>
      </div>
     </div>
   </ion-content>
   <div class="tabs">
-    <a class="tab-item" href='#/app/currentCheck'>
-      Current Check
+    <a class="tab-item" href='#/nav/currentCheck'>
+      Current Order
     </a>
     <a class="tab-item" ng-click='sendOrder()'>
       Place Order
@@ -23,3 +31,5 @@
     </a>
   </div>
 </ion-view>
+
+<!-- href='#/nav/menuItemDescription' -->
