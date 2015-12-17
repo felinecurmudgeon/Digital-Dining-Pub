@@ -48,7 +48,10 @@
         name="InputState" placeholder="Enter State"
         value = {{restaurant.restaurant_state}} ng-model="restaurant.restaurant_state" required>
     </div>
-    <input type="submit" name="submit" id="submit" value="Submit" class="btn btn-info pull-right">
+    <input type="submit" name="submit" id="submit" class="btn btn-info pull-right"
+      value="Create my Restaurant" ng-show="$scope.creation">
+    <input type="submit" name="submit" id="submit" value="Update info" class="btn btn-info pull-right"
+      value="Create my Restaurant" ng-hide="$scope.creation">
   </div>
 </form>
 <!-- 
