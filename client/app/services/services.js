@@ -37,7 +37,7 @@ angular.module('digitalDining.services', [])
 })
 
 .factory('Restaurants', function ($http) {
-  var getRestaurantInfo = function (userId) {
+  var getRestaurantInfo = function () {
     return $http({
       method: 'GET',
       url: '/api/restaurants?all=false'
