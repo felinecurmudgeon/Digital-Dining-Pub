@@ -176,11 +176,8 @@ angular.module('digitalDining.controllers', [])
 }])
 
 .controller('CheckCtrl', ['$scope', '$filter', 'CheckFactory', 'CheckInFactory', function ($scope, $filter, CheckFactory, CheckInFactory) {
-  
-  
   $scope.getPartyInfo = function () {
     $scope.partyInfo = CheckInFactory.getPartyInfo();
-    console.log("ran party info", $scope.partyInfo );
   };
   $scope.getPartyInfo();
 
