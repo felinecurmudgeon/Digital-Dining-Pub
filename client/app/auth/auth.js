@@ -2,6 +2,7 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
 
 .controller('AuthController', function ($scope, $window, $location, Auth) {
   $scope.user = {is_restaurant_user: true};
+  $scope.showPasswordMatch = false;
 
   $scope.authenticated = function () {
     return Auth.isAuth();
@@ -19,7 +20,10 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
   };
 
   $scope.signup = function () {
-    console.log($scope.user);
+    $scope.showPasswordMatch = false;
+    if ($scope.user.password !== $scope.user.password2) {
+      $scope.showPasswordMatch = true;
+    } else {
     Auth.signup($scope.user)
       .then(function (token) {
         $window.localStorage.setItem('com.digitalDining', token);
@@ -28,6 +32,7 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
       .catch(function (error) {
         console.error(error);
       });
+    }
   };
 
   $scope.signout = function () {
