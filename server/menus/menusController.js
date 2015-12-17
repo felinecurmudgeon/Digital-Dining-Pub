@@ -8,7 +8,7 @@ module.exports = {
   getMenuCategories : function (req, res) {
     console.log('getting menu categories');
     var JsonResponseObject = new JsonResponseObj();
-    menusModel.menuCategory.get()
+    menusModel.menuCategory.get(req.query.rid)
       .then(function (menuCats) {
         for (var i = 0; i < menuCats.length; i++) {
           var JsonDataObject = new JsonDataObj();
