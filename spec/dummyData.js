@@ -351,19 +351,19 @@ module.exports = {
                   "party_id" : participant.party_id,
                   "user_id" : participant.user_id,
                   "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
-                  "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                  "ordered_at" : new Date().toMysqlFormat()
                 };
                 var menuItemOrderedObj2 = {
                   "party_id" : participant.party_id,
                   "user_id" : participant.user_id,
                   "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
-                  "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                  "ordered_at" : new Date().toMysqlFormat()
                 };
                 var menuItemOrderedObj3 = {
                   "party_id" : participant.party_id,
                   "user_id" : participant.user_id,
                   "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
-                  "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                  "ordered_at" : new Date().toMysqlFormat()
                 };
                 insertData('menu_items_ordered', menuItemOrderedObj);
                 insertData('menu_items_ordered', menuItemOrderedObj2);
