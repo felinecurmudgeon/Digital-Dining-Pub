@@ -1,6 +1,10 @@
 <h1> Menu Editor </h1>
 
 <div>
+  <form class="addCategoryForm">
+    <input placeholder="New Category" ng-Model="catToAdd">
+    <button ng-click="addCategory()">Add Category</button>
+  </form>
   <div ng-repeat="(category, menuItems) in menu">
     <h3 class="category">{{category}}</h3> 
     <button class="addItem" ng-show="!addItemForm[category]" ng-click="toggleAddItemForm(category)"> Add item to category </button>
@@ -26,8 +30,10 @@
       <span class="itemDescription" ng-show="!menuItem.editable">{{menuItem.attributes.description}}</span> 
       <input class="descriptionEdit" ng-show="menuItem.editable" value="{{menuItem.attributes.description}}">
       <br>
-      <button class="editItem" ng-click="editItem(menuItem)" ng-bind="editText(menuItem)">fff</button>
-      <button class="cancelEdit" ng-show="menuItem.editable" ng-click="cancelEdit(menuItem)">Cancel Edit</button>
+      <button class="editItem" ng-click="editItem(menuItem)" ng-bind="editText(menuItem)"></button>
+      <button class="cancelEdit" ng-show="menuItem.editable" ng-click="menuItem.editable = false">Cancel Edit</button>
+      <button class="deleteItem" ng-show="!menuItem.editable" ng-bind="deleteText(menuItem)" ng-click="deleteItem(menuItem)"></button>
+      <button class="cancelEdit" ng-show="menuItem.deletable" ng-click="menuItem.deletable = false">Cancel Delete</button>
       <hr>
     </div>
   </div>
