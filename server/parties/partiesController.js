@@ -68,23 +68,22 @@ module.exports = {
           res.send(response);
         });
     } else {
-      var query = url.parse(req.url, true).query;
-      if (query.rid) {
+      if (req.query.rid) {
         var sendAnswer = function (callback) {
-          callback(+query.rid)
+          callback(+req.query.rid)
             .then(function (data) {
               var response = createJsonResponseForParty(data);
               res.status(200);
               res.send(response);
             });
         };
-        if (query.status === 'waiting') {
+        if (req.query.status === 'waiting') {
           sendAnswer(partiesModel.party.getCheckedInParties);
-        } else if (query.status === 'seated') {
+        } else if (req.query.status === 'seated') {
           sendAnswer(partiesModel.party.getCurrentParties);
-        } else if (query.status === 'canceled') {
+        } else if (req.query.status === 'canceled') {
           sendAnswer(partiesModel.party.getCanceledParties);
-        } else if (query.status === 'ended') {
+        } else if (req.query.status === 'ended') {
           sendAnswer(partiesModel.party.getFinishedParties);
         } else {
           sendAnswer(partiesModel.party.getAllParties);
