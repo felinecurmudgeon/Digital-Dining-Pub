@@ -96,6 +96,13 @@ angular.module('digitalDining.services', [])
     });
     console.log('item', order);
   };
+  var removeItemFromOrder = function (item) {
+    for (var i = 0; i < order.menu_items.length; i++) {
+      if (order.menu_items[i].menu_item_id === item.menuID) {
+        order.menu_items.splice(i, 1);
+      }
+    }
+  };
   var sendOrder = function (pid) {
     pid = pid || 1;
     console.log('hit');
@@ -108,7 +115,8 @@ angular.module('digitalDining.services', [])
   return {
     sendOrder: sendOrder,
     order: order,
-    addItemToOrder: addItemToOrder
+    addItemToOrder: addItemToOrder,
+    removeItemFromOrder: removeItemFromOrder
   };
 }])
 
@@ -142,7 +150,12 @@ angular.module('digitalDining.services', [])
 }])
 .factory('CheckInFactory', ['$http', function ($http) {
   var partyInfo = {};
+  var isCheckedIn = false;
+  var getCheckInStatus = function () {
+    return isCheckedIn;
+  };
   var doCheckIn = function (data) {
+    isCheckedIn = true;
     return $http({
       url: 'http://localhost:8000/api/parties',
       method: 'POST',
@@ -155,6 +168,8 @@ angular.module('digitalDining.services', [])
     return partyInfo;
   };
   return {
+    getCheckInStatus: getCheckInStatus,
+    isCheckedIn: isCheckedIn,
     doCheckIn: doCheckIn,
     partyInfo: partyInfo,
     getPartyInfo: getPartyInfo

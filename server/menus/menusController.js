@@ -40,6 +40,7 @@ module.exports = {
     var JsonResponseObject = new JsonResponseObj();
     menusModel.menuItems.get(req.query.rid)
       .then(function (menuItems) {
+        console.log(JSON.stringify(menuItems));
         for (var i = 0; i < menuItems.length; i++) {
           var JsonDataObject = new JsonDataObj();
           var JsonDataObjectIncluded = new JsonDataObj();

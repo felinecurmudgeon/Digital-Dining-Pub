@@ -53,7 +53,7 @@ angular.module('digitalDining.controllers', [])
 
 }])
 
-.controller('RestaurantMenuCtrl', ['$scope', 'MenuFactory', 'HomeFactory', 'OrderFactory', 'CheckInFactory', function ($scope, MenuFactory, HomeFactory, OrderFactory, CheckInFactory) {
+.controller('RestaurantMenuCtrl', ['$scope', '$state', 'MenuFactory', 'HomeFactory', 'OrderFactory', 'CheckInFactory', function ($scope, $state, MenuFactory, HomeFactory, OrderFactory, CheckInFactory) {
   $scope.getMenuItems = function () {
     var restID = HomeFactory.getFocusedRestaurant();
     MenuFactory.getMenuItems(restID.id).then(function (dataObject) {
@@ -61,9 +61,11 @@ angular.module('digitalDining.controllers', [])
       for (var itemIndex = 0; itemIndex < dataObject.data.data.length; itemIndex++) {
         if (!$scope.menu[dataObject.data.data[itemIndex].attributes.menuCategoryId]) {
           dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
+          dataObject.data.data[itemIndex].attributes.isOrdered = false;
           $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName] = [dataObject.data.data[itemIndex].attributes];
         } else {
           dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
+          dataObject.data.data[itemIndex].attributes.isOrdered = false;
           $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].push(dataObject.data.data[itemIndex].attributes);
         }
       }
@@ -71,14 +73,25 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.getMenuItems();
 
+  $scope.clickLocationCheckingForOrder = function (event, item) {
+    if (event.srcElement.className === 'item activated') {
+      MenuFactory.focusMenuItem(item);
+      $state.go('nav.menuItemDescription');
+    } else if (event.srcElement.className === 'addButton icon ion-plus-circled') {
+      item.isOrdered = !item.isOrdered;
+      OrderFactory.addItemToOrder(item);
+    } else if (event.srcElement.className === 'removeButton icon ion-minus-circled') {
+      item.isOrdered = !item.isOrdered;
+      OrderFactory.removeItemFromOrder(item);
+    }
+  };
+
   $scope.getPartyInfo = function () {
     $scope.partyInfo = CheckInFactory.getPartyInfo();
+    $scope.isCheckedIn = CheckInFactory.getCheckInStatus();
   };
   $scope.getPartyInfo();
 
-  $scope.focusMenuItem = function (item) {
-    MenuFactory.focusMenuItem(item);
-  };
   $scope.sendOrder = function () {
     OrderFactory.sendOrder($scope.partyInfo.data.id);
   };
@@ -120,23 +133,30 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', function ($scope, MenuFactory, OrderFactory) {
+.controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', 'CheckInFactory', function ($scope, MenuFactory, OrderFactory, CheckInFactory) {
   $scope.focusedMenuItem = {};
   $scope.getFocusedMenuItem = function () {
     $scope.focusedMenuItem = MenuFactory.getFocusedMenuItem();
   };
   $scope.getFocusedMenuItem();
+
+  $scope.getCheckInStatus = function () {
+    $scope.isCheckedIn = CheckInFactory.getCheckInStatus();
+  };
+  $scope.getCheckInStatus();
+
   $scope.addItemToOrder = function (item) {
+    item.isOrdered = !item.isOrdered;
     OrderFactory.addItemToOrder(item);
   };
 }])
 
 .controller('CheckInCtrl', ['$scope', 'HomeFactory', 'CheckInFactory', function ($scope, HomeFactory, CheckInFactory) {
-  $scope.focusedRestaurant = {};
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
   $scope.getFocusedRestaurant();
+
   $scope.partyInfo = {
     restaurant_id: $scope.focusedRestaurant.id,
     party_size: ''

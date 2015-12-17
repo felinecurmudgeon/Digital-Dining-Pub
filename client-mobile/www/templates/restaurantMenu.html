@@ -1,5 +1,5 @@
 <ion-view view-title="Menu">
-  <<ion-header-bar class='bar bar-header bar-dark'>
+  <ion-header-bar class='bar bar-header bar-dark'>
     <h1 class="title">Menu</h1>
     <div class="buttons">
       <button class="button button-clear">Check Order</button>
@@ -10,13 +10,12 @@
     <div>
       <div ng-repeat="(category, menuItems) in menu">
         <div class="item item-divider">{{category}}</div> 
-        <ion-list>
-        <ion-item ng-repeat="menuItem in menuItems" href='#/nav/menuItemDescription' ng-click='focusMenuItem(menuItem)'>
-          <i class="addButton button-icon icon ion-plus-circled"></i>
+        <ion-item ng-repeat="menuItem in menuItems"   ng-click='clickLocationCheckingForOrder($event, menuItem)'>
+          <i ng-if='!menuItem.isOrdered && isCheckedIn' class="addButton icon ion-plus-circled"></i>
+          <i ng-if='menuItem.isOrdered' class="removeButton icon ion-minus-circled"></i>
           <span class="itemTitle">{{menuItem.title}}</span>
           <span class="itemPrice">{{menuItem.price}} </span>
        </ion-item>
-       <ion-list>
      </div>
     </div>
   </ion-content>
@@ -32,3 +31,5 @@
     </a>
   </div>
 </ion-view>
+
+<!-- href='#/nav/menuItemDescription' -->

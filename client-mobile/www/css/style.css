@@ -47,8 +47,10 @@ h1 {
 
 .addButton {
   color: green;
-  font-size: 70px !important;
+  font-size: 25px;
+  z-index: 100;
 }
-button.addButton {
-  font-size: 70px;
+.removeButton {
+  color: red;
+  font-size: 25px;
 }
