@@ -134,7 +134,6 @@ angular.module('digitalDining.controllers', [])
 }])
 
 .controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', 'CheckInFactory', function ($scope, MenuFactory, OrderFactory, CheckInFactory) {
-  $scope.focusedMenuItem = {};
   $scope.getFocusedMenuItem = function () {
     $scope.focusedMenuItem = MenuFactory.getFocusedMenuItem();
   };
@@ -151,7 +150,7 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('CheckInCtrl', ['$scope', 'HomeFactory', 'CheckInFactory', function ($scope, HomeFactory, CheckInFactory) {
+.controller('CheckInCtrl', ['$scope', '$state', 'HomeFactory', 'CheckInFactory', function ($scope, $state, HomeFactory, CheckInFactory) {
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
@@ -163,6 +162,10 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.doCheckIn = function () {
     CheckInFactory.doCheckIn($scope.partyInfo);
+    $scope.isCheckedIn = true;
+    setTimeout(function () {
+      $state.go('nav.restaurantMenu');
+    }, 2000);
   };
 }])
 
@@ -184,15 +187,11 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory', 'CheckInFactory', function ($scope, HomeFactory, CheckInFactory) {
-  $scope.focusedRestaurant = {};
+.controller('RestaurantDisplayCtrl', ['$scope', '$state', 'HomeFactory', function ($scope, $state, HomeFactory) {
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
   $scope.getFocusedRestaurant();
-  $scope.doCheckIn = function () {
-    CheckInFactory.doCheckIn();
-  };
 }])
 
 .controller('CheckCtrl', ['$scope', '$filter', 'CheckFactory', 'CheckInFactory', function ($scope, $filter, CheckFactory, CheckInFactory) {
