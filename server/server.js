@@ -9,7 +9,7 @@ var tokenVerification = require('./middleware/verification');
 var app = express();
 var expressRouter = express.Router();
 
-app.use(express.static(__dirname + '/../client-mobile'));
+app.use(express.static(__dirname + '/../client'));
 
 //cookie parser
 app.use(cookieParser());

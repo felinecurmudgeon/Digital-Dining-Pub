@@ -4,21 +4,17 @@
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Party Name</span>
-          <input type="text" ng-model="loginData.username">
+          <input type="text" ng-model="partyInfo.username">
         </label>
         <label class="item item-input">
           <span class="input-label">Party Size</span>
-          <input type="number" ng-model="checkInData.partysize">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Special Requsts</span>
-          <input type="text" ng-model="checkInData.requests">
+          <input type="number" ng-model="partyInfo.party_size">
         </label>
         <label class="item">
           <button class="button button-block button-positive" type="submit">Check In to (restaurantName)</button>
         </label>
         <div>
-          <h3> Wait Time : {{currentWait}} </h3>
+          <h3>{{focusedRestaurant}} </h3>
         </div>
       </div>
     </form>
