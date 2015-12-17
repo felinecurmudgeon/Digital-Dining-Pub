@@ -1,7 +1,8 @@
 angular.module('digitalDining', [
   'ui.router',
   'digitalDining.services',
-  'digitalDining.auth'])
+  'digitalDining.auth',
+  'digitalDining.restaurantSettings'])
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/reservations');
@@ -30,7 +31,8 @@ angular.module('digitalDining', [
     })
     .state('restaurantSettings', {
       url: '/restaurantSettings',
-      templateUrl: './app/dummy.html' // TODO
+      templateUrl: './app/restaurantSettings/restaurantSettings.html',
+      controller: 'restSettingsController'
     });
   $httpProvider.interceptors.push('AttachTokens');
 })
@@ -39,7 +41,7 @@ angular.module('digitalDining', [
     request: function (object) {
       var jwt = $window.localStorage.getItem('com.digitalDining');
       if (jwt) {
-        object.headers['x-access-token'] = jwt;
+        object.headers['authorization'] = jwt;
       }
       object.headers['Allow-Control-Allow-Origin'] = '*';
       return object;
