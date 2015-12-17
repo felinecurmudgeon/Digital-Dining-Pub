@@ -32,7 +32,6 @@ module.exports = {
 
   //check if username is taken.  if so, respond 401.  If not, create user in DB and send client back a JWT.
   signup: function (req, res) {
-    console.log(req.body.is_restaurant_user);
     Users.getByUsername(req.body.username)
     .then(function (user) {
       if (user.length === 0) {

@@ -7,7 +7,12 @@ module.exports = {
   getRestaurants : function (req, res) {
     var JsonResponseObject = new JsonResponseObj();
     console.log('getting restaurant ', req.params.id);
-    restaurantsModel.restaurant.get(req.params.id)
+    var parameters = {
+      restaurantId: req.params.id,
+      userId: req.user.id,
+      all: req.query.all
+    };
+    restaurantsModel.restaurant.get(parameters)
       .then(function (data) {
         for (var i = 0; i < data.length; i++) {
           var JsonDataObject = new JsonDataObj();

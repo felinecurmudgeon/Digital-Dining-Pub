@@ -49,7 +49,7 @@ TBD
 ## Restaurants API
 | HTTP Method   | URL           | Description
 | ------------- | ------------- | ---------------------------------
-| GET           | /restaurants       | Gets all restaurants
+| GET           | /restaurants?all=bool        | Gets all restaurants (if all=false, only for a given user, by default true)
 | GET           | /restaurants/:id   | Gets a specific restaurant
 | POST          | /restaurants       | Creates an restaurant
 | PUT           | /restaurants/:id   | Updates an restaurant
