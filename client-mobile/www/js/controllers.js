@@ -238,4 +238,5 @@ angular.module('digitalDining.controllers', [])
         $scope.totalWithTaxAndTip = $scope.totalWithTax;
       });
   };
+  $scope.getOrderItems();
 }]);
