@@ -97,7 +97,7 @@ angular.module('digitalDining.services', [])
     console.log('item', order);
   };
   var removeItemFromOrder = function (item) {
-    for (var i = 0; i < order.menu_items.length; i++) {
+    for (var i = 0; i <= order.menu_items.length; i++) {
       if (order.menu_items[i].menu_item_id === item.menuID) {
         order.menu_items.splice(i, 1);
       }
@@ -148,7 +148,7 @@ angular.module('digitalDining.services', [])
   };
   return attach;
 }])
-.factory('CheckInFactory', ['$http', function ($http) {
+.factory('CheckInFactory', ['$http', '$window', function ($http, $window) {
   var partyInfo = {};
   var isCheckedIn = false;
   var getCheckInStatus = function () {
@@ -162,6 +162,7 @@ angular.module('digitalDining.services', [])
       data: data
     }).then( function (response) {
       partyInfo = response;
+      $window.localStorage.setItem('partyInfo', JSON.stringify(response));
     });
   };
   var getPartyInfo = function () {
