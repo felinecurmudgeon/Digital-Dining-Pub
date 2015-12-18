@@ -9,12 +9,12 @@ angular.module('digitalDining', [
   $urlRouterProvider.otherwise('/reservations');
   $stateProvider
     .state('login', {
-      url:'/login',
+      url: '/login',
       templateUrl: './app/auth/login.html',
       controller: 'AuthController'
     })
     .state('signup', {
-      url:'/signup',
+      url: '/signup',
       templateUrl: './app/auth/signup.html',
       controller: 'AuthController'
     })
@@ -55,7 +55,7 @@ angular.module('digitalDining', [
     request: function (object) {
       var jwt = $window.localStorage.getItem('com.digitalDining');
       if (jwt) {
-        object.headers['authorization'] = jwt;
+        object.headers.authorization = jwt;
       }
       object.headers['Allow-Control-Allow-Origin'] = '*';
       return object;
@@ -63,14 +63,14 @@ angular.module('digitalDining', [
   };
   return attach;
 })
-.run(function($rootScope, $location, $state, Auth) {
-    $rootScope.$on('$stateChangeStart', function (e, toState  , toParams, fromState, fromParams) {
+.run(function ($rootScope, $location, $state, Auth) {
+    $rootScope.$on('$stateChangeStart', function (e, toState) {
         var isLogin = (toState.name === 'login' || toState.name === 'signup');
-        if(isLogin){
-           return; // no need to redirect 
+        if (isLogin) {
+           return; // no need to redirect
         }
         var userInfo = Auth.isAuth();
-        if(userInfo === false) {
+        if (userInfo === false) {
             e.preventDefault(); // stop current execution
             $state.go('login'); // go to login
         }
