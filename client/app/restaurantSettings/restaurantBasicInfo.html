@@ -7,18 +7,6 @@
           value = {{restaurant.restaurant_name}} ng-model="restaurant.restaurant_name" required>
     </div>
     <div class="form-group">
-      <label for="InputCategory">Category of restaurant</label>
-      <input type="text" class="form-control" id="InputCategory" 
-        name="InputCategory" placeholder="Enter a category best describing your restaurant"
-        value = {{restaurant.restaurant_category}} ng-model="restaurant.restaurant_category">
-    </div>
-    <div class="form-group">
-      <label for="InputDescription">Restaurant description</label>
-      <input type="text" class="form-control" id="InputDescription" 
-        name="InputDescription" placeholder="Enter a short description of your restaurant"
-        value = {{restaurant.restaurant_description}} ng-model="restaurant.restaurant_description">
-    </div>
-    <div class="form-group">
       <label for="InputPhoneNumber">Phone Number</label>
       <input type="text" class="form-control" id="InputPhoneNumber"
         name="InputPhoneNumber" placeholder="Enter Phone Number"
@@ -49,9 +37,9 @@
         value = {{restaurant.restaurant_state}} ng-model="restaurant.restaurant_state" required>
     </div>
     <input type="submit" name="submit" id="submit" class="btn btn-info pull-right"
-      value="Create my Restaurant" ng-show="$scope.creation">
+      value="Create my Restaurant" ng-show="creation">
     <input type="submit" name="submit" id="submit" value="Update info" class="btn btn-info pull-right"
-      value="Create my Restaurant" ng-hide="$scope.creation">
+      value="Create my Restaurant" ng-hide="creation">
   </div>
 </form>
 <!-- 

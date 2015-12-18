@@ -31,9 +31,22 @@ angular.module('digitalDining', [
     })
     .state('restaurantSettings', {
       url: '/restaurantSettings',
-      templateUrl: './app/restaurantSettings/restaurantSettings.html',
+      templateUrl: './app/restaurantSettings/restaurantSettingsTemplate.html',
       controller: 'restSettingsController'
+    })
+    .state('restaurantSettings.info', {
+      url: '/restaurantSettings/info',
+      templateUrl: './app/restaurantSettings/restaurantBasicInfo.html'
+    })
+    .state('restaurantSettings.description', {
+      url: '/restaurantSettings/description',
+      templateUrl: './app/restaurantSettings/restaurantDescription.html'
+    })
+    .state('restaurantSettings.hours', {
+      url: '/restaurantSettings/hours',
+      templateUrl: './app/restaurantSettings/restaurantHours.html'
     });
+
   $httpProvider.interceptors.push('AttachTokens');
 })
 .factory('AttachTokens', function ($window) {

@@ -3,7 +3,7 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
 .controller('restSettingsController', function ($scope, $window, $location, Restaurants) {
   $scope.restaurant = {};
   $scope.creation = true;
-
+  $scope.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   $scope.creating = function () {
     Restaurants.getRestaurantInfo()
       .then(function (resp) {
