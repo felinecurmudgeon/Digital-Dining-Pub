@@ -118,6 +118,7 @@ CREATE TABLE parties (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   restaurant_id INT NOT NULL,
   table_id INT,
+  party_name VARCHAR(30) NOT NULL,
   party_size INT NOT NULL,
   checkedin_at TIMESTAMP,
   seated_at TIMESTAMP,

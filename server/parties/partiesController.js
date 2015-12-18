@@ -1,8 +1,9 @@
 /*jshint camelcase: false */
-var partiesModel = require('./partiesModel.js');
+var partiesModel = require('./partiesModel');
 var url = require('url');
-var JsonResponse = require('../JsonResponseObject.js');
-var JsonData = require('../JsonDataObject.js');
+var JsonResponse = require('../JsonResponseObject');
+var JsonData = require('../JsonDataObject');
+var nameGenerator = require('./nameGenerator');
 
 var createJsonResponseForParty = function (data) {
   var JsonResponseObject = new JsonResponse();
@@ -23,15 +24,31 @@ var createJsonResponseForParty = function (data) {
   return JsonResponseObject;
 };
 
+var getAvailablePartyName = function () {
+  var name = nameGenerator();
+  return partiesModel.party.getOpenPartiesByName(name)
+    .then(function (data) {
+      if (data.length === 0) {
+        return name;
+      } else {
+        return getAvailablePartyName();
+      }
+    });
+};
+
 module.exports = {
   checkInAndCreateParty: function (req, res) {
-    partiesModel.party.checkInAndCreateParty({
-      restaurant_id: req.body.restaurant_id,
-      party_size: req.body.party_size,
-      user_id: req.user.id})
-      .then(function (data) {
-        res.status(201);
-        res.send(data);
+    getAvailablePartyName()
+      .then(function (partyName) {
+        partiesModel.party.checkInAndCreateParty({
+          party_name: partyName,
+          restaurant_id: req.body.restaurant_id,
+          party_size: req.body.party_size,
+          user_id: req.user.id})
+          .then(function (data) {
+            res.status(201);
+            res.send(data);
+          });
       });
   },
   editParty: function (req, res) {

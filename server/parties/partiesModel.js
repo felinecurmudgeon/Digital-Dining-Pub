@@ -90,6 +90,19 @@ module.exports = {
         });
       });
     },
+    getOpenPartiesByName: function (partyName) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('SELECT * FROM parties \
+                      WHERE party_name = ? \
+                      AND closed_at IS NOT NULL', [partyName], function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
     checkInAndCreateParty: function (parameters) {
     /*creates a new party; expected parameters: restaurant_id, party_size, user_id,
     and creates the corresponding particpant in party_participants
@@ -100,6 +113,7 @@ module.exports = {
             reject(err);
           }
           var partyParameters = {
+            party_name: parameters.party_name,
             restaurant_id: parameters.restaurant_id,
             party_size: parameters.party_size,
             table_id: null,
