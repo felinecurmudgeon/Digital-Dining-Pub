@@ -5,6 +5,7 @@ angular.module('digitalDining', [
   'digitalDining.restaurantSettings'])
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+  $urlRouterProvider.when('/restaurantSettings', '/restaurantSettings/info');
   $urlRouterProvider.otherwise('/reservations');
   $stateProvider
     .state('login', {
@@ -35,15 +36,15 @@ angular.module('digitalDining', [
       controller: 'restSettingsController'
     })
     .state('restaurantSettings.info', {
-      url: '/restaurantSettings/info',
+      url: '/info',
       templateUrl: './app/restaurantSettings/restaurantBasicInfo.html'
     })
     .state('restaurantSettings.description', {
-      url: '/restaurantSettings/description',
+      url: '/description',
       templateUrl: './app/restaurantSettings/restaurantDescription.html'
     })
     .state('restaurantSettings.hours', {
-      url: '/restaurantSettings/hours',
+      url: '/hours',
       templateUrl: './app/restaurantSettings/restaurantHours.html'
     });
 
