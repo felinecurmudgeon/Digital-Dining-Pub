@@ -58,27 +58,6 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
       });
   };
 
-  $scope.signup = function () {
-    $scope.showPasswordMatch = false;
-    if ($scope.user.password !== $scope.user.password2) {
-      $scope.showPasswordMatch = true;
-    } else {
-    Auth.signup($scope.user)
-      .then(function (token) {
-        $window.localStorage.setItem('com.digitalDining', token);
-        $location.path('/restaurantSettings');
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-    }
-  };
-
-  $scope.signout = function () {
-    Auth.signout();
-    $location.path('/login');
-  };
-
   $scope.creating();
 });
 
