@@ -89,7 +89,7 @@ var restaurantOwners = [
 
 var users = [
   {username: 'toto',
-  password: 'pwd',},
+  password: 'pwd'},
   
   {username: 'emilio',
   password: 'qwerty'},
