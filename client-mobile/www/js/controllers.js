@@ -98,6 +98,9 @@ angular.module('digitalDining.controllers', [])
   $scope.addItemToOrder = function (item) {
     OrderFactory.addItemToOrder(item);
   };
+
+  $scope.footersrc = '../templates/restaurantFooter.html';
+
 }])
 
 .controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {
@@ -164,6 +167,9 @@ angular.module('digitalDining.controllers', [])
   $scope.doCheckIn = function () {
     CheckInFactory.doCheckIn($scope.partyInfo);
   };
+
+  $scope.footersrc = '../templates/restaurantFooter.html';
+
 }])
 
 .controller('SignUpCtrl', ['$scope', '$state', '$window', 'AuthFactory', function ($scope, $state, $window, AuthFactory) {
@@ -193,6 +199,7 @@ angular.module('digitalDining.controllers', [])
   $scope.doCheckIn = function () {
     CheckInFactory.doCheckIn();
   };
+  $scope.footersrc = '../templates/restaurantFooter.html';
 }])
 
 .controller('CheckCtrl', ['$scope', '$filter', 'CheckFactory', 'CheckInFactory', function ($scope, $filter, CheckFactory, CheckInFactory) {

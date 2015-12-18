@@ -7,7 +7,6 @@
   </ion-header-bar>
   <ion-content>
     <h1>Menu</h1>
-    <div>
       <div ng-repeat="(category, menuItems) in menu">
         <div class="item item-divider">{{category}}</div> 
         <ion-item ng-repeat="menuItem in menuItems"   ng-click='clickLocationCheckingForOrder($event, menuItem)'>
@@ -17,19 +16,11 @@
           <span class="itemPrice">{{menuItem.price}} </span>
        </ion-item>
      </div>
-    </div>
-  </ion-content>
-  <div class="tabs">
-    <a class="tab-item" href='#/nav/currentCheck'>
-      Current Order
-    </a>
-    <a class="tab-item" ng-click='sendOrder()'>
+     <button class="button" ng-click='sendOrder()'>
       Place Order
-    </a>
-    <a class="tab-item">
-      Call Waiter
-    </a>
-  </div>
+    </button>
+  </ion-content>
+  <ng-include src="footersrc"></ng-include>
 </ion-view>
 
 <!-- href='#/nav/menuItemDescription' -->
