@@ -10,11 +10,14 @@
     <div>
       <div ng-repeat="(category, menuItems) in menu">
         <div class="item item-divider">{{category}}</div> 
-        <ion-item ng-repeat="menuItem in menuItems"   ng-click='clickLocationCheckingForOrder($event, menuItem)'>
+        <ion-item ng-repeat="menuItem in menuItems"   ng-click='clickLocationCheckingForOrder($event, menuItem)'><span>
           <i ng-if='!menuItem.isOrdered && isCheckedIn' class="addButton icon ion-plus-circled"></i>
+          <!-- <input type='number' ng-model ='menuItem.quantity' value='0'> -->
+          <!-- <span><div counter value="0" min="0" max="10" step="1" editable></div> </span> -->
           <i ng-if='menuItem.isOrdered' class="removeButton icon ion-minus-circled"></i>
           <span class="itemTitle">{{menuItem.title}}</span>
           <span class="itemPrice">{{menuItem.price}} </span>
+      </span>
        </ion-item>
      </div>
     </div>
@@ -33,3 +36,5 @@
 </ion-view>
 
 <!-- href='#/nav/menuItemDescription' -->
+<!-- ng-if='!menuItem.isOrdered && isCheckedIn' -->
+<!-- ng-if='menuItem.isOrdered' -->
