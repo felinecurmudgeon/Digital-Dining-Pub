@@ -1,6 +1,7 @@
 /*jshint -W079 */
-var db = require('../server/sql-db/index.js');
+var db = require('../server/sql-db/index');
 var Promise = require('bluebird');
+require('../server/utils');
 
 var deleteAllDataFromTable = function (table) {
   return new Promise( function (resolve, reject) {
@@ -315,7 +316,7 @@ module.exports = {
       .then(function (tables) {
         return tables.forEach(function (table) {
           testDataIds.tableIds.push({
-            "id" : table.id,
+            "id": table.id,
             "rid": table.restaurant_id
           })
         })
@@ -323,10 +324,12 @@ module.exports = {
       //insert into party and party_participants 
       .then(function () {
         return Promise.all(testDataIds.tableIds.map(function (tableIds, index) {
+          var nameGenerator = require('../server/parties/nameGenerator');
           var partyObj = {
-            "table_id" : testDataIds.tableIds[index].id,
-            "restaurant_id" : testDataIds.tableIds[index].rid,
-            "party_size" : Math.ceil(4 * Math.random())
+            "table_id": testDataIds.tableIds[index].id,
+            "restaurant_id": testDataIds.tableIds[index].rid,
+            "party_size": Math.ceil(4 * Math.random()),
+            "party_name": nameGenerator()
           }
           return insertData('parties', partyObj);
         }))
@@ -348,22 +351,22 @@ module.exports = {
             return getAllDataFromTable('menu_items')
               .then(function (menuItems) {
                 var menuItemOrderedObj = {
-                  "party_id" : participant.party_id,
-                  "user_id" : participant.user_id,
-                  "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
-                  "ordered_at" : new Date().toMysqlFormat()
+                  "party_id": participant.party_id,
+                  "user_id": participant.user_id,
+                  "menu_item_id": menuItems[Math.floor(menuItems.length * Math.random())].id,
+                  "ordered_at": new Date().toMysqlFormat()
                 };
                 var menuItemOrderedObj2 = {
-                  "party_id" : participant.party_id,
-                  "user_id" : participant.user_id,
-                  "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
-                  "ordered_at" : new Date().toMysqlFormat()
+                  "party_id": participant.party_id,
+                  "user_id": participant.user_id,
+                  "menu_item_id": menuItems[Math.floor(menuItems.length * Math.random())].id,
+                  "ordered_at": new Date().toMysqlFormat()
                 };
                 var menuItemOrderedObj3 = {
-                  "party_id" : participant.party_id,
-                  "user_id" : participant.user_id,
-                  "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
-                  "ordered_at" : new Date().toMysqlFormat()
+                  "party_id": participant.party_id,
+                  "user_id": participant.user_id,
+                  "menu_item_id": menuItems[Math.floor(menuItems.length * Math.random())].id,
+                  "ordered_at": new Date().toMysqlFormat()
                 };
                 insertData('menu_items_ordered', menuItemOrderedObj);
                 insertData('menu_items_ordered', menuItemOrderedObj2);
