@@ -7,9 +7,7 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
   $scope.creating = function () {
     Restaurants.getRestaurantInfo()
       .then(function (resp) {
-        if (resp.data.length === 0) {
-          $scope.creation = true;
-        } else {
+        if (resp.data.length !== 0) {
           $scope.creation = false;
           console.log(resp.data[0].attributes);
           $scope.restaurant.id = resp.data[0].id;
@@ -37,7 +35,7 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
           $scope.restaurant.opening_hour_sunday = resp.data[0].attributes.openingHourSunday;
           $scope.restaurant.closing_hour_sunday = resp.data[0].attributes.closingHourSunday;
         }
-      })
+      });
   };
 
   $scope.submitRestaurant = function () {
@@ -50,7 +48,6 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
     };
     callAPI()
       .then(function (data) {
-        console.log(data);
         $scope.creation = false;
       })
       .catch(function (error) {
