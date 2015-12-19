@@ -93,7 +93,7 @@ angular.module('digitalDining.controllers', [])
   $scope.getPartyInfo();
 
   $scope.sendOrder = function () {
-    var partyId = JSON.parse($window.localStorage.partyInfo).data.id;
+    var partyId = JSON.parse($window.localStorage.getItem('partyId'));
     OrderFactory.sendOrder(partyId);
   };
   $scope.addItemToOrder = function (item) {
@@ -159,17 +159,15 @@ angular.module('digitalDining.controllers', [])
 }])
 
 .controller('CheckInCtrl', ['$scope', '$state', '$window', 'HomeFactory', 'CheckInFactory', function ($scope, $state, $window, HomeFactory, CheckInFactory) {
-  
   $scope.isCheckedIn = false;
 
   $scope.getCheckedInStatus = function () {
-    console.log("checking");
     if ($window.localStorage.getItem('partyInfo')) {
       $scope.isCheckedIn = true;
     } else {
       $scope.isCheckedIn = false;
     }
-  }
+  };
 
   $scope.getCheckedInStatus();
 
@@ -215,9 +213,6 @@ angular.module('digitalDining.controllers', [])
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
   $scope.getFocusedRestaurant();
-  $scope.doCheckIn = function () {
-    CheckInFactory.doCheckIn();
-  };
   $scope.footersrc = '../templates/restaurantFooter.html';
 }])
 
@@ -233,14 +228,13 @@ angular.module('digitalDining.controllers', [])
   $scope.totalWithTaxAndTip = 0;
 
   $scope.getCheckedInStatus = function () {
-    console.log("checking");
     $scope.partyInfo = JSON.parse($window.localStorage.getItem('partyInfo'));
     if ($window.localStorage.getItem('partyInfo')) {
       $scope.isCheckedIn = true;
     } else {
       $scope.isCheckedIn = false;
     }
-  }
+  };
 
   $scope.getCheckedInStatus();
 
@@ -253,15 +247,7 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.doCharge = function () {
     //this should be broken out between tax amount and tip amounts and accounted for separtely in a production app
-    CheckFactory.chargeCard($scope.totalWithTaxAndTip)
-      .then(function () {
-        $window.localStorage.removeItem('partyInfo');
-        $window.localStorage.removeItem('partyId');
-        $window.localStorage.removeItem('restaurantId');
-        OrderFactory.clearOrder();
-        console.log('charged sucessfully');
-
-      });
+    CheckFactory.chargeCard($scope.totalWithTaxAndTip);
   };
   $scope.getOrderItems = function () {
     CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
