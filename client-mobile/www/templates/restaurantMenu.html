@@ -1,25 +1,24 @@
 <ion-view view-title="Menu">
-  <ion-header-bar class='bar bar-header bar-dark'>
-    <h1 class="title">Menu</h1>
-    <div class="buttons">
-      <button class="button button-clear">Check Order</button>
-    </div>
-  </ion-header-bar>
   <ion-content>
-    <h1>{{rest.attributes.restaurantName}}</h1>
-      <div ng-repeat="(category, menuItems) in menu">
-        <div class="item item-divider">{{category}}</div> 
-        <ion-item ng-repeat="menuItem in menuItems"   ng-click='clickLocationCheckingForOrder($event, menuItem)'><span>
-          <i ng-if='!menuItem.isOrdered && isCheckedIn' class="addButton icon ion-plus-circled"></i>
-          <!-- <input type='number' ng-model ='menuItem.quantity' value='0'> -->
-          <!-- <span><div counter value="0" min="0" max="10" step="1" editable></div> </span> -->
-          <i ng-if='menuItem.isOrdered' class="removeButton icon ion-minus-circled"></i>
-          <span class="itemTitle">{{menuItem.title}}</span>
-          <span class="itemPrice">{{menuItem.price}} </span>
-      </span>
-       </ion-item>
-     </div>
-     <button class="button" ng-click='sendOrder()'>
+    <div class='titleHeader'><h1>{{rest.attributes.restaurantName}}</h1></div>
+    <div ng-repeat="(category, menuItems) in menu">
+      <div class="item item-divider">{{category}}</div> 
+      <ion-item ng-repeat="menuItem in menuItems"   ng-click='clickLocationCheckingForOrder($event, menuItem)'><span>
+        <i ng-if='!menuItem.isOrdered && isCheckedIn' class="addButton icon ion-plus-circled"></i>
+        <!-- <input type='number' ng-model ='menuItem.quantity' value='0'> -->
+        <!-- <span><div counter value="0" min="0" max="10" step="1" editable></div> </span> -->
+        <i ng-if='menuItem.isOrdered' class="removeButton icon ion-minus-circled"></i>
+        <span class="itemTitle">{{menuItem.title}}</span>
+        <span class="itemPrice">{{menuItem.price}} </span>
+    </span>
+     </ion-item>
+   </div>
+  </ion-content>
+  <div class="tabs">
+    <a class="tab-item" href='#/nav/currentCheck'>
+      Current Order
+    </a>
+    <a class="tab-item" ng-click='sendOrder()'>
       Place Order
     </button>
   </ion-content>
