@@ -103,6 +103,10 @@ angular.module('digitalDining.services', [])
       }
     }
   };
+  var clearOrder = function () {
+    order = {};
+  }
+
   var sendOrder = function (pid) {
     pid = pid || 1;
     console.log('hit');
@@ -115,6 +119,7 @@ angular.module('digitalDining.services', [])
   return {
     sendOrder: sendOrder,
     order: order,
+    clearOrder: clearOrder,
     addItemToOrder: addItemToOrder,
     removeItemFromOrder: removeItemFromOrder
   };
@@ -161,8 +166,10 @@ angular.module('digitalDining.services', [])
       method: 'POST',
       data: data
     }).then( function (response) {
-      partyInfo = response;
       $window.localStorage.setItem('partyInfo', JSON.stringify(response));
+      $window.localStorage.setItem('partyId', JSON.stringify(response.data.id));
+      $window.localStorage.setItem('restaurantId', JSON.stringify(response.data.restaurant_id));
+
     });
   };
   var getPartyInfo = function () {
@@ -172,7 +179,6 @@ angular.module('digitalDining.services', [])
     getCheckInStatus: getCheckInStatus,
     isCheckedIn: isCheckedIn,
     doCheckIn: doCheckIn,
-    partyInfo: partyInfo,
     getPartyInfo: getPartyInfo
   };
 }])
