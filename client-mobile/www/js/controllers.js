@@ -23,6 +23,11 @@ angular.module('digitalDining.controllers', [])
     $scope.loginData.username = '';
     $scope.loginData.password = '';
   };
+  $scope.clearStorage = function () {
+    $window.localStorage.removeItem('partyInfo');
+    $window.localStorage.removeItem('partyId');
+    $window.localStorage.removeItem('restaurantId');
+  };
 
   $scope.goToSignUp = function () {
     $state.go('signup');
@@ -95,6 +100,7 @@ angular.module('digitalDining.controllers', [])
   $scope.sendOrder = function () {
     var partyId = JSON.parse($window.localStorage.getItem('partyId'));
     OrderFactory.sendOrder(partyId);
+    $state.go('nav.currentCheck');
   };
   $scope.addItemToOrder = function (item) {
     OrderFactory.addItemToOrder(item);
@@ -160,14 +166,22 @@ angular.module('digitalDining.controllers', [])
 
 .controller('CheckInCtrl', ['$scope', '$state', '$window', 'HomeFactory', 'CheckInFactory', function ($scope, $state, $window, HomeFactory, CheckInFactory) {
   $scope.isCheckedIn = false;
+  console.log('routed to checkIn');
 
-  $scope.getCheckedInStatus = function () {
+  $scope.updateCheckedInStatus = function () {
     if ($window.localStorage.getItem('partyInfo')) {
       $scope.isCheckedIn = true;
+    } else {
+      $scope.isCheckedIn = false;
     }
+    console.log('$scope.isCheckedIn is ', $scope.isCheckedIn);
   };
 
-  $scope.getCheckedInStatus();
+  $scope.updateCheckedInStatus();
+
+  $scope.getCheckInStatus = function () {
+    return $scope.isCheckedIn;
+  };
 
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
