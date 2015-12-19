@@ -1,5 +1,4 @@
 var usersController = require('./users/usersController');
-var restaurantUsersController = require('./users/restaurantUsersController');
 var restaurantsController = require('./restaurants/restaurantsController');
 var menusController = require('./menus/menusController');
 var partiesController = require('./parties/partiesController');
@@ -18,10 +17,6 @@ module.exports = function (router) {
   router.get('/api/auth/facebook', authController.facebookLogin());
   router.get('/api/auth/callback', authController.facebookCallback);
 
-  router.get('/api/restaurantusers', restaurantUsersController.getUser);
-  router.get('/api/restaurantusers/:id', restaurantUsersController.getUser);
-  router.post('/api/restaurantusers', restaurantUsersController.createUser);
-
   router.get('/api/restaurants', restaurantsController.getRestaurants);
   router.get('/api/restaurants/:id', restaurantsController.getRestaurants);
   router.post('/api/restaurants', restaurantsController.createRestaurant);
@@ -30,6 +25,8 @@ module.exports = function (router) {
 
   router.get('/api/menuCategories', menusController.getMenuCategories);
   router.post('/api/menuCategories', menusController.createMenuCategories);
+  router.delete('/api/menuCategories/:id', menusController.deleteMenuCategory);
+  router.put('/api/menuCategories/:id', menusController.editMenuCategory);
 
   router.get('/api/menuItems', menusController.getMenuItems);
   router.post('/api/menuItems', menusController.createMenuItems);

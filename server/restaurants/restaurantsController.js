@@ -7,7 +7,12 @@ module.exports = {
   getRestaurants : function (req, res) {
     var JsonResponseObject = new JsonResponseObj();
     console.log('getting restaurant ', req.params.id);
-    restaurantsModel.restaurant.get(req.params.id)
+    var parameters = {
+      restaurantId: req.params.id,
+      userId: req.user.id,
+      all: req.query.all
+    };
+    restaurantsModel.restaurant.get(parameters)
       .then(function (data) {
         for (var i = 0; i < data.length; i++) {
           var JsonDataObject = new JsonDataObj();
@@ -20,6 +25,9 @@ module.exports = {
             restaurantCity: data[i].restaurant_city,
             restaurantState: data[i].restaurant_state,
             restaurantZipCode: data[i].restaurant_zip_code,
+            restaurantDescription: data[i].restaurant_description,
+            restaurantPhoneNumber: data[i].restaurant_phone_number,
+            restaurantCategory: data[i].restaurant_category,
             openingHourMonday: data[i].opening_hour_monday,
             closingHourMonday: data[i].closing_hour_monday,
             openingHourTuesday: data[i].opening_hour_tuesday,
@@ -44,8 +52,11 @@ module.exports = {
 
   createRestaurant : function (req, res) {
     console.log('creating restaurant ');
-    restaurantsModel.restaurant.post(req.body)
+    var params = req.body;
+    params.restaurant_owner_id = req.user.id;
+    restaurantsModel.restaurant.post(params)
       .then(function (data) {
+        console.log('data sent back is ', data);
         res.status(201);
         res.send(data);
       });

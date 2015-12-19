@@ -1,6 +1,7 @@
 /*jshint -W079 */
-var db = require('../server/sql-db/index.js');
+var db = require('../server/sql-db/index');
 var Promise = require('bluebird');
+require('../server/utils');
 
 var deleteAllDataFromTable = function (table) {
   return new Promise( function (resolve, reject) {
@@ -69,18 +70,22 @@ var insertOrUpdateUser = function (table, user) { //only for unique key constrai
   });
 };
 
-var restaurantUsers = [
-  {username: 'toto',
-  password: 'pwd'},
+var restaurantOwners = [
+  {username: 'EmilioPizzaiolo',
+  password: 'pwd',
+  is_restaurant_user: true},
   
-  {username: 'emilio',
-  password: 'qwerty'},
+  {username: 'Sam',
+  password: 'qwerty',
+  is_restaurant_user: true},
   
-  {username: 'ZinedineZidane',
-  password: 'france98'},
+  {username: 'Germaine',
+  password: 'france98',
+  is_restaurant_user: true},
   
-  {username: 'tobias',
-  password: '123456'}
+  {username: 'Hans',
+  password: '123456',
+  is_restaurant_user: true}
 ];
 
 var users = [
@@ -204,8 +209,8 @@ module.exports = {
   createCompleteRestaurantsInDB: function (){
     //TODO: either run test in gulp or make this function actually create dummy data
     console.log("creating dummy complete restaurants");
-    return Promise.all(restaurantUsers.map(function (restaurantUser, index) {
-      return insertOrUpdateUser('restaurant_users', restaurantUser)
+    return Promise.all(restaurantOwners.map(function (restaurantUser, index) {
+      return insertOrUpdateUser('users', restaurantUser)
         .then(function (createdRestaurantUser) {
           restaurants[index].restaurant_owner_id = createdRestaurantUser.id
           return insertData('restaurants', restaurants[index]);
@@ -262,9 +267,6 @@ module.exports = {
         deleteAllDataFromTable('payment_info');
       })
       .then(function() {
-        deleteAllDataFromTable('users');
-      })
-      .then(function() {
         deleteAllDataFromTable('menu_items');
       })
       .then(function() {
@@ -280,7 +282,7 @@ module.exports = {
         deleteAllDataFromTable('restaurants');
       })
       .then(function() {
-        deleteAllDataFromTable('restaurant_users');
+        deleteAllDataFromTable('users');
       })
       .then(function() {
         console.log('DB emptied!');
@@ -314,7 +316,7 @@ module.exports = {
       .then(function (tables) {
         return tables.forEach(function (table) {
           testDataIds.tableIds.push({
-            "id" : table.id,
+            "id": table.id,
             "rid": table.restaurant_id
           })
         })
@@ -322,10 +324,12 @@ module.exports = {
       //insert into party and party_participants 
       .then(function () {
         return Promise.all(testDataIds.tableIds.map(function (tableIds, index) {
+          var nameGenerator = require('../server/parties/nameGenerator');
           var partyObj = {
-            "table_id" : testDataIds.tableIds[index].id,
-            "restaurant_id" : testDataIds.tableIds[index].rid,
-            "party_size" : Math.ceil(4 * Math.random())
+            "table_id": testDataIds.tableIds[index].id,
+            "restaurant_id": testDataIds.tableIds[index].rid,
+            "party_size": Math.ceil(4 * Math.random()),
+            "party_name": nameGenerator()
           }
           return insertData('parties', partyObj);
         }))
@@ -347,22 +351,22 @@ module.exports = {
             return getAllDataFromTable('menu_items')
               .then(function (menuItems) {
                 var menuItemOrderedObj = {
-                  "party_id" : participant.party_id,
-                  "user_id" : participant.user_id,
-                  "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
-                  "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                  "party_id": participant.party_id,
+                  "user_id": participant.user_id,
+                  "menu_item_id": menuItems[Math.floor(menuItems.length * Math.random())].id,
+                  "ordered_at": new Date().toMysqlFormat()
                 };
                 var menuItemOrderedObj2 = {
-                  "party_id" : participant.party_id,
-                  "user_id" : participant.user_id,
-                  "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
-                  "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                  "party_id": participant.party_id,
+                  "user_id": participant.user_id,
+                  "menu_item_id": menuItems[Math.floor(menuItems.length * Math.random())].id,
+                  "ordered_at": new Date().toMysqlFormat()
                 };
                 var menuItemOrderedObj3 = {
-                  "party_id" : participant.party_id,
-                  "user_id" : participant.user_id,
-                  "menu_item_id" : menuItems[Math.floor(menuItems.length * Math.random())].id,
-                  "ordered_at" : new Date().toISOString().slice(0, 19).replace('T', ' ')
+                  "party_id": participant.party_id,
+                  "user_id": participant.user_id,
+                  "menu_item_id": menuItems[Math.floor(menuItems.length * Math.random())].id,
+                  "ordered_at": new Date().toMysqlFormat()
                 };
                 insertData('menu_items_ordered', menuItemOrderedObj);
                 insertData('menu_items_ordered', menuItemOrderedObj2);

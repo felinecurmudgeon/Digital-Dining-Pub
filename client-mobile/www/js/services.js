@@ -60,7 +60,7 @@ angular.module('digitalDining.services', [])
   };
 }])
 
-.factory('CheckFactory', ['$http', function ($http) {
+.factory('CheckFactory', ['$http', '$window', function ($http, $window) {
   var getCheckItems = function (pid) {
     return $http({
       url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
@@ -74,6 +74,11 @@ angular.module('digitalDining.services', [])
       data: {
         amount: amt
       }
+    }).then(function () {
+        $window.localStorage.removeItem('partyInfo');
+        $window.localStorage.removeItem('partyId');
+        $window.localStorage.removeItem('restaurantId');
+        console.log('charged sucessfully');
     });
   };
   return {
@@ -86,7 +91,6 @@ angular.module('digitalDining.services', [])
   var order = {
     menu_items: []
   };
-
   var addItemToOrder = function (item, quantity) {
     console.log(item);
     quantity = quantity || 1;
@@ -97,24 +101,33 @@ angular.module('digitalDining.services', [])
     console.log('item', order);
   };
   var removeItemFromOrder = function (item) {
-    for (var i = 0; i <= order.menu_items.length; i++) {
+    for (var i = 0; i < order.menu_items.length; i++) {
       if (order.menu_items[i].menu_item_id === item.menuID) {
         order.menu_items.splice(i, 1);
+        i--;
       }
     }
   };
+  var clearOrder = function () {
+    order.menu_items = [];
+  };
+
   var sendOrder = function (pid) {
     pid = pid || 1;
     console.log('hit');
+    var temp = order.menu_items;
     return $http({
       url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
       method: 'POST',
-      data: order.menu_items
+      data: temp
+    }).then( function () {
+      clearOrder();
     });
   };
   return {
     sendOrder: sendOrder,
     order: order,
+    clearOrder: clearOrder,
     addItemToOrder: addItemToOrder,
     removeItemFromOrder: removeItemFromOrder
   };
@@ -161,8 +174,9 @@ angular.module('digitalDining.services', [])
       method: 'POST',
       data: data
     }).then( function (response) {
-      partyInfo = response;
       $window.localStorage.setItem('partyInfo', JSON.stringify(response));
+      $window.localStorage.setItem('partyId', JSON.stringify(response.data.id));
+      $window.localStorage.setItem('restaurantId', JSON.stringify(response.data.restaurant_id));
     });
   };
   var getPartyInfo = function () {
@@ -172,7 +186,6 @@ angular.module('digitalDining.services', [])
     getCheckInStatus: getCheckInStatus,
     isCheckedIn: isCheckedIn,
     doCheckIn: doCheckIn,
-    partyInfo: partyInfo,
     getPartyInfo: getPartyInfo
   };
 }])

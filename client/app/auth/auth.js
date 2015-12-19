@@ -1,7 +1,9 @@
+/*jshint camelcase: false */
 angular.module('digitalDining.auth', ['digitalDining.services'])
 
 .controller('AuthController', function ($scope, $window, $location, Auth) {
-  $scope.user = {};
+  $scope.user = {is_restaurant_user: true};
+  $scope.showPasswordMatch = false;
 
   $scope.authenticated = function () {
     return Auth.isAuth();
@@ -9,8 +11,11 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
 
   $scope.signin = function () {
     Auth.signin($scope.user)
-      .then(function (token) {
-        $window.localStorage.setItem('com.digitalDining', token);
+      .then(function (response) {
+        $window.localStorage.setItem('com.digitalDining', response.token);
+        if (response.restaurantId) {
+          $window.localStorage.setItem('restaurantId', response.restaurantId);
+        }
         $location.path('/reservations');
       })
       .catch(function (error) {
@@ -19,6 +24,9 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
   };
 
   $scope.signup = function () {
+    if ($scope.user.password !== $scope.user.password2) {
+      $scope.showPasswordMatch = true;
+    } else {
     Auth.signup($scope.user)
       .then(function (token) {
         $window.localStorage.setItem('com.digitalDining', token);
@@ -27,6 +35,7 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
       .catch(function (error) {
         console.error(error);
       });
+    }
   };
 
   $scope.signout = function () {

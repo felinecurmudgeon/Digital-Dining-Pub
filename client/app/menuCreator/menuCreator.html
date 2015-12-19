@@ -1,0 +1,45 @@
+<h1> Menu Editor </h1>
+
+<div class="menuCreator">
+  <form class="addCategoryForm">
+    <input placeholder="New Category" ng-Model="catToAdd">
+    <button class="create" ng-click="categoryMethods.add()">Add Category</button>
+  </form>
+  <div ng-repeat="(category, menuItems) in menu">
+    <h3 class="category" ng-show="!menuItems.editable">{{category}}</h3>
+    <input class="catNameEdit" ng-show="menuItems.editable" ng-model="menuItems.editedName">
+    <button class="create item" ng-show="!menu[category].addItemForm" ng-click="toggleAddItemForm(category)"> Add item to category </button>
+    <button class="delete" ng-show="!menuItems.editable" ng-bind="categoryMethods.deleteText(menuItems)" ng-click="categoryMethods.delete(category, menuItems)">Delete Category</button>
+    <button class="cancel" ng-show="menuItems.deletable" ng-click="menuItems.deletable = false">Cancel Delete</button>
+    <button class="edit" ng-show="!menuItems.deletable" ng-bind="categoryMethods.editText(menuItems)" ng-click="categoryMethods.edit(category, menuItems)">Edit Category</button>
+    <button class="cancel" ng-show="menuItems.editable" ng-click="menuItems.editable = false">Cancel Edit</button>
+    <hr>
+    <div ng-show="menu[category].addItemForm">
+      <form class="addItemForm">
+        <div class="inputs">
+          <div><label>Item Title:</label> <input ng-model="menu[category].itemToAdd.title" type="text"></div>
+          <div><label>Item Description:</label> <input ng-model="menu[category].itemToAdd.description" type="text" class="decription-input"></div>
+          <div><label>Price:</label><input ng-model="menu[category].itemToAdd.price" type="text"></div>
+        </div>
+        <button class="create" ng-click="itemMethods.post(category, menuItems.catId)">Add Item</button>
+        <button class="cancel" ng-click="toggleAddItemForm(category)">Cancel</button>
+      </form>
+      <hr>
+    </div>  
+    <div ng-repeat="(index, menuItem) in menuItems.items">
+      <span class="itemTitle" ng-show="!menuItem.editable">{{menuItem.attributes.title}}</span>
+      <input class="titleEdit" ng-show="menuItem.editable" ng-model="menuItem.editedTitle">
+      <span class="itemPrice" ng-show="!menuItem.editable">{{menuItem.attributes.price}} </span> 
+      <input class="priceEdit" ng-show="menuItem.editable" ng-model="menuItem.editedPrice">
+      <br>
+      <span class="itemDescription" ng-show="!menuItem.editable">{{menuItem.attributes.description}}</span> 
+      <input class="descriptionEdit" ng-show="menuItem.editable" ng-model="menuItem.editedDescription">
+      <br>
+      <button class="edit" ng-click="itemMethods.edit(menuItem)" ng-bind="itemMethods.editText(menuItem)"></button>
+      <button class="cancel" ng-show="menuItem.editable" ng-click="menuItem.editable = false">Cancel Edit</button>
+      <button class="delete" ng-show="!menuItem.editable" ng-bind="itemMethods.deleteText(menuItem)" ng-click="itemMethods.delete(menuItem, category, index)"></button>
+      <button class="cancel" ng-show="menuItem.deletable" ng-click="menuItem.deletable = false">Cancel Delete</button>
+      <hr>
+    </div>
+  </div>
+</div>

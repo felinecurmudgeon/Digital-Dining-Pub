@@ -1,10 +1,15 @@
-<form class="form-signin" ng-submit='signin()'>
-  <h2 class="form-signin-heading">Please Log in</h2>
-  <label for="inputEmail" class="sr-only">Email address</label>
-  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus ng-model='user.username'>
-  <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required ng-model='user.password'>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-  <a href="#/signup">Don't have an account? <strong>Signup</strong> ...</a>
-
+<form class="form-signin" ng-submit="signin()">
+  <div class="col-md-7">
+    <h2 class="form-signin-heading">Please Log in</h2>
+      <div class="form-group">
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus ng-model="user.username">
+      </div>
+      <div class="form-group">
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required ng-model="user.password">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+        <a href="#/signup">Don't have an account? <strong>Signup</strong> ...</a>
+      </div>
+  </div>
 </form>

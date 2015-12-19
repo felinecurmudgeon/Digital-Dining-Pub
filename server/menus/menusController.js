@@ -34,13 +34,29 @@ module.exports = {
       });
   },
 
+  deleteMenuCategory : function (req, res) {
+    console.log('deleting menu category');
+    menusModel.menuCategory.delete(req.params.id)
+    .then(function (deletedIds) {
+      res.status(204).send(deletedIds);
+    });
+  },
+
+  editMenuCategory : function (req, res) {
+    console.log('updating menu category ', req.params.id);
+    menusModel.menuCategory.put(req.body, req.params.id)
+      .then(function (updatedItem) {
+        res.status(201);
+        res.send(updatedItem);
+      });
+  },
+
   ///menu items
   getMenuItems : function (req, res) {
     console.log('getting menu');
     var JsonResponseObject = new JsonResponseObj();
     menusModel.menuItems.get(req.query.rid)
       .then(function (menuItems) {
-        console.log(JSON.stringify(menuItems));
         for (var i = 0; i < menuItems.length; i++) {
           var JsonDataObject = new JsonDataObj();
           var JsonDataObjectIncluded = new JsonDataObj();

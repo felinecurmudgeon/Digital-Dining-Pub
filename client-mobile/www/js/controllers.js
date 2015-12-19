@@ -53,7 +53,7 @@ angular.module('digitalDining.controllers', [])
 
 }])
 
-.controller('RestaurantMenuCtrl', ['$scope', '$state', 'MenuFactory', 'HomeFactory', 'OrderFactory', 'CheckInFactory', function ($scope, $state, MenuFactory, HomeFactory, OrderFactory, CheckInFactory) {
+.controller('RestaurantMenuCtrl', ['$scope', '$state', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', 'CheckInFactory', function ($scope, $state, $window, MenuFactory, HomeFactory, OrderFactory, CheckInFactory) {
   $scope.getMenuItems = function () {
     var restID = HomeFactory.getFocusedRestaurant();
     MenuFactory.getMenuItems(restID.id).then(function (dataObject) {
@@ -61,15 +61,16 @@ angular.module('digitalDining.controllers', [])
       for (var itemIndex = 0; itemIndex < dataObject.data.data.length; itemIndex++) {
         if (!$scope.menu[dataObject.data.data[itemIndex].attributes.menuCategoryId]) {
           dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
-          dataObject.data.data[itemIndex].attributes.isOrdered = false;
+          dataObject.data.data[itemIndex].attributes.quantity = 0;
           $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName] = [dataObject.data.data[itemIndex].attributes];
         } else {
           dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
-          dataObject.data.data[itemIndex].attributes.isOrdered = false;
+          dataObject.data.data[itemIndex].attributes.quantity = 0;
           $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].push(dataObject.data.data[itemIndex].attributes);
         }
       }
     });
+    $scope.rest = restID;
   };
   $scope.getMenuItems();
 
@@ -87,17 +88,20 @@ angular.module('digitalDining.controllers', [])
   };
 
   $scope.getPartyInfo = function () {
-    $scope.partyInfo = CheckInFactory.getPartyInfo();
     $scope.isCheckedIn = CheckInFactory.getCheckInStatus();
   };
   $scope.getPartyInfo();
 
   $scope.sendOrder = function () {
-    OrderFactory.sendOrder($scope.partyInfo.data.id);
+    var partyId = JSON.parse($window.localStorage.getItem('partyId'));
+    OrderFactory.sendOrder(partyId);
   };
   $scope.addItemToOrder = function (item) {
     OrderFactory.addItemToOrder(item);
   };
+
+  $scope.footersrc = '../templates/restaurantFooter.html';
+
 }])
 
 .controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {
@@ -148,9 +152,23 @@ angular.module('digitalDining.controllers', [])
     item.isOrdered = !item.isOrdered;
     OrderFactory.addItemToOrder(item);
   };
+  $scope.removeItemFromOrder = function (item) {
+    item.isOrdered = !item.isOrdered;
+    OrderFactory.removeItemFromOrder(item);
+  };
 }])
 
 .controller('CheckInCtrl', ['$scope', '$state', '$window', 'HomeFactory', 'CheckInFactory', function ($scope, $state, $window, HomeFactory, CheckInFactory) {
+  $scope.isCheckedIn = false;
+
+  $scope.getCheckedInStatus = function () {
+    if ($window.localStorage.getItem('partyInfo')) {
+      $scope.isCheckedIn = true;
+    }
+  };
+
+  $scope.getCheckedInStatus();
+
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
@@ -162,11 +180,12 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.doCheckIn = function () {
     CheckInFactory.doCheckIn($scope.partyInfo);
+    $state.go('nav.restaurantMenu');
     $scope.isCheckedIn = true;
-    setTimeout(function () {
-      $state.go('nav.restaurantMenu');
-    }, 2000);
   };
+
+  $scope.footersrc = '../templates/restaurantFooter.html';
+
 }])
 
 .controller('SignUpCtrl', ['$scope', '$state', '$window', 'AuthFactory', function ($scope, $state, $window, AuthFactory) {
@@ -192,23 +211,30 @@ angular.module('digitalDining.controllers', [])
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
   $scope.getFocusedRestaurant();
+  $scope.footersrc = '../templates/restaurantFooter.html';
 }])
 
-.controller('CheckCtrl', ['$scope', '$filter', 'CheckFactory', 'CheckInFactory', '$window', function ($scope, $filter, CheckFactory, CheckInFactory, $window) {
-  $scope.getPartyInfo = function () {
-    $scope.partyInfo = CheckInFactory.getPartyInfo();
-  };
-  $scope.getPartyInfo();
-  $scope.partyInfoLocalStorage = JSON.parse($window.localStorage.getItem('partyInfo'));
-  var partyId = $scope.partyInfo.data.id; //hard code this to a valid partyId for testing
-  console.log(partyId);
-  $scope.partyInfo = JSON.parse($window.localStorage.getItem('partyInfo'));
+.controller('CheckCtrl', ['$scope', '$filter', 'CheckFactory', 'CheckInFactory', 'OrderFactory', '$window', function ($scope, $filter, CheckFactory, CheckInFactory, OrderFactory, $window) {
+
+  $scope.isCheckedIn = false;
+  $scope.partyInfo = {};
   $scope.orderItems = [];
   $scope.subtotal = 0;
   var subtotal = 0;
   $scope.totalWithTax = 0;
   $scope.taxAmount = 0;
   $scope.totalWithTaxAndTip = 0;
+
+  $scope.getCheckedInStatus = function () {
+    $scope.partyInfo = JSON.parse($window.localStorage.getItem('partyInfo'));
+    if ($window.localStorage.getItem('partyInfo')) {
+      $scope.isCheckedIn = true;
+    } else {
+      $scope.isCheckedIn = false;
+    }
+  };
+
+  $scope.getCheckedInStatus();
 
   var taxCalculator = function (total) {
      return total * 1.08;
@@ -219,25 +245,22 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.doCharge = function () {
     //this should be broken out between tax amount and tip amounts and accounted for separtely in a production app
-    CheckFactory.chargeCard($scope.totalWithTaxAndTip)
-      .then(function () {
-        console.log('charged sucessfully');
-      });
+    CheckFactory.chargeCard($scope.totalWithTaxAndTip);
   };
   $scope.getOrderItems = function () {
-    CheckFactory.getCheckItems(partyId)
+    CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
       .then(function (items) {
-        console.log(items);
         for (var i = 0; i < items.data.included.length; i++) {
           $scope.orderItems.push(items.data.included[i].attributes);
           subtotal += items.data.included[i].attributes.price;
         }
         $scope.subtotal = $filter('number')(subtotal, 2);
         $scope.totalWithTax = $filter('number')(taxCalculator($scope.subtotal), 2);
-        $scope.totalWithTaxAndTip = $scope.totalWithTax;
+        $scope.totalWithTaxAndTip = $filter('number')($scope.totalWithTax, 2);
       });
   };
   $scope.getOrderItems();
+  $scope.footersrc = '../templates/restaurantFooter.html';
 }])
 .directive('counter', function () {
     return {

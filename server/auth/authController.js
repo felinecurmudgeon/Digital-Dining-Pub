@@ -4,6 +4,7 @@ var Users = require('./../users/usersModel.js').user;
 var bcrypt = require('bcryptjs');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var passport = require('passport');
+var Restaurants = require('./../restaurants/restaurantsModel.js').restaurant;
 
 module.exports = {
   //check username and password in the DB.  If no match, send 401. If there is a match, send the client back a JWT.
@@ -21,7 +22,29 @@ module.exports = {
               userID: user[0].id
             };
             var token = jwt.sign(profile, process.env.DDJWTSECRET);
-            res.status(200).json({token: token});
+            var response = {};
+            response.token = token;
+
+            //if it's a restaurant user, try to find his restaurant ID and add it to the response
+            if (user[0].is_restaurant_user) {
+              Restaurants.get({
+                all: 'false',
+                userId: user[0].id})
+              .then(function (restaurant) {
+                if (restaurant.length === 0) {
+                  res.status(200).json(response);
+                } else {
+                  response.restaurantId = restaurant[0].id;
+                  res.status(200).json(response);
+                }
+              })
+              .catch( function () {
+                res.status(500).send('Could not locate restaurant data');
+              });
+
+            } else {
+              res.status(200).json(response);
+            }
           } else {
             res.status(401).send('Wrong username or password');
           }
@@ -38,18 +61,16 @@ module.exports = {
         bcrypt.hash(req.body.password, 8, function (err, hash) {
           Users.post({
             username: req.body.username,
-            password: hash
+            password: hash,
+            is_restaurant_user: req.body.is_restaurant_user || false
           })
           .then(function (insertedUser) {
-            //post does not return the full user profile.  we must make a get to retrieve the info.
-            Users.get(insertedUser.insertId).then(function (retrievedUser) {
-              var profile = {
-                username: retrievedUser[0].username,
-                userID: retrievedUser[0].id
-              };
-              var token = jwt.sign(profile, process.env.DDJWTSECRET);
-              res.status(201).json({token: token});
-            });
+            var profile = {
+              username: req.body.username,
+              userID: insertedUser.insertId
+            };
+            var token = jwt.sign(profile, process.env.DDJWTSECRET);
+            res.status(201).json({token: token});
           });
         });
       } else {
