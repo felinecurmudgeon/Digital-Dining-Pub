@@ -2,7 +2,8 @@ angular.module('digitalDining', [
   'ui.router',
   'digitalDining.services',
   'digitalDining.auth',
-  'digitalDining.restaurantSettings'])
+  'digitalDining.restaurantSettings',
+  'digitalDining.menuCreator'])
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.when('/restaurantSettings', '/restaurantSettings/info');
@@ -28,7 +29,8 @@ angular.module('digitalDining', [
     })
     .state('menuCreator', {
       url: '/menuCreator',
-      templateUrl: './app/dummy.html' // TODO
+      templateUrl: './app/menuCreator/menuCreator.html',
+      controller: 'MenuCtrl'
     })
     .state('restaurantSettings', {
       url: '/restaurantSettings',

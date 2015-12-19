@@ -56,6 +56,7 @@ module.exports = {
     params.restaurant_owner_id = req.user.id;
     restaurantsModel.restaurant.post(params)
       .then(function (data) {
+        console.log('data sent back is ', data);
         res.status(201);
         res.send(data);
       });
