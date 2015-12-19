@@ -2,7 +2,7 @@ angular.module('digitalDining', [
   'ui.router',
   'digitalDining.services',
   'digitalDining.auth',
-  'digitalDining.restaurantSettings'.
+  'digitalDining.restaurantSettings',
   'digitalDining.menuCreator'])
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {

@@ -13,7 +13,7 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
           catId: result.data.insertId,
           deletable: false,
           editable: false,
-          editedName: categories[catIndex].attributes.category_name,
+          editedName: $scope.catToAdd,
           itemToAdd: {},
           addItemForm: false
         };
