@@ -164,8 +164,6 @@ angular.module('digitalDining.controllers', [])
   $scope.getCheckedInStatus = function () {
     if ($window.localStorage.getItem('partyInfo')) {
       $scope.isCheckedIn = true;
-    } else {
-      $scope.isCheckedIn = false;
     }
   };
 
