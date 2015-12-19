@@ -82,27 +82,28 @@ angular.module('digitalDining.services', [])
   };
 })
 
-.factory('MenuFactory', ['$http', function ($http) {
-  var getMenuItems = function (restID) {
+.factory('MenuFactory', ['$http', '$window', function ($http, $window) {
+  var getMenuItems = function () {
     return $http({
-      url: 'http://localhost:8000/api/menuitems/?rid=' + restID,
+      url: 'http://localhost:8000/api/menuitems/?rid=' + $window.localStorage.getItem('restaurantId'),
       method: 'GET'
     });
   };
 
-  var getMenuCategories = function (restID) {
+  var getMenuCategories = function () {
     return $http({
-      url: 'http://localhost:8000/api/menuCategories/?rid=' + restID,
+      url: 'http://localhost:8000/api/menuCategories/?rid=' + $window.localStorage.getItem('restaurantId'),
       method: 'GET'
     });
   };
 
   var postMenuItem = function (menuItem) {
+    console.log($window.localStorage.getItem('restaurantId') + ' is the restaurant Id');
     return $http({
       url: 'http://localhost:8000/api/menuItems',
       method: 'POST',
       data: {
-        'restaurant_id' : 1, //ultimately this will be communicated in the JWT
+        'restaurant_id' : $window.localStorage.getItem('restaurantId'),
         'title' : menuItem.attributes.title,
         'description' : menuItem.attributes.description,
         'price' : menuItem.attributes.price,
@@ -116,7 +117,7 @@ angular.module('digitalDining.services', [])
       url: 'http://localhost:8000/api/menuItems/' + menuItem.id,
       method: 'PUT',
       data: {
-        'restaurant_id' : 1, //ultimately this will be communicated in the JWT
+        'restaurant_id' : $window.localStorage.getItem('restaurantId'),
         'title' : menuItem.editedTitle,
         'description' : menuItem.editedDescription,
         'price' : menuItem.editedPrice,
@@ -137,7 +138,7 @@ angular.module('digitalDining.services', [])
       url: 'http://localhost:8000/api/menuCategories',
       method: 'POST',
       data: {
-        'restaurant_id' : 1, //ultimately this will be communicated in the JWT
+        'restaurant_id' : $window.localStorage.getItem('restaurantId'),
         'category_name' : category
       }
     });

@@ -63,7 +63,7 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
   $scope.getMenu = function () {
     $scope.menu = {};
 
-    MenuFactory.getMenuCategories(1).then(function (dataObject) { //the 1 is the hardcoded restaurant ID. Eventually this will be removed.
+    MenuFactory.getMenuCategories().then(function (dataObject) {
       var categories = dataObject.data.data;
       for (var catIndex = 0; catIndex < categories.length; catIndex++) {
         $scope.menu[categories[catIndex].attributes.category_name] = {
@@ -77,7 +77,7 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
         };
       }
     }).then(function () {
-      MenuFactory.getMenuItems(1).then(function (dataObject) { //the 1 is the hardcoded restaurant ID. Eventually this will be removed.
+      MenuFactory.getMenuItems().then(function (dataObject) {
         var menuItems = dataObject.data.data;
         for (var itemIndex = 0; itemIndex < menuItems.length; itemIndex++) {
           menuItems[itemIndex].editable = false;

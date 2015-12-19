@@ -38,7 +38,6 @@ module.exports = {
     console.log('deleting menu category');
     menusModel.menuCategory.delete(req.params.id)
     .then(function (deletedIds) {
-      console.log('responding with ', deletedIds);
       res.status(204).send(deletedIds);
     });
   },

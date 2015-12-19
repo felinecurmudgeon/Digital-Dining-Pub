@@ -48,28 +48,44 @@ var Promise = require('bluebird');
       //deleting a category also deletes all of the menu items associated with that category
       //The promise resolves as an array with the categoryID at index 0 and all the menu_item_ids at indices 1+
       delete: function (menuCategoryId) {
-        console.log('deleting id = ', menuCategoryId);
         return new Promise(function (resolve, reject) {
-          db.con.query('SELECT * FROM menu_items where menu_category_id = ?', menuCategoryId, function (err, data) {
-            var deletePromises = [];
+          db.con.beginTransaction(function (err) {
             if (err) {
-              reject (err);
-            } else {
-              console.log('got data ', data);
+              reject(err);
+            }
+            db.con.query('SELECT * FROM menu_items where menu_category_id = ?', menuCategoryId, function (err, data) {
+              if (err) {
+                return db.con.rollback(function () {
+                  reject(err);
+                });
+              }
+              var deletePromises = [];
               for (var i = 0; i < data.length; i++) {
                 deletePromises.push(module.exports.menuItems.delete(data[i].id));
               }
               return Promise.all(deletePromises).then(function (deletedIds) {
                 db.con.query('DELETE FROM menu_categories WHERE id = ?', menuCategoryId, function (err) {
                   if (err) {
-                    reject(err);
-                  } else {
-                    console.log('promise resolves with ', [menuCategoryId].concat(deletedIds));
-                    resolve([Number(menuCategoryId)].concat(deletedIds));
+                    return db.con.rollback(function () {
+                      reject(err);
+                    });
                   }
+                  db.con.commit(function (err) {
+                    if (err) {
+                      return db.con.rollback(function () {
+                        reject(err);
+                      });
+                    }
+                    resolve([Number(menuCategoryId)].concat(deletedIds));
+                  });
+                });
+              })
+              .catch(function (err) {
+                return db.con.rollback(function () {
+                  reject(err);
                 });
               });
-            }
+            });
           });
         });
       }
