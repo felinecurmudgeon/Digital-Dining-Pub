@@ -72,3 +72,7 @@ h1 {
 .order-buttons {
   margin: 0 auto;
 }
+
+.itemDescription {
+  text-align: center;
+}

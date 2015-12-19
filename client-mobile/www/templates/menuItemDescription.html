@@ -1,9 +1,9 @@
-<ion-view view-title='Description'>
+<ion-view view-title='{{focusedMenuItem.title}}'>
   <ion-content>
     <ion-item>
     <div class="list card">
       <div class="item item">
-        <h2>{{focusedMenuItem.title}}</h2>
+        <h2 class='itemDescription'>{{focusedMenuItem.title}}</h2>
         <p>{{focusedMenuItem.description}}</p>
       </div>
       <div class="item item-image">
@@ -15,10 +15,9 @@
       Remove Item
       </button>
       <button ng-show='isCheckedIn' class='addToOrder button button-balanced' ng-click='addItemToOrder(focusedMenuItem)'>
-        Add Item to Order
+        Add Item to Order (${{focusedMenuItem.price}})
       </button>
     </div>
     </ion-item>
-    
   </ion-content>
 </ion-view>

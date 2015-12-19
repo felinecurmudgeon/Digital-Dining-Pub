@@ -111,10 +111,12 @@ angular.module('digitalDining.services', [])
   var sendOrder = function (pid) {
     pid = pid || 1;
     console.log('hit');
+    var temp = order.menu_items;
+    order.menu_items = [];
     return $http({
       url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
       method: 'POST',
-      data: order.menu_items
+      data: temp
     });
   };
   return {

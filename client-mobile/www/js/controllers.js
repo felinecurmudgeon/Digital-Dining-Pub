@@ -61,11 +61,11 @@ angular.module('digitalDining.controllers', [])
       for (var itemIndex = 0; itemIndex < dataObject.data.data.length; itemIndex++) {
         if (!$scope.menu[dataObject.data.data[itemIndex].attributes.menuCategoryId]) {
           dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
-          dataObject.data.data[itemIndex].attributes.isOrdered = false;
+          dataObject.data.data[itemIndex].attributes.quantity = 0;
           $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName] = [dataObject.data.data[itemIndex].attributes];
         } else {
           dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
-          dataObject.data.data[itemIndex].attributes.isOrdered = false;
+          dataObject.data.data[itemIndex].attributes.quantity = 0;
           $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].push(dataObject.data.data[itemIndex].attributes);
         }
       }
@@ -93,7 +93,8 @@ angular.module('digitalDining.controllers', [])
   $scope.getPartyInfo();
 
   $scope.sendOrder = function () {
-    OrderFactory.sendOrder(JSON.parse($window.localStorage.getItem('partyInfo')).data.id);
+    var partyId = JSON.parse($window.localStorage.partyInfo).data.id;
+    OrderFactory.sendOrder(partyId);
   };
   $scope.addItemToOrder = function (item) {
     OrderFactory.addItemToOrder(item);
