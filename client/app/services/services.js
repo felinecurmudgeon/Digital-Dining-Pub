@@ -97,7 +97,7 @@ angular.module('digitalDining.services', [])
     });
   };
 
-  var postMenuItem = function (menuItem, categoryId) {
+  var postMenuItem = function (menuItem) {
     return $http({
       url: 'http://localhost:8000/api/menuItems',
       method: 'POST',
@@ -108,9 +108,9 @@ angular.module('digitalDining.services', [])
         'price' : menuItem.attributes.price,
         'menu_category_id' : menuItem.attributes.menuCategoryId
       }
-    })
+    });
   };
-  
+
   var editMenuItem = function (menuItem) {
     return $http({
       url: 'http://localhost:8000/api/menuItems/' + menuItem.id,
@@ -128,7 +128,7 @@ angular.module('digitalDining.services', [])
   var deleteMenuItem = function (menuItem) {
     return $http({
       url: 'http://localhost:8000/api/menuItems/' + menuItem.id,
-      method: 'DELETE',
+      method: 'DELETE'
     });
   };
 
@@ -159,7 +159,7 @@ angular.module('digitalDining.services', [])
       }
     });
   };
-  
+
   return {
     editCategory: editCategory,
     deleteCategory: deleteCategory,

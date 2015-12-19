@@ -1,6 +1,7 @@
+/*jshint camelcase: false */
 angular.module('digitalDining.menuCreator', ['digitalDining.services'])
-  
-.controller('MenuCtrl', ['$scope', 'MenuFactory', '$http', function ($scope, MenuFactory, $http) {
+
+.controller('MenuCtrl', ['$scope', 'MenuFactory', function ($scope, MenuFactory) {
   $scope.menu = {};
   $scope.catToAdd = '';
 
@@ -21,22 +22,22 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
       });
     },
     delete: function (categoryName, category) {
-      if(!category.deletable){
+      if (!category.deletable) {
         category.deletable = true;
       } else {
-        MenuFactory.deleteCategory($scope.menu[categoryName].catId).then(function (deletedIds) {
+        MenuFactory.deleteCategory($scope.menu[categoryName].catId).then(function () {
           delete $scope.menu[categoryName];
         });
       }
     },
-    edit: function (categoryName, category) { 
+    edit: function (categoryName, category) {
       category.deletable = false;
-      if(!category.editable){ 
+      if (!category.editable) {
         category.editable = true;
         category.editedName = categoryName;
       } else {
         MenuFactory.editCategory(category.editedName, category)
-        .then(function (result) {
+        .then(function () {
           $scope.menu[category.editedName] = $scope.menu[categoryName];
           delete $scope.menu[categoryName];
           category.editable = false;
@@ -58,13 +59,13 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
       }
     }
   };
-  
+
   $scope.getMenu = function () {
-    $scope.menu = {}; 
+    $scope.menu = {};
 
     MenuFactory.getMenuCategories(1).then(function (dataObject) { //the 1 is the hardcoded restaurant ID. Eventually this will be removed.
       var categories = dataObject.data.data;
-      for(var catIndex = 0; catIndex < categories.length; catIndex++){
+      for (var catIndex = 0; catIndex < categories.length; catIndex++) {
         $scope.menu[categories[catIndex].attributes.category_name] = {
           items: [],
           catId: categories[catIndex].id,
@@ -75,31 +76,31 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
           addItemForm: false
         };
       }
-    }).then(function(){
+    }).then(function () {
       MenuFactory.getMenuItems(1).then(function (dataObject) { //the 1 is the hardcoded restaurant ID. Eventually this will be removed.
         var menuItems = dataObject.data.data;
-        for(var itemIndex = 0; itemIndex < menuItems.length; itemIndex++){
+        for (var itemIndex = 0; itemIndex < menuItems.length; itemIndex++) {
           menuItems[itemIndex].editable = false;
           menuItems[itemIndex].deletable = false;
           menuItems[itemIndex].editedPrice = menuItems[itemIndex].attributes.price;
           menuItems[itemIndex].editedTitle = menuItems[itemIndex].attributes.title;
           menuItems[itemIndex].editedDescription = menuItems[itemIndex].attributes.description;
-          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].items.push(menuItems[itemIndex]);         
-        };
+          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].items.push(menuItems[itemIndex]);
+        }
       });
     });
   };
 
-  
+
   $scope.toggleAddItemForm = function (category) {
     $scope.menu[category].itemToAdd.title = '';
     $scope.menu[category].itemToAdd.description = '';
     $scope.menu[category].itemToAdd.price = '';
     $scope.menu[category].addItemForm = !$scope.menu[category].addItemForm;
-  }
-  
+  };
+
   $scope.itemMethods = {
-    editText: function(menuItem){
+    editText: function (menuItem) {
       if (menuItem.editable) {
         return 'Save Edit';
       } else {
@@ -127,23 +128,23 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
         editedDescription: $scope.menu[category].itemToAdd.description,
         editedPrice: $scope.menu[category].itemToAdd.price
       };
-      MenuFactory.postMenuItem(newItem, categoryId)
+      MenuFactory.postMenuItem(newItem)
       .then(function (result) {
         $scope.toggleAddItemForm(category);
         newItem.id = result.data.insertId;
         $scope.menu[category].items.push(newItem);
       });
     },
-    edit: function (menuItem) { 
+    edit: function (menuItem) {
     menuItem.deletable = false;
-      if(!menuItem.editable){ 
+      if (!menuItem.editable) {
         menuItem.editable = true;
         menuItem.editedPrice = menuItem.attributes.price;
         menuItem.editedTitle = menuItem.attributes.title;
         menuItem.editedDescription = menuItem.attributes.description;
       } else {
         MenuFactory.editMenuItem(menuItem)
-        .then(function (result) {
+        .then(function () {
           menuItem.attributes.price = menuItem.editedPrice;
           menuItem.attributes.title = menuItem.editedTitle;
           menuItem.attributes.description = menuItem.editedDescription;
@@ -152,11 +153,11 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
       }
     },
     delete: function (menuItem, category, index) {
-      if(!menuItem.deletable){
+      if (!menuItem.deletable) {
         menuItem.deletable = true;
-      } else { 
+      } else {
         MenuFactory.deleteMenuItem(menuItem)
-        .then(function (result) {
+        .then(function () {
           $scope.menu[category].items.splice(index, 1);
         });
       }

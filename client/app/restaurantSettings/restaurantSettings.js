@@ -1,3 +1,4 @@
+/*jshint camelcase: false */
 angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
 
 .controller('restSettingsController', function ($scope, $window, $location, Restaurants) {
@@ -47,7 +48,7 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
       }
     };
     callAPI()
-      .then(function (data) {
+      .then(function () {
         $scope.creation = false;
       })
       .catch(function (error) {

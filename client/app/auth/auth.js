@@ -1,3 +1,4 @@
+/*jshint camelcase: false */
 angular.module('digitalDining.auth', ['digitalDining.services'])
 
 .controller('AuthController', function ($scope, $window, $location, Auth) {
