@@ -68,3 +68,7 @@ h1 {
     text-align: center;
     width: 40px;
 }
+
+.order-buttons {
+  margin: 0 auto;
+}

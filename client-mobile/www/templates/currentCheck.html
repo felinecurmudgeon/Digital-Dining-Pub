@@ -2,8 +2,8 @@
   <ion-content>
     <h4> Items Ordered </h4>
     <div collection-repeat = 'item in orderItems' >
-      <li> <span class='itemName'> {{item.title}} </span> </li>
-      <li> <span class = 'itemPrice'> {{item.price}} </span> </li>
+      <li> <span class='itemName'> {{item.title}} </span><span class = 'itemPrice'> {{item.price}} </span> </li>
+      
       <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
     </div>
     <div class ='subtotal'>

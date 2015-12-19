@@ -97,9 +97,10 @@ angular.module('digitalDining.services', [])
     console.log('item', order);
   };
   var removeItemFromOrder = function (item) {
-    for (var i = 0; i <= order.menu_items.length; i++) {
+    for (var i = 0; i < order.menu_items.length; i++) {
       if (order.menu_items[i].menu_item_id === item.menuID) {
         order.menu_items.splice(i, 1);
+        i--;
       }
     }
   };

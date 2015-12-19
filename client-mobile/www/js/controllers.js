@@ -70,6 +70,7 @@ angular.module('digitalDining.controllers', [])
         }
       }
     });
+    $scope.rest = restID;
   };
   $scope.getMenuItems();
 
@@ -149,6 +150,10 @@ angular.module('digitalDining.controllers', [])
   $scope.addItemToOrder = function (item) {
     item.isOrdered = !item.isOrdered;
     OrderFactory.addItemToOrder(item);
+  };
+  $scope.removeItemFromOrder = function (item) {
+    item.isOrdered = !item.isOrdered;
+    OrderFactory.removeItemFromOrder(item);
   };
 }])
 

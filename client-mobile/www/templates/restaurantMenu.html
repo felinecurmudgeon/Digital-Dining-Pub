@@ -6,7 +6,7 @@
     </div>
   </ion-header-bar>
   <ion-content>
-    <h1>Menu</h1>
+    <h1>{{rest.attributes.restaurantName}}</h1>
       <div ng-repeat="(category, menuItems) in menu">
         <div class="item item-divider">{{category}}</div> 
         <ion-item ng-repeat="menuItem in menuItems"   ng-click='clickLocationCheckingForOrder($event, menuItem)'><span>
