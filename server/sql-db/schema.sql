@@ -3,15 +3,17 @@ CREATE DATABASE digitaldining;
   
 USE digitaldining;
 
-CREATE TABLE restaurant_users (
+CREATE TABLE users (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   username VARCHAR(20) NOT NULL,
-  password CHAR(60) NOT NULL,
+  password CHAR(60),
+  stripe_id VARCHAR(100),
+  facebook_id CHAR(32) DEFAULT 'null',
+  is_restaurant_user BOOLEAN NOT NULL DEFAULT FALSE,
 
-  UNIQUE(username)
-
+  CONSTRAINT unique_user UNIQUE (username, facebook_id)
 );
 
 CREATE TABLE restaurants (
@@ -43,7 +45,7 @@ CREATE TABLE restaurants (
   closing_hour_sunday TIME DEFAULT '23:00:00',
 
   FOREIGN KEY (restaurant_owner_id)
-    REFERENCES restaurant_users(id)
+    REFERENCES users(id)
 );
 
 CREATE TABLE restaurant_employees (
@@ -56,7 +58,7 @@ CREATE TABLE restaurant_employees (
   FOREIGN KEY (restaurant_id)
     REFERENCES restaurants(id),
   FOREIGN KEY (restaurant_user_id)
-    REFERENCES restaurant_users(id)  
+    REFERENCES users(id)  
 );
 
 CREATE TABLE tables (
@@ -99,18 +101,6 @@ CREATE TABLE menu_items (
     REFERENCES menu_categories(id)
 );
 
-CREATE TABLE users (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  username VARCHAR(20) NOT NULL,
-  password CHAR(60),
-  stripe_id VARCHAR(100),
-  facebook_id CHAR(32) DEFAULT 'null',
-
-  CONSTRAINT unique_user UNIQUE (username, facebook_id)
-);
-
 CREATE TABLE payment_info (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -128,6 +118,7 @@ CREATE TABLE parties (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   restaurant_id INT NOT NULL,
   table_id INT,
+  party_name VARCHAR(30) NOT NULL,
   party_size INT NOT NULL,
   checkedin_at TIMESTAMP,
   seated_at TIMESTAMP,

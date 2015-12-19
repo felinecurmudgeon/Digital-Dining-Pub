@@ -1,0 +1,38 @@
+<form role="form" ng-submit="submitRestaurant()">
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Opening Hour</th>
+        <th>Closing Hour</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="day in days">
+        <td>{{day}}</td>
+        <td>
+          <div class="input-group">
+            <input type="text" class="form-control"
+            value = {{restaurant['opening_hour_' + day.toLowerCase()]}} ng-model="restaurant['opening_hour_' + day.toLowerCase()]">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-time"></span>
+            </span>
+          </div>
+        </td>
+        <td>
+          <div class="input-group">
+            <input type="text" class="form-control"
+            value = {{restaurant['closing_hour_' + day.toLowerCase()]}} ng-model="restaurant['closing_hour_' + day.toLowerCase()]">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-time"></span>
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <input type="submit" name="submit" id="submit" class="btn btn-info pull-right"
+    value="Create my Restaurant" ng-show="creation">
+  <input type="submit" name="submit" id="submit" value="Update info" class="btn btn-info pull-right"
+    value="Create my Restaurant" ng-hide="creation">
+</form>
