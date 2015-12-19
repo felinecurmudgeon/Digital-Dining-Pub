@@ -1,0 +1,22 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Party Size</th>
+      <th>Party Name</th>
+      <th>Hour of arrival</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="party in parties.seated">
+      <td>
+        {{party.attributes.partySize}}
+      </td>
+      <td>
+        {{party.attributes.partyName}}
+      </td>
+      <td>
+        {{party.attributes.checkedinAt.slice(12, 16)}}
+      </td>
+    </tr>
+  </tbody>
+</table>

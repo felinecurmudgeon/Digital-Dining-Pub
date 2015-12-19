@@ -1,0 +1,36 @@
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Party Size</th>
+        <th>Party Name</th>
+        <th>Hour of arrival</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="party in parties.waiting">
+        <td>
+          {{party.attributes.partySize}}
+        </td>
+        <td>
+          {{party.attributes.partyName}}
+        </td>
+        <td>
+          {{party.attributes.checkedinAt.slice(12, 16)}}
+        </td>
+        <td>
+          <!-- Single button -->
+          <div class="btn-group" uib-dropdown uib-keyboard-nav>
+            <button id="simple-btn-keyboard-nav" type="button" class="btn btn-primary" uib-dropdown-toggle>
+              Seat Party <span class="caret"></span>
+            </button>
+            <ul class="uib-dropdown-menu" aria-labelledby="simple-btn-keyboard-nav">
+              <li ng-repeat="party in parties.waiting"><a href="#">Action</a></li>
+              <li class="divider"></li>
+              <li ng-repeat="party in parties.waiting"><a href="#">Separated link</a></li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
