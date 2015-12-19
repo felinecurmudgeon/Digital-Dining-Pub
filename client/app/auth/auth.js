@@ -20,7 +20,6 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
   };
 
   $scope.signup = function () {
-    $scope.showPasswordMatch = false;
     if ($scope.user.password !== $scope.user.password2) {
       $scope.showPasswordMatch = true;
     } else {
