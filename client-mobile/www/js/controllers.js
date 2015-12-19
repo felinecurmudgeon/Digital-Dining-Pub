@@ -262,9 +262,10 @@ angular.module('digitalDining.controllers', [])
   var taxCalculator = function (total) {
      return total * 1.08;
   };
+  $scope.tipAmount = 0;
   $scope.tipCalculator = function (total, percentage) {
     $scope.tipAmount = $filter('number')(total * percentage, 2);
-    $scope.totalWithTaxAndTip = $filter('number')(Number($scope.tipAmount) + Number(total), 2);
+    //$scope.totalWithTaxAndTip = $filter('number')(Number($scope.tipAmount) + Number(total), 2);
   };
   $scope.doCharge = function () {
     //this should be broken out between tax amount and tip amounts and accounted for separtely in a production app
