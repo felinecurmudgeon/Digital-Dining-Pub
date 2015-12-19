@@ -2,123 +2,166 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
   
 .controller('MenuCtrl', ['$scope', 'MenuFactory', '$http', function ($scope, MenuFactory, $http) {
   $scope.menu = {};
-  $scope.itemToAdd = {};
-  $scope.addItemForm = {};
-  $scope.saveButtonText = 'Edit Item';
-  $scope.showAddCat = false;
   $scope.catToAdd = '';
 
-  $scope.addCategory = function () {
-    MenuFactory.postCategory($scope.catToAdd)
-    .then(function (result) {
-      $scope.menu[$scope.catToAdd] = {
-        items: [],
-        catId: result.data.insertId
-      };
-      $scope.catToAdd = '';
-    });
+  $scope.categoryMethods = {
+    add: function () {
+      MenuFactory.postCategory($scope.catToAdd)
+      .then(function (result) {
+        $scope.menu[$scope.catToAdd] = {
+          items: [],
+          catId: result.data.insertId,
+          deletable: false,
+          editable: false,
+          editedName: categories[catIndex].attributes.category_name,
+          itemToAdd: {},
+          addItemForm: false
+        };
+        $scope.catToAdd = '';
+      });
+    },
+    delete: function (categoryName, category) {
+      if(!category.deletable){
+        category.deletable = true;
+      } else {
+        MenuFactory.deleteCategory($scope.menu[categoryName].catId).then(function (deletedIds) {
+          delete $scope.menu[categoryName];
+        });
+      }
+    },
+    edit: function (categoryName, category) { 
+      category.deletable = false;
+      if(!category.editable){ 
+        category.editable = true;
+        category.editedName = categoryName;
+      } else {
+        MenuFactory.editCategory(category.editedName, category)
+        .then(function (result) {
+          $scope.menu[category.editedName] = $scope.menu[categoryName];
+          delete $scope.menu[categoryName];
+          category.editable = false;
+        });
+      }
+    },
+    deleteText: function (category) {
+      if (category.deletable) {
+        return 'Confirm Delete';
+      } else {
+        return 'Delete Category';
+      }
+    },
+    editText: function (category) {
+      if (category.editable) {
+        return 'Save Edit';
+      } else {
+        return 'Edit Category Name';
+      }
+    }
   };
   
   $scope.getMenu = function () {
     $scope.menu = {}; 
 
-    MenuFactory.getMenuCategories(1).then( function (dataObject) { //the 1 is the hardcoded restaurant ID. Eventually this will be removed.
-      for(var catIndex = 0; catIndex < dataObject.data.data.length; catIndex++){
-        $scope.menu[dataObject.data.data[catIndex].attributes.category_name] = {
+    MenuFactory.getMenuCategories(1).then(function (dataObject) { //the 1 is the hardcoded restaurant ID. Eventually this will be removed.
+      var categories = dataObject.data.data;
+      for(var catIndex = 0; catIndex < categories.length; catIndex++){
+        $scope.menu[categories[catIndex].attributes.category_name] = {
           items: [],
-          catId: dataObject.data.data[catIndex].id
-        }
-        $scope.addItemForm[dataObject.data.data[catIndex].attributes.category_name] = false;
-        $scope.itemToAdd[dataObject.data.data[catIndex].attributes.category_name] = false;
+          catId: categories[catIndex].id,
+          deletable: false,
+          editable: false,
+          editedName: categories[catIndex].attributes.category_name,
+          itemToAdd: {},
+          addItemForm: false
+        };
       }
     }).then(function(){
       MenuFactory.getMenuItems(1).then(function (dataObject) { //the 1 is the hardcoded restaurant ID. Eventually this will be removed.
-        for(var itemIndex = 0; itemIndex < dataObject.data.data.length; itemIndex++){
-          dataObject.data.data[itemIndex].editable = false;
-          dataObject.data.data[itemIndex].deletable = false;
-          dataObject.data.data[itemIndex].editedPrice = dataObject.data.data[itemIndex].attributes.price;
-          dataObject.data.data[itemIndex].editedTitle = dataObject.data.data[itemIndex].attributes.title;
-          dataObject.data.data[itemIndex].editedDescription = dataObject.data.data[itemIndex].attributes.description;
-          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].items.push(dataObject.data.data[itemIndex]);         
+        var menuItems = dataObject.data.data;
+        for(var itemIndex = 0; itemIndex < menuItems.length; itemIndex++){
+          menuItems[itemIndex].editable = false;
+          menuItems[itemIndex].deletable = false;
+          menuItems[itemIndex].editedPrice = menuItems[itemIndex].attributes.price;
+          menuItems[itemIndex].editedTitle = menuItems[itemIndex].attributes.title;
+          menuItems[itemIndex].editedDescription = menuItems[itemIndex].attributes.description;
+          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].items.push(menuItems[itemIndex]);         
         };
       });
     });
   };
 
-  $scope.getMenu();
-
+  
   $scope.toggleAddItemForm = function (category) {
-    $scope.itemToAdd[category].title = '';
-    $scope.itemToAdd[category].description = '';
-    $scope.itemToAdd[category].price = '';
-    $scope.addItemForm[category] = !$scope.addItemForm[category];
+    $scope.menu[category].itemToAdd.title = '';
+    $scope.menu[category].itemToAdd.description = '';
+    $scope.menu[category].itemToAdd.price = '';
+    $scope.menu[category].addItemForm = !$scope.menu[category].addItemForm;
   }
-
-  $scope.editText = function(menuItem){
-    if(menuItem.editable){
-      return 'Save Edit';
-    } else {
-      return 'Edit Item';
-    }
-  }
-
-  $scope.deleteText = function (menuItem) {
-    if(menuItem.deletable){
-      return 'Confirm Delete';
-    } else {
-      return 'Delete Item';
-    }
-  }
-
-  $scope.postNewItem = function (category, categoryId) {
-    var newItem = {
-      attributes: {
-        title: $scope.itemToAdd[category].title,
-        description: $scope.itemToAdd[category].description,
-        price: $scope.itemToAdd[category].price,
-        menuCategoryId: categoryId
-      },
-      editable: false,
-      deletable: false,
-      editedTitle: $scope.itemToAdd[category].title,
-      editedDescription: $scope.itemToAdd[category].description,
-      editedPrice: $scope.itemToAdd[category].price
-    };
-    MenuFactory.postMenuItem(newItem, categoryId)
-    .then(function (result) {
-      $scope.toggleAddItemForm(category);
-      newItem.id = result.data.insertId;
-      $scope.menu[category].items.push(newItem);
-    });
-  };
-
-  $scope.editItem = function (menuItem) { 
-    menuItem.deletable = false;
-    if(!menuItem.editable){ 
-      menuItem.editable = true;
-      menuItem.editedPrice = menuItem.attributes.price;
-      menuItem.editedTitle = menuItem.attributes.title;
-      menuItem.editedDescription = menuItem.attributes.description;
-    } else {
-      MenuFactory.editMenuItem(menuItem)
+  
+  $scope.itemMethods = {
+    editText: function(menuItem){
+      if (menuItem.editable) {
+        return 'Save Edit';
+      } else {
+        return 'Edit Item';
+      }
+    },
+    deleteText: function (menuItem) {
+      if (menuItem.deletable) {
+        return 'Confirm Delete';
+      } else {
+        return 'Delete Item';
+      }
+    },
+    post: function (category, categoryId) {
+      var newItem = {
+        attributes: {
+          title: $scope.menu[category].itemToAdd.title,
+          description: $scope.menu[category].itemToAdd.description,
+          price: $scope.menu[category].itemToAdd.price,
+          menuCategoryId: categoryId
+        },
+        editable: false,
+        deletable: false,
+        editedTitle: $scope.menu[category].itemToAdd.title,
+        editedDescription: $scope.menu[category].itemToAdd.description,
+        editedPrice: $scope.menu[category].itemToAdd.price
+      };
+      MenuFactory.postMenuItem(newItem, categoryId)
       .then(function (result) {
-        menuItem.attributes.price = menuItem.editedPrice;
-        menuItem.attributes.title = menuItem.editedTitle;
-        menuItem.attributes.description = menuItem.editedDescription;
-        menuItem.editable = false;
+        $scope.toggleAddItemForm(category);
+        newItem.id = result.data.insertId;
+        $scope.menu[category].items.push(newItem);
       });
+    },
+    edit: function (menuItem) { 
+    menuItem.deletable = false;
+      if(!menuItem.editable){ 
+        menuItem.editable = true;
+        menuItem.editedPrice = menuItem.attributes.price;
+        menuItem.editedTitle = menuItem.attributes.title;
+        menuItem.editedDescription = menuItem.attributes.description;
+      } else {
+        MenuFactory.editMenuItem(menuItem)
+        .then(function (result) {
+          menuItem.attributes.price = menuItem.editedPrice;
+          menuItem.attributes.title = menuItem.editedTitle;
+          menuItem.attributes.description = menuItem.editedDescription;
+          menuItem.editable = false;
+        });
+      }
+    },
+    delete: function (menuItem, category, index) {
+      if(!menuItem.deletable){
+        menuItem.deletable = true;
+      } else { 
+        MenuFactory.deleteMenuItem(menuItem)
+        .then(function (result) {
+          $scope.menu[category].items.splice(index, 1);
+        });
+      }
     }
   };
 
-  $scope.deleteItem = function (menuItem, category, index) {
-    if(!menuItem.deletable){
-      menuItem.deletable = true;
-    } else { 
-      MenuFactory.deleteMenuItem(menuItem)
-      .then(function (result) {
-        $scope.menu[category].items.splice(index, 1);
-      })
-    }
-  }
-
+  $scope.getMenu();
 }]);
