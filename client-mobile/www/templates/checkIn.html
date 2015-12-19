@@ -1,6 +1,7 @@
 <ion-view view-title="Check In">
+
   <ion-content>
-    <form ng-submit="doCheckIn()">
+    <form ng-submit="doCheckIn()" ng-show="!isCheckedIn">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Party Name</span>
@@ -11,12 +12,48 @@
           <input type="number" ng-model="partyInfo.party_size">
         </label>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Check In to {{focusedRestaurant.attributes.restaurantName}}</button>
+          <button ng-if='!isCheckedIn'class="button button-block button-positive" type="submit">Check In to {{focusedRestaurant.attributes.restaurantName}}</button>
+          <button ng-if='isCheckedIn' class="button button-block button-balanced" type="submit">Checked In at {{focusedRestaurant.attributes.restaurantName}}</button>
         </label>
       </div>
     </form>
-    <ng-include src="footersrc"></ng-include>
+    <br>
+    <br>
+    <br>
+      <div ng-show="isCheckedIn">
+        You are already checked in.<br>
+      </div>
+        <div ng-show="!isCheckedIn">
+        You are NOT checked in.
+      </div>
+      <br>
   </ion-content>
+
+
+
+<!--   <ng-include src="footersrc"></ng-include> -->
+
+  <ion-footer-bar align-title="left" class="bar-assertive">
+  <div class="tabs">
+      <a class="tab-item" href='#/nav/restaurantMenu'>
+        Menu
+      </a>
+      <a class="tab-item" href='#/nav/restaurantDescription'>
+        Details
+      </a>
+      <a class="tab-item" href='#/nav/currentCheck'>
+        Order
+      </a>
+      <a class="tab-item" href='#/nav/checkIn'>
+        Check In
+      </a>
+      <a class="tab-item">
+        Server
+      </a>
+    </div>
+</ion-footer-bar>
+
+
 </ion-view>
 
     

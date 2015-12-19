@@ -53,7 +53,7 @@ angular.module('digitalDining.controllers', [])
 
 }])
 
-.controller('RestaurantMenuCtrl', ['$scope', '$state', 'MenuFactory', 'HomeFactory', 'OrderFactory', 'CheckInFactory', function ($scope, $state, MenuFactory, HomeFactory, OrderFactory, CheckInFactory) {
+.controller('RestaurantMenuCtrl', ['$scope', '$state', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', 'CheckInFactory', function ($scope, $state, $window, MenuFactory, HomeFactory, OrderFactory, CheckInFactory) {
   $scope.getMenuItems = function () {
     var restID = HomeFactory.getFocusedRestaurant();
     MenuFactory.getMenuItems(restID.id).then(function (dataObject) {
@@ -87,13 +87,12 @@ angular.module('digitalDining.controllers', [])
   };
 
   $scope.getPartyInfo = function () {
-    $scope.partyInfo = CheckInFactory.getPartyInfo();
     $scope.isCheckedIn = CheckInFactory.getCheckInStatus();
   };
   $scope.getPartyInfo();
 
   $scope.sendOrder = function () {
-    OrderFactory.sendOrder($scope.partyInfo.data.id);
+    OrderFactory.sendOrder(JSON.parse($window.localStorage.getItem('partyInfo')).data.id);
   };
   $scope.addItemToOrder = function (item) {
     OrderFactory.addItemToOrder(item);
@@ -137,7 +136,6 @@ angular.module('digitalDining.controllers', [])
 }])
 
 .controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', 'CheckInFactory', function ($scope, MenuFactory, OrderFactory, CheckInFactory) {
-  $scope.focusedMenuItem = {};
   $scope.getFocusedMenuItem = function () {
     $scope.focusedMenuItem = MenuFactory.getFocusedMenuItem();
   };
@@ -154,7 +152,21 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('CheckInCtrl', ['$scope', 'HomeFactory', 'CheckInFactory', function ($scope, HomeFactory, CheckInFactory) {
+.controller('CheckInCtrl', ['$scope', '$state', '$window', 'HomeFactory', 'CheckInFactory', function ($scope, $state, $window, HomeFactory, CheckInFactory) {
+  
+  $scope.isCheckedIn = false;
+
+  $scope.getCheckedInStatus = function () {
+    console.log("checking");
+    if ($window.localStorage.getItem('partyInfo')) {
+      $scope.isCheckedIn = true;
+    } else {
+      $scope.isCheckedIn = false;
+    }
+  }
+
+  $scope.getCheckedInStatus();
+
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
@@ -166,6 +178,8 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.doCheckIn = function () {
     CheckInFactory.doCheckIn($scope.partyInfo);
+    $state.go('nav.restaurantMenu');
+    $scope.isCheckedIn = true;
   };
 
   $scope.footersrc = '../templates/restaurantFooter.html';
@@ -190,8 +204,7 @@ angular.module('digitalDining.controllers', [])
   };
 }])
 
-.controller('RestaurantDisplayCtrl', ['$scope', 'HomeFactory', 'CheckInFactory', function ($scope, HomeFactory, CheckInFactory) {
-  $scope.focusedRestaurant = {};
+.controller('RestaurantDisplayCtrl', ['$scope', '$state', 'HomeFactory', function ($scope, $state, HomeFactory) {
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
@@ -202,21 +215,28 @@ angular.module('digitalDining.controllers', [])
   $scope.footersrc = '../templates/restaurantFooter.html';
 }])
 
-.controller('CheckCtrl', ['$scope', '$filter', 'CheckFactory', 'CheckInFactory', function ($scope, $filter, CheckFactory, CheckInFactory) {
-  $scope.getPartyInfo = function () {
-    $scope.partyInfo = CheckInFactory.getPartyInfo();
-  };
-  $scope.getPartyInfo();
+.controller('CheckCtrl', ['$scope', '$filter', 'CheckFactory', 'CheckInFactory', 'OrderFactory', '$window', function ($scope, $filter, CheckFactory, CheckInFactory, OrderFactory, $window) {
 
-  var partyId = $scope.partyInfo.data.id; //hard code this to a valid partyId for testing
-  console.log(partyId);
-
+  $scope.isCheckedIn = false;
+  $scope.partyInfo = {};
   $scope.orderItems = [];
   $scope.subtotal = 0;
   var subtotal = 0;
   $scope.totalWithTax = 0;
   $scope.taxAmount = 0;
   $scope.totalWithTaxAndTip = 0;
+
+  $scope.getCheckedInStatus = function () {
+    console.log("checking");
+    $scope.partyInfo = JSON.parse($window.localStorage.getItem('partyInfo'));
+    if ($window.localStorage.getItem('partyInfo')) {
+      $scope.isCheckedIn = true;
+    } else {
+      $scope.isCheckedIn = false;
+    }
+  }
+
+  $scope.getCheckedInStatus();
 
   var taxCalculator = function (total) {
      return total * 1.08;
@@ -229,21 +249,83 @@ angular.module('digitalDining.controllers', [])
     //this should be broken out between tax amount and tip amounts and accounted for separtely in a production app
     CheckFactory.chargeCard($scope.totalWithTaxAndTip)
       .then(function () {
+        $window.localStorage.removeItem('partyInfo');
+        $window.localStorage.removeItem('partyId');
+        $window.localStorage.removeItem('restaurantId');
+        OrderFactory.clearOrder();
         console.log('charged sucessfully');
+
       });
   };
   $scope.getOrderItems = function () {
-    CheckFactory.getCheckItems(partyId)
+    CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
       .then(function (items) {
-        console.log(items);
         for (var i = 0; i < items.data.included.length; i++) {
           $scope.orderItems.push(items.data.included[i].attributes);
           subtotal += items.data.included[i].attributes.price;
         }
         $scope.subtotal = $filter('number')(subtotal, 2);
         $scope.totalWithTax = $filter('number')(taxCalculator($scope.subtotal), 2);
-        $scope.totalWithTaxAndTip = $scope.totalWithTax;
+        $scope.totalWithTaxAndTip = $filter('number')($scope.totalWithTax, 2);
       });
   };
   $scope.getOrderItems();
-}]);
+  $scope.footersrc = '../templates/restaurantFooter.html';
+}])
+.directive('counter', function () {
+    return {
+        restrict: 'A',
+        scope: { value: '=value' },
+        template: '<a href="javascript:;" class="counter-minus" ng-click="minus()">-</a>\
+                  <input type="text" class="counter-field" ng-model="value" ng-change="changed()" ng-readonly="readonly">\
+                  <a  href="javascript:;" class="counter-plus" ng-click="plus()">+</a>',
+        link: function ( scope , element , attributes ) {
+            if ( angular.isUndefined(scope.value) ) {
+              throw 'Missing the value attribute on the counter directive.';
+            }
+            var min = angular.isUndefined(attributes.min) ? null : parseInt(attributes.min);
+            var max = angular.isUndefined(attributes.max) ? null : parseInt(attributes.max);
+            var step = angular.isUndefined(attributes.step) ? 1 : parseInt(attributes.step);
+            element.addClass('counter-container');
+            scope.readonly = angular.isUndefined(attributes.editable) ? true : false;
+            var setValue = function ( val ) {
+              scope.value = parseInt( val );
+            };
+            setValue( scope.value );
+
+            scope.minus = function () {
+              if ( min && (scope.value <= min || scope.value - step <= min) || min === 0 && scope.value < 1 ) {
+                  setValue( min );
+                  return false;
+              }
+              setValue( scope.value - step );
+            };
+            scope.plus = function () {
+              if ( max && (scope.value >= max || scope.value + step >= max) ) {
+                  setValue( max );
+                  return false;
+              }
+              setValue( scope.value + step );
+            };
+            scope.changed = function () {
+              if ( !scope.value ) {
+                setValue( 0 );
+              }
+              if ( /[0-9]/.test(scope.value) ) {
+                setValue( scope.value );
+              } else {
+                setValue( scope.min );
+              }
+              if ( min && (scope.value <= min || scope.value - step <= min) ) {
+                setValue( min );
+                return false;
+              }
+              if ( max && (scope.value >= max || scope.value + step >= max) ) {
+                setValue( max );
+                return false;
+              }
+              setValue( scope.value );
+            };
+        }
+    };
+});

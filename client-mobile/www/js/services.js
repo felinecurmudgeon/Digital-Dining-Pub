@@ -97,12 +97,16 @@ angular.module('digitalDining.services', [])
     console.log('item', order);
   };
   var removeItemFromOrder = function (item) {
-    for (var i = 0; i < order.menu_items.length; i++) {
+    for (var i = 0; i <= order.menu_items.length; i++) {
       if (order.menu_items[i].menu_item_id === item.menuID) {
         order.menu_items.splice(i, 1);
       }
     }
   };
+  var clearOrder = function () {
+    order = {};
+  }
+
   var sendOrder = function (pid) {
     pid = pid || 1;
     console.log('hit');
@@ -115,6 +119,7 @@ angular.module('digitalDining.services', [])
   return {
     sendOrder: sendOrder,
     order: order,
+    clearOrder: clearOrder,
     addItemToOrder: addItemToOrder,
     removeItemFromOrder: removeItemFromOrder
   };
@@ -148,7 +153,7 @@ angular.module('digitalDining.services', [])
   };
   return attach;
 }])
-.factory('CheckInFactory', ['$http', function ($http) {
+.factory('CheckInFactory', ['$http', '$window', function ($http, $window) {
   var partyInfo = {};
   var isCheckedIn = false;
   var getCheckInStatus = function () {
@@ -161,7 +166,10 @@ angular.module('digitalDining.services', [])
       method: 'POST',
       data: data
     }).then( function (response) {
-      partyInfo = response;
+      $window.localStorage.setItem('partyInfo', JSON.stringify(response));
+      $window.localStorage.setItem('partyId', JSON.stringify(response.data.id));
+      $window.localStorage.setItem('restaurantId', JSON.stringify(response.data.restaurant_id));
+
     });
   };
   var getPartyInfo = function () {
@@ -171,7 +179,6 @@ angular.module('digitalDining.services', [])
     getCheckInStatus: getCheckInStatus,
     isCheckedIn: isCheckedIn,
     doCheckIn: doCheckIn,
-    partyInfo: partyInfo,
     getPartyInfo: getPartyInfo
   };
 }])
