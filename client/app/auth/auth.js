@@ -11,8 +11,11 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
 
   $scope.signin = function () {
     Auth.signin($scope.user)
-      .then(function (token) {
-        $window.localStorage.setItem('com.digitalDining', token);
+      .then(function (response) {
+        $window.localStorage.setItem('com.digitalDining', response.token);
+        if (response.restaurantId) {
+          $window.localStorage.setItem('restaurantId', response.restaurantId);
+        }
         $location.path('/reservations');
       })
       .catch(function (error) {

@@ -48,7 +48,9 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
       }
     };
     callAPI()
-      .then(function () {
+      .then(function (data) {
+        console.log('got data ', data);
+        $window.localStorage.setItem('restaurantId', data.id);
         $scope.creation = false;
       })
       .catch(function (error) {

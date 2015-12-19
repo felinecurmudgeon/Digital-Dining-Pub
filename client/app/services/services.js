@@ -8,7 +8,7 @@ angular.module('digitalDining.services', [])
       data: user
     })
     .then(function (resp) {
-      return resp.data.token;
+      return resp.data;
     });
   };
   var signup = function (user) {

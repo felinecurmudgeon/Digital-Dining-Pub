@@ -4,6 +4,7 @@ var Users = require('./../users/usersModel.js').user;
 var bcrypt = require('bcryptjs');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var passport = require('passport');
+var Restaurants = require('./../restaurants/restaurantsModel.js').restaurant;
 
 module.exports = {
   //check username and password in the DB.  If no match, send 401. If there is a match, send the client back a JWT.
@@ -21,7 +22,29 @@ module.exports = {
               userID: user[0].id
             };
             var token = jwt.sign(profile, process.env.DDJWTSECRET);
-            res.status(200).json({token: token});
+            var response = {};
+            response.token = token;
+
+            //if it's a restaurant user, try to find his restaurant ID and add it to the response
+            if (user[0].is_restaurant_user) {
+              Restaurants.get({
+                all: 'false',
+                userId: user[0].id})
+              .then(function (restaurant) {
+                if (restaurant.length === 0) {
+                  res.status(200).json(response);
+                } else {
+                  response.restaurantId = restaurant[0].id;
+                  res.status(200).json(response);
+                }
+              })
+              .catch( function () {
+                res.status(500).send('Could not locate restaurant data');
+              });
+
+            } else {
+              res.status(200).json(response);
+            }
           } else {
             res.status(401).send('Wrong username or password');
           }
