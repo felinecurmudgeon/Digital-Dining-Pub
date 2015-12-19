@@ -171,5 +171,29 @@ angular.module('digitalDining.services', [])
     getMenuItems: getMenuItems,
     postMenuItem: postMenuItem
   };
-}]);
+}])
 
+.factory('Reservations', function ($http, $window) {
+  var getCheckedInParties = function () {
+    return $http({
+      method: 'GET',
+      url: '/api/parties?rid=' + $window.localStorage.getItem('restaurantId') + '&status=waiting',
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
+  };
+  var getSeatedParties = function () {
+    return $http({
+      method: 'GET',
+      url: '/api/parties?rid=' + $window.localStorage.getItem('restaurantId') + '&status=seated',
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
+  };
+  return {
+    getCheckedInParties: getCheckedInParties,
+    getSeatedParties: getSeatedParties
+  };
+});
