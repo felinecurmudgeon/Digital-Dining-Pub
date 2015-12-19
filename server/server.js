@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('./middleware/logger');
 var passport = require('passport');
 var tokenVerification = require('./middleware/verification');
+require('./utils.js');
 
 var app = express();
 var expressRouter = express.Router();

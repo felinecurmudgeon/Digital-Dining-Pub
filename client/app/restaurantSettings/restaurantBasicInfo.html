@@ -1,0 +1,56 @@
+<form role="form" ng-submit="submitRestaurant()">
+  <div class="col-md-7">
+    <div class="form-group">
+      <label for="InputName">Restaurant Name</label>
+        <input type="text" class="form-control" id="InputName" 
+          name="InputName" placeholder="Enter Name"
+          value = {{restaurant.restaurant_name}} ng-model="restaurant.restaurant_name" required>
+    </div>
+    <div class="form-group">
+      <label for="InputPhoneNumber">Phone Number</label>
+      <input type="text" class="form-control" id="InputPhoneNumber"
+        name="InputPhoneNumber" placeholder="Enter Phone Number"
+        value = {{restaurant.restaurant_phone_number}} ng-model="restaurant.restaurant_phone_number" required>
+    </div>
+    <div class="form-group">
+      <label for="InputAddress">Address</label>
+      <input type="text" class="form-control" id="InputAddress"
+        name="InputAddress" placeholder="Enter Address"
+        value = {{restaurant.restaurant_address}} ng-model="restaurant.restaurant_address" required>
+    </div>
+    <div class="form-group">
+      <label for="InputCity">City</label>
+      <input type="text" class="form-control" id="InputCity"
+        name="InputCity" placeholder="Enter City"
+        value = {{restaurant.restaurant_city}} ng-model="restaurant.restaurant_city" required>
+    </div>
+    <div class="form-group">
+      <label for="InputZipCode">ZipCode</label>
+      <input type="text" class="form-control" id="InputZipCode"
+        name="InputZipCode" placeholder="Enter ZipCode"
+        value = {{restaurant.restaurant_zip_code}} ng-model="restaurant.restaurant_zip_code" required>
+    </div>
+    <div class="form-group">
+      <label for="InputState">State</label>
+      <input type="text" class="form-control" id="InputState"
+        name="InputState" placeholder="Enter State"
+        value = {{restaurant.restaurant_state}} ng-model="restaurant.restaurant_state" required>
+    </div>
+    <input type="submit" name="submit" id="submit" class="btn btn-info pull-right"
+      value="Create my Restaurant" ng-show="creation">
+    <input type="submit" name="submit" id="submit" value="Update info" class="btn btn-info pull-right"
+      value="Create my Restaurant" ng-hide="creation">
+  </div>
+</form>
+<!-- 
+<div class="col-lg-3 col-md-push-1">
+    <div class="col-md-12">
+        <div class="alert alert-success">
+            <strong><span class="glyphicon glyphicon-ok"></span> Success! Message sent.</strong>
+        </div>
+        <div class="alert alert-danger">
+            <span class="glyphicon glyphicon-remove"></span><strong> Error! Please check all page inputs.</strong>
+        </div>
+    </div>
+</div>
+  -->

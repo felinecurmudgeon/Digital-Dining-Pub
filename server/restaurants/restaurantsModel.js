@@ -4,11 +4,13 @@ var Promise = require('bluebird');
 
 module.exports = {
   restaurant: {
-    get: function (restaurantId) {
+    get: function (parameters) {
       return new Promise(function (resolve, reject) {
         var query = '';
-        if (restaurantId) {
-          query = 'SELECT * FROM restaurants WHERE id = ' + restaurantId;
+        if (parameters.restaurantId) {
+          query = 'SELECT * FROM restaurants WHERE id = ' + parameters.restaurantId;
+        } else if (parameters.all === 'false') {
+          query = 'SELECT * FROM restaurants WHERE restaurant_owner_id = ' + parameters.userId;
         } else {
           query = 'SELECT * FROM restaurants';
         }
