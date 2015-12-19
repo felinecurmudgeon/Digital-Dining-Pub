@@ -10,9 +10,9 @@ module.exports = {
       return new Promise(function (resolve, reject) {
         db.con.query('SELECT * FROM parties \
                       WHERE restaurant_id = ? \
-                      AND checkedin_at IS NOT NULL \
-                      AND seated_at IS NULL \
-                      AND closed_at IS NULL', restaurantId, function (err, data) {
+                      AND checkedin_at != "0000-00-00 00:00:00" \
+                      AND seated_at = "0000-00-00 00:00:00" \
+                      AND closed_at = "0000-00-00 00:00:00"', restaurantId, function (err, data) {
           if (err) {
             reject(err);
           } else {
@@ -26,9 +26,9 @@ module.exports = {
       return new Promise(function (resolve, reject) {
         db.con.query('SELECT * FROM parties \
                       WHERE restaurant_id = ? \
-                      AND checkedin_at IS NOT NULL \
-                      AND seated_at IS NOT NULL \
-                      AND closed_at IS NULL', restaurantId, function (err, data) {
+                      AND checkedin_at != "0000-00-00 00:00:00" \
+                      AND seated_at != "0000-00-00 00:00:00" \
+                      AND closed_at = "0000-00-00 00:00:00"', restaurantId, function (err, data) {
           if (err) {
             reject(err);
           } else {
@@ -42,8 +42,8 @@ module.exports = {
       return new Promise(function (resolve, reject) {
         db.con.query('SELECT * FROM parties \
                       WHERE restaurant_id = ? \
-                      AND seated_at IS NULL \
-                      AND closed_at IS NOT NULL', restaurantId, function (err, data) {
+                      AND seated_at = "0000-00-00 00:00:00" \
+                      AND closed_at != "0000-00-00 00:00:00"', restaurantId, function (err, data) {
           if (err) {
             reject(err);
           } else {
@@ -57,8 +57,8 @@ module.exports = {
       return new Promise(function (resolve, reject) {
         db.con.query('SELECT * FROM parties \
                       WHERE restaurant_id = ? \
-                      AND seated_at IS NOT NULL \
-                      AND closed_at IS NOT NULL', restaurantId, function (err, data) {
+                      AND seated_at != "0000-00-00 00:00:00" \
+                      AND closed_at != "0000-00-00 00:00:00"', restaurantId, function (err, data) {
           if (err) {
             reject(err);
           } else {
@@ -94,7 +94,7 @@ module.exports = {
       return new Promise(function (resolve, reject) {
         db.con.query('SELECT * FROM parties \
                       WHERE party_name = ? \
-                      AND closed_at IS NOT NULL', [partyName], function (err, data) {
+                      AND closed_at != "0000-00-00 00:00:00"', [partyName], function (err, data) {
           if (err) {
             reject(err);
           } else {
