@@ -23,6 +23,8 @@ module.exports = function (router) {
   router.put('/api/restaurants/:id', restaurantsController.updateRestaurant);
   router.delete('/api/restaurants/:id', restaurantsController.deleteRestaurant);
 
+  router.get('/api/tables', restaurantsController.getTables);
+
   router.get('/api/menuCategories', menusController.getMenuCategories);
   router.post('/api/menuCategories', menusController.createMenuCategories);
   router.delete('/api/menuCategories/:id', menusController.deleteMenuCategory);
