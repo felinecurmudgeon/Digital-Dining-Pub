@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.controllers', 'digitalDining.services'])
 
-.run(function ($ionicPlatform) {
+.run(function ($ionicPlatform, $ionicConfig) {
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,6 +19,7 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
       // org.apache.cordova.statusbar required
       window.StatusBar.styleDefault();
     }
+    $ionicConfig.views.maxCache(0);
   });
 })
 

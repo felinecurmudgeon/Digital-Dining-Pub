@@ -6,7 +6,7 @@ module.exports = {
   chargeCard : function (req, res) {
 
     // Get the amount submitted by the form
-    var amount = req.body.amount * 100;
+    var amount = Math.round(req.body.amount * 100);
     console.log(amount);
 
     //look up current cust, get stripe id
