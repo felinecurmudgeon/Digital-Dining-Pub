@@ -325,11 +325,14 @@ module.exports = {
       .then(function () {
         return Promise.all(testDataIds.tableIds.map(function (tableIds, index) {
           var nameGenerator = require('../server/parties/nameGenerator');
+          var seated = Math.random() > 0.5;
           var partyObj = {
-            "table_id": testDataIds.tableIds[index].id,
+            "table_id": (seated ? testDataIds.tableIds[index].id : null),
             "restaurant_id": testDataIds.tableIds[index].rid,
             "party_size": Math.ceil(4 * Math.random()),
-            "party_name": nameGenerator()
+            "party_name": nameGenerator(),
+            "checkedin_at": new Date().toMysqlFormat(),
+            "seated_at": (seated ? new Date().toMysqlFormat() : "0000-00-00 00:00:00")
           }
           return insertData('parties', partyObj);
         }))

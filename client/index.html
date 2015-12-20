@@ -7,10 +7,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/style.css">
     <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-ui-bootstrap/src/position/position.js"></script>
+    <script src="lib/angular-ui-bootstrap/src/dropdown/dropdown.js"></script>
     <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="./app/app.js"></script>
     <script src="./app/auth/auth.js"></script>
     <script src="./app/restaurantSettings/restaurantSettings.js"></script>
+    <script src="./app/reservations/reservations.js"></script>
     <script src="./app/services/services.js"></script>
     <script src="./app/menuCreator/menuCreator.js"></script>
   </head>
@@ -33,8 +36,7 @@
       </div>
     </nav>
 
-    <div class="container">
-      <div ui-view></div>
-    </div>
+    <div ui-view></div>
+
   </body>
 </html>

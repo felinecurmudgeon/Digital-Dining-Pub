@@ -1,7 +1,7 @@
 /*jshint camelcase: false */
 angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
 
-.controller('restSettingsController', function ($scope, $window, $location, Restaurants) {
+.controller('restSettingsController', function ($scope, $window, Restaurants) {
   $scope.restaurant = {};
   $scope.creation = true;
   $scope.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -40,14 +40,14 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
   };
 
   $scope.submitRestaurant = function () {
-    var callAPI = function () {
+    var postRestInfo = function () {
       if ($scope.creation) {
         return Restaurants.createRestaurant($scope.restaurant);
       } else {
         return Restaurants.updateRestaurant($scope.restaurant);
       }
     };
-    callAPI()
+    postRestInfo()
       .then(function (data) {
         console.log('got data ', data);
         $window.localStorage.setItem('restaurantId', data.id);
