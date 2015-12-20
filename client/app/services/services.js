@@ -89,14 +89,12 @@ angular.module('digitalDining.services', [])
       method: 'GET'
     });
   };
-
   var getMenuCategories = function () {
     return $http({
       url: 'http://localhost:8000/api/menuCategories/?rid=' + $window.localStorage.getItem('restaurantId'),
       method: 'GET'
     });
   };
-
   var postMenuItem = function (menuItem) {
     console.log($window.localStorage.getItem('restaurantId') + ' is the restaurant Id');
     return $http({
@@ -111,7 +109,6 @@ angular.module('digitalDining.services', [])
       }
     });
   };
-
   var editMenuItem = function (menuItem) {
     return $http({
       url: 'http://localhost:8000/api/menuItems/' + menuItem.id,
@@ -125,14 +122,12 @@ angular.module('digitalDining.services', [])
       }
     });
   };
-
   var deleteMenuItem = function (menuItem) {
     return $http({
       url: 'http://localhost:8000/api/menuItems/' + menuItem.id,
       method: 'DELETE'
     });
   };
-
   var postCategory = function (category) {
     return $http({
       url: 'http://localhost:8000/api/menuCategories',
@@ -143,14 +138,12 @@ angular.module('digitalDining.services', [])
       }
     });
   };
-
   var deleteCategory = function (categoryId) {
     return $http({
       url: 'http://localhost:8000/api/menuCategories/' + categoryId,
       method: 'DELETE'
     });
   };
-
   var editCategory = function (categoryName, category) {
     return $http({
       url: 'http://localhost:8000/api/menuCategories/' + category.catId,
@@ -160,7 +153,6 @@ angular.module('digitalDining.services', [])
       }
     });
   };
-
   return {
     editCategory: editCategory,
     deleteCategory: deleteCategory,
@@ -195,5 +187,20 @@ angular.module('digitalDining.services', [])
   return {
     getCheckedInParties: getCheckedInParties,
     getSeatedParties: getSeatedParties
+  };
+})
+
+.factory('Tables', function ($http, $window) {
+  var getTables = function () {
+    return $http({
+      method: 'GET',
+      url: '/api/tables?rid=' + $window.localStorage.getItem('restaurantId'),
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
+  };
+  return {
+    getTables: getTables
   };
 });

@@ -1,7 +1,7 @@
 /*jshint camelcase: false */
 angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
 
-.controller('restSettingsController', function ($scope, Restaurants) {
+.controller('restSettingsController', function ($scope, $window, Restaurants) {
   $scope.restaurant = {};
   $scope.creation = true;
   $scope.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
