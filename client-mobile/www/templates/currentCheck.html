@@ -1,19 +1,9 @@
 <ion-view view-title="Current Check">
   <ion-content>
-  <br>
-  <br>
-<!--   <div ng-show='!isCheckedIn'>
-    Please check in.
-  <div>
-  <div ng-show='isCheckedIn'>
-    You are checked in.
-  <div>
- -->
-  <div ng-init='getOrderItems()'>
     <h4> Items Ordered </h4>
-    <div collection-repeat = 'item in orderItems' item-height='50' item-width='100'>
-      <li> <span class='itemName'> {{item.title}} </span> </li>
-      <li> <span class = 'itemPrice'> {{item.price}} </span> </li>
+    <div collection-repeat = 'item in orderItems' >
+      <li> <span class='itemName'> {{item.title}} </span><span class = 'itemPrice'> {{item.price}} </span> </li>
+      
       <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
     </div>
     <div class ='subtotal'>
@@ -45,6 +35,8 @@
   </div>
   <br>
   <br>
+  <div ng-show='isBilled'> Your card has successfully been charged>
+  </div>
     <!-- <ng-include src="footersrc"></ng-include> -->
   </ion-content>
 

@@ -23,6 +23,11 @@ angular.module('digitalDining.controllers', [])
     $scope.loginData.username = '';
     $scope.loginData.password = '';
   };
+  $scope.clearStorage = function () {
+    $window.localStorage.removeItem('partyInfo');
+    $window.localStorage.removeItem('partyId');
+    $window.localStorage.removeItem('restaurantId');
+  };
 
   $scope.goToSignUp = function () {
     $state.go('signup');
@@ -53,23 +58,33 @@ angular.module('digitalDining.controllers', [])
 
 }])
 
-.controller('RestaurantMenuCtrl', ['$scope', '$state', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', 'CheckInFactory', function ($scope, $state, $window, MenuFactory, HomeFactory, OrderFactory, CheckInFactory) {
+.controller('RestaurantMenuCtrl', ['$scope', '$state', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, $state, $window, MenuFactory, HomeFactory, OrderFactory) {
+  $scope.getPartyInfo = function () {
+    console.log('partyId is ', $window.localStorage.getItem('partyId'));
+    if ($window.localStorage.getItem('partyId')) {
+      $scope.isCheckedIn = true;
+    } else {
+      $scope.isCheckedIn = false;
+    }
+  };
+  $scope.getPartyInfo();
   $scope.getMenuItems = function () {
     var restID = HomeFactory.getFocusedRestaurant();
     MenuFactory.getMenuItems(restID.id).then(function (dataObject) {
       $scope.menu = {};
       for (var itemIndex = 0; itemIndex < dataObject.data.data.length; itemIndex++) {
-        if (!$scope.menu[dataObject.data.data[itemIndex].attributes.menuCategoryId]) {
+        if (!$scope.menu[dataObject.data.included[itemIndex].attributes.categoryName]) {
           dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
-          dataObject.data.data[itemIndex].attributes.isOrdered = false;
+          dataObject.data.data[itemIndex].attributes.quantity = 0;
           $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName] = [dataObject.data.data[itemIndex].attributes];
         } else {
           dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
-          dataObject.data.data[itemIndex].attributes.isOrdered = false;
+          dataObject.data.data[itemIndex].attributes.quantity = 0;
           $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].push(dataObject.data.data[itemIndex].attributes);
         }
       }
     });
+    $scope.rest = restID;
   };
   $scope.getMenuItems();
 
@@ -86,13 +101,11 @@ angular.module('digitalDining.controllers', [])
     }
   };
 
-  $scope.getPartyInfo = function () {
-    $scope.isCheckedIn = CheckInFactory.getCheckInStatus();
-  };
-  $scope.getPartyInfo();
 
   $scope.sendOrder = function () {
-    OrderFactory.sendOrder(JSON.parse($window.localStorage.getItem('partyInfo')).data.id);
+    var partyId = JSON.parse($window.localStorage.getItem('partyId'));
+    OrderFactory.sendOrder(partyId);
+    $state.go('nav.currentCheck');
   };
   $scope.addItemToOrder = function (item) {
     OrderFactory.addItemToOrder(item);
@@ -150,22 +163,30 @@ angular.module('digitalDining.controllers', [])
     item.isOrdered = !item.isOrdered;
     OrderFactory.addItemToOrder(item);
   };
+  $scope.removeItemFromOrder = function (item) {
+    item.isOrdered = !item.isOrdered;
+    OrderFactory.removeItemFromOrder(item);
+  };
 }])
 
 .controller('CheckInCtrl', ['$scope', '$state', '$window', 'HomeFactory', 'CheckInFactory', function ($scope, $state, $window, HomeFactory, CheckInFactory) {
-  
   $scope.isCheckedIn = false;
+  console.log('routed to checkIn');
 
-  $scope.getCheckedInStatus = function () {
-    console.log("checking");
+  $scope.updateCheckedInStatus = function () {
     if ($window.localStorage.getItem('partyInfo')) {
       $scope.isCheckedIn = true;
     } else {
       $scope.isCheckedIn = false;
     }
-  }
+    console.log('$scope.isCheckedIn is ', $scope.isCheckedIn);
+  };
 
-  $scope.getCheckedInStatus();
+  $scope.updateCheckedInStatus();
+
+  $scope.getCheckInStatus = function () {
+    return $scope.isCheckedIn;
+  };
 
   $scope.getFocusedRestaurant = function () {
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
@@ -177,8 +198,12 @@ angular.module('digitalDining.controllers', [])
     party_size: ''
   };
   $scope.doCheckIn = function () {
-    CheckInFactory.doCheckIn($scope.partyInfo);
-    $state.go('nav.restaurantMenu');
+    CheckInFactory.doCheckIn($scope.partyInfo).then( function () {
+      $state.go('nav.restaurantMenu');
+    });
+    // setTimeout(function () {
+    //   $state.go('nav.restaurantMenu')
+    // },2000);
     $scope.isCheckedIn = true;
   };
 
@@ -209,13 +234,10 @@ angular.module('digitalDining.controllers', [])
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
   $scope.getFocusedRestaurant();
-  $scope.doCheckIn = function () {
-    CheckInFactory.doCheckIn();
-  };
   $scope.footersrc = '../templates/restaurantFooter.html';
 }])
 
-.controller('CheckCtrl', ['$scope', '$filter', 'CheckFactory', 'CheckInFactory', 'OrderFactory', '$window', function ($scope, $filter, CheckFactory, CheckInFactory, OrderFactory, $window) {
+.controller('CheckCtrl', ['$scope', '$state', '$filter', 'CheckFactory', 'CheckInFactory', 'OrderFactory', '$window', function ($scope, $state, $filter, CheckFactory, CheckInFactory, OrderFactory, $window) {
 
   $scope.isCheckedIn = false;
   $scope.partyInfo = {};
@@ -227,14 +249,13 @@ angular.module('digitalDining.controllers', [])
   $scope.totalWithTaxAndTip = 0;
 
   $scope.getCheckedInStatus = function () {
-    console.log("checking");
     $scope.partyInfo = JSON.parse($window.localStorage.getItem('partyInfo'));
     if ($window.localStorage.getItem('partyInfo')) {
       $scope.isCheckedIn = true;
     } else {
       $scope.isCheckedIn = false;
     }
-  }
+  };
 
   $scope.getCheckedInStatus();
 
@@ -247,15 +268,12 @@ angular.module('digitalDining.controllers', [])
   };
   $scope.doCharge = function () {
     //this should be broken out between tax amount and tip amounts and accounted for separtely in a production app
-    CheckFactory.chargeCard($scope.totalWithTaxAndTip)
-      .then(function () {
-        $window.localStorage.removeItem('partyInfo');
-        $window.localStorage.removeItem('partyId');
-        $window.localStorage.removeItem('restaurantId');
-        OrderFactory.clearOrder();
-        console.log('charged sucessfully');
-
-      });
+    CheckFactory.chargeCard($scope.totalWithTaxAndTip).then( function () {
+      $scope.isBilled = true;
+      setTimeout( function () {
+        $state.go('nav.home');
+      }, 2000);
+    });
   };
   $scope.getOrderItems = function () {
     CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
