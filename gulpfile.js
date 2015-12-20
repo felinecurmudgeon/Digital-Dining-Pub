@@ -10,7 +10,7 @@ var concat = require('gulp-concat');
 var jscs = require('gulp-jscs');
 
 var paths = {
-  clientScripts: ['client-mobile/www/js/*.js', 'client/*.js', 'client/app/*.js', 'client/app/**/*.js'],
+  clientScripts: ['client-mobile/www/app/**/*.js', 'client/*.js', 'client/app/*.js', 'client/app/**/*.js'],
   serverScripts: ['server/*.js', 'server/**/*.js'],
   html: [],
   styles: [],
