@@ -69,5 +69,4 @@ angular.module('dd-payCtrls', [])
       });
   };
   $scope.getOrderItems();
-  $scope.footersrc = 'restaurantFooter.html';
 }]);

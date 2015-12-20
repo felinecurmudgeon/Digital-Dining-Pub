@@ -38,7 +38,4 @@ angular.module('dd-checkInCtrl', [])
     // },2000);
     $scope.isCheckedIn = true;
   };
-
-  $scope.footersrc = 'restaurantFooter.html';
-
 }]);

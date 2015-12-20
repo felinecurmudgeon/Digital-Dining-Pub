@@ -13,16 +13,19 @@ angular.module('dd-restCtrls', [])
   $scope.getMenuItems = function () {
     var restID = HomeFactory.getFocusedRestaurant();
     MenuFactory.getMenuItems(restID.id).then(function (dataObject) {
+      var menuItems = dataObject.data.data;
+      var categories = dataObject.data.included;
       $scope.menu = {};
-      for (var itemIndex = 0; itemIndex < dataObject.data.data.length; itemIndex++) {
-        if (!$scope.menu[dataObject.data.included[itemIndex].attributes.categoryName]) {
-          dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
-          dataObject.data.data[itemIndex].attributes.quantity = 0;
-          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName] = [dataObject.data.data[itemIndex].attributes];
+
+      for (var itemIndex = 0; itemIndex < menuItems.length; itemIndex++) {
+        if (!$scope.menu[categories[itemIndex].attributes.categoryName]) {
+          menuItems[itemIndex].attributes.menuID = menuItems[itemIndex].id;
+          menuItems[itemIndex].attributes.quantity = 0;
+          $scope.menu[categories[itemIndex].attributes.categoryName] = [menuItems[itemIndex].attributes];
         } else {
-          dataObject.data.data[itemIndex].attributes.menuID = dataObject.data.data[itemIndex].id;
-          dataObject.data.data[itemIndex].attributes.quantity = 0;
-          $scope.menu[dataObject.data.included[itemIndex].attributes.categoryName].push(dataObject.data.data[itemIndex].attributes);
+          menuItems[itemIndex].attributes.menuID = menuItems[itemIndex].id;
+          menuItems[itemIndex].attributes.quantity = 0;
+          $scope.menu[categories[itemIndex].attributes.categoryName].push(menuItems[itemIndex].attributes);
         }
       }
     });
@@ -53,7 +56,6 @@ angular.module('dd-restCtrls', [])
     OrderFactory.addItemToOrder(item);
   };
 
-  //$scope.footersrc = 'restaurantFooter.html';
 }])
 
 
@@ -62,7 +64,6 @@ angular.module('dd-restCtrls', [])
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
   $scope.getFocusedRestaurant();
-  //$scope.footersrc = 'restaurantFooter.html';
 }])
 
 
