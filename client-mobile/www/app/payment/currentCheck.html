@@ -8,23 +8,19 @@
     </div>
     <div class ='subtotal'>
       Subtotal:
-      {{subtotal}}
+      {{bill.subtotal}}
     </div>
-    <div class ='subtotal'>
-      Total with Tax:
-      {{totalWithTax}}
+    <div class ='subtotal' ng-bind='taxPlusSubtotal()'>
     </div>
     <div>
-      <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .15)'>15%</button>
-      <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .18)'>18%</button>
-      <button class="button button-stable" ng-click='tipCalculator(totalWithTax, .20)'>20%</button> <br>
-      Tip: <input ng-model='tipAmount'>
+      <button class="button button-stable" ng-click='tipCalculator(.15)'>15%</button>
+      <button class="button button-stable" ng-click='tipCalculator(.18)'>18%</button>
+      <button class="button button-stable" ng-click='tipCalculator(.20)'>20%</button> <br>
+      Tip: <input ng-model="bill.tip">
     </div>
 
     <form ng-submit='doCharge()'>
-      <div class = 'total'>
-      Total:
-      {{totalWithTax*1 + tipAmount*1}}
+      <div class = 'total' ng-bind="total()">
       </div>
       <div class = 'submit'>
         <button class='button button-balanced' type='submit'>

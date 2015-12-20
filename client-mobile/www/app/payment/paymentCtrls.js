@@ -22,11 +22,11 @@ angular.module('dd-payCtrls', [])
   $scope.isCheckedIn = false;
   $scope.partyInfo = {};
   $scope.orderItems = [];
-  $scope.subtotal = 0;
-  var subtotal = 0;
-  $scope.totalWithTax = 0;
-  $scope.taxAmount = 0;
-  $scope.totalWithTaxAndTip = 0;
+  $scope.bill = {
+    subtotal: 0,
+    tax: 0,
+    tip: 0
+  };
 
   $scope.getCheckedInStatus = function () {
     $scope.partyInfo = JSON.parse($window.localStorage.getItem('partyInfo'));
@@ -37,35 +37,47 @@ angular.module('dd-payCtrls', [])
     }
   };
 
+  $scope.total = function () {
+    var total = Number($scope.bill.subtotal) + Number($scope.bill.tax) + Number($scope.bill.tip);
+    return 'Total:\n' + Number(total).toFixed(2);
+  };
+
+  $scope.taxPlusSubtotal = function () {
+    var taxPlusSub = Number($scope.bill.subtotal) + Number($scope.bill.tax);
+    return 'Total with tax: \n' + taxPlusSub.toFixed(2);
+  };
+
   $scope.getCheckedInStatus();
 
   var taxCalculator = function (total) {
-     return total * 1.08;
+     return total * 0.08;
   };
-  $scope.tipAmount = 0;
-  $scope.tipCalculator = function (total, percentage) {
-    $scope.tipAmount = $filter('number')(total * percentage, 2);
-    //$scope.totalWithTaxAndTip = $filter('number')(Number($scope.tipAmount) + Number(total), 2);
+
+  $scope.tipCalculator = function (percentage) {
+    $scope.bill.tip = ((Number($scope.bill.tax) + Number($scope.bill.subtotal)) * percentage).toFixed(2);
   };
+
   $scope.doCharge = function () {
     //this should be broken out between tax amount and tip amounts and accounted for separtely in a production app
-    CheckFactory.chargeCard($scope.totalWithTaxAndTip).then( function () {
+    var total = Number($scope.bill.subtotal) + Number($scope.bill.tax) + Number($scope.bill.tip);
+    CheckFactory.chargeCard(total).then( function () {
       $scope.isBilled = true;
       setTimeout( function () {
         $state.go('nav.home');
       }, 2000);
     });
   };
+
   $scope.getOrderItems = function () {
     CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
       .then(function (items) {
+        var subtotal = 0;
         for (var i = 0; i < items.data.included.length; i++) {
           $scope.orderItems.push(items.data.included[i].attributes);
           subtotal += items.data.included[i].attributes.price;
         }
-        $scope.subtotal = $filter('number')(subtotal, 2);
-        $scope.totalWithTax = $filter('number')(taxCalculator($scope.subtotal), 2);
-        $scope.totalWithTaxAndTip = $filter('number')($scope.totalWithTax, 2);
+        $scope.bill.subtotal = subtotal.toFixed(2);
+        $scope.bill.tax = taxCalculator(Number($scope.bill.subtotal)).toFixed(2);
       });
   };
   $scope.getOrderItems();
