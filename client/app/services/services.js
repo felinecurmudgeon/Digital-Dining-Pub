@@ -169,7 +169,7 @@ angular.module('digitalDining.services', [])
   var getCheckedInParties = function () {
     return $http({
       method: 'GET',
-      url: '/api/parties?rid=' + $window.localStorage.getItem('restaurantId') + '&status=waiting',
+      url: '/api/parties?rid=' + $window.localStorage.getItem('restaurantId') + '&status=waiting'
     })
     .then(function (resp) {
       return resp.data;
@@ -178,7 +178,7 @@ angular.module('digitalDining.services', [])
   var getSeatedParties = function () {
     return $http({
       method: 'GET',
-      url: '/api/parties?rid=' + $window.localStorage.getItem('restaurantId') + '&status=seated',
+      url: '/api/parties?rid=' + $window.localStorage.getItem('restaurantId') + '&status=seated'
     })
     .then(function (resp) {
       return resp.data;
@@ -194,7 +194,7 @@ angular.module('digitalDining.services', [])
   var getTables = function () {
     return $http({
       method: 'GET',
-      url: '/api/tables?rid=' + $window.localStorage.getItem('restaurantId'),
+      url: '/api/tables?rid=' + $window.localStorage.getItem('restaurantId')
     })
     .then(function (resp) {
       return resp.data;

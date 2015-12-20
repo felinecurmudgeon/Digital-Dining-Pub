@@ -78,7 +78,7 @@ module.exports = {
         res.status(204);
         res.send(data);
       });
-  }, 
+  },
 
   //tables
   getTables : function (req, res) {
@@ -86,7 +86,7 @@ module.exports = {
     console.log(restaurantId);
     var JsonResponseObject = new JsonResponseObj();
     restaurantsModel.tables.get(restaurantId)
-      .then(function(data) {
+      .then(function (data) {
         for (var i = 0; i < data.length; i++) {
           var JsonDataObject = new JsonDataObj();
           JsonDataObject.type = 'tables';
