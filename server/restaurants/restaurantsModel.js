@@ -69,6 +69,18 @@ module.exports = {
           }
         });
       });
+    },
+    post: function (table) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('INSERT into tables SET ?', table, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            table.id = data.insertId;
+            resolve(table);
+          }
+        });
+      });
     }
   }
 };
