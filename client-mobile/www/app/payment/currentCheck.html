@@ -1,0 +1,63 @@
+<ion-view view-title="Current Check">
+  <ion-content>
+      <h4 ng-show="isCheckedIn"> Items Ordered </h4>
+      <div collection-repeat = 'item in orderItems' ng-show="isCheckedIn">
+        <li> <span class='itemName'> {{item.title}} </span><span class = 'itemPrice'> {{item.price}} </span> </li>
+        
+        <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
+      </div>
+      <div class ='subtotal' ng-show="isCheckedIn">
+        Subtotal:
+        {{bill.subtotal}}
+      </div>
+      <div class ='subtotal' ng-bind='taxPlusSubtotal()' ng-show="isCheckedIn">
+      </div>
+      <div ng-show="isCheckedIn">
+        <button class="button button-stable" ng-click='tipCalculator(.15)'>15%</button>
+        <button class="button button-stable" ng-click='tipCalculator(.18)'>18%</button>
+        <button class="button button-stable" ng-click='tipCalculator(.20)'>20%</button> <br>
+        Tip: <input ng-model="bill.tip">
+      </div ng-show="isCheckedIn">
+
+      <form ng-submit='doCharge()' ng-show="isCheckedIn">
+        <div class = 'total' ng-bind="total()">
+        </div>
+        <div class = 'submit'>
+          <button class='button button-balanced' type='submit'>
+            Submit Order
+          </button>
+        </div>
+      </form>
+    <div ng-show="!isCheckedIn">
+      You must be seated at a restaurant before your check will be available.
+    </div>
+    <br>
+    <br>
+    <div ng-show='isBilled'> Your card has successfully been charged>
+    </div>
+  </div>
+    <!-- <ng-include src="footersrc"></ng-include> -->
+  </ion-content>
+
+  <ion-footer-bar align-title="left" class="bar-assertive">
+  <div class="tabs">
+      <a class="tab-item" href='#/nav/restaurantMenu'>
+        Menu
+      </a>
+      <a class="tab-item" href='#/nav/restaurantDescription'>
+        Details
+      </a>
+      <a class="tab-item" href='#/nav/currentCheck'>
+        Order
+      </a>
+      <a class="tab-item" href='#/nav/checkIn'>
+        Check In
+      </a>
+      <a class="tab-item">
+        Server
+      </a>
+    </div>
+</ion-footer-bar>
+
+
+</ion-view>
