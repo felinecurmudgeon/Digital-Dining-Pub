@@ -200,7 +200,19 @@ angular.module('digitalDining.services', [])
       return resp.data;
     });
   };
+  var postTable = function (newTable) {
+    return $http({
+      url: 'http://localhost:8000/api/tables',
+      method: 'POST',
+      data: {
+        'restaurant_id': $window.localStorage.getItem('restaurantId'),
+        'table_number': +newTable.tableNumber,
+        'seats': newTable.seats
+      }
+    });
+  };
   return {
-    getTables: getTables
+    getTables: getTables,
+    postTable: postTable
   };
 });
