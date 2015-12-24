@@ -87,6 +87,16 @@ h1 {
   margin-bottom: 2%;
 }
 
+<<<<<<< HEAD
 .divCenter {
   text-align: center;
 }
+=======
+.input-label {
+  width: 25%;
+}
+
+.fbButton {
+  position:relative;
+};
+>>>>>>> Some styling
