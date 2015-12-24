@@ -1,9 +1,11 @@
 <ion-view view-title="Details for {{focusedRestaurant.attributes.restaurantName}}">
   <ion-content>
-    <h2 class="titleBar">Address</h2>
+    <h2 class="titleBar">Location</h2>
     <p>
       {{focusedRestaurant.attributes.restaurantAddress}}, {{focusedRestaurant.attributes.restaurantCity}}, {{focusedRestaurant.attributes.restaurantState}} {{focusedRestaurant.attributes.restaurantZipCode}}
     </p>
+    <ng-map center="{{focusedRestaurant.attributes.restaurantAddress}}, {{focusedRestaurant.attributes.restaurantCity}}, {{focusedRestaurant.attributes.restaurantState}} {{focusedRestaurant.attributes.restaurantZipCode}}"> <marker position='{{focusedRestaurant.attributes.restaurantAddress}}, {{focusedRestaurant.attributes.restaurantCity}}, {{focusedRestaurant.attributes.restaurantState}} {{focusedRestaurant.attributes.restaurantZipCode}}' centered='true'></marker>
+    </ng-map>
 
   <h2 class="titleBar">Hours</h2>
     <ul class ='hours list'> 

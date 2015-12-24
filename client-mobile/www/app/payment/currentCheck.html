@@ -20,7 +20,7 @@
         <button class="button button-small button-stable" ng-click='tipCalculator(.20)'>20%</button> 
       </ion-item>
 
-      <ion-item ng-bind="total()" class='billTotal'>
+      <ion-item ng-show="isCheckedIn" ng-bind="total()" class='billTotal'>
       </ion-item>
       </strong>
       <form ng-submit='doCharge()' ng-show="isCheckedIn">

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('digitalDining', ['ionic', 'angularPayments', 'dd-authCtrl', 'dd-authFactory', 'dd-checkInCtrl', 'dd-checkInFactory',
-  'dd-restCtrls', 'dd-restFactories', 'dd-payCtrls', 'dd-payFactories', 'dd-homeCtrls', 'dd-homeFactories'])
+  'dd-restCtrls', 'dd-restFactories', 'dd-payCtrls', 'dd-payFactories', 'dd-homeCtrls', 'dd-homeFactories', 'ngMap'])
 
 .run(function ($ionicPlatform, $ionicConfig) {
   $ionicPlatform.ready(function () {
