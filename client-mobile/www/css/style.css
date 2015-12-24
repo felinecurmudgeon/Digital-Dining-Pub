@@ -86,3 +86,11 @@ h1 {
   width: 10%;
   margin-bottom: 2%;
 }
+
+.input-label {
+  width: 25%;
+}
+
+.fbButton {
+  position:relative;
+};
