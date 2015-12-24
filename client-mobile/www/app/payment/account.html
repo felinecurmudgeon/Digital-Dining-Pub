@@ -1,33 +1,27 @@
-<ion-view view-title="Account">
+<ion-view view-title="Account Setup">
   <ion-content>
-    <h1>Account</h1>
-    <p> Heres where the account settings go</p>
-    <h2>Payments</h2>
     <!-- for testing use: 4242-4242-4242-4242 Expiry: 12/16 (or any other date in the near future) CVC: 999 -->
     <form stripe-form="handleStripe" name="stripeForm">
-      <div class="span3">
-        <label for="">Card number</label>
-        <input type="text" class="input-block-level accountInput" ng-model="number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="stripeForm.number.$card.type"/>
-      </div>
-      
-      <div class="span1">
-        <label for="">Expiry</label>
-        <input type="text" class="input-block-level accountInput" ng-model="expiry" payments-validate="expiry" payments-format="expiry" />
-      </div>
-      
-      <div class="span3">
-        <label for="">Name on card </label>
-        <input type="text" class="input-block-level accountInput">
-      </div>
-      
-      <div class="span1">
-        <label for="">CVC</label>
-        <input type="text" class="input-block-level accountInput" ng-model="cvc" payments-validate="cvc" payments-format="cvc" payments-type-model="type"/>
-      </div>
-      
-      <div class="span4">
-        <button type="submit" class="btn btn-primary btn-large">Submit</button>
-      </div>
+        <div class="list">
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Name on Card</span>
+            <input type="text" class="input-block-level" placeholder='Name on Card'>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Credit Card Number</span>
+            <input type="text" class="input-block-level" placeholder='Credit Card Number' ng-model="number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="stripeForm.number.$card.type"/>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Expiry</span>
+             <input type="text" class="input-block-level" placeholder='Expiry' ng-model="expiry" payments-validate="expiry" payments-format="expiry" />
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">CVC</span>
+             <input type="text" class="input-block-level" placeholder='CVC' ng-model="cvc" payments-validate="cvc" payments-format="cvc" payments-type-model="type"/>
+          </label>
+          <br>
+          <button type="submit" class="button button-block button-positive">Submit Payment Info</button>
+        </div>
     </form>
   </ion-content>
 </ion-view>

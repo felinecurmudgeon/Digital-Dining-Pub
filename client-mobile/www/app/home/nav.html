@@ -1,9 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="true">
   <ion-side-menu-content>
     <ion-nav-bar class="bar-dark">
-     <!--  <ion-nav-back-button>
-      </ion-nav-back-button> -->
-
       <ion-nav-buttons side="left">
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
         </button>
@@ -21,23 +18,17 @@
         <ion-item menu-close href="#/nav/home">
           Home
         </ion-item>
-        <ion-item menu-close href="#/nav/checkIn">
-          Check In
-        </ion-item>
-        <ion-item menu-close ng-click='clearStorage()'>
-        Clear local storage
-        </ion-item>
-        <ion-item menu-close href="#/nav/restaurantMenu">
-          Restaurant Menu
-        </ion-item>
         <ion-item menu-close href="#/nav/currentCheck">
-          Current Check
+          Current Reservation
         </ion-item>
         <ion-item menu-close href="#/nav/account">
           Account
         </ion-item>
         <ion-item menu-close ng-click="logout()">
           Logout
+        </ion-item>
+        <ion-item menu-close ng-click='clearStorage()'>
+        Clear local storage
         </ion-item>
         <img class = 'logo' src = 'http://logoholic.org/wp-content/uploads/2012/10/D.jpg'>
       </ion-list>

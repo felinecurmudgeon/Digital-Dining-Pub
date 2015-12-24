@@ -1,9 +1,8 @@
-<ion-view view-title="Menu">
+<ion-view view-title="Menu for {{rest.attributes.restaurantName}}">
   <ion-content>
-    <div class='titleHeader'><h1>{{rest.attributes.restaurantName}}</h1></div>
     <div ng-repeat="(category, menuItems) in menu">
       <div class="item item-divider">{{category}}</div> 
-      <ion-item ng-repeat="menuItem in menuItems"   ng-click='clickLocationCheckingForOrder($event, menuItem)'><span>
+      <ion-item ng-repeat="menuItem in menuItems" ng-click='clickLocationCheckingForOrder($event, menuItem)'><span>
         <i ng-if='!menuItem.isOrdered && isCheckedIn' class="addButton icon ion-plus-circled"></i>
         <!-- <input type='number' ng-model ='menuItem.quantity' value='0'> -->
         <!-- <span><div counter value="0" min="0" max="10" step="1" editable></div> </span> -->
@@ -13,11 +12,12 @@
     </span>
      </ion-item>
    </div>
-   <button class='button button-balanced' ng-click='sendOrder()'> Place Order </button>
+   <br>
+   <button class="button button-block button-positive" ng-show='isCheckedIn' ng-click='sendOrder()'> Place Order </button>
   </ion-content>
 <!--   <ng-include src="footersrc"></ng-include> -->
 
-  <ion-footer-bar align-title="left" class="bar">
+  <ion-footer-bar align-title="left">
     <div class="tabs">
         <a class="tab-item" href='#/nav/restaurantMenu'>
           Menu

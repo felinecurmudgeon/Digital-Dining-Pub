@@ -14,6 +14,7 @@
   "dependencies": {
     "angular": "~1.4.8",
     "angular-ui-router": "~0.2.15",
-    "angular-ui-bootstrap": "~0.14.3"
+    "angular-ui-bootstrap": "~0.14.3",
+    "ngmap": "~1.15.9"
   }
 }

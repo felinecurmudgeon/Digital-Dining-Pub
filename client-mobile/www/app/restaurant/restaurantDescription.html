@@ -1,29 +1,27 @@
-<ion-view>
+<ion-view view-title="Details for {{focusedRestaurant.attributes.restaurantName}}">
   <ion-content>
- <!--    <h1>{{focusedRestaurant}}</h1> -->
+    <h2 class="titleBar">Location</h2>
+    <p>
+      {{focusedRestaurant.attributes.restaurantAddress}}, {{focusedRestaurant.attributes.restaurantCity}}, {{focusedRestaurant.attributes.restaurantState}} {{focusedRestaurant.attributes.restaurantZipCode}}
+    </p>
+    <ng-map center="{{focusedRestaurant.attributes.restaurantAddress}}, {{focusedRestaurant.attributes.restaurantCity}}, {{focusedRestaurant.attributes.restaurantState}} {{focusedRestaurant.attributes.restaurantZipCode}}"> <marker position='{{focusedRestaurant.attributes.restaurantAddress}}, {{focusedRestaurant.attributes.restaurantCity}}, {{focusedRestaurant.attributes.restaurantState}} {{focusedRestaurant.attributes.restaurantZipCode}}' centered='true'></marker>
+    </ng-map>
 
-    <div>
-      {{focusedRestaurant.attributes.restaurantName}}
-    </div>
-    <div class ='hours'> Open Hours
-      <li>{{focusedRestaurant.attributes.openingHourMonday}}-{{focusedRestaurant.attributes.closingHourMonday}}</li>
-      <li>{{focusedRestaurant.attributes.openingHourTuesday}}-{{focusedRestaurant.attributes.closingHourTuesday}}</li>
-      <li>{{focusedRestaurant.attributes.openingHourWednesday}}-{{focusedRestaurant.attributes.closingHourWednesday}}</li>
-      <li>{{focusedRestaurant.attributes.openingHourThursday}}-{{focusedRestaurant.attributes.closingHourThursday}}</li>
-      <li>{{focusedRestaurant.attributes.openingHourFriday}}-{{focusedRestaurant.attributes.closingHourFriday}}</li>
-      <li>{{focusedRestaurant.attributes.openingHourSatday}}-{{focusedRestaurant.attributes.closingHourSatday}}</li>
-      <li>{{focusedRestaurant.attributes.openingHourSunday}}-{{focusedRestaurant.attributes.closingHourSunday}}</li>
-    </div>
-    <div class = 'address'> Address
-      <p>{{focusedRestaurant.attributes.restaurantAddress}}</p>
-      <p>{{focusedRestaurant.attributes.restaurantCity}}</p>
-      <p>{{focusedRestaurant.attributes.restaurantState}}</p>
-      <p>{{focusedRestaurant.attributes.restaurantZipCode}}</p>
-    </div>
+  <h2 class="titleBar">Hours</h2>
+    <ul class ='hours list'> 
+      <li class='item'>Monday: {{focusedRestaurant.attributes.openingHourMonday}}-{{focusedRestaurant.attributes.closingHourMonday}}</li>
+      <li class='item'>Tuesday:{{focusedRestaurant.attributes.openingHourTuesday}}-{{focusedRestaurant.attributes.closingHourTuesday}}</li>
+      <li class='item'>Wednesday: {{focusedRestaurant.attributes.openingHourWednesday}}-{{focusedRestaurant.attributes.closingHourWednesday}}</li>
+      <li class='item'>Thursday: {{focusedRestaurant.attributes.openingHourThursday}}-{{focusedRestaurant.attributes.closingHourThursday}}</li>
+      <li class='item'>Friday: {{focusedRestaurant.attributes.openingHourFriday}}-{{focusedRestaurant.attributes.closingHourFriday}}</li>
+      <li class='item'>Saturday: {{focusedRestaurant.attributes.openingHourSatday}}-{{focusedRestaurant.attributes.closingHourSatday}}</li>
+      <li class='item'>Sunday: {{focusedRestaurant.attributes.openingHourSunday}}-{{focusedRestaurant.attributes.closingHourSunday}}</li>
+    </ul>
+    
   </ion-content>
 <!--   <ng-include src="footersrc"></ng-include> -->
 
- <ion-footer-bar align-title="left" class="bar-assertive">
+ <ion-footer-bar align-title="left">
   <div class="tabs">
       <a class="tab-item" href='#/nav/restaurantMenu'>
         Menu

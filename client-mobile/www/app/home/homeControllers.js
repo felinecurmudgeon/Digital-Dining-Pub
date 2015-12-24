@@ -15,6 +15,7 @@ angular.module('dd-homeCtrls', [])
     $window.localStorage.removeItem('partyId');
     $window.localStorage.removeItem('restaurantId');
   };
+
 }])
 
 .controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {
