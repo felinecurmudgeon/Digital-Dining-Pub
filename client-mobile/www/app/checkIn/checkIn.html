@@ -19,21 +19,24 @@
     </form>
     <br>
     <br>
+      <div ng-show="isCheckedIn" class="card">
+        <div class="item item-text-wrap">
+          You are already checked in to {{focusedRestaurant.attributes.restaurantName}}.<br>
+        </div>
+      </div>
+      <div ng-show="!hasRestaurant && !isCheckedIn" class="card">
+        <div class="item item-text-wrap">
+          Please select a restaurant from the home page before checking in!
+        </div>
+      </div>
     <br>
-      <div ng-show="isCheckedIn">
-        You are already checked in.<br>
-      </div>
-      <div ng-show="!hasRestaurant && !isCheckedIn">
-        Please select a restaurant from the home page before checking in!
-      </div>
-      <br>
   </ion-content>
 
 
 
 <!--   <ng-include src="footersrc"></ng-include> -->
 
-  <ion-footer-bar align-title="left" class="bar-assertive">
+  <ion-footer-bar align-title="left">
   <div class="tabs">
       <a class="tab-item" href='#/nav/restaurantMenu'>
         Menu

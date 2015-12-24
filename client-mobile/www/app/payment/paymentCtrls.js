@@ -39,12 +39,12 @@ angular.module('dd-payCtrls', [])
 
   $scope.total = function () {
     var total = Number($scope.bill.subtotal) + Number($scope.bill.tax) + Number($scope.bill.tip);
-    return 'Total:\n' + Number(total).toFixed(2);
+    return 'Total:\n' + $filter('currency')(Number(total).toFixed(2));
   };
 
   $scope.taxPlusSubtotal = function () {
     var taxPlusSub = Number($scope.bill.subtotal) + Number($scope.bill.tax);
-    return 'Total with tax: \n' + taxPlusSub.toFixed(2);
+    return 'Total with tax: \n' + $filter('currency')(taxPlusSub.toFixed(2));
   };
 
   $scope.getCheckedInStatus();

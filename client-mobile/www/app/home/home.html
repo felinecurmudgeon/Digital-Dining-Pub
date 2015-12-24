@@ -1,15 +1,21 @@
-<ion-view view-title="Home">
+<ion-view view-title="Restaurants Nearest You">
   <ion-content>
-    <h4>Restaurants In Your Location</h4>
-    <div collection-repeat = 'rest in restaurants'>
-      <ion-item class="" href='#/nav/restaurantDescription'>
-        <h2>{{rest}} </h2>
-        <div class="item item-image restaurantContainer">
-        
-          <img src="{{rest.restaurantImg}}" ng-click='focusRestaurant(rest)'>
+    <div collection-repeat = 'rest in restaurants' class="list card">
+        <div class="item item-avatar">
+          <img src="../../img/pizza.jpeg">
+          <h2>{{rest.attributes.restaurantName}}</h2>
+          <p>{{rest.attributes.restaurantAddress}} {{rest.attributes.restaurantCity}} {{rest.attributes.restaurantState}}</p>
         </div>
-        <br>
-      </ion-item>
+
+        <div class="item item-image">
+          <img src="../../img/pizza.jpeg">
+        </div>
+
+        <a class="item item-icon-left assertive" ng-click='focusRestaurant(rest)' href='#/nav/restaurantMenu' >
+          <i class="ion-arrow-right-a"></i>
+          See menu, hours and check-in
+        </a>
+
     </div>
     
   </ion-content>
