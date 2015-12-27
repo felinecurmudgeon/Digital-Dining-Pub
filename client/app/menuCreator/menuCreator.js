@@ -7,6 +7,9 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
 
   $scope.categoryMethods = {
     add: function () {
+      if (!$scope.catToAdd.match(/\S+/g)) {
+        return;
+      }
       MenuFactory.postCategory($scope.catToAdd)
       .then(function (result) {
         $scope.menu[$scope.catToAdd] = {
@@ -46,16 +49,16 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
     },
     deleteText: function (category) {
       if (category.deletable) {
-        return 'Confirm Delete';
+        return 'Confirm';
       } else {
-        return 'Delete Category';
+        return 'Delete';
       }
     },
     editText: function (category) {
       if (category.editable) {
-        return 'Save Edit';
+        return 'Save';
       } else {
-        return 'Edit Category Name';
+        return 'Edit';
       }
     }
   };
@@ -102,16 +105,16 @@ angular.module('digitalDining.menuCreator', ['digitalDining.services'])
   $scope.itemMethods = {
     editText: function (menuItem) {
       if (menuItem.editable) {
-        return 'Save Edit';
+        return 'Save';
       } else {
-        return 'Edit Item';
+        return 'Edit';
       }
     },
     deleteText: function (menuItem) {
       if (menuItem.deletable) {
-        return 'Confirm Delete';
+        return 'Confirm';
       } else {
-        return 'Delete Item';
+        return 'Delete';
       }
     },
     post: function (category, categoryId) {
