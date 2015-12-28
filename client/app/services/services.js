@@ -184,9 +184,22 @@ angular.module('digitalDining.services', [])
       return resp.data;
     });
   };
+  var seatParty = function (party, table) {
+    return $http({
+      method: 'PUT',
+      url: '/api/parties/' + party.id + '?event=seat',
+      data: {
+        'table_id': table.id
+      }
+    })
+    .then(function (resp) {
+      return resp;
+    });
+  };
   return {
     getCheckedInParties: getCheckedInParties,
-    getSeatedParties: getSeatedParties
+    getSeatedParties: getSeatedParties,
+    seatParty: seatParty
   };
 }])
 
