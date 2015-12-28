@@ -37,6 +37,8 @@ angular.module('dd-payCtrls', [])
     }
   };
 
+  $scope.getCheckedInStatus();
+
   $scope.total = function () {
     var total = Number($scope.bill.subtotal) + Number($scope.bill.tax) + Number($scope.bill.tip);
     return 'Total:\n' + $filter('currency')(Number(total).toFixed(2));
@@ -46,8 +48,6 @@ angular.module('dd-payCtrls', [])
     var taxPlusSub = Number($scope.bill.subtotal) + Number($scope.bill.tax);
     return 'Total with tax: \n' + $filter('currency')(taxPlusSub.toFixed(2));
   };
-
-  $scope.getCheckedInStatus();
 
   var taxCalculator = function (total) {
      return total * 0.08;
@@ -80,5 +80,7 @@ angular.module('dd-payCtrls', [])
         $scope.bill.tax = taxCalculator(Number($scope.bill.subtotal)).toFixed(2);
       });
   };
+
   $scope.getOrderItems();
+
 }]);
