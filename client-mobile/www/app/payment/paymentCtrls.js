@@ -29,7 +29,10 @@ angular.module('dd-payCtrls', [])
   };
 
   $scope.getCheckedInStatus = function () {
-    $scope.partyInfo = JSON.parse($window.localStorage.getItem('partyInfo'));
+    //$scope.partyInfo = JSON.parse($window.localStorage.getItem('partyInfo')); - NOT USED??
+
+    //replace lookup with call to API/DB
+
     if ($window.localStorage.getItem('partyInfo')) {
       $scope.isCheckedIn = true;
     } else {
@@ -69,6 +72,9 @@ angular.module('dd-payCtrls', [])
   };
 
   $scope.getOrderItems = function () {
+    
+    //replace lookup with lookup to DB - getCheckItems for value from DB
+
     CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
       .then(function (items) {
         var subtotal = 0;

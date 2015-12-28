@@ -11,8 +11,16 @@ angular.module('dd-restCtrls', [])
   };
   $scope.getPartyInfo();
   $scope.getMenuItems = function () {
-    var restID = HomeFactory.getFocusedRestaurant();
-    MenuFactory.getMenuItems(restID.id).then(function (dataObject) {
+    //check if user is in a party
+
+    //if yes, make restID the party restaurant 
+
+    //if no, use focusedRestaurant
+
+    var currentRestaurant = HomeFactory.getFocusedRestaurant();
+
+
+    MenuFactory.getMenuItems(currentRestaurant.id).then(function (dataObject) {
       var menuItems = dataObject.data.data;
       var categories = dataObject.data.included;
       $scope.menu = {};
@@ -29,7 +37,7 @@ angular.module('dd-restCtrls', [])
         }
       }
     });
-    $scope.rest = restID;
+    $scope.rest = currentRestaurant;
   };
   $scope.getMenuItems();
 
@@ -61,9 +69,17 @@ angular.module('dd-restCtrls', [])
 
 .controller('RestaurantDisplayCtrl', ['$scope', '$state', 'HomeFactory', function ($scope, $state, HomeFactory) {
   $scope.getFocusedRestaurant = function () {
+    //check if user is in a party
+
+    //if yes, make $scope.focusedRestaurant the party restaurant 
+
+    //if no, use focusedRestaurant from homefactory
+
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
   };
+
   $scope.getFocusedRestaurant();
+
 }])
 
 
