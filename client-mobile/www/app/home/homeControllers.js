@@ -34,7 +34,7 @@ angular.module('dd-homeCtrls', [])
   };
 
   var distance = function (x1, y1, x2, y2) {
-    if (!Number(x1) || !Number(x2) || !Number(y1) || !Number(y2)){
+    if (!Number (x1) || !Number (x2) || !Number (y1) || !Number (y2)) {
       return null;
     }
 
