@@ -28,6 +28,10 @@ angular.module('digitalDining.reservations', ['digitalDining.services'])
         });
       });
   };
+  $scope.seatParty = function (party, table) {
+    Reservations.seatParty(party, table);
+    console.log(party);
+  };
   $scope.getParties();
   $scope.getTables();
 }]);
