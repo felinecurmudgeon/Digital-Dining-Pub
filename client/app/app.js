@@ -60,6 +60,10 @@ angular.module('digitalDining', [
     .state('restaurantSettings.hours', {
       url: '/hours',
       templateUrl: './app/restaurantSettings/restaurantHours.html'
+    })
+    .state('restaurantSettings.tables', {
+      url: '/tables',
+      templateUrl: './app/restaurantSettings/restaurantTables.html'
     });
 
   $httpProvider.interceptors.push('AttachTokens');

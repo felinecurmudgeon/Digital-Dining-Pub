@@ -1,0 +1,38 @@
+<!-- <form role="form" ng-submit="submitTable()" ng-show="tables.add">
+  <input type="number" class="form-control" ng-model="tables.new.tableNumber">
+  <input type="number" class="form-control" ng-model="tables.new.seats" required>
+  <input type="submit" name="submit" id="submit" class="btn" value="Create table">
+</form> -->
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Table Number</th>
+      <th>Table Size</th>
+      <th class="btn btn-primary" ng-click="tables.add = !tables.add">Add table</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-show="tables.add">
+      <td class="input">
+        <input type="number" name="tnum" class="form-control" ng-model="tables.new.tableNumber" placeholder="Table Number">
+      </td>
+      <td class="input">
+        <input type="number" name="seats" class="form-control" ng-model="tables.new.seats" placeholder="Table Size">
+      </td>
+      <td>
+        <button class="btn" ng-click="submitTable()">Submit table</button>
+      </td>
+    </tr>
+    <tr ng-repeat="table in tables.data">
+      <td>
+        {{table.attributes.tableNumber}}
+      </td>
+      <td>
+        {{table.attributes.seats}}
+      </td>
+      <td><button class="btn">Edit table</button></td>
+    </tr>
+  </tbody>
+</table>
+
