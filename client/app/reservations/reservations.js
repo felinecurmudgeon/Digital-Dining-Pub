@@ -2,7 +2,10 @@ angular.module('digitalDining.reservations', ['digitalDining.services'])
 
 .controller('reservationsController', ['$scope', 'Reservations', 'Tables', function ($scope, Reservations, Tables) {
   $scope.parties = {};
-  $scope.table = {};
+  $scope.tables = {
+    available: [],
+    occupied: []
+  };
   $scope.getParties = function () {
     Reservations.getCheckedInParties()
       .then(function (resp) {
@@ -16,7 +19,13 @@ angular.module('digitalDining.reservations', ['digitalDining.services'])
   $scope.getTables = function () {
     Tables.getTables()
       .then(function (resp) {
-        $scope.tables = resp.data;
+        resp.data.forEach(function (table) {
+          if (table.attributes.available) {
+            $scope.tables.available.push(table);
+          } else {
+            $scope.tables.occupied.push(table);
+          }
+        });
       });
   };
   $scope.getParties();
