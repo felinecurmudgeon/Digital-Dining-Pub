@@ -28,6 +28,7 @@ module.exports = {
             restaurantDescription: data[i].restaurant_description,
             restaurantPhoneNumber: data[i].restaurant_phone_number,
             restaurantCategory: data[i].restaurant_category,
+            restaurantPictureUrl: data[i].restaurant_picture_url,
             openingHourMonday: data[i].opening_hour_monday,
             closingHourMonday: data[i].closing_hour_monday,
             openingHourTuesday: data[i].opening_hour_tuesday,

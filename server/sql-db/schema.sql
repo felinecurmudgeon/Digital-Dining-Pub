@@ -29,6 +29,7 @@ CREATE TABLE restaurants (
   restaurant_description VARCHAR(255),
   restaurant_phone_number VARCHAR(20),
   restaurant_category VARCHAR(40),
+  restaurant_picture_url VARCHAR(355),
   opening_hour_monday TIME DEFAULT '08:00:00',
   closing_hour_monday TIME DEFAULT '23:00:00',
   opening_hour_tuesday TIME DEFAULT '08:00:00',
@@ -93,6 +94,7 @@ CREATE TABLE menu_items (
   menu_category_id INT,
   title VARCHAR(80) NOT NULL,
   description VARCHAR(255) NOT NULL,
+  menu_item_picture_url VARCHAR(355),
   price DECIMAL(5,2) NOT NULL,
 
   FOREIGN KEY (restaurant_id)
