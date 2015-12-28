@@ -26,14 +26,18 @@ angular.module('dd-homeCtrls', [])
         cb([lat, lng]);
       };
       var onError = function (error) {
-        console.log('code: ' + error.code + '\n' +
+        console.log('error in getting location, code: ' + error.code + '\n' +
               'message: ' + error.message + '\n');
-        cb(error.message);
+        cb([error.message, error.message]);
       };
       window.navigator.geolocation.getCurrentPosition(onSuccess, onError);
   };
 
   var distance = function (x1, y1, x2, y2) {
+    if (!Number(x1) || !Number(x2) || !Number(y1) || !Number(y2)){
+      return null;
+    }
+
     var xlen = 0;
     var ylen = 0;
 
