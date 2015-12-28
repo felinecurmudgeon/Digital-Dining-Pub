@@ -143,7 +143,6 @@ TBD
 {
   "restaurant_id" : "337", 
   "party_size" : "5", 
-  "table_id" : "96"
 }
 `
 
