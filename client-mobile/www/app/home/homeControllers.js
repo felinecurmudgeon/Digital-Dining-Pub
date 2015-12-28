@@ -57,19 +57,19 @@ angular.module('dd-homeCtrls', [])
   $scope.displayRestaurants = function () {
     HomeFactory.getAllRestaurants().then(function (restaurants) {
     // uncomment this line and comment out everything else in this function to turn off the geo location
-    $scope.restaurants = restaurants.data.data;
-     //  getLocation(function (latLng) {
-     //    //lookup coords for each rest via google maps
-     //    restaurants.data.data.forEach(function (restaurant) {
-     //      var address = restaurant.attributes.restaurantAddress + ',' + restaurant.attributes.restaurantCity + ',' + restaurant.attributes.restaurantState;
-     //      HomeFactory.convertAddress(address)
-     //        .then(function (mapResult) {
-     //          //run through distance function and append distance to restaurants.data.data
-     //          restaurant.attributes.distance = distance(mapResult.data.results[0].geometry.location.lat, mapResult.data.results[0].geometry.location.lng, latLng[0], latLng[1]);
-     //             $scope.restaurants = restaurants.data.data;
-     //        });
-     //    });
-     // });
+    //$scope.restaurants = restaurants.data.data;
+      getLocation(function (latLng) {
+        //lookup coords for each rest via google maps
+        restaurants.data.data.forEach(function (restaurant) {
+          var address = restaurant.attributes.restaurantAddress + ',' + restaurant.attributes.restaurantCity + ',' + restaurant.attributes.restaurantState;
+          HomeFactory.convertAddress(address)
+            .then(function (mapResult) {
+              //run through distance function and append distance to restaurants.data.data
+              restaurant.attributes.distance = distance(mapResult.data.results[0].geometry.location.lat, mapResult.data.results[0].geometry.location.lng, latLng[0], latLng[1]);
+                 $scope.restaurants = restaurants.data.data;
+            });
+        });
+     });
     });
 
   };

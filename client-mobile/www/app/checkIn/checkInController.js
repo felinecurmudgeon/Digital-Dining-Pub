@@ -42,13 +42,13 @@ angular.module('dd-checkInCtrl', [])
     CheckInFactory.getUsers()
       .then(function (users) {
         $scope.users = users;
-      })
+      });
   };
 
   $scope.addUsersToParty = function () {
-    console.log($scope.selectedUser); //TODO: figure out why this isn't coming through from HTML 
+    console.log($scope.selectedUser); //TODO: figure out why this isn't coming through from HTML
     CheckInFactory.addUsersToParty(10); //hardcoded until line above is fixed
-  }
+  };
 
   $scope.getFocusedRestaurant();
   $scope.updateStatus();

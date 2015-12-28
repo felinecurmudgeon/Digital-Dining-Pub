@@ -15,7 +15,6 @@ angular.module('dd-checkInFactory', [])
       method: 'POST',
       data: data
     }).then( function (response) {
-      console.log("response is ", response);
       $window.localStorage.setItem('partyInfo', JSON.stringify(response));
       $window.localStorage.setItem('partyId', JSON.stringify(response.data.id));
       $window.localStorage.setItem('restaurantId', JSON.stringify(response.data.restaurant_id));
@@ -30,17 +29,17 @@ angular.module('dd-checkInFactory', [])
     return $http({
       url: 'http://localhost:8000/api/users?custonly=true',
       method: 'GET'
-    })
+    });
   };
 
   var addUsersToParty = function (userId) {
     return $http({
-      url: 'http://localhost:8000/api/parties/'+$window.localStorage.getItem('partyId')+'?event=addParticipant',
+      url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant',
       method: 'PUT',
       data: {
         'user_id' : userId
       }
-    })
+    });
   };
 
   return {

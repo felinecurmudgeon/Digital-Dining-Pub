@@ -15,8 +15,6 @@ module.exports = {
         } else {
             query = 'SELECT * FROM users';
         }
-        
-
         db.con.query(query, function (err, data) {
           if (err) {
             reject(err);
