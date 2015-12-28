@@ -19,11 +19,19 @@
     </form>
     <br>
     <br>
-      <div ng-show="isCheckedIn" class="card">
+      <form ng-submit="addUsersToParty()" ng-show="isCheckedIn" class="card">
         <div class="item item-text-wrap">
-          You are already checked in to {{focusedRestaurant.attributes.restaurantName}}.<br>
+          You are already checked in to {{focusedRestaurant.attributes.restaurantName}}.
+          <br>
+          <br>
+          Add other Digital Dining users to your reservation here:
+         <select name="selectedUser" ng-model="selectedUser">
+            <option value="">---Please select---</option> 
+            <option ng-repeat="user in users.data.data" value="{{user.id}}" ng-model="selectedUser">{{user.attributes.username}}</option> 
+          </select>
+          <button type="submit" class="button button-block button-balanced">Add User to Reservation</button>
         </div>
-      </div>
+      </form>
       <div ng-show="!hasRestaurant && !isCheckedIn" class="card">
         <div class="item item-text-wrap">
           Please select a restaurant from the home page before checking in!

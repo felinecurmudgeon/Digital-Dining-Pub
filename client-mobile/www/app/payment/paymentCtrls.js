@@ -64,7 +64,7 @@ angular.module('dd-payCtrls', [])
       $scope.isBilled = true;
       setTimeout( function () {
         $state.go('nav.home');
-      }, 2000);
+      }, 1000);
     });
   };
 

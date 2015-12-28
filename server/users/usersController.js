@@ -24,7 +24,7 @@ var createJsonResponseForUsers = function (data) {
 module.exports = {
   getAllUsers : function (req, res) {
     console.log('getting users');
-    usersModel.user.get()
+    usersModel.user.get(null, req.query.custonly)
       .then(function (data) {
         var response = createJsonResponseForUsers(data);
         res.status(200);

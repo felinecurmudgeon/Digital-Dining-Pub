@@ -194,7 +194,7 @@ module.exports = {
         var partyParameters = {
           closed_at: new Date().toMysqlFormat()
         };
-        db.con.query('UPDATE parties SET ? WHERE party_id = ?', [partyParameters, partyId], function (err) {
+        db.con.query('UPDATE parties SET ? WHERE id = ?', [partyParameters, partyId], function (err) {
           if (err) {
             reject(err);
           } else {

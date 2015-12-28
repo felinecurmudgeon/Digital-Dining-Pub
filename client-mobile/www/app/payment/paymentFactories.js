@@ -15,6 +15,11 @@ angular.module('dd-payFactories', [])
         amount: amt
       }
     }).then(function () {
+      return $http({
+        url: 'http://localhost:8000/api/parties/'+$window.localStorage.removeItem('partyId')+'?event=close',
+        method: 'PUT'
+      })
+    }).then(function () {
         $window.localStorage.removeItem('partyInfo');
         $window.localStorage.removeItem('partyId');
         $window.localStorage.removeItem('restaurantId');
