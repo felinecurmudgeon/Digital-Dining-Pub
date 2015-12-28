@@ -1,6 +1,6 @@
 angular.module('digitalDining.services', [])
 
-.factory('Auth', function ($http, $location, $window) {
+.factory('Auth', ['$http', '$location', '$window', function ($http, $location, $window) {
   var signin = function (user) {
     return $http({
       method: 'POST',
@@ -34,9 +34,9 @@ angular.module('digitalDining.services', [])
     isAuth: isAuth,
     signout: signout
   };
-})
+}])
 
-.factory('Restaurants', function ($http) {
+.factory('Restaurants', ['$http', function ($http) {
   var getRestaurantInfo = function () {
     return $http({
       method: 'GET',
@@ -80,7 +80,7 @@ angular.module('digitalDining.services', [])
     createRestaurant: createRestaurant,
     updateRestaurant: updateRestaurant
   };
-})
+}])
 
 .factory('MenuFactory', ['$http', '$window', function ($http, $window) {
   var getMenuItems = function () {
@@ -165,7 +165,7 @@ angular.module('digitalDining.services', [])
   };
 }])
 
-.factory('Reservations', function ($http, $window) {
+.factory('Reservations', ['$http', '$window', function ($http, $window) {
   var getCheckedInParties = function () {
     return $http({
       method: 'GET',
@@ -188,9 +188,9 @@ angular.module('digitalDining.services', [])
     getCheckedInParties: getCheckedInParties,
     getSeatedParties: getSeatedParties
   };
-})
+}])
 
-.factory('Tables', function ($http, $window) {
+.factory('Tables', ['$http', '$window', function ($http, $window) {
   var getTables = function () {
     return $http({
       method: 'GET',
@@ -215,4 +215,4 @@ angular.module('digitalDining.services', [])
     getTables: getTables,
     postTable: postTable
   };
-});
+}]);
