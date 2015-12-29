@@ -25,6 +25,7 @@ module.exports = function (router) {
 
   router.post('/api/tables', restaurantsController.createTable);
   router.get('/api/tables', restaurantsController.getTables);
+  router.put('/api/tables/:id', restaurantsController.updateTable);
 
   router.get('/api/menuCategories', menusController.getMenuCategories);
   router.post('/api/menuCategories', menusController.createMenuCategories);

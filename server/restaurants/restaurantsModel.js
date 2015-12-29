@@ -81,6 +81,17 @@ module.exports = {
           }
         });
       });
+    },
+    put: function (updatedTable, id) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('UPDATE tables SET ? WHERE id= ?', [updatedTable, id], function (err) {
+          if (err) {
+            reject (err);
+          } else {
+            resolve(updatedTable);
+          }
+        });
+      });
     }
   }
 };

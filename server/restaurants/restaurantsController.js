@@ -102,6 +102,7 @@ module.exports = {
         res.send(JsonResponseObject);
       });
   },
+
   createTable : function (req, res) {
     console.log('creating table ');
     var params = req.body;
@@ -111,5 +112,15 @@ module.exports = {
         res.status(201);
         res.send(data);
       });
+  },
+
+  updateTable : function (req, res) {
+    console.log('updating table ', req.params.id);
+    restaurantsModel.tables.put(req.body, req.params.id)
+      .then(function (data) {
+        res.status(201);
+        res.send(data);
+      });
   }
+
 };

@@ -72,6 +72,7 @@ TBD
 | HTTP Method   | URL           | Description
 | ------------- | ------------- | ---------------------------------
 | POST          | /tables       | Creates a new table
+| PUT           | /tables/:id       | Updates a table (data in the body)
 | GET           | /tables?rid=restaurantId        | Gets all tables for a given restaurant
 
 ### Example POST
