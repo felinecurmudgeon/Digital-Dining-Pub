@@ -15,11 +15,18 @@ angular.module('dd-homeFactories', [])
   var getFocusedRestaurant = function () {
     return focusedRestaurant;
   };
+  var convertAddress = function (address) {
+    return $http({
+      url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyDMFRplgg_Ayr8hZyNAK1QUSw5UNPbVmNM',
+      method: 'GET'
+    });
+  };
   return {
     getAllRestaurants: getAllRestaurants,
     focusedRestaurant: focusedRestaurant,
     focusRestaurant: focusRestaurant,
-    getFocusedRestaurant: getFocusedRestaurant
+    getFocusedRestaurant: getFocusedRestaurant,
+    convertAddress: convertAddress
   };
 }])
 

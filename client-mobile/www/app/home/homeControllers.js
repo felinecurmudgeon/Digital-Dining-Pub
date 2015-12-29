@@ -19,92 +19,56 @@ angular.module('dd-homeCtrls', [])
 }])
 
 .controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {
-  // var onSuccess = function (position) {
-  //   window.alert('Latitude: ' + position.coords.latitude + '\n' +
-  //         'Longitude: ' + position.coords.longitude + '\n' +
-  //         'Altitude: ' + position.coords.altitude + '\n' +
-  //         'Accuracy: ' + position.coords.accuracy + '\n' +
-  //         'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
-  //         'Heading: ' + position.coords.heading + '\n' +
-  //         'Speed: ' + position.coords.speed + '\n' +
-  //         'Timestamp: ' + position.timestamp + '\n');
-  // };
+  var getLocation = function (cb) {
+      var onSuccess = function (position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        cb([lat, lng]);
+      };
+      var onError = function (error) {
+        console.log('error in getting location, code: ' + error.code + '\n' +
+              'message: ' + error.message + '\n');
+        cb([error.message, error.message]);
+      };
+      window.navigator.geolocation.getCurrentPosition(onSuccess, onError);
+  };
 
-  // var onError = function (error) {
-  //   window.alert('code: ' + error.code + '\n' +
-  //         'message: ' + error.message + '\n');
-  // };
+  var distance = function (x1, y1, x2, y2) {
+    if (!Number (x1) || !Number (x2) || !Number (y1) || !Number (y2)) {
+      return null;
+    }
 
-  // window.navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    var xlen = x1 - x2;
+    var ylen = y1 - y2;
+
+    ylen = (ylen * 110.574) * 0.62137119;
+    xlen = (xlen * (111.320 * Math.cos(((y1 + y2) / 2) * Math.PI / 180) * 0.62137119));
+
+    return Math.sqrt(Math.pow(xlen, 2) + Math.pow(ylen, 2));
+  };
 
   $scope.displayRestaurants = function () {
     HomeFactory.getAllRestaurants().then(function (restaurants) {
-      $scope.restaurants = restaurants.data.data;
+    // uncomment this line and comment out everything else in this function to turn off the geo location
+    // $scope.restaurants = restaurants.data.data;
+      getLocation(function (latLng) {
+        //lookup coords for each rest via google maps
+        restaurants.data.data.forEach(function (restaurant) {
+          var address = restaurant.attributes.restaurantAddress + ',' + restaurant.attributes.restaurantCity + ',' + restaurant.attributes.restaurantState;
+          HomeFactory.convertAddress(address)
+            .then(function (mapResult) {
+              //run through distance function and append distance to restaurants.data.data
+              restaurant.attributes.distance = distance(mapResult.data.results[0].geometry.location.lng, mapResult.data.results[0].geometry.location.lat, latLng[1], latLng[0]);
+                 $scope.restaurants = restaurants.data.data;
+            });
+        });
+     });
     });
 
   };
   $scope.displayRestaurants();
-  $scope.test = [1];
 
   $scope.focusRestaurant = function (rest) {
     HomeFactory.focusRestaurant(rest);
   };
 }]);
-
-// .directive('counter', function () {
-//     return {
-//         restrict: 'A',
-//         scope: { value: '=value' },
-//         template: '<a href="javascript:;" class="counter-minus" ng-click="minus()">-</a>\
-//                   <input type="text" class="counter-field" ng-model="value" ng-change="changed()" ng-readonly="readonly">\
-//                   <a  href="javascript:;" class="counter-plus" ng-click="plus()">+</a>',
-//         link: function ( scope , element , attributes ) {
-//             if ( angular.isUndefined(scope.value) ) {
-//               throw 'Missing the value attribute on the counter directive.';
-//             }
-//             var min = angular.isUndefined(attributes.min) ? null : parseInt(attributes.min);
-//             var max = angular.isUndefined(attributes.max) ? null : parseInt(attributes.max);
-//             var step = angular.isUndefined(attributes.step) ? 1 : parseInt(attributes.step);
-//             element.addClass('counter-container');
-//             scope.readonly = angular.isUndefined(attributes.editable) ? true : false;
-//             var setValue = function ( val ) {
-//               scope.value = parseInt( val );
-//             };
-//             setValue( scope.value );
-
-//             scope.minus = function () {
-//               if ( min && (scope.value <= min || scope.value - step <= min) || min === 0 && scope.value < 1 ) {
-//                   setValue( min );
-//                   return false;
-//               }
-//               setValue( scope.value - step );
-//             };
-//             scope.plus = function () {
-//               if ( max && (scope.value >= max || scope.value + step >= max) ) {
-//                   setValue( max );
-//                   return false;
-//               }
-//               setValue( scope.value + step );
-//             };
-//             scope.changed = function () {
-//               if ( !scope.value ) {
-//                 setValue( 0 );
-//               }
-//               if ( /[0-9]/.test(scope.value) ) {
-//                 setValue( scope.value );
-//               } else {
-//                 setValue( scope.min );
-//               }
-//               if ( min && (scope.value <= min || scope.value - step <= min) ) {
-//                 setValue( min );
-//                 return false;
-//               }
-//               if ( max && (scope.value >= max || scope.value + step >= max) ) {
-//                 setValue( max );
-//                 return false;
-//               }
-//               setValue( scope.value );
-//             };
-//         }
-//     };
-// });
