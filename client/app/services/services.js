@@ -26,6 +26,7 @@ angular.module('digitalDining.services', [])
   };
   var signout = function () {
     $window.localStorage.removeItem('com.digitalDining');
+    $window.localStorage.removeItem('restaurantId');
     $location.path('/signin');
   };
   return {

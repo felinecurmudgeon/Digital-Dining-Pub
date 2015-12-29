@@ -79,6 +79,7 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
       });
   };
   $scope.updateOrRemoveTable = function (index) {
+    console.log($scope.tables.data[index]);
     if ($scope.tables.data[index].edit === true) {
       Tables.updateTable($scope.tables.data[index])
         .then(function (res) {
