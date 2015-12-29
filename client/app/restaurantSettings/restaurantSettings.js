@@ -1,5 +1,7 @@
 /*jshint camelcase: false */
-angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
+angular.module('digitalDining.restaurantSettings', [
+  'digitalDining.restaurantServices',
+  'digitalDining.tablesServices'])
 
 .controller('restSettingsController', ['$scope', '$window', 'Restaurants', 'Tables', function ($scope, $window, Restaurants, Tables) {
   $scope.restaurant = {};

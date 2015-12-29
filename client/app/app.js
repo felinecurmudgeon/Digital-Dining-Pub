@@ -1,7 +1,7 @@
 angular.module('digitalDining', [
   'ui.router',
   'ui.bootstrap.dropdown',
-  'digitalDining.services',
+  'digitalDining.authServices',
   'digitalDining.auth',
   'digitalDining.restaurantSettings',
   'digitalDining.menuCreator',

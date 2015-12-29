@@ -1,4 +1,6 @@
-angular.module('digitalDining.reservations', ['digitalDining.services'])
+angular.module('digitalDining.reservations', [
+  'digitalDining.reservationsServices',
+  'digitalDining.tablesServices'])
 
 .controller('reservationsController', ['$scope', 'Reservations', 'Tables', function ($scope, Reservations, Tables) {
   $scope.parties = {};
