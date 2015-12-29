@@ -11,7 +11,7 @@ echo 'hi dad'
 # # forever start server/server.js
 cd client-mobile
 # # npm install
-bower install
+bower install --allow-root
 echo 'flag M'
 ionic serve -a
 
