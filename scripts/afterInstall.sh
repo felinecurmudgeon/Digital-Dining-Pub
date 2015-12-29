@@ -10,3 +10,4 @@ cd client-mobile
 npm install
 sudo env "PATH=$PATH" bower install --allow-root
 ionic serve -a
+

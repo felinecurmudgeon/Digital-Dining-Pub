@@ -4,6 +4,8 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
 .controller('AuthController', function ($scope, $window, $location, Auth) {
   $scope.user = {is_restaurant_user: true};
   $scope.showPasswordMatch = false;
+  $scope.duplicateEmail = false;
+  $scope.failedLogin = false;
 
   $scope.authenticated = function () {
     return Auth.isAuth();
@@ -19,11 +21,14 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
         $location.path('/reservations');
       })
       .catch(function (error) {
+        $scope.failedLogin = true;
         console.error(error);
       });
   };
 
   $scope.signup = function () {
+    $scope.duplicateEmail = false;
+    $scope.showPasswordMatch = false;
     if ($scope.user.password !== $scope.user.password2) {
       $scope.showPasswordMatch = true;
     } else {
@@ -33,6 +38,7 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
         $location.path('/restaurantSettings');
       })
       .catch(function (error) {
+        $scope.duplicateEmail = true;
         console.error(error);
       });
     }
@@ -42,5 +48,4 @@ angular.module('digitalDining.auth', ['digitalDining.services'])
     Auth.signout();
     $location.path('/login');
   };
-
 });
