@@ -47,4 +47,3 @@ angular.module('digitalDining.reservations', [
   $scope.getParties();
   $scope.getTables();
 }]);
-//TODO add a ngclick in the view to seat people, and send this to the server
