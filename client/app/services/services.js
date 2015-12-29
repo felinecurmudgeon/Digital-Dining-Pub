@@ -224,8 +224,19 @@ angular.module('digitalDining.services', [])
       }
     });
   };
+  var editTable = function (table) {
+    return $http({
+      url: 'http://localhost:8000/api/tables/' + table.id,
+      method: 'PUT',
+      data: {
+        'table_number': +table.attributes.tableNumber,
+        'seats': +table.attributes.seats
+      }
+    });
+  };
   return {
     getTables: getTables,
-    postTable: postTable
+    postTable: postTable,
+    editTable: editTable
   };
 }]);

@@ -78,6 +78,12 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
         delete $scope.tables.new;
       });
   };
+  $scope.updateTable = function (index) {
+    Tables.editTable($scope.tables.data[index])
+      .then(function () {
+        $scope.tables.data[index].edit = false;
+      });
+  };
   $scope.creating();
   $scope.getTables();
 }]);
