@@ -224,19 +224,26 @@ angular.module('digitalDining.services', [])
       }
     });
   };
-  var editTable = function (table) {
+  var updateTable = function (table) {
     return $http({
       url: 'http://localhost:8000/api/tables/' + table.id,
       method: 'PUT',
       data: {
-        'table_number': +table.attributes.tableNumber,
-        'seats': +table.attributes.seats
+        'table_number': +table.attributes.newTableNumber || +table.attributes.tableNumber,
+        'seats': +table.attributes.newSeats || +table.attributes.seats
       }
+    });
+  };
+  var removeTable = function (table) {
+    return $http({
+      url: 'http://localhost:8000/api/tables/' + table.id,
+      method: 'DELETE'
     });
   };
   return {
     getTables: getTables,
     postTable: postTable,
-    editTable: editTable
+    updateTable: updateTable,
+    removeTable: removeTable
   };
 }]);
