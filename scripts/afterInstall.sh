@@ -4,7 +4,7 @@ cd /home/ec2-user/myApp
 echo $PATH
 echo 'hi mom'
 # npm install
-bower install
+bower install --allow-root
 echo 'hi dad'
 # forever stopall
 # sudo service mysqld start
