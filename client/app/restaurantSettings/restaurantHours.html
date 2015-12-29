@@ -12,7 +12,7 @@
         <td>{{day}}</td>
         <td>
           <div class="input-group">
-            <input type="text" class="form-control"
+            <input type="text" class="form-control input-sm"
             value = {{restaurant['opening_hour_' + day.toLowerCase()]}} ng-model="restaurant['opening_hour_' + day.toLowerCase()]">
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-time"></span>
@@ -21,7 +21,7 @@
         </td>
         <td>
           <div class="input-group">
-            <input type="text" class="form-control"
+            <input type="text" class="form-control input-sm"
             value = {{restaurant['closing_hour_' + day.toLowerCase()]}} ng-model="restaurant['closing_hour_' + day.toLowerCase()]">
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-time"></span>
