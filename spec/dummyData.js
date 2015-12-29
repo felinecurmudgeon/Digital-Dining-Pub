@@ -120,6 +120,7 @@ var restaurants = [
   restaurant_city: 'San Francisco',
   restaurant_state: 'California',
   restaurant_zip_code: 94122,
+  restaurant_picture_url: 'http://www.24-7.com/wp-content/uploads/2015/01/10uk139.jpg',
   opening_hour_monday:'11:00:00',
   closing_hour_monday: '22:30:00',
   opening_hour_tuesday:'11:00:00',

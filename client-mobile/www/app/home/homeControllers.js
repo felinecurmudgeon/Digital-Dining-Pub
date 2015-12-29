@@ -26,30 +26,23 @@ angular.module('dd-homeCtrls', [])
         cb([lat, lng]);
       };
       var onError = function (error) {
-        console.log('code: ' + error.code + '\n' +
+        console.log('error in getting location, code: ' + error.code + '\n' +
               'message: ' + error.message + '\n');
-        cb(error.message);
+        cb([error.message, error.message]);
       };
       window.navigator.geolocation.getCurrentPosition(onSuccess, onError);
   };
 
   var distance = function (x1, y1, x2, y2) {
-    var xlen = 0;
-    var ylen = 0;
+    if (!Number (x1) || !Number (x2) || !Number (y1) || !Number (y2)) {
+      return null;
+    }
 
-    if (x1 > x2) {
-      xlen = x1 - x2;
-    } else {
-      xlen = x2 - x1;
-    }
-    if (y1 > y2) {
-      ylen = y1 - y2;
-    } else {
-      ylen = y2 - y1;
-    }
+    var xlen = x1 - x2;
+    var ylen = y1 - y2;
 
     ylen = (ylen * 110.574) * 0.62137119;
-    xlen = (xlen * (111.320 * Math.cos(y1 - ylen)) * 0.62137119);
+    xlen = (xlen * (111.320 * Math.cos(((y1 + y2) / 2) * Math.PI / 180) * 0.62137119));
 
     return Math.sqrt(Math.pow(xlen, 2) + Math.pow(ylen, 2));
   };
@@ -64,7 +57,7 @@ angular.module('dd-homeCtrls', [])
           HomeFactory.convertAddress(address)
             .then(function (mapResult) {
               //run through distance function and append distance to restaurants.data.data
-              restaurant.attributes.distance = distance(mapResult.data.results[0].geometry.location.lat, mapResult.data.results[0].geometry.location.lng, latLng[0], latLng[1]);
+              restaurant.attributes.distance = distance(mapResult.data.results[0].geometry.location.lng, mapResult.data.results[0].geometry.location.lat, latLng[1], latLng[0]);
                  $scope.restaurants = restaurants.data.data;
             });
         });
@@ -78,61 +71,3 @@ angular.module('dd-homeCtrls', [])
     HomeFactory.focusRestaurant(rest);
   };
 }]);
-
-// .directive('counter', function () {
-//     return {
-//         restrict: 'A',
-//         scope: { value: '=value' },
-//         template: '<a href="javascript:;" class="counter-minus" ng-click="minus()">-</a>\
-//                   <input type="text" class="counter-field" ng-model="value" ng-change="changed()" ng-readonly="readonly">\
-//                   <a  href="javascript:;" class="counter-plus" ng-click="plus()">+</a>',
-//         link: function ( scope , element , attributes ) {
-//             if ( angular.isUndefined(scope.value) ) {
-//               throw 'Missing the value attribute on the counter directive.';
-//             }
-//             var min = angular.isUndefined(attributes.min) ? null : parseInt(attributes.min);
-//             var max = angular.isUndefined(attributes.max) ? null : parseInt(attributes.max);
-//             var step = angular.isUndefined(attributes.step) ? 1 : parseInt(attributes.step);
-//             element.addClass('counter-container');
-//             scope.readonly = angular.isUndefined(attributes.editable) ? true : false;
-//             var setValue = function ( val ) {
-//               scope.value = parseInt( val );
-//             };
-//             setValue( scope.value );
-
-//             scope.minus = function () {
-//               if ( min && (scope.value <= min || scope.value - step <= min) || min === 0 && scope.value < 1 ) {
-//                   setValue( min );
-//                   return false;
-//               }
-//               setValue( scope.value - step );
-//             };
-//             scope.plus = function () {
-//               if ( max && (scope.value >= max || scope.value + step >= max) ) {
-//                   setValue( max );
-//                   return false;
-//               }
-//               setValue( scope.value + step );
-//             };
-//             scope.changed = function () {
-//               if ( !scope.value ) {
-//                 setValue( 0 );
-//               }
-//               if ( /[0-9]/.test(scope.value) ) {
-//                 setValue( scope.value );
-//               } else {
-//                 setValue( scope.min );
-//               }
-//               if ( min && (scope.value <= min || scope.value - step <= min) ) {
-//                 setValue( min );
-//                 return false;
-//               }
-//               if ( max && (scope.value >= max || scope.value + step >= max) ) {
-//                 setValue( max );
-//                 return false;
-//               }
-//               setValue( scope.value );
-//             };
-//         }
-//     };
-// });

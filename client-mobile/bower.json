@@ -6,6 +6,6 @@
   },
   "dependencies": {
     "angular-payments": "*",
-    "ng-maps": "ng-map#*"
+    "ngmap": "~1.16.0"
   }
 }

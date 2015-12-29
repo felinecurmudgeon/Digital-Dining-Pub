@@ -1,6 +1,6 @@
 angular.module('dd-payCtrls', [])
 
-.controller('AccountCtrl', ['$scope', 'PaymentFactory', function ($scope, PaymentFactory) {
+.controller('AccountCtrl', ['$scope', '$state', 'PaymentFactory', function ($scope, $state, PaymentFactory) {
 
   $scope.handleStripe = function (status, response) {
     console.log(status);
@@ -11,7 +11,12 @@ angular.module('dd-payCtrls', [])
     } else {
       // got stripe token, now charge it or smt
       console.log(response.id);
-      PaymentFactory.addCard(response.id);
+      PaymentFactory.addCard(response.id).then(function () {
+        $scope.hasCreditOnFile = true;
+        setTimeout( function () {
+          $state.go('nav.home');
+        }, 2000);
+      });
     }
   };
 
