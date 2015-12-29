@@ -78,18 +78,18 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
         delete $scope.tables.new;
       });
   };
-  $scope.updateOrRemoveTable = function (index) {
-    console.log($scope.tables.data[index]);
-    if ($scope.tables.data[index].edit === true) {
-      Tables.updateTable($scope.tables.data[index])
+  $scope.updateOrRemoveTable = function (table) {
+    if (table.edit === true) {
+      Tables.updateTable(table)
         .then(function (res) {
-          $scope.tables.data[index].attributes.seats = res.data.seats;
-          $scope.tables.data[index].attributes.tableNumber = res.data.table_number;
-          $scope.tables.data[index].edit = false;
+          table.attributes.seats = res.data.seats;
+          table.attributes.tableNumber = res.data.table_number;
+          table.edit = false;
         });
-    } else if ($scope.tables.data[index].remove === true) {
-      Tables.removeTable($scope.tables.data[index])
+    } else if (table.remove === true) {
+      Tables.removeTable(table)
         .then(function () {
+          var index = $scope.tables.data.indexOf(table);
           $scope.tables.data.splice(index, 1);
         });
     }

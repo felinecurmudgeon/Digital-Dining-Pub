@@ -3,7 +3,10 @@
     <tr>
       <th>Table Number</th>
       <th>Table Size</th>
-      <th><button class="btn btn-primary btn-sm" ng-click="tables.add = !tables.add">Add table</button></th>
+      <th>
+        <button class="btn btn-primary btn-sm" ng-click="tables.add = true" ng-hide="tables.add">Add table</button>
+        <button class="btn btn-primary btn-sm" ng-click="tables.add = false" ng-show="tables.add">Hide add table</button>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -19,7 +22,7 @@
           ng-click="submitTable()">Submit table</button>
       </td>
     </tr>
-    <tr ng-repeat="table in tables.data">
+    <tr ng-repeat="table in tables.data | orderBy:'attributes.tableNumber'">
       <td ng-hide="table.edit">
         {{table.attributes.tableNumber}}
       </td>
@@ -38,7 +41,7 @@
         <div class="btn-group">
           <button type="button" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-pencil" aria-hidden="true" ng-hide="table.edit || table.remove" ng-click="table.edit = true"></span>
-            <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-show="table.edit || table.remove" ng-click="updateOrRemoveTable($index)"></span>
+            <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-show="table.edit || table.remove" ng-click="updateOrRemoveTable(table)"></span>
           </button>
           <button type="button" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-trash" aria-hidden="true" ng-hide="table.edit || table.remove" ng-click="table.remove = true"></span>
