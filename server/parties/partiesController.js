@@ -1,26 +1,45 @@
 /*jshint camelcase: false */
 var partiesModel = require('./partiesModel');
+var restaurantsModel = require('../restaurants/restaurantsModel.js');
 var url = require('url');
 var JsonResponse = require('../JsonResponseObject');
 var JsonData = require('../JsonDataObject');
 var nameGenerator = require('./nameGenerator');
 
-var createJsonResponseForParty = function (data) {
+var createJsonResponseForParty = function (partyData, included) {
   var JsonResponseObject = new JsonResponse();
-  for (var i = 0; i < data.length; i++) {
+  var tableIds = [];
+  for (var i = 0; i < partyData.length; i++) {
     var JsonDataObject = new JsonData();
     JsonDataObject.type = 'party';
-    JsonDataObject.id = data[i].id;
+    JsonDataObject.id = partyData[i].id;
     JsonDataObject.attributes = {
-      restaurantId: data[i].restaurant_id,
-      tableId: data[i].table_id,
-      partySize: data[i].party_size,
-      partyName: data[i].party_name,
-      checkedinAt: data[i].checkedin_at,
-      seatedAt: data[i].seated_at,
-      closedAt: data[i].closed_at
+      restaurantId: partyData[i].restaurant_id,
+      tableId: partyData[i].table_id,
+      partySize: partyData[i].party_size,
+      partyName: partyData[i].party_name,
+      checkedinAt: partyData[i].checkedin_at,
+      seatedAt: partyData[i].seated_at,
+      closedAt: partyData[i].closed_at
     };
+    tableIds.push(partyData[i].table_id);
     JsonResponseObject.data.push(JsonDataObject);
+  }
+  if (included.tables) {
+    for (var j = 0; j < included.tables.length; j++) {
+      if (tableIds.indexOf(included.tables[j].id) !== -1) {
+        var JsonDataObjectIncluded = new JsonData();
+        JsonDataObjectIncluded.type = 'tables';
+        JsonDataObjectIncluded.id = included.tables[j].id;
+        JsonDataObjectIncluded.attributes = {
+          restaurantId: included.tables[j].restaurant_id,
+          tableNumber: included.tables[j].table_number,
+          seats: included.tables[j].seats,
+          available: included.tables[j].available
+        };
+        JsonResponseObject.included.push(JsonDataObjectIncluded);
+      }
+    }
   }
   return JsonResponseObject;
 };
@@ -90,9 +109,12 @@ module.exports = {
         var sendAnswer = function (callback) {
           callback(+req.query.rid)
             .then(function (data) {
-              var response = createJsonResponseForParty(data);
-              res.status(200);
-              res.send(response);
+              restaurantsModel.tables.get(+req.query.rid)
+                .then(function (tables) {
+                  var response = createJsonResponseForParty(data, {tables: tables});
+                  res.status(200);
+                  res.send(response);
+                });
             });
         };
         if (req.query.status === 'waiting') {
