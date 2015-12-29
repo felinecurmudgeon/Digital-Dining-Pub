@@ -92,6 +92,17 @@ module.exports = {
           }
         });
       });
+    },
+    delete: function (id) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('DELETE FROM tables WHERE id=' + id, function (err) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(id);
+          }
+        });
+      });
     }
   }
 };

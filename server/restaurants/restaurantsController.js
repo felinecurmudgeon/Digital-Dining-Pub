@@ -121,6 +121,15 @@ module.exports = {
         res.status(201);
         res.send(data);
       });
+  },
+
+  deleteTable : function (req, res) {
+    console.log('deleting table ', req.params.id);
+    restaurantsModel.tables.delete(req.params.id)
+      .then(function (data) {
+        res.status(204);
+        res.send(data);
+      });
   }
 
 };
