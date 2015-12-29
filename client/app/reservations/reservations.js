@@ -7,13 +7,23 @@ angular.module('digitalDining.reservations', ['digitalDining.services'])
     occupied: []
   };
   $scope.getParties = function () {
+    var addTableNumberToResponse = function (resp) {
+      var tables = resp.included.reduce(function (acc, table) {
+        acc[table.id] = table.attributes;
+        return acc;
+      }, {});
+      resp.data.forEach(function (party) {
+        party.attributes.tableNumber = tables[party.attributes.tableId].tableNumber;
+      });
+      return resp.data;
+    };
     Reservations.getCheckedInParties()
       .then(function (resp) {
         $scope.parties.waiting = resp.data;
       });
     Reservations.getSeatedParties()
       .then(function (resp) {
-        $scope.parties.seated = resp.data;
+        $scope.parties.seated = addTableNumberToResponse(resp);
       });
   };
   $scope.getTables = function () {
