@@ -83,7 +83,6 @@ module.exports = {
   //tables
   getTables : function (req, res) {
     var restaurantId = req.query.rid;
-    console.log(restaurantId);
     var JsonResponseObject = new JsonResponseObj();
     restaurantsModel.tables.get(restaurantId)
       .then(function (data) {
