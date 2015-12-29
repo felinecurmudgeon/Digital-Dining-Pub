@@ -33,6 +33,11 @@ h1 {
   margin: 0 auto;
 }
 
+.btnRight {
+  float: right;
+  margin: 5%;
+}
+
 .num {
   float:right;
 }
