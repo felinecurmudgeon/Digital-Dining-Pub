@@ -93,8 +93,8 @@ angular.module('digitalDining', [
     }
     var userInfo = Auth.isAuth();
     if (userInfo === false) {
-        e.preventDefault(); // stop current execution
-        $state.go('login'); // go to login
+      e.preventDefault(); // stop current execution
+      $state.go('login'); // go to login
     } else {
       if (toState.name === 'pleaseCreate' || toState.name === 'restaurantSettings' || toState.name === 'restaurantSettings.info') {
         return;
