@@ -50,7 +50,7 @@ angular.module('dd-homeCtrls', [])
   $scope.displayRestaurants = function () {
     HomeFactory.getAllRestaurants().then(function (restaurants) {
     // uncomment this line and comment out everything else in this function to turn off the geo location
-    // $scope.restaurants = restaurants.data.data;
+    $scope.restaurants = restaurants.data.data;
       getLocation(function (latLng) {
         //lookup coords for each rest via google maps
         restaurants.data.data.forEach(function (restaurant) {
