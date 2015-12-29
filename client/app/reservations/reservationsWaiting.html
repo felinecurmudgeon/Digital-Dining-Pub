@@ -27,7 +27,7 @@
             <ul class="uib-dropdown-menu" aria-labelledby="simple-btn-keyboard-nav">
               <li ng-repeat="table in tables.available" ng-click="seatParty(party, table)"><a href="#">Table {{table.attributes.tableNumber}} - {{table.attributes.seats}} seats</a></li>
               <li class="divider"></li>
-              <li ng-repeat="table in tables.occupied"><a href="#">Table {{table.attributes.tableNumber}} - {{table.attributes.seats}} seats (occupied)</a></li>
+              <li ng-repeat="table in tables.occupied" ng-click="seatParty(party, table)"><a href="#">Table {{table.attributes.tableNumber}} - {{table.attributes.seats}} seats (occupied)</a></li>
             </ul>
           </div>
         </td>
