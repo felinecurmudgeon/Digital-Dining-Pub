@@ -106,6 +106,13 @@ module.exports = {
         } else {
           sendAnswer(partiesModel.party.getAllParties);
         }
+      } else if (req.query.user) {
+        partiesModel.party.getCurrentPartyForUser(req.user.id)
+          .then(function (data) {
+            var response = createJsonResponseForParty(data);
+            res.status(200);
+            res.send(response);
+          });
       } else {
         res.status(400);
         res.send();

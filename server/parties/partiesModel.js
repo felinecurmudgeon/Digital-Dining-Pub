@@ -37,6 +37,31 @@ module.exports = {
         });
       });
     },
+    getCurrentPartyForUser: function (userId) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('SELECT * FROM party_participants pp \
+          INNER JOIN parties p ON p.id=pp.party_id WHERE user_id = ? AND p.closed_at="0000-00-00 00:00:00"', userId, function (err, data) {
+
+          var compare = function (a, b) {
+            var d1 = new Date(a.checkedin_at);
+            var d2 = new Date(b.checkedin_at);
+            if (d1 < d2)
+              return 1;
+            if (d1 > d2)
+              return -1;
+            return 0;
+          }
+
+          data.sort(compare);
+
+          if (err) {
+            reject(err);
+          } else {
+            resolve([data[0]]);
+          }
+        })
+     });
+    },
     getCanceledParties: function (restaurantId) {
       //retrieves all cancelled parties (that have never started) for a given restaurantId
       return new Promise(function (resolve, reject) {

@@ -28,7 +28,6 @@ angular.module('dd-checkInCtrl', [])
     $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
     $scope.partyInfo.restaurant_id = $scope.focusedRestaurant.id;
     $scope.partyInfo.party_size = '';
-    console.log($scope.focusedRestaurant);
   };
 
   $scope.doCheckIn = function () {

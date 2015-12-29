@@ -8,25 +8,38 @@ angular.module('dd-homeFactories', [])
       method: 'GET'
     });
   };
+
   var focusedRestaurant = {};
+
   var focusRestaurant = function (rest) {
     focusedRestaurant = rest;
   };
+
   var getFocusedRestaurant = function () {
     return focusedRestaurant;
   };
+
   var convertAddress = function (address) {
     return $http({
       url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyDMFRplgg_Ayr8hZyNAK1QUSw5UNPbVmNM',
       method: 'GET'
     });
   };
+
+  var getCheckedInRestaurant = function () {
+    return $http({
+      url: 'http://localhost:8000/api/parties?user=true',
+      method: 'GET' 
+    });
+  };
+
   return {
     getAllRestaurants: getAllRestaurants,
     focusedRestaurant: focusedRestaurant,
     focusRestaurant: focusRestaurant,
     getFocusedRestaurant: getFocusedRestaurant,
-    convertAddress: convertAddress
+    convertAddress: convertAddress,
+    getCheckedInRestaurant: getCheckedInRestaurant
   };
 }])
 

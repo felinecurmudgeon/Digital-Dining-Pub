@@ -2,7 +2,6 @@ angular.module('dd-restCtrls', [])
 
 .controller('RestaurantMenuCtrl', ['$scope', '$state', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, $state, $window, MenuFactory, HomeFactory, OrderFactory) {
   $scope.getPartyInfo = function () {
-    console.log('partyId is ', $window.localStorage.getItem('partyId'));
     if ($window.localStorage.getItem('partyId')) {
       $scope.isCheckedIn = true;
     } else {
@@ -12,6 +11,14 @@ angular.module('dd-restCtrls', [])
   $scope.getPartyInfo();
   $scope.getMenuItems = function () {
     //check if user is in a party
+    $scope.getCheckedInRestaurant = function () {
+      $scope.checkedInRest = HomeFactory.getCheckedInRestaurant()
+        .then(function (rest) {
+          console.log(rest.data.data);
+        })
+    };
+
+    $scope.getCheckedInRestaurant();
 
     //if yes, make restID the party restaurant 
 
