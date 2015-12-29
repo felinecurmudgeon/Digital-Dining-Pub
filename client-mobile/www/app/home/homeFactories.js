@@ -29,7 +29,7 @@ angular.module('dd-homeFactories', [])
   var getCheckedInRestaurant = function () {
     return $http({
       url: 'http://localhost:8000/api/parties?user=true',
-      method: 'GET' 
+      method: 'GET'
     });
   };
 

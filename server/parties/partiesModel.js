@@ -45,12 +45,14 @@ module.exports = {
           var compare = function (a, b) {
             var d1 = new Date(a.checkedin_at);
             var d2 = new Date(b.checkedin_at);
-            if (d1 < d2)
+            if (d1 < d2) {
               return 1;
-            if (d1 > d2)
+            }
+            if (d1 > d2) {
               return -1;
+            }
             return 0;
-          }
+          };
 
           data.sort(compare);
 
@@ -59,7 +61,7 @@ module.exports = {
           } else {
             resolve([data[0]]);
           }
-        })
+        });
      });
     },
     getCanceledParties: function (restaurantId) {

@@ -15,12 +15,12 @@ angular.module('dd-restCtrls', [])
       $scope.checkedInRest = HomeFactory.getCheckedInRestaurant()
         .then(function (rest) {
           console.log(rest.data.data);
-        })
+        });
     };
 
     $scope.getCheckedInRestaurant();
 
-    //if yes, make restID the party restaurant 
+    //if yes, make restID the party restaurant
 
     //if no, use focusedRestaurant
 
@@ -78,7 +78,7 @@ angular.module('dd-restCtrls', [])
   $scope.getFocusedRestaurant = function () {
     //check if user is in a party
 
-    //if yes, make $scope.focusedRestaurant the party restaurant 
+    //if yes, make $scope.focusedRestaurant the party restaurant
 
     //if no, use focusedRestaurant from homefactory
 

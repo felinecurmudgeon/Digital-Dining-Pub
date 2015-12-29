@@ -72,9 +72,6 @@ angular.module('dd-payCtrls', [])
   };
 
   $scope.getOrderItems = function () {
-    
-    //replace lookup with lookup to DB - getCheckItems for value from DB
-
     CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
       .then(function (items) {
         var subtotal = 0;
