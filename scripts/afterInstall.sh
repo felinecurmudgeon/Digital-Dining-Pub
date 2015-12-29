@@ -9,8 +9,9 @@ echo 'hi dad'
 # forever stopall
 # sudo service mysqld start
 # # forever start server/server.js
-# cd client-mobile
+cd client-mobile
 # # npm install
-# sudo env "PATH=$PATH" bower install --allow-root
-# ionic serve -a
+bower install
+echo 'flag M'
+ionic serve -a
 
