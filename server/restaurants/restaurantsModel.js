@@ -57,5 +57,18 @@ module.exports = {
       });
     });
    }
+  },
+  tables: {
+    get: function (restaurantId) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('SELECT * FROM tables WHERE restaurant_id = ' + restaurantId, function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    }
   }
 };

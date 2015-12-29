@@ -120,6 +120,7 @@ var restaurants = [
   restaurant_city: 'San Francisco',
   restaurant_state: 'California',
   restaurant_zip_code: 94122,
+  restaurant_picture_url: 'http://www.24-7.com/wp-content/uploads/2015/01/10uk139.jpg',
   opening_hour_monday:'11:00:00',
   closing_hour_monday: '22:30:00',
   opening_hour_tuesday:'11:00:00',
@@ -325,11 +326,14 @@ module.exports = {
       .then(function () {
         return Promise.all(testDataIds.tableIds.map(function (tableIds, index) {
           var nameGenerator = require('../server/parties/nameGenerator');
+          var seated = Math.random() > 0.5;
           var partyObj = {
-            "table_id": testDataIds.tableIds[index].id,
+            "table_id": (seated ? testDataIds.tableIds[index].id : null),
             "restaurant_id": testDataIds.tableIds[index].rid,
             "party_size": Math.ceil(4 * Math.random()),
-            "party_name": nameGenerator()
+            "party_name": nameGenerator(),
+            "checkedin_at": new Date().toMysqlFormat(),
+            "seated_at": (seated ? new Date().toMysqlFormat() : "0000-00-00 00:00:00")
           }
           return insertData('parties', partyObj);
         }))

@@ -5,6 +5,7 @@
     "ionic": "driftyco/ionic-bower#1.1.1"
   },
   "dependencies": {
-    "angular-payments": "*"
+    "angular-payments": "*",
+    "ngmap": "~1.16.0"
   }
 }

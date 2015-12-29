@@ -4,7 +4,8 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.controllers', 'digitalDining.services'])
+angular.module('digitalDining', ['ionic', 'angularPayments', 'dd-authCtrl', 'dd-authFactory', 'dd-checkInCtrl', 'dd-checkInFactory',
+  'dd-restCtrls', 'dd-restFactories', 'dd-payCtrls', 'dd-payFactories', 'dd-homeCtrls', 'dd-homeFactories', 'ngMap'])
 
 .run(function ($ionicPlatform, $ionicConfig) {
   $ionicPlatform.ready(function () {
@@ -31,8 +32,8 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
     url: '/app',
     views: {
       '': {
-        templateUrl: 'templates/login.html',
-        controller: 'AppCtrl'
+        templateUrl: 'app/auth/login.html',
+        controller: 'AuthCtrl'
       }
     }
   })
@@ -41,8 +42,8 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
     url: '/signup',
     views: {
       '': {
-        templateUrl: 'templates/signup.html',
-        controller: 'SignUpCtrl'
+        templateUrl: 'app/auth/signup.html',
+        controller: 'AuthCtrl'
       }
     }
   })
@@ -50,24 +51,14 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
   .state('nav', {
     url: '/nav',
     abstract: true,
-    templateUrl: 'templates/nav.html',
-    controller: 'AppCtrl'
+    templateUrl: 'app/home/nav.html',
+    controller: 'NavCtrl'
   })
-
-  .state('nav.search', {
-    url: '/search',
-    views: {
-      'navContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
-
   .state('nav.restaurantMenu', {
       url: '/restaurantMenu',
       views: {
         'navContent': {
-          templateUrl: 'templates/restaurantMenu.html',
+          templateUrl: 'app/restaurant/restaurantMenu.html',
           controller: 'RestaurantMenuCtrl'
         }
       }
@@ -76,7 +67,7 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
       url: '/home',
       views: {
         'navContent': {
-          templateUrl: 'templates/home.html',
+          templateUrl: 'app/home/home.html',
           controller: 'HomeCtrl'
         }
       }
@@ -85,16 +76,8 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
       url: '/checkIn',
       views: {
         'navContent': {
-          templateUrl: 'templates/checkIn.html',
+          templateUrl: 'app/checkIn/checkIn.html',
           controller: 'CheckInCtrl'
-        }
-      }
-    })
-    .state('nav.success', {
-      url: '/success',
-      views: {
-        '': {
-          templateUrl: 'templates/success.html'
         }
       }
     })
@@ -102,7 +85,7 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
       url: '/currentCheck',
       views: {
         'navContent': {
-          templateUrl: 'templates/currentCheck.html',
+          templateUrl: 'app/payment/currentCheck.html',
           controller: 'CheckCtrl'
         }
       }
@@ -111,16 +94,8 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
       url: '/account',
       views: {
         'navContent': {
-          templateUrl: 'templates/account.html',
+          templateUrl: 'app/payment/account.html',
           controller: 'AccountCtrl'
-        }
-      }
-    })
-    .state('nav.aboutUs', {
-      url: '/aboutUs',
-      views: {
-        'navContent': {
-          templateUrl: 'templates/aboutUs.html'
         }
       }
     })
@@ -128,7 +103,7 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
       url: '/menuItemDescription',
       views: {
         'navContent': {
-          templateUrl: 'templates/menuItemDescription.html',
+          templateUrl: 'app/restaurant/menuItemDescription.html',
           controller: 'MenuItemDisplayCtrl'
         }
       }
@@ -137,7 +112,7 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
       url: '/restaurantDescription',
       views: {
         'navContent': {
-          templateUrl: 'templates/restaurantDescription.html',
+          templateUrl: 'app/restaurant/restaurantDescription.html',
           controller: 'RestaurantDisplayCtrl'
         }
       }
@@ -146,13 +121,14 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'digitalDining.cont
     url: '/successFBLogin',
     views: {
       '': {
-      templateUrl: 'templates/success.html',
-      controller: 'AppCtrl'
+      templateUrl: 'app/auth/success.html',
+      controller: 'AuthCtrl'
       }
     }
   });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app');
+  //run the AttackTokens factor before sending out HTTP requests
   $httpProvider.interceptors.push('AttachTokens');
 }]);

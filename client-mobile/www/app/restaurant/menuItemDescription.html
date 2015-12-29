@@ -1,0 +1,28 @@
+<ion-view view-title='{{focusedMenuItem.title}}'>
+<ion-nav-bar>
+  <ion-nav-back-button class="button-clear">
+    <i class="ion-arrow-left-c"></i> Back
+  </ion-nav-back-button>
+</ion-nav-bar>
+  <ion-content>
+    <ion-item>
+      <div class="list card">
+        <div class="item item">
+          <h2 class='itemDescription'>{{focusedMenuItem.title}}</h2>
+          <p>{{focusedMenuItem.description}}</p>
+        </div>
+        <div class="item item-image">
+          <img src="http://previews.123rf.com/images/jirkaejc/jirkaejc1003/jirkaejc100300299/6629628-photo-shot-of-prosciutto-crudo-ham-Stock-Photo.jpg">
+        </div>
+      </div>
+      <div class ='order-buttons text-center'>
+        <button ng-show='isCheckedIn' class='removeFromOrder button button-assertive' ng-click='removeItemFromOrder(focusedMenuItem)'>
+        Remove Item
+        </button>
+        <button ng-show='isCheckedIn' class='addToOrder button button-balanced' ng-click='addItemToOrder(focusedMenuItem)'>
+          Add Item to Order (${{focusedMenuItem.price}})
+        </button>
+      </div>
+    </ion-item>
+  </ion-content>
+</ion-view>

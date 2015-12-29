@@ -28,6 +28,7 @@ module.exports = {
             restaurantDescription: data[i].restaurant_description,
             restaurantPhoneNumber: data[i].restaurant_phone_number,
             restaurantCategory: data[i].restaurant_category,
+            restaurantPictureUrl: data[i].restaurant_picture_url || 'https://s3-us-west-1.amazonaws.com/digitaldiningphotos/genericRestaurant.jpg',
             openingHourMonday: data[i].opening_hour_monday,
             closingHourMonday: data[i].closing_hour_monday,
             openingHourTuesday: data[i].opening_hour_tuesday,
@@ -77,6 +78,30 @@ module.exports = {
       .then(function (data) {
         res.status(204);
         res.send(data);
+      });
+  },
+
+  //tables
+  getTables : function (req, res) {
+    var restaurantId = req.query.rid;
+    console.log(restaurantId);
+    var JsonResponseObject = new JsonResponseObj();
+    restaurantsModel.tables.get(restaurantId)
+      .then(function (data) {
+        for (var i = 0; i < data.length; i++) {
+          var JsonDataObject = new JsonDataObj();
+          JsonDataObject.type = 'tables';
+          JsonDataObject.id = data[i].id;
+          JsonDataObject.attributes = {
+            restaurantId: data[i].restaurant_id,
+            tableNumber: data[i].table_number,
+            seats: data[i].seats,
+            available: !!data[i].available
+          };
+          JsonResponseObject.data.push(JsonDataObject);
+        }
+        res.status(200);
+        res.send(JsonResponseObject);
       });
   }
 };

@@ -1,0 +1,66 @@
+<ion-view view-title="Current Check">
+  <ion-content>
+      <ion-item collection-repeat = 'item in orderItems' ng-show="isCheckedIn">
+        <span class='itemName'> {{item.title}} </span><span class = 'itemPrice'> {{item.price | currency}} </span>
+        
+        <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
+      </ion-item>
+      <strong>
+      <ion-item ng-show="isCheckedIn" class='billTotal'>
+        Subtotal: {{bill.subtotal | currency}}
+      </ion-item>
+
+      <ion-item ng-bind='taxPlusSubtotal()' ng-show="isCheckedIn" class='billTotal'>
+      </ion-item>
+
+      <ion-item ng-show="isCheckedIn" class='billTotal'>
+        Tip Amount: <input ng-model="bill.tip" class='tip'><br>
+        <button class="button button-small button-stable" ng-click='tipCalculator(.15)'>15%</button>
+        <button class="button button-small button-stable" ng-click='tipCalculator(.18)'>18%</button>
+        <button class="button button-small button-stable" ng-click='tipCalculator(.20)'>20%</button> 
+      </ion-item>
+
+      <ion-item ng-show="isCheckedIn" ng-bind="total()" class='billTotal'>
+      </ion-item>
+      </strong>
+      <form ng-submit='doCharge()' ng-show="isCheckedIn">
+        </div>
+        <div class = 'submit'>
+          <button class="button button-block button-positive" type='submit'>
+            Submit Order
+          </button>
+        </div>
+      </form>
+    <div ng-show="!isCheckedIn">
+      You must be seated at a restaurant before your check will be available.
+    </div>
+    <br>
+    <br>
+    <div ng-show='isBilled'> Your card has successfully been charged.
+    </div>
+  </div>
+    <!-- <ng-include src="footersrc"></ng-include> -->
+  </ion-content>
+
+  <ion-footer-bar align-title="left">
+  <div class="tabs">
+      <a class="tab-item" href='#/nav/restaurantMenu'>
+        Menu
+      </a>
+      <a class="tab-item" href='#/nav/restaurantDescription'>
+        Details
+      </a>
+      <a class="tab-item" href='#/nav/currentCheck'>
+        Order
+      </a>
+      <a class="tab-item" href='#/nav/checkIn'>
+        Check In
+      </a>
+      <a class="tab-item">
+        Server
+      </a>
+    </div>
+</ion-footer-bar>
+
+
+</ion-view>

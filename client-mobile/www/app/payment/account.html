@@ -1,0 +1,29 @@
+<ion-view view-title="Account Setup">
+  <ion-content>
+    <!-- for testing use: 4242-4242-4242-4242 Expiry: 12/16 (or any other date in the near future) CVC: 999 -->
+    <form stripe-form="handleStripe" name="stripeForm">
+        <div class="list">
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Name on Card</span>
+            <input type="text" class="input-block-level" placeholder='Name on Card'>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Credit Card Number</span>
+            <input type="text" class="input-block-level" placeholder='Credit Card Number' ng-model="number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="stripeForm.number.$card.type"/>
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Expiry</span>
+             <input type="text" class="input-block-level" placeholder='Expiry' ng-model="expiry" payments-validate="expiry" payments-format="expiry" />
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">CVC</span>
+             <input type="text" class="input-block-level" placeholder='CVC' ng-model="cvc" payments-validate="cvc" payments-format="cvc" payments-type-model="type"/>
+          </label>
+          <br>
+          <button ng-show='!hasCreditOnFile &&!stripeError' type="submit" class="button button-block button-positive">Submit Payment Info</button>
+          <button ng-show='stripeError && !hasCreditOnFile' type="submit" class="button button-block button-assertive">Invalid Card, Please Resubmit</button>
+          <button ng-show='hasCreditOnFile' type="submit" class="button button-block button-balanced">Credit Card Valid, Redirecting</button>
+        </div>
+    </form>
+  </ion-content>
+</ion-view>

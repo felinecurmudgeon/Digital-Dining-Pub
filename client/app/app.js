@@ -1,12 +1,15 @@
 angular.module('digitalDining', [
   'ui.router',
+  'ui.bootstrap.dropdown',
   'digitalDining.services',
   'digitalDining.auth',
   'digitalDining.restaurantSettings',
-  'digitalDining.menuCreator'])
+  'digitalDining.menuCreator',
+  'digitalDining.reservations'])
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.when('/restaurantSettings', '/restaurantSettings/info');
+  $urlRouterProvider.when('/reservations', '/reservations/waiting');
   $urlRouterProvider.otherwise('/reservations');
   $stateProvider
     .state('login', {
@@ -25,7 +28,16 @@ angular.module('digitalDining', [
     })
     .state('reservations', {
       url: '/reservations',
-      templateUrl: './app/dummy.html' // TODO
+      templateUrl: './app/reservations/reservationsTemplate.html',
+      controller: 'reservationsController' // TODO
+    })
+    .state('reservations.waiting', {
+      url: '/waiting',
+      templateUrl: './app/reservations/reservationsWaiting.html'
+    })
+    .state('reservations.current', {
+      url: '/current',
+      templateUrl: './app/reservations/reservationsCurrent.html'
     })
     .state('menuCreator', {
       url: '/menuCreator',

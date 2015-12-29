@@ -15,6 +15,7 @@ var createJsonResponseForParty = function (data) {
       restaurantId: data[i].restaurant_id,
       tableId: data[i].table_id,
       partySize: data[i].party_size,
+      partyName: data[i].party_name,
       checkedinAt: data[i].checkedin_at,
       seatedAt: data[i].seated_at,
       closedAt: data[i].closed_at

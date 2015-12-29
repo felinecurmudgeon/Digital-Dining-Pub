@@ -1,0 +1,44 @@
+<ion-view view-title="Details for {{focusedRestaurant.attributes.restaurantName}}">
+  <ion-content>
+    <h2 class="titleBar">Location</h2>
+    <p>
+      {{focusedRestaurant.attributes.restaurantAddress}}, {{focusedRestaurant.attributes.restaurantCity}}, {{focusedRestaurant.attributes.restaurantState}} {{focusedRestaurant.attributes.restaurantZipCode}}
+    </p>
+    <ng-map center="{{focusedRestaurant.attributes.restaurantAddress}}, {{focusedRestaurant.attributes.restaurantCity}}, {{focusedRestaurant.attributes.restaurantState}} {{focusedRestaurant.attributes.restaurantZipCode}}"> <marker position='{{focusedRestaurant.attributes.restaurantAddress}}, {{focusedRestaurant.attributes.restaurantCity}}, {{focusedRestaurant.attributes.restaurantState}} {{focusedRestaurant.attributes.restaurantZipCode}}' centered='true'></marker>
+    </ng-map>
+
+  <h2 class="titleBar">Hours</h2>
+    <ul class ='hours list'> 
+      <li class='item'>Monday: {{focusedRestaurant.attributes.openingHourMonday}}-{{focusedRestaurant.attributes.closingHourMonday}}</li>
+      <li class='item'>Tuesday:{{focusedRestaurant.attributes.openingHourTuesday}}-{{focusedRestaurant.attributes.closingHourTuesday}}</li>
+      <li class='item'>Wednesday: {{focusedRestaurant.attributes.openingHourWednesday}}-{{focusedRestaurant.attributes.closingHourWednesday}}</li>
+      <li class='item'>Thursday: {{focusedRestaurant.attributes.openingHourThursday}}-{{focusedRestaurant.attributes.closingHourThursday}}</li>
+      <li class='item'>Friday: {{focusedRestaurant.attributes.openingHourFriday}}-{{focusedRestaurant.attributes.closingHourFriday}}</li>
+      <li class='item'>Saturday: {{focusedRestaurant.attributes.openingHourSatday}}-{{focusedRestaurant.attributes.closingHourSatday}}</li>
+      <li class='item'>Sunday: {{focusedRestaurant.attributes.openingHourSunday}}-{{focusedRestaurant.attributes.closingHourSunday}}</li>
+    </ul>
+    
+  </ion-content>
+<!--   <ng-include src="footersrc"></ng-include> -->
+
+ <ion-footer-bar align-title="left">
+  <div class="tabs">
+      <a class="tab-item" href='#/nav/restaurantMenu'>
+        Menu
+      </a>
+      <a class="tab-item" href='#/nav/restaurantDescription'>
+        Details
+      </a>
+      <a class="tab-item" href='#/nav/currentCheck'>
+        Order
+      </a>
+      <a class="tab-item" href='#/nav/checkIn'>
+        Check In
+      </a>
+      <a class="tab-item">
+        Server
+      </a>
+    </div>
+</ion-footer-bar>
+  
+</ion-view>

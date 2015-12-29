@@ -68,6 +68,12 @@ TBD
 }
 `
 
+## Restaurants API
+| HTTP Method   | URL           | Description
+| ------------- | ------------- | ---------------------------------
+| GET           | /tables?rid=restaurantId        | Gets all tables for a given restaurant
+
+
 
 ## MenusCategories API
 | HTTP Method   | URL           | Description
