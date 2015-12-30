@@ -1,8 +1,11 @@
 /*jshint camelcase: false */
-angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
+angular.module('digitalDining.restaurantSettings', [
+  'digitalDining.restaurantServices',
+  'digitalDining.tablesServices'])
 
-.controller('restSettingsController', function ($scope, $window, Restaurants) {
+.controller('restSettingsController', ['$scope', '$window', 'Restaurants', 'Tables', function ($scope, $window, Restaurants, Tables) {
   $scope.restaurant = {};
+  $scope.tables = {};
   $scope.creation = true;
   $scope.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   $scope.creating = function () {
@@ -10,7 +13,6 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
       .then(function (resp) {
         if (resp.data.length !== 0) {
           $scope.creation = false;
-          console.log(resp.data[0].attributes);
           $scope.restaurant.id = resp.data[0].id;
           $scope.restaurant.restaurant_name = resp.data[0].attributes.restaurantName;
           $scope.restaurant.restaurant_owner_id = resp.data[0].attributes.restaurantOwnerId;
@@ -38,7 +40,12 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
         }
       });
   };
-
+  $scope.getTables = function () {
+    Tables.getTables()
+      .then(function (resp) {
+        $scope.tables.data = resp.data;
+      });
+  };
   $scope.submitRestaurant = function () {
     var postRestInfo = function () {
       if ($scope.creation) {
@@ -57,7 +64,39 @@ angular.module('digitalDining.restaurantSettings', ['digitalDining.services'])
         console.error(error);
       });
   };
-
+  $scope.submitTable = function () {
+    Tables.postTable($scope.tables.new)
+      .then(function (resp) {
+        var newTable = {
+          id: resp.data.id,
+          attributes: {
+            available: true,
+            restaurantId: resp.data.restaurant_id,
+            seats: resp.data.seats,
+            tableNumber: resp.data.table_number
+          }
+        };
+        $scope.tables.data.push(newTable);
+        delete $scope.tables.new;
+      });
+  };
+  $scope.updateOrRemoveTable = function (table) {
+    if (table.edit === true) {
+      Tables.updateTable(table)
+        .then(function (res) {
+          table.attributes.seats = res.data.seats;
+          table.attributes.tableNumber = res.data.table_number;
+          table.edit = false;
+        });
+    } else if (table.remove === true) {
+      Tables.removeTable(table)
+        .then(function () {
+          var index = $scope.tables.data.indexOf(table);
+          $scope.tables.data.splice(index, 1);
+        });
+    }
+  };
   $scope.creating();
-});
+  $scope.getTables();
+}]);
 

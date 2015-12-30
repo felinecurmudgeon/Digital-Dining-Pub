@@ -1,4 +1,4 @@
-//random name generator, inspired by Dockers : github.com/docker/docker/blob/master/pkg/namesgenerator/names-generator.go
+//random name generator, inspired by Docker : github.com/docker/docker/blob/master/pkg/namesgenerator/names-generator.go
 
 var left = [
     'admiring',
