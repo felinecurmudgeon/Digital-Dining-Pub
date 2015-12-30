@@ -41,6 +41,15 @@ h1 {
   float: right;
 }
 
+input.payAmount {
+  font-size:100%;
+  float:right;
+  text-align:right;
+  height:25px;
+  width:55px;
+  border:1px solid black;
+}
+
 .addButton {
   color: green;
   font-size: 25px;
@@ -90,3 +99,13 @@ h1 {
 .divCenter {
   text-align: center;
 }
+
+.input-label {
+  width: 100px;
+}
+
+.fbButton {
+  position: relative;
+  left: 50%;
+  margin-left: -100px;
+};

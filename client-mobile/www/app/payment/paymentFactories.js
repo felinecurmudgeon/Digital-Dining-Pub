@@ -7,26 +7,29 @@ angular.module('dd-payFactories', [])
       method: 'GET'
     });
   };
-  var chargeCard = function (amt) {
+  var chargeCard = function (paymentSummary) {
     return $http({
       url: 'http://localhost:8000/api/charges',
       method: 'POST',
-      data: {
-        amount: amt
-      }
+      data: paymentSummary
     }).then(function () {
-      return $http({
-        url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
-        method: 'PUT'
-      });
-    }).then(function () {
-        $window.localStorage.removeItem('partyInfo');
-        $window.localStorage.removeItem('partyId');
-        $window.localStorage.removeItem('restaurantId');
         console.log('charged sucessfully');
     });
   };
+  var closeBill = function () {
+    return $http({
+      url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
+      method: 'PUT'
+    })
+    .then(function () {
+      $window.localStorage.removeItem('partyInfo');
+      $window.localStorage.removeItem('partyId');
+      $window.localStorage.removeItem('restaurantId');
+    });
+  };
+
   return {
+    closeBill: closeBill,
     getCheckItems: getCheckItems,
     chargeCard: chargeCard
   };

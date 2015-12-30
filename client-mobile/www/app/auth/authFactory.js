@@ -45,7 +45,12 @@ angular.module('dd-authFactory', [])
     });
   };
 
+  var isAuth = function () {
+    return !!$window.localStorage.getItem('digitaldining');
+  };
+
   return {
+    isAuth: isAuth,
     signin: signin,
     signup: signup
   };

@@ -1,24 +1,91 @@
-/*.menuCreator button {
-  border-radius: 20px;
-  color: white;
-  border: none;
-  font-size: 10px;
+.createCategory {
+  border-radius: 30px;
 }
-
-.delete {
-  background-color: red;
-}
-
-.create {
-  background-color: #b3ffb3;
-}
-
-.edit {
-  background-color: #FFFF66;
-}*/
 
 .catNameEdit {
   display: block;
   font-size: 23px;
-/*  font-weight: bold;*/
+}
+
+.menuCreator {
+    margin-left:20px;
+}
+
+.catForm {
+    width:200px;
+    display:inline-block;
+    margin-right:20px;
+}
+
+.category {
+  width:40%;
+}
+
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.category button {
+  width:65px;
+  border-radius:30px;
+  vertical-align:middle;
+  height:20px;
+  line-height:0;
+  padding-left:0;
+  padding-right:0;
+  margin-right:8px;
+  margin-bottom:10px;
+}
+
+.itemContainer button {
+  width:60px;
+  border-radius:30px;
+  vertical-align:middle;
+  height:20px;
+  line-height:0;
+  padding-left:0;
+  padding-right:0;
+  margin-right:8px;
+}
+
+.itemContainer input {
+  height: 27px;
+  margin-bottom:3px;
+  padding-left:0px;
+  padding-right:0px;
+}
+
+.itemContainer span {
+  height:30px;
+}
+
+.titleEdit {
+  font-weight:bold;
+  width:70%;
+  display:inline;
+}
+
+.priceEdit {
+    width:15%;
+    text-align:right;
+    float: right;
+}
+
+.itemContainer {
+  position:relative;
+}
+
+.itemDescription {
+    width: 100%;
+    display:block;
+}
+
+.itemPrice {
+    float:right;
+}
+.itemTitle {
+    font-weight:bold;
+    padding-bottom:10px;
+    display:inline-block;
 }

@@ -11,5 +11,8 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
         <a href="#/signup">Don't have an account? <strong>Signup</strong> ...</a>
       </div>
+      <div class="alert alert-danger" ng-show="failedLogin">
+        <div class="glyphicon glyphicon-remove"></div><strong> Error! The username / password are incorrect. </strong>
+      </div>
   </div>
 </form>

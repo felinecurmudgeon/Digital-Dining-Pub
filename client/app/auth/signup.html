@@ -14,8 +14,9 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
       <a href="#/login">Already have an account? <strong>Login</strong> ...</a>
     </div>
-    <div class="alert alert-danger" ng-show="showPasswordMatch">
-      <span class="glyphicon glyphicon-remove"></span><strong> Error! The two passwords don't match </strong>
+    <div class="alert alert-danger" ng-show="showPasswordMatch || duplicateEmail">
+      <div ng-show="showPasswordMatch" class="glyphicon glyphicon-remove"></div><strong ng-show="showPasswordMatch"> Error! The two passwords don't match </strong><br>
+      <div ng-show="duplicateEmail" class="glyphicon glyphicon-remove"></div><strong ng-show="duplicateEmail"> Error! There is already an account associated with this email address </strong>
     </div>
   </div>
 </form>

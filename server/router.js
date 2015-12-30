@@ -39,7 +39,7 @@ module.exports = function (router) {
   router.delete('/api/menuItems/:id', menusController.deleteMenuItems);
 
   router.post('/api/charges/addcard', chargesController.createStripeCustomer);
-  router.post('/api/charges', chargesController.chargeCard);
+  router.post('/api/charges', chargesController.pay);
 
   router.post('/api/parties', partiesController.checkInAndCreateParty);
   router.put('/api/parties/:id', partiesController.editParty);

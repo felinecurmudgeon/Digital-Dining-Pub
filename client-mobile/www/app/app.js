@@ -128,7 +128,25 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'dd-authCtrl', 'dd-
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app');
-  //run the AttackTokens factor before sending out HTTP requests
+  // without the anonymous function passed to .otherwise, we get an 'infinite'
+  // redirect loop.  This is a quirky angular interaction b/w .otherwise and $stateChangeStart
+  $urlRouterProvider.otherwise( function ($injector) {
+    var $state = $injector.get('$state');
+    $state.go('nav.home');
+  });
+  //run the AttachTokens factor before sending out HTTP requests
   $httpProvider.interceptors.push('AttachTokens');
-}]);
+}])
+.run(function ($rootScope, $location, $state, AuthFactory) {
+    $rootScope.$on('$stateChangeStart', function (e, toState) {
+        var isLogin = (toState.name === 'app' || toState.name === 'signup' || toState.name === 'successFBLogin');
+        if (isLogin) {
+           return; // no need to redirect
+        }
+        var userInfo = AuthFactory.isAuth();
+        if (userInfo === false) {
+            e.preventDefault(); // stop current execution
+            $state.go('app'); // go to login
+        }
+    });
+});
