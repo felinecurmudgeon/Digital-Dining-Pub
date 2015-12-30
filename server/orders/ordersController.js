@@ -44,7 +44,6 @@ module.exports = {
   getItemsOrdered: function (req, res) {
     ordersModel.order.get(req.params.pid)
       .then(function (data) {
-        console.dir(data);
         var response = createJsonResponseForPartyItems(data);
         res.status(200);
         res.send(response);
@@ -61,7 +60,7 @@ module.exports = {
         res.send(data);
       });
   },
-  updateItemsOrdered: function (req, res) { // expecting an array of items in the body
+  updateItemsOrdered: function (req, res) {
     if (req.query.event === 'serve') {
       ordersModel.order.put(req.params.mioid, {
           served_at: new Date().toMysqlFormat()

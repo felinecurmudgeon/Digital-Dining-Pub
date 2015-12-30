@@ -33,17 +33,6 @@ module.exports = {
         });
       });
     },
-    put: function (id, parameters) {
-      return new Promise(function (resolve, reject) {
-        db.con.query('UPDATE menu_items_ordered SET ? WHERE id = ?', [parameters, id], function (err, data) {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(data);
-          }
-        });
-      });
-    },
     delete: function (id) {
       return new Promise(function (resolve, reject) {
         db.con.query('DELETE FROM menu_items_ordered WHERE id = ?', id, function (err, data) {
@@ -55,14 +44,12 @@ module.exports = {
         });
       });
     },
-    put: function (updatedItem, itemId) {
+    put: function (itemId, updatedItem) {
       return new Promise(function (resolve, reject) {
         db.con.query('UPDATE menu_items_ordered SET ? WHERE id = ?', [updatedItem, itemId], function (err) {
           if (err) {
             reject (err);
           } else {
-            console.log('successful update: ', updatedItem);
-            console.log('with ID: ', itemId);
             resolve(updatedItem);
           }
         });
@@ -78,7 +65,7 @@ module.exports = {
           }
           var putPromises = [];
           for (var i = 0; i < updatedItems.length; i++) {
-            putPromises.push(module.exports.order.put(updatedItems[i], updatedItems[i].id));
+            putPromises.push(module.exports.order.put(updatedItems[i].id, updatedItems[i]));
           }
 
           return Promise.all(putPromises).then(function (updatedIds) {
