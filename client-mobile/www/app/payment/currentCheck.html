@@ -31,8 +31,10 @@
       <form ng-submit='doCharge()' ng-show="isCheckedIn">
         </div>
         <div class = 'submit'>
-          <button class="button button-block button-positive" type='submit'>
+          <button ng-show='!isBilled' class="button button-block button-positive" type='submit'>
             Submit Payment
+          </button>
+          <button class='button button-block button-balanced'ng-show='isBilled'> Your card has successfully been charged.
           </button>
         </div>
       </form>
@@ -47,7 +49,7 @@
     <br>
     <br>
     <div ng-show="isBilled"> Your card has successfully been charged.</div>
-  </div>
+    </div>
     <!-- <ng-include src="footersrc"></ng-include> -->
   </ion-content>
 

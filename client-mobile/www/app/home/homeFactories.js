@@ -4,7 +4,8 @@ angular.module('dd-homeFactories', [])
 .factory('HomeFactory', ['$http', '$window', function ($http, $window) {
   var getAllRestaurants = function () {
     return $http({
-      url: 'http://localhost:8000/api/restaurants',
+      // url: 'http://localhost:8000/api/restaurants',
+      url: window.isMobileProduction ? 'http://localhost:8000/api/restaurants' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/restaurants',
       method: 'GET'
     });
   };

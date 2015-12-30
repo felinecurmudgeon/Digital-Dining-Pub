@@ -9,7 +9,8 @@ angular.module('dd-payFactories', [])
   };
   var chargeCard = function (paymentSummary) {
     return $http({
-      url: 'http://localhost:8000/api/charges',
+      // url: 'http://localhost:8000/api/charges',
+      url: window.isMobileProduction ? 'http://localhost:8000/api/charges' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/charges',
       method: 'POST',
       data: paymentSummary
     }).then(function () {
@@ -38,7 +39,8 @@ angular.module('dd-payFactories', [])
 .factory('PaymentFactory', ['$http', function ($http) {
   var addCard = function (token) {
     return $http({
-      url: 'http://localhost:8000/api/charges/addcard',
+      // url: 'http://localhost:8000/api/charges/addcard',
+      url: window.isMobileProduction ? 'http://localhost:8000/api/charges/addcard' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/charges/addcard',
       method: 'POST',
       data: {
         'stripeToken' : token
