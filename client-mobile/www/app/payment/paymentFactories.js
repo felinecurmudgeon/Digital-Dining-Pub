@@ -1,6 +1,6 @@
 angular.module('dd-payFactories', [])
 
-.factory('CheckFactory', ['$http', '$window', function ($http, $window) {
+.factory('CheckFactory', ['$http', function ($http) {
   var getCheckItems = function (pid) {
     return $http({
       url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
@@ -13,6 +13,7 @@ angular.module('dd-payFactories', [])
       method: 'POST',
       data: paymentSummary
     }).then(function () {
+<<<<<<< HEAD
       return $http({
         url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
         method: 'PUT'
@@ -21,6 +22,8 @@ angular.module('dd-payFactories', [])
         $window.localStorage.removeItem('partyInfo');
         $window.localStorage.removeItem('partyId');
         $window.localStorage.removeItem('restaurantId');
+=======
+>>>>>>> Completed bill splitting
         console.log('charged sucessfully');
     });
   };

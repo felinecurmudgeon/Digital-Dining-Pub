@@ -50,28 +50,43 @@ module.exports = {
           if (err) {
             reject (err);
           } else {
+            console.log('successful update: ', updatedItem);
+            console.log('with ID: ', itemId);
             resolve(updatedItem);
           }
         });
       });
+    },
+    batchPut: function (updatedItems) {
+      return new Promise(function (resolve, reject) {
+        db.con.beginTransaction(function (err) {
+          if (err) {
+            return db.con.rollback(function () {
+              reject(err);
+            });
+          }
+          var putPromises = [];
+          for (var i = 0; i < updatedItems.length; i++) {
+            putPromises.push(module.exports.order.put(updatedItems[i], updatedItems[i].id));
+          }
+
+          return Promise.all(putPromises).then(function (updatedIds) {
+            db.con.commit(function (err) {
+              if (err) {
+                return db.con.rollback(function () {
+                  reject(err);
+                });
+              }
+              resolve(updatedIds);
+            });
+          })
+          .catch(function (err) {
+            return db.con.rollback(function () {
+              reject(err);
+            });
+          });
+        });
+      });
     }
-    // batchPut: function (updatedItems) {
-    //   return new Promise(function (resolve, reject) {
-    //     db.con.beginTransaction(function (err) {
-    //       if (err) {
-    //         reject(err);
-    //       }
-    //       var putPromises = [];
-    //       for(var i = 0; i < updatedItems.length; i++){
-    //         putPromises.push(module.exports.order.put(updatedItems[i], updatedItems[i].id));
-    //       }
-
-    //       return Promise.all(putPromises).then(function (updatedIds) {
-
-    //       })
-
-
-      // })
-    // }
   }
 };

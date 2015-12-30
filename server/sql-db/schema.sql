@@ -140,7 +140,7 @@ CREATE TABLE menu_items_ordered (
   menu_item_id INT NOT NULL,
   quantity INT NOT NULL DEFAULT 1,
   user_id INT NOT NULL,
-  total_paid INT NOT NULL DEFAULT 0,
+  total_paid DECIMAL(5,2) NOT NULL DEFAULT 0,
   ordered_at TIMESTAMP,
   served_at TIMESTAMP,
   paid_at TIMESTAMP,

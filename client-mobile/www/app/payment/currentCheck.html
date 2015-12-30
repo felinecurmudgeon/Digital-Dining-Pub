@@ -4,8 +4,9 @@
   </ion-nav-title>
   <ion-content>
       <ion-item collection-repeat = 'item in orderItems' ng-show="isCheckedIn">
-        <input type="checkbox" ng-model="item.selected" ng-change="togglePay(item)"><span class='itemName'> {{item.title}} </span><span ng-show="!item.selected" class = 'itemPrice'> {{+item.price - +item.totalPaid | currency}} </span>
+        <input ng-show="!item.paid" type="checkbox" ng-model="item.selected" ng-change="togglePay(item)"><span class='itemName'> {{item.title}} </span><span ng-show="!item.selected && !item.paid" class = 'itemPrice'> {{+item.price - +item.totalPaid | currency}} </span>
         <input class="payAmount" type="text" ng-change="updatePay()" ng-show="item.selected" ng-model="item.payAmount"><span class="itemPrice" ng-show="item.selected">$</span>
+        <span class='itemPrice' ng-show="item.paid">Paid</span>
         
         <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
       </ion-item>
@@ -35,13 +36,17 @@
           </button>
         </div>
       </form>
+    <div ng-show="invalidInput">
+    Invalid payment values.
+    You must have one or more items selected and valid monetary values provided for each selected item.
+    Please do not exceed the remaining balance for any item.
+    </div>
     <div ng-show="!isCheckedIn" class="card">
       You must be seated at a restaurant before your check will be available.
     </div>
     <br>
     <br>
-    <div ng-show='isBilled'> Your card has successfully been charged.
-    </div>
+    <div ng-show="isBilled"> Your card has successfully been charged.</div>
   </div>
     <!-- <ng-include src="footersrc"></ng-include> -->
   </ion-content>
