@@ -51,7 +51,7 @@ angular.module('digitalDining.reservationsServices', [])
   var serveItemOrdered = function (item) {
     return $http({
       method: 'PUT',
-      url: '/api/parties/' + item.attributes.partyId + '/menuitems/' + 217 + '?event=serve'
+      url: '/api/parties/' + item.attributes.partyId + '/menuitems/' + item.id + '?event=serve'
     })
     .then(function (resp) {
       return resp.data;
