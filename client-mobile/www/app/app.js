@@ -139,15 +139,12 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'dd-authCtrl', 'dd-
 }])
 .run(function ($rootScope, $location, $state, AuthFactory) {
     $rootScope.$on('$stateChangeStart', function (e, toState) {
-      console.log(toState.name + ' is destination');
         var isLogin = (toState.name === 'app' || toState.name === 'signup' || toState.name === 'successFBLogin');
-        console.log('is this an unprotected route? ', isLogin);
         if (isLogin) {
            return; // no need to redirect
         }
         var userInfo = AuthFactory.isAuth();
         if (userInfo === false) {
-          console.log('redirecting cause not logged in');
             e.preventDefault(); // stop current execution
             $state.go('app'); // go to login
         }

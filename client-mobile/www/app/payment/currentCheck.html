@@ -3,9 +3,9 @@
       Check for {{focusedRestaurant.attributes.restaurantName}}
   </ion-nav-title>
   <ion-content>
-      <ion-item collection-repeat='item in orderItems' ng-show="isCheckedIn" item-height="8%" item-width="100%">
-        <span class='itemName'> {{item.title}} </span>
-        <span class='itemPrice'> {{item.price | currency}} </span>
+      <ion-item collection-repeat = 'item in orderItems' ng-show="isCheckedIn">
+        <input type="checkbox" ng-model="item.selected" ng-change="togglePay(item)"><span class='itemName'> {{item.title}} </span><span ng-show="!item.selected" class = 'itemPrice'> {{+item.price - +item.totalPaid | currency}} </span>
+        <input class="payAmount" type="text" ng-change="updatePay()" ng-show="item.selected" ng-model="item.payAmount"><span class="itemPrice" ng-show="item.selected">$</span>
         
         <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
       </ion-item>
@@ -31,7 +31,7 @@
         </div>
         <div class = 'submit'>
           <button class="button button-block button-positive" type='submit'>
-            Submit Order
+            Submit Payment
           </button>
         </div>
       </form>

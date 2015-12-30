@@ -44,6 +44,7 @@ module.exports = {
   getItemsOrdered: function (req, res) {
     ordersModel.order.get(req.params.pid)
       .then(function (data) {
+        console.dir(data);
         var response = createJsonResponseForPartyItems(data);
         res.status(200);
         res.send(response);

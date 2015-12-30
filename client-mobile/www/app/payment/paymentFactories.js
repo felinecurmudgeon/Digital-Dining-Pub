@@ -7,13 +7,11 @@ angular.module('dd-payFactories', [])
       method: 'GET'
     });
   };
-  var chargeCard = function (amt) {
+  var chargeCard = function (paymentSummary) {
     return $http({
       url: 'http://localhost:8000/api/charges',
       method: 'POST',
-      data: {
-        amount: amt
-      }
+      data: paymentSummary
     }).then(function () {
       return $http({
         url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',

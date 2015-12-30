@@ -11,4 +11,3 @@ forever start server/mobileServer.js
 cd client-mobile
 npm install
 bower install --allow-root
-

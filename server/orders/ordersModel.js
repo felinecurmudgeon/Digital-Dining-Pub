@@ -24,7 +24,7 @@ module.exports = {
     },
     get: function (partyId) {
       return new Promise(function (resolve, reject) {
-        db.con.query('SELECT * FROM menu_items_ordered mio INNER JOIN parties p ON mio.party_id = p.id INNER JOIN menu_items mi ON mi.id = mio.menu_item_id WHERE p.id = ?', partyId, function (err, data) {
+        db.con.query('SELECT mio.id, mio.party_id, mio.menu_item_id, mio.quantity, mio.total_paid, mio.ordered_at, mio.served_at, mio.paid_at, mio.canceled_at, p.restaurant_id, mi.price, mi.title, mi.description, mi.menu_category_id FROM menu_items_ordered mio INNER JOIN parties p ON mio.party_id = p.id INNER JOIN menu_items mi ON mi.id = mio.menu_item_id WHERE p.id = ?', partyId, function (err, data) {
           if (err) {
             reject(err);
           } else {
@@ -43,6 +43,35 @@ module.exports = {
           }
         });
       });
+    },
+    put: function (updatedItem, itemId) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('UPDATE menu_items_ordered SET ? WHERE id = ?', [updatedItem, itemId], function (err) {
+          if (err) {
+            reject (err);
+          } else {
+            resolve(updatedItem);
+          }
+        });
+      });
     }
+    // batchPut: function (updatedItems) {
+    //   return new Promise(function (resolve, reject) {
+    //     db.con.beginTransaction(function (err) {
+    //       if (err) {
+    //         reject(err);
+    //       }
+    //       var putPromises = [];
+    //       for(var i = 0; i < updatedItems.length; i++){
+    //         putPromises.push(module.exports.order.put(updatedItems[i], updatedItems[i].id));
+    //       }
+
+    //       return Promise.all(putPromises).then(function (updatedIds) {
+
+    //       })
+
+
+      // })
+    // }
   }
 };
