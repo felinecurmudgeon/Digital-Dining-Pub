@@ -44,12 +44,12 @@ angular.module('dd-checkInCtrl', [])
 
   $scope.setSelectedUser = function (user) {
     $scope.selectedUser = JSON.parse(user);
-  }
+  };
 
   $scope.addUsersToParty = function () {
     CheckInFactory.addUsersToParty($scope.selectedUser.id);
     console.log($scope.selectedUser);
-    var alertPopup = $ionicPopup.alert({
+    $ionicPopup.alert({
      title: 'Reservation Updated',
      template: $scope.selectedUser.attributes.username + ' has been added to your party.'
    });

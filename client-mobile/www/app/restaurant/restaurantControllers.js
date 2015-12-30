@@ -46,7 +46,6 @@ angular.module('dd-restCtrls', [])
     }
   };
 
-
   $scope.sendOrder = function () {
     var partyId = JSON.parse($window.localStorage.getItem('partyId'));
     OrderFactory.sendOrder(partyId);
@@ -64,7 +63,7 @@ angular.module('dd-restCtrls', [])
     HomeFactory.getFocusedRestaurant()
       .then(function (rest) {
         $scope.focusedRestaurant = rest;
-      })
+      });
   };
 
   $scope.getFocusedRestaurant();

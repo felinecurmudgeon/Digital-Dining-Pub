@@ -65,7 +65,6 @@ angular.module('dd-restFactories', [])
 
   var sendOrder = function (pid) {
     pid = pid || 1;
-    console.log('hit');
     var temp = order.menu_items;
     return $http({
       url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',

@@ -1,6 +1,6 @@
 <ion-view>
   <ion-nav-title>
-      Tab for {{focusedRestaurant.attributes.restaurantName}}
+      Check for {{focusedRestaurant.attributes.restaurantName}}
   </ion-nav-title>
   <ion-content>
       <ion-item collection-repeat='item in orderItems' ng-show="isCheckedIn" item-height="8%" item-width="100%">
@@ -35,7 +35,7 @@
           </button>
         </div>
       </form>
-    <div ng-show="!isCheckedIn">
+    <div ng-show="!isCheckedIn" class="card">
       You must be seated at a restaurant before your check will be available.
     </div>
     <br>
@@ -55,10 +55,10 @@
         Details
       </a>
       <a class="tab-item" href='#/nav/currentCheck'>
-        Tab
+        Check
       </a>
       <a class="tab-item" href='#/nav/checkIn'>
-        Check In
+        Reservation
       </a>
       <a class="tab-item">
         Server

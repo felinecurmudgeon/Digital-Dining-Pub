@@ -16,7 +16,7 @@ angular.module('dd-payFactories', [])
       }
     }).then(function () {
       return $http({
-        url: 'http://localhost:8000/api/parties/' + $window.localStorage.removeItem('partyId') + '?event=close',
+        url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
         method: 'PUT'
       });
     }).then(function () {

@@ -109,7 +109,10 @@ module.exports = {
       } else if (req.query.user) {
         partiesModel.party.getCurrentPartyForUser(req.user.id)
           .then(function (data) {
-            var response = createJsonResponseForParty(data);
+            var response = null;
+            if (data[0] !== undefined) {
+              response = createJsonResponseForParty(data);
+            }
             res.status(200);
             res.send(response);
           });

@@ -1,5 +1,4 @@
-<ion-view view-title="Check In">
-
+<ion-view view-title="Reservation">
   <ion-content>
     <form ng-submit="doCheckIn()" ng-show="!isCheckedIn && hasRestaurant">
       <div class="list">
@@ -28,7 +27,7 @@
             <label class="item item-input item-select">
               <div class="input-label">
      
-           Add users to the reservation:
+           Add users to reservation:
               </div>
               <select name="selectedUser" ng-model="selectedUser" ng-change="setSelectedUser(selectedUser)">
                  <option value="">---Please select---</option> 
@@ -58,10 +57,10 @@
         Details
       </a>
       <a class="tab-item" href='#/nav/currentCheck'>
-        Tab
+        Check
       </a>
       <a class="tab-item" href='#/nav/checkIn'>
-        Check In
+        Reservation
       </a>
       <a class="tab-item">
         Server

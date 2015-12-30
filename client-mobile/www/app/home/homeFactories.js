@@ -35,16 +35,14 @@ angular.module('dd-homeFactories', [])
     //if no, use focusedRestaurant
     return getParty()
       .then(function (party) {
-        if(party.data.data[0].attributes) {
+        if (party.data.data) {
           $window.localStorage.setItem('partyInfo', JSON.stringify(party));
           $window.localStorage.setItem('partyId', JSON.stringify(party.data.data[0].id));
           $window.localStorage.setItem('restaurantId', JSON.stringify(party.data.data[0].attributes.restaurantId));
-          console.log("rest from focused ", focusedRestaurant);
           return getRestaurant(party.data.data[0].attributes.restaurantId)
             .then(function (rest) {
-              console.log("rest from getrest ", rest.data.data[0]);
               return rest.data.data[0];
-            })
+            });
         } else {
           return focusedRestaurant;
         }

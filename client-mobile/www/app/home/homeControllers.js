@@ -1,7 +1,7 @@
 /*jshint camelcase: false */
 angular.module('dd-homeCtrls', [])
 
-.controller('NavCtrl', ['$state', '$scope', '$window', function ($state, $scope, $window) {
+.controller('NavCtrl', ['$state', '$scope', '$window', 'HomeFactory', function ($state, $scope, $window, HomeFactory) {
 
   $scope.logout = function () {
     if ($window.localStorage.getItem('digitaldining')) {
@@ -15,6 +15,20 @@ angular.module('dd-homeCtrls', [])
     $window.localStorage.removeItem('partyId');
     $window.localStorage.removeItem('restaurantId');
   };
+
+  //use to conditionally show the reservation link
+  $scope.getCheckedInStatus = function () {
+    HomeFactory.getFocusedRestaurant()
+      .then (function () {
+        if ($window.localStorage.getItem('partyInfo')) {
+          $scope.isCheckedIn = true;
+        } else {
+          $scope.isCheckedIn = false;
+        }
+    });
+  };
+
+  $scope.getCheckedInStatus();
 
 }])
 
