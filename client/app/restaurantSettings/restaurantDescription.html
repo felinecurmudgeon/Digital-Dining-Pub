@@ -1,4 +1,4 @@
-<form role="form" ng-submit="submitRestaurant()">
+<form role="form" ng-submit="submitRestaurant()" ng-show="showForm()">
   <div class="col-md-7">
     <div class="form-group">
       <label for="InputCategory">Category of restaurant</label>
@@ -13,11 +13,29 @@
         value = {{restaurant.restaurant_description}} ng-model="restaurant.restaurant_description">
     </div>
     <input type="submit" name="submit" id="submit" class="btn btn-info pull-right"
-      value="Create my Restaurant" ng-show="creation">
-    <input type="submit" name="submit" id="submit" class="btn btn-info pull-right"
-      value="Update info" ng-hide="creation">
+      value="Update info">
   </div>
 </form>
+
+<div ng-hide="showForm()">
+  <div class="col-md-7">
+    <div class="form-group">
+      <label for="InputCategory">Category of restaurant</label>
+      <div class="form-control" readonly>
+        {{restaurant.restaurant_category}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="InputDescription">Restaurant description</label>
+      <div class="form-control" readonly>
+        {{restaurant.restaurant_description}}
+      </div>
+    </div>
+    <button ng-click="showForm.edit = true" class="btn btn-info pull-right">
+      Edit Information
+    </button>
+  </div>
+</div>
 <!-- 
 <div class="col-lg-3 col-md-push-1">
     <div class="col-md-12">

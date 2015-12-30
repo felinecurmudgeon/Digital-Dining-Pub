@@ -1,4 +1,4 @@
-<form role="form" ng-submit="submitRestaurant()">
+<form role="form" ng-submit="submitRestaurant()" ng-show="showForm()">
   <div class="col-md-7">
     <div class="form-group">
       <label for="InputName">Restaurant Name</label>
@@ -42,15 +42,47 @@
       value="Update info" ng-hide="creation">
   </div>
 </form>
-<!-- 
-<div class="col-lg-3 col-md-push-1">
-    <div class="col-md-12">
-        <div class="alert alert-success">
-            <strong><span class="glyphicon glyphicon-ok"></span> Success! Message sent.</strong>
-        </div>
-        <div class="alert alert-danger">
-            <span class="glyphicon glyphicon-remove"></span><strong> Error! Please check all page inputs.</strong>
-        </div>
+
+<div ng-hide="showForm()">
+  <div class="col-md-7">
+    <div class="form-group">
+      <label for="InputName">Restaurant Name</label>
+      <div class="form-control" readonly>
+        {{restaurant.restaurant_name}}
+      </div>
     </div>
+    <div class="form-group">
+      <label for="InputPhoneNumber">Phone Number</label>
+      <div class="form-control" readonly>
+        {{restaurant.restaurant_phone_number}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="InputAddress">Address</label>
+      <div class="form-control" readonly>
+        {{restaurant.restaurant_address}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="InputCity">City</label>
+      <div class="form-control" readonly>
+        {{restaurant.restaurant_city}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="InputZipCode">ZipCode</label>
+      <div class="form-control" readonly>
+        {{restaurant.restaurant_zip_code}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="InputState">State</label>
+      <div class="form-control" readonly>
+        {{restaurant.restaurant_state}}
+      </div>
+    </div>
+    <button ng-click="showForm.edit = true" class="btn btn-info pull-right">
+      Edit Information
+    </button>
+  </div>
 </div>
-  -->
