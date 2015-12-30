@@ -3,14 +3,12 @@ angular.module('dd-payFactories', [])
 .factory('CheckFactory', ['$http', '$window', function ($http, $window) {
   var getCheckItems = function (pid) {
     return $http({
-      // url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
       url: window.isMobileProduction ? 'http://localhost:8000/api/parties/' + pid + '/menuitems' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties/' + pid + '/menuitems',
       method: 'GET'
     });
   };
   var chargeCard = function (paymentSummary) {
     return $http({
-      // url: 'http://localhost:8000/api/charges',
       url: window.isMobileProduction ? 'http://localhost:8000/api/charges' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/charges',
       method: 'POST',
       data: paymentSummary
@@ -40,7 +38,6 @@ angular.module('dd-payFactories', [])
 .factory('PaymentFactory', ['$http', function ($http) {
   var addCard = function (token) {
     return $http({
-      // url: 'http://localhost:8000/api/charges/addcard',
       url: window.isMobileProduction ? 'http://localhost:8000/api/charges/addcard' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/charges/addcard',
       method: 'POST',
       data: {

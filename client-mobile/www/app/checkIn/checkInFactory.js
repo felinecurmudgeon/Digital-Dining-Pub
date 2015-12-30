@@ -28,14 +28,16 @@ angular.module('dd-checkInFactory', [])
 
   var getUsers = function () {
     return $http({
-      url: 'http://localhost:8000/api/users?custonly=true',
+      // url: 'http://localhost:8000/api/users?custonly=true',
+      url: window.isMobileProduction ? 'http://localhost:8000/api/users?custonly=true' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/users?custonly=true',
       method: 'GET'
     });
   };
 
   var addUsersToParty = function (userId) {
     return $http({
-      url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant',
+      // url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant',
+      url: window.isMobileProduction ? 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant',
       method: 'PUT',
       data: {
         'user_id' : userId
