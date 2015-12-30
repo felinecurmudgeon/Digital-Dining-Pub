@@ -3,20 +3,20 @@ angular.module('digitalDining.menuServices', [])
 .factory('Menus', ['$http', '$window', function ($http, $window) {
   var getMenuItems = function () {
     return $http({
-      url: 'http://localhost:8000/api/menuitems/?rid=' + $window.localStorage.getItem('restaurantId'),
+      url: '/api/menuitems/?rid=' + $window.localStorage.getItem('restaurantId'),
       method: 'GET'
     });
   };
   var getMenuCategories = function () {
     return $http({
-      url: 'http://localhost:8000/api/menuCategories/?rid=' + $window.localStorage.getItem('restaurantId'),
+      url: '/api/menuCategories/?rid=' + $window.localStorage.getItem('restaurantId'),
       method: 'GET'
     });
   };
   var postMenuItem = function (menuItem) {
     console.log($window.localStorage.getItem('restaurantId') + ' is the restaurant Id');
     return $http({
-      url: 'http://localhost:8000/api/menuItems',
+      url: '/api/menuItems',
       method: 'POST',
       data: {
         'restaurant_id' : $window.localStorage.getItem('restaurantId'),
@@ -29,7 +29,7 @@ angular.module('digitalDining.menuServices', [])
   };
   var editMenuItem = function (menuItem) {
     return $http({
-      url: 'http://localhost:8000/api/menuItems/' + menuItem.id,
+      url: '/api/menuItems/' + menuItem.id,
       method: 'PUT',
       data: {
         'restaurant_id' : $window.localStorage.getItem('restaurantId'),
@@ -42,13 +42,13 @@ angular.module('digitalDining.menuServices', [])
   };
   var deleteMenuItem = function (menuItem) {
     return $http({
-      url: 'http://localhost:8000/api/menuItems/' + menuItem.id,
+      url: '/api/menuItems/' + menuItem.id,
       method: 'DELETE'
     });
   };
   var postCategory = function (category) {
     return $http({
-      url: 'http://localhost:8000/api/menuCategories',
+      url: '/api/menuCategories',
       method: 'POST',
       data: {
         'restaurant_id' : $window.localStorage.getItem('restaurantId'),
@@ -58,13 +58,13 @@ angular.module('digitalDining.menuServices', [])
   };
   var deleteCategory = function (categoryId) {
     return $http({
-      url: 'http://localhost:8000/api/menuCategories/' + categoryId,
+      url: '/api/menuCategories/' + categoryId,
       method: 'DELETE'
     });
   };
   var editCategory = function (categoryName, category) {
     return $http({
-      url: 'http://localhost:8000/api/menuCategories/' + category.catId,
+      url: '/api/menuCategories/' + category.catId,
       method: 'PUT',
       data: {
         'category_name': categoryName
