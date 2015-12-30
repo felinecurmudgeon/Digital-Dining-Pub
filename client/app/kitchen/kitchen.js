@@ -28,19 +28,24 @@ angular.module('digitalDining.kitchen', [
         itemOrdered.attributes.menuItem = menuItems[itemOrdered.attributes.menuItemId];
       });
       return itemsOrdered.data;
-    }
+    };
     Reservations.getSeatedParties()
       .then(function (parties) {
         $scope.parties = addTableNumberToResponseAndMap(parties);
-        for (k in $scope.parties) {
+        /*jshint loopfunc: true */
+        for (var k in $scope.parties) {
           ItemsOrdered.getItemsOrdered(k)
             .then(function (itemsOrdered) {
               addMenuItemToItemsOrdered(itemsOrdered).forEach(function (menuItem) {
                 $scope.parties[menuItem.attributes.partyId].itemsOrdered.push(menuItem);
               });
-            })
+            });
         }
+        /*jshint loopfunc: false */
       });
+  };
+  $scope.serveItem = function (item) {
+    ItemsOrdered.serveItemOrdered(item);
   };
 
   $scope.getParties();

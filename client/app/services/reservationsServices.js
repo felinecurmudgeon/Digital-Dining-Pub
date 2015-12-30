@@ -48,7 +48,17 @@ angular.module('digitalDining.reservationsServices', [])
       return resp.data;
     });
   };
+  var serveItemOrdered = function (item) {
+    return $http({
+      method: 'PUT',
+      url: '/api/parties/' + item.attributes.partyId + '/menuitems/' + 217 + '?event=serve'
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
+  };
   return {
-    getItemsOrdered: getItemsOrdered
+    getItemsOrdered: getItemsOrdered,
+    serveItemOrdered: serveItemOrdered
   };
 }]);
