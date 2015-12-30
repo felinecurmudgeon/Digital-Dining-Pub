@@ -37,7 +37,9 @@ angular.module('digitalDining.kitchen', [
           ItemsOrdered.getItemsOrdered(k)
             .then(function (itemsOrdered) {
               addMenuItemToItemsOrdered(itemsOrdered).forEach(function (menuItem) {
-                $scope.parties[menuItem.attributes.partyId].itemsOrdered.push(menuItem);
+                if (menuItem.attributes.servedAt === '0000-00-00 00:00:00') {
+                  $scope.parties[menuItem.attributes.partyId].itemsOrdered.push(menuItem);
+                }
               });
             });
         }
@@ -45,7 +47,11 @@ angular.module('digitalDining.kitchen', [
       });
   };
   $scope.serveItem = function (item) {
-    ItemsOrdered.serveItemOrdered(item);
+    ItemsOrdered.serveItemOrdered(item)
+      .then(function () {
+        var index = $scope.parties[item.attributes.partyId].itemsOrdered.indexOf(item);
+        $scope.parties[item.attributes.partyId].itemsOrdered.splice(index, 1);
+      });
   };
 
   $scope.getParties();
