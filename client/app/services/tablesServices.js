@@ -12,7 +12,7 @@ angular.module('digitalDining.tablesServices', [])
   };
   var postTable = function (newTable) {
     return $http({
-      url: 'http://localhost:8000/api/tables',
+      url: '/api/tables',
       method: 'POST',
       data: {
         'restaurant_id': $window.localStorage.getItem('restaurantId'),
@@ -23,7 +23,7 @@ angular.module('digitalDining.tablesServices', [])
   };
   var updateTable = function (table) {
     return $http({
-      url: 'http://localhost:8000/api/tables/' + table.id,
+      url: '/api/tables/' + table.id,
       method: 'PUT',
       data: {
         'table_number': +table.attributes.newTableNumber || +table.attributes.tableNumber,
@@ -33,7 +33,7 @@ angular.module('digitalDining.tablesServices', [])
   };
   var removeTable = function (table) {
     return $http({
-      url: 'http://localhost:8000/api/tables/' + table.id,
+      url: '/api/tables/' + table.id,
       method: 'DELETE'
     });
   };
