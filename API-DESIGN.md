@@ -71,8 +71,19 @@ TBD
 ## Restaurants API
 | HTTP Method   | URL           | Description
 | ------------- | ------------- | ---------------------------------
+| POST          | /tables       | Creates a new table
+| PUT           | /tables/:id       | Updates a table (data in the body)
+| DELETE        | /tables/:id       | Deletes a table
 | GET           | /tables?rid=restaurantId        | Gets all tables for a given restaurant
 
+### Example POST
+`
+{ 
+  "restaurant_id": 185, <==must be valid restaurant_id
+  "table_number" : 13,
+  "seats" : 4
+}
+`
 
 
 ## MenusCategories API
@@ -134,7 +145,6 @@ TBD
 {
   "restaurant_id" : "337", 
   "party_size" : "5", 
-  "table_id" : "96"
 }
 `
 

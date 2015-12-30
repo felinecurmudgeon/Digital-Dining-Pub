@@ -190,7 +190,7 @@ module.exports = {
             table_id: parameters.table_id,
             seated_at: new Date().toMysqlFormat()
           };
-          db.con.query('UPDATE parties SET ? WHERE party_id = ?', [partyParameters, partyId], function (err) {
+          db.con.query('UPDATE parties SET ? WHERE id = ?', [partyParameters, partyId], function (err) {
             if (err) {
               return db.con.rollback(function () {
                 reject(err);

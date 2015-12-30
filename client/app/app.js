@@ -1,7 +1,7 @@
 angular.module('digitalDining', [
   'ui.router',
   'ui.bootstrap.dropdown',
-  'digitalDining.services',
+  'digitalDining.authServices',
   'digitalDining.auth',
   'digitalDining.restaurantSettings',
   'digitalDining.menuCreator',
@@ -10,7 +10,7 @@ angular.module('digitalDining', [
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.when('/restaurantSettings', '/restaurantSettings/info');
   $urlRouterProvider.when('/reservations', '/reservations/waiting');
-  $urlRouterProvider.otherwise('/reservations');
+  $urlRouterProvider.otherwise('/reservations/waiting');
   $stateProvider
     .state('login', {
       url: '/login',
@@ -24,7 +24,7 @@ angular.module('digitalDining', [
     })
     .state('kitchen', {
       url: '/kitchen',
-      templateUrl: './app/dummy.html' // TODO add controller
+      templateUrl: './app/pleaseCreate.html' // TODO add controller
     })
     .state('reservations', {
       url: '/reservations',
@@ -60,6 +60,14 @@ angular.module('digitalDining', [
     .state('restaurantSettings.hours', {
       url: '/hours',
       templateUrl: './app/restaurantSettings/restaurantHours.html'
+    })
+    .state('restaurantSettings.tables', {
+      url: '/tables',
+      templateUrl: './app/restaurantSettings/restaurantTables.html'
+    })
+    .state('pleaseCreate', {
+      url: '/pleaseCreate',
+      templateUrl: './app/pleaseCreate.html'
     });
 
   $httpProvider.interceptors.push('AttachTokens');
@@ -77,16 +85,24 @@ angular.module('digitalDining', [
   };
   return attach;
 })
-.run(function ($rootScope, $location, $state, Auth) {
-    $rootScope.$on('$stateChangeStart', function (e, toState) {
-        var isLogin = (toState.name === 'login' || toState.name === 'signup');
-        if (isLogin) {
-           return; // no need to redirect
-        }
-        var userInfo = Auth.isAuth();
-        if (userInfo === false) {
-            e.preventDefault(); // stop current execution
-            $state.go('login'); // go to login
-        }
+.run(function ($rootScope, $location, $state, $window, Auth) {
+  $rootScope.$on('$stateChangeStart', function (e, toState) {
+    var isLogin = (toState.name === 'login' || toState.name === 'signup');
+    if (isLogin) {
+      return; // no need to redirect
+    }
+    var userInfo = Auth.isAuth();
+    if (userInfo === false) {
+      e.preventDefault(); // stop current execution
+      $state.go('login'); // go to login
+    } else {
+      if (toState.name === 'pleaseCreate' || toState.name === 'restaurantSettings' || toState.name === 'restaurantSettings.info') {
+        return;
+      }
+      if ($window.localStorage.restaurantId === undefined) {
+        e.preventDefault(); // stop current execution
+        $state.go('pleaseCreate');
+      }
+    }
     });
 });

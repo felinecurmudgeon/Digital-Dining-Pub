@@ -84,7 +84,6 @@ module.exports = {
   //tables
   getTables : function (req, res) {
     var restaurantId = req.query.rid;
-    console.log(restaurantId);
     var JsonResponseObject = new JsonResponseObj();
     restaurantsModel.tables.get(restaurantId)
       .then(function (data) {
@@ -103,5 +102,35 @@ module.exports = {
         res.status(200);
         res.send(JsonResponseObject);
       });
+  },
+
+  createTable : function (req, res) {
+    console.log('creating table ');
+    var params = req.body;
+    restaurantsModel.tables.post(params)
+      .then(function (data) {
+        console.log('data sent back is ', data);
+        res.status(201);
+        res.send(data);
+      });
+  },
+
+  updateTable : function (req, res) {
+    console.log('updating table ', req.params.id);
+    restaurantsModel.tables.put(req.body, req.params.id)
+      .then(function (data) {
+        res.status(201);
+        res.send(data);
+      });
+  },
+
+  deleteTable : function (req, res) {
+    console.log('deleting table ', req.params.id);
+    restaurantsModel.tables.delete(req.params.id)
+      .then(function (data) {
+        res.status(204);
+        res.send(data);
+      });
   }
+
 };

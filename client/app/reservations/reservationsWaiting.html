@@ -25,9 +25,9 @@
               Seat Party <span class="caret"></span>
             </button>
             <ul class="uib-dropdown-menu" aria-labelledby="simple-btn-keyboard-nav">
-              <li ng-repeat="table in tables"><a href="#">{{table}}</a></li>
+              <li ng-repeat="table in tables.available" ng-click="seatParty(party, table)"><a href="#">Table {{table.attributes.tableNumber}} - {{table.attributes.seats}} seats</a></li>
               <li class="divider"></li>
-              <li ng-repeat="party in parties.waiting"><a href="#">Separated link</a></li>
+              <li ng-repeat="table in tables.occupied" ng-click="seatParty(party, table)"><a href="#">Table {{table.attributes.tableNumber}} - {{table.attributes.seats}} seats (occupied)</a></li>
             </ul>
           </div>
         </td>

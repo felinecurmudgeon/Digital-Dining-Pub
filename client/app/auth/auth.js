@@ -1,5 +1,5 @@
 /*jshint camelcase: false */
-angular.module('digitalDining.auth', ['digitalDining.services'])
+angular.module('digitalDining.auth', ['digitalDining.authServices'])
 
 .controller('AuthController', function ($scope, $window, $location, Auth) {
   $scope.user = {is_restaurant_user: true};

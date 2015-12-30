@@ -1,6 +1,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Table</th>
       <th>Party Size</th>
       <th>Party Name</th>
       <th>Hour of arrival</th>
@@ -8,6 +9,9 @@
   </thead>
   <tbody>
     <tr ng-repeat="party in parties.seated">
+      <td>
+        {{party.attributes.tableNumber}}
+      </td>
       <td>
         {{party.attributes.partySize}}
       </td>
