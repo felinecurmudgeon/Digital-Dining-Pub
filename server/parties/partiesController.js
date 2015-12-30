@@ -25,7 +25,7 @@ var createJsonResponseForParty = function (partyData, included) {
     tableIds.push(partyData[i].table_id);
     JsonResponseObject.data.push(JsonDataObject);
   }
-  if (included.tables) {
+  if (included) {
     for (var j = 0; j < included.tables.length; j++) {
       if (tableIds.indexOf(included.tables[j].id) !== -1) {
         var JsonDataObjectIncluded = new JsonData();

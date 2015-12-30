@@ -43,13 +43,11 @@ angular.module('dd-restFactories', [])
     menu_items: []
   };
   var addItemToOrder = function (item, quantity) {
-    console.log(item);
     quantity = quantity || 1;
     order.menu_items.push({
       menu_item_id: item.menuID,
       quantity: quantity
     });
-    console.log('item', order);
   };
   var removeItemFromOrder = function (item) {
     for (var i = 0; i < order.menu_items.length; i++) {
