@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody ng-repeat="party in parties">
-      <tr ng-repeat="itemOrdered in party.itemsOrdered" ng-show="party.itemsOrdered.length">
+      <tr class="active" ng-repeat="itemOrdered in party.itemsOrdered" ng-show="party.itemsOrdered.length">
         <td>
           {{party.tableNumber}}
         </td>
@@ -20,7 +20,7 @@
           {{itemOrdered.attributes.orderedAt}}
         </td>
         <td>
-          {{party.checkedinAt.slice(12, 16)}}
+          <button class="btn btn-primary btn-sm" ng-click="serveItem(itemOrdered)">Served</button>
         </td>
       </tr>
       <tr ng-hide="party.itemsOrdered.length">
