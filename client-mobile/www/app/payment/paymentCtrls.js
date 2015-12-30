@@ -41,13 +41,26 @@ angular.module('dd-payCtrls', [])
          $scope.isCheckedIn = true;
           CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
             .then(function (items) {
-              var subtotal = 0;
-              for (var i = 0; i < items.data.included.length; i++) {
-                $scope.orderItems.push(items.data.included[i].attributes);
-                subtotal += items.data.included[i].attributes.price;
-              }
-              $scope.bill.subtotal = subtotal.toFixed(2);
-              $scope.bill.tax = taxCalculator(Number($scope.bill.subtotal)).toFixed(2);
+               $scope.orderItems = [];
+               for (var i = 0; i < items.data.data.length; i++) {
+                 $scope.orderItems.push(items.data.data[i].attributes);
+                 $scope.orderItems[i].price = items.data.included[i].attributes.price;
+                 $scope.orderItems[i].title = items.data.included[i].attributes.title;
+                 $scope.orderItems[i].id = items.data.data[i].id;
+                 $scope.orderItems[i].payAmount = ($scope.orderItems[i].price - $scope.orderItems[i].totalPaid).toFixed(2);
+                 if (Number($scope.orderItems[i].payAmount) === 0) {
+                   $scope.orderItems[i].paid = true;
+                 } else {
+                   $scope.orderItems[i].paid = false;
+                 }
+               }
+              // var subtotal = 0;
+              // for (var i = 0; i < items.data.included.length; i++) {
+              //   $scope.orderItems.push(items.data.included[i].attributes);
+              //   subtotal += items.data.included[i].attributes.price;
+              // }
+              // $scope.bill.subtotal = subtotal.toFixed(2);
+              // $scope.bill.tax = taxCalculator(Number($scope.bill.subtotal)).toFixed(2);
             });
        } else {
          $scope.isCheckedIn = false;
@@ -55,7 +68,6 @@ angular.module('dd-payCtrls', [])
     });
   };
 
-  $scope.getCheckedInStatusAndMenuItems();
 
   $scope.total = function () {
     var total = $scope.bill.subtotal + $scope.bill.tax + Number($scope.bill.tip);
@@ -136,38 +148,40 @@ angular.module('dd-payCtrls', [])
           //equal (or greater) to the price of the item
           //the extra 0.001 is to prevent any floating point shenanigans
           if (!$scope.orderItems[i].paid && !($scope.orderItems[i].selected && (Number($scope.orderItems[i].payAmount) + Number($scope.orderItems[i].totalPaid) + 0.001 >= Number($scope.orderItems[i].price)))) {
+            console.log($scope.orderItems[i].id + ' was not paid for');
             allPaid = false;
           }
         }
         if (allPaid) {
-          $state.go('nav.home');
-          $window.localStorage.removeItem('partyInfo');
-          $window.localStorage.removeItem('partyId');
-          $window.localStorage.removeItem('restaurantId');
+          console.log('everything has been paid for');
+          CheckFactory.closeBill().then(function () {
+            $state.go('nav.home');
+          });
         } else {
-          $scope.getOrderItems();
+          $scope.getCheckedInStatusAndMenuItems();
         }
       }, 2000);
     });
   };
 
-  $scope.getOrderItems = function () {
-    CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
-      .then(function (items) {
-        $scope.orderItems = [];
-        for (var i = 0; i < items.data.data.length; i++) {
-          $scope.orderItems.push(items.data.data[i].attributes);
-          $scope.orderItems[i].price = items.data.included[i].attributes.price;
-          $scope.orderItems[i].title = items.data.included[i].attributes.title;
-          $scope.orderItems[i].id = items.data.data[i].id;
-          $scope.orderItems[i].payAmount = ($scope.orderItems[i].price - $scope.orderItems[i].totalPaid).toFixed(2);
-          if (Number($scope.orderItems[i].payAmount) === 0) {
-            $scope.orderItems[i].paid = true;
-          } else {
-            $scope.orderItems[i].paid = false;
-          }
-        }
-      });
-  };
-  $scope.getOrderItems();
+  // $scope.getOrderItems = function () {
+  //   CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
+  //     .then(function (items) {
+  //       $scope.orderItems = [];
+  //       for (var i = 0; i < items.data.data.length; i++) {
+  //         $scope.orderItems.push(items.data.data[i].attributes);
+  //         $scope.orderItems[i].price = items.data.included[i].attributes.price;
+  //         $scope.orderItems[i].title = items.data.included[i].attributes.title;
+  //         $scope.orderItems[i].id = items.data.data[i].id;
+  //         $scope.orderItems[i].payAmount = ($scope.orderItems[i].price - $scope.orderItems[i].totalPaid).toFixed(2);
+  //         if (Number($scope.orderItems[i].payAmount) === 0) {
+  //           $scope.orderItems[i].paid = true;
+  //         } else {
+  //           $scope.orderItems[i].paid = false;
+  //         }
+  //       }
+  //     });
+  // };
+  // $scope.getOrderItems();
+  $scope.getCheckedInStatusAndMenuItems();
 }]);

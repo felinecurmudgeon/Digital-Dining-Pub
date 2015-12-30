@@ -1,6 +1,6 @@
 angular.module('dd-payFactories', [])
 
-.factory('CheckFactory', ['$http', function ($http) {
+.factory('CheckFactory', ['$http', '$window', function ($http, $window) {
   var getCheckItems = function (pid) {
     return $http({
       url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
@@ -13,21 +13,31 @@ angular.module('dd-payFactories', [])
       method: 'POST',
       data: paymentSummary
     }).then(function () {
-<<<<<<< HEAD
-      return $http({
-        url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
-        method: 'PUT'
-      });
-    }).then(function () {
-        $window.localStorage.removeItem('partyInfo');
-        $window.localStorage.removeItem('partyId');
-        $window.localStorage.removeItem('restaurantId');
-=======
->>>>>>> Completed bill splitting
+    //   return $http({
+    //     url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
+    //     method: 'PUT'
+    //   });
+    // }).then(function () {
+    //     $window.localStorage.removeItem('partyInfo');
+    //     $window.localStorage.removeItem('partyId');
+    //     $window.localStorage.removeItem('restaurantId');
         console.log('charged sucessfully');
     });
   };
+  var closeBill = function () {
+    return $http({
+      url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
+      method: 'PUT'
+    })
+    .then(function () {
+      $window.localStorage.removeItem('partyInfo');
+      $window.localStorage.removeItem('partyId');
+      $window.localStorage.removeItem('restaurantId');
+    });
+  };
+
   return {
+    closeBill: closeBill,
     getCheckItems: getCheckItems,
     chargeCard: chargeCard
   };
