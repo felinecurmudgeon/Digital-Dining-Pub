@@ -1,0 +1,28 @@
+<div class="container"> 
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Table</th>
+        <th>Item ordered</th>
+        <th>Waiting time</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="party in parties">
+        <td>
+          {{party.tableNumber}}
+        </td>
+        <td>
+          {{party.partySize}}
+        </td>
+        <td>
+          {{party.partyName}}
+        </td>
+        <td>
+          {{party.checkedinAt.slice(12, 16)}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

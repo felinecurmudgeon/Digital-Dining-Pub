@@ -5,7 +5,8 @@ angular.module('digitalDining', [
   'digitalDining.auth',
   'digitalDining.restaurantSettings',
   'digitalDining.menuCreator',
-  'digitalDining.reservations'])
+  'digitalDining.reservations',
+  'digitalDining.kitchen'])
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.when('/restaurantSettings', '/restaurantSettings/info');
@@ -24,12 +25,13 @@ angular.module('digitalDining', [
     })
     .state('kitchen', {
       url: '/kitchen',
-      templateUrl: './app/pleaseCreate.html' // TODO add controller
+      templateUrl: './app/kitchen/kitchen.html',
+      controller: 'kitchenController'
     })
     .state('reservations', {
       url: '/reservations',
       templateUrl: './app/reservations/reservationsTemplate.html',
-      controller: 'reservationsController' // TODO
+      controller: 'reservationsController'
     })
     .state('reservations.waiting', {
       url: '/waiting',
