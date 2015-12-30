@@ -1,7 +1,11 @@
-<ion-view view-title="Current Check">
+<ion-view>
+  <ion-nav-title>
+      Tab for {{focusedRestaurant.attributes.restaurantName}}
+  </ion-nav-title>
   <ion-content>
-      <ion-item collection-repeat = 'item in orderItems' ng-show="isCheckedIn">
-        <span class='itemName'> {{item.title}} </span><span class = 'itemPrice'> {{item.price | currency}} </span>
+      <ion-item collection-repeat='item in orderItems' ng-show="isCheckedIn" item-height="8%" item-width="100%">
+        <span class='itemName'> {{item.title}} </span>
+        <span class='itemPrice'> {{item.price | currency}} </span>
         
         <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
       </ion-item>
@@ -51,7 +55,7 @@
         Details
       </a>
       <a class="tab-item" href='#/nav/currentCheck'>
-        Order
+        Tab
       </a>
       <a class="tab-item" href='#/nav/checkIn'>
         Check In

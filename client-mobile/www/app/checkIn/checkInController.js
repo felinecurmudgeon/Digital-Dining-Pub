@@ -1,33 +1,31 @@
 /*jshint camelcase: false */
 angular.module('dd-checkInCtrl', [])
 
-.controller('CheckInCtrl', ['$scope', '$state', '$window', 'HomeFactory', 'CheckInFactory', function ($scope, $state, $window, HomeFactory, CheckInFactory) {
-  $scope.isCheckedIn = false;
-  $scope.hasRestaurant = true;
-  $scope.focusedRestaurant = null;
-  $scope.partyInfo = {};
+.controller('CheckInCtrl', ['$scope', '$state', '$window', '$ionicPopup', 'HomeFactory', 'CheckInFactory', function ($scope, $state, $window, $ionicPopup, HomeFactory, CheckInFactory) {
 
-  $scope.updateStatus = function () {
-    if ($window.localStorage.getItem('partyInfo')) {
-      $scope.isCheckedIn = true;
-    } else {
-      $scope.isCheckedIn = false;
-    }
-    if (Object.keys($scope.focusedRestaurant).length > 0) {
-      $scope.hasRestaurant = true;
-    } else {
-      $scope.hasRestaurant = false;
-    }
-  };
+  $scope.partyInfo = {};
 
   $scope.getCheckInStatus = function () {
     return $scope.isCheckedIn;
   };
 
   $scope.getFocusedRestaurant = function () {
-    $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
-    $scope.partyInfo.restaurant_id = $scope.focusedRestaurant.id;
-    $scope.partyInfo.party_size = '';
+    HomeFactory.getFocusedRestaurant()
+      .then(function (rest) {
+        $scope.focusedRestaurant = rest;
+        $scope.partyInfo.restaurant_id = rest.id;
+        $scope.partyInfo.party_size = '';
+        if ($window.localStorage.getItem('partyInfo')) {
+          $scope.isCheckedIn = true;
+        } else {
+          $scope.isCheckedIn = false;
+        }
+        if (Object.keys($scope.focusedRestaurant).length > 0) {
+          $scope.hasRestaurant = true;
+        } else {
+          $scope.hasRestaurant = false;
+        }
+      });
   };
 
   $scope.doCheckIn = function () {
@@ -45,15 +43,19 @@ angular.module('dd-checkInCtrl', [])
   };
 
   $scope.setSelectedUser = function (user) {
-    $scope.selectedUser = user;
+    $scope.selectedUser = JSON.parse(user);
   }
 
   $scope.addUsersToParty = function () {
-    CheckInFactory.addUsersToParty($scope.selectedUser); 
+    CheckInFactory.addUsersToParty($scope.selectedUser.id);
+    console.log($scope.selectedUser);
+    var alertPopup = $ionicPopup.alert({
+     title: 'Reservation Updated',
+     template: $scope.selectedUser.attributes.username + ' has been added to your party.'
+   });
   };
 
   $scope.getFocusedRestaurant();
-  $scope.updateStatus();
   $scope.getUsers();
 
 }]);

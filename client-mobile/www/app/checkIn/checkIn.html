@@ -32,7 +32,7 @@
               </div>
               <select name="selectedUser" ng-model="selectedUser" ng-change="setSelectedUser(selectedUser)">
                  <option value="">---Please select---</option> 
-                 <option ng-repeat="user in users.data.data" value="{{user.id}}">{{user.attributes.username}}</option> 
+                 <option ng-repeat="user in users.data.data" value="{{user}}">{{user.attributes.username}}</option> 
                </select>
             </label>
           </div>
@@ -58,7 +58,7 @@
         Details
       </a>
       <a class="tab-item" href='#/nav/currentCheck'>
-        Order
+        Tab
       </a>
       <a class="tab-item" href='#/nav/checkIn'>
         Check In

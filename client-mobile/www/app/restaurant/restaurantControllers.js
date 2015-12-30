@@ -1,21 +1,16 @@
 angular.module('dd-restCtrls', [])
 
 .controller('RestaurantMenuCtrl', ['$scope', '$state', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, $state, $window, MenuFactory, HomeFactory, OrderFactory) {
-  
-  $scope.getPartyInfo = function () {
-    if ($window.localStorage.getItem('partyId')) {
-      $scope.isCheckedIn = true;
-    } else {
-      $scope.isCheckedIn = false;
-    }
-  };
 
-  $scope.getPartyInfo();
-  
   $scope.getMenuItems = function () {
    HomeFactory.getFocusedRestaurant()
     .then (function (rest) {
      $scope.focusedRestaurant = rest;
+       if ($window.localStorage.getItem('partyId')) {
+         $scope.isCheckedIn = true;
+       } else {
+         $scope.isCheckedIn = false;
+       }
       MenuFactory.getMenuItems(rest.id).then(function (dataObject) {
         var menuItems = dataObject.data.data;
         var categories = dataObject.data.included;

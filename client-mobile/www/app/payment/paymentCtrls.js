@@ -22,10 +22,8 @@ angular.module('dd-payCtrls', [])
 
 }])
 
-.controller('CheckCtrl', ['$scope', '$state', '$filter', 'CheckFactory', 'CheckInFactory', 'OrderFactory', '$window', function ($scope, $state, $filter, CheckFactory, CheckInFactory, OrderFactory, $window) {
+.controller('CheckCtrl', ['$scope', '$state', '$filter', 'CheckFactory', 'CheckInFactory', 'OrderFactory', 'HomeFactory', '$window', function ($scope, $state, $filter, CheckFactory, CheckInFactory, OrderFactory, HomeFactory, $window) {
 
-  $scope.isCheckedIn = false;
-  $scope.partyInfo = {};
   $scope.orderItems = [];
   $scope.bill = {
     subtotal: 0,
@@ -33,19 +31,29 @@ angular.module('dd-payCtrls', [])
     tip: 0
   };
 
-  $scope.getCheckedInStatus = function () {
-    //$scope.partyInfo = JSON.parse($window.localStorage.getItem('partyInfo')); - NOT USED??
-
-    //replace lookup with call to API/DB
-
-    if ($window.localStorage.getItem('partyInfo')) {
-      $scope.isCheckedIn = true;
-    } else {
-      $scope.isCheckedIn = false;
-    }
+  $scope.getCheckedInStatusAndMenuItems = function () {
+    HomeFactory.getFocusedRestaurant()
+     .then (function (rest) {
+      $scope.focusedRestaurant = rest;
+       if ($window.localStorage.getItem('partyId')) {
+         $scope.isCheckedIn = true;
+          CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
+            .then(function (items) {
+              var subtotal = 0;
+              for (var i = 0; i < items.data.included.length; i++) {
+                $scope.orderItems.push(items.data.included[i].attributes);
+                subtotal += items.data.included[i].attributes.price;
+              }
+              $scope.bill.subtotal = subtotal.toFixed(2);
+              $scope.bill.tax = taxCalculator(Number($scope.bill.subtotal)).toFixed(2);
+            });
+       } else {
+         $scope.isCheckedIn = false;
+       }
+    });
   };
 
-  $scope.getCheckedInStatus();
+  $scope.getCheckedInStatusAndMenuItems();
 
   $scope.total = function () {
     var total = Number($scope.bill.subtotal) + Number($scope.bill.tax) + Number($scope.bill.tip);
@@ -75,20 +83,5 @@ angular.module('dd-payCtrls', [])
       }, 1000);
     });
   };
-
-  $scope.getOrderItems = function () {
-    CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
-      .then(function (items) {
-        var subtotal = 0;
-        for (var i = 0; i < items.data.included.length; i++) {
-          $scope.orderItems.push(items.data.included[i].attributes);
-          subtotal += items.data.included[i].attributes.price;
-        }
-        $scope.bill.subtotal = subtotal.toFixed(2);
-        $scope.bill.tax = taxCalculator(Number($scope.bill.subtotal)).toFixed(2);
-      });
-  };
-
-  $scope.getOrderItems();
 
 }]);
