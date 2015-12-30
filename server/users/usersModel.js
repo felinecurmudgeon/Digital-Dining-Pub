@@ -4,16 +4,17 @@ var Promise = require('bluebird');
 
 module.exports = {
   user: {
-    get: function (id) {
+    get: function (id, custonly) {
       return new Promise( function (resolve, reject) {
         var query;
         if (id) {
           query = 'SELECT * FROM users \
                       WHERE id = ' + id;
+        } else if (custonly === 'true') {
+            query = 'SELECT * FROM users WHERE is_restaurant_user = 0';
         } else {
-          query = 'SELECT * FROM users';
+            query = 'SELECT * FROM users';
         }
-
         db.con.query(query, function (err, data) {
           if (err) {
             reject(err);

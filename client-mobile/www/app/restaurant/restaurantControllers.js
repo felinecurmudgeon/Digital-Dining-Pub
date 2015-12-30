@@ -1,36 +1,36 @@
 angular.module('dd-restCtrls', [])
 
 .controller('RestaurantMenuCtrl', ['$scope', '$state', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, $state, $window, MenuFactory, HomeFactory, OrderFactory) {
-  $scope.getPartyInfo = function () {
-    console.log('partyId is ', $window.localStorage.getItem('partyId'));
-    if ($window.localStorage.getItem('partyId')) {
-      $scope.isCheckedIn = true;
-    } else {
-      $scope.isCheckedIn = false;
-    }
-  };
-  $scope.getPartyInfo();
-  $scope.getMenuItems = function () {
-    var restID = HomeFactory.getFocusedRestaurant();
-    MenuFactory.getMenuItems(restID.id).then(function (dataObject) {
-      var menuItems = dataObject.data.data;
-      var categories = dataObject.data.included;
-      $scope.menu = {};
 
-      for (var itemIndex = 0; itemIndex < menuItems.length; itemIndex++) {
-        if (!$scope.menu[categories[itemIndex].attributes.categoryName]) {
-          menuItems[itemIndex].attributes.menuID = menuItems[itemIndex].id;
-          menuItems[itemIndex].attributes.quantity = 0;
-          $scope.menu[categories[itemIndex].attributes.categoryName] = [menuItems[itemIndex].attributes];
-        } else {
-          menuItems[itemIndex].attributes.menuID = menuItems[itemIndex].id;
-          menuItems[itemIndex].attributes.quantity = 0;
-          $scope.menu[categories[itemIndex].attributes.categoryName].push(menuItems[itemIndex].attributes);
+  $scope.getMenuItems = function () {
+   HomeFactory.getFocusedRestaurant()
+    .then (function (rest) {
+     $scope.focusedRestaurant = rest;
+       if ($window.localStorage.getItem('partyId')) {
+         $scope.isCheckedIn = true;
+       } else {
+         $scope.isCheckedIn = false;
+       }
+      MenuFactory.getMenuItems(rest.id).then(function (dataObject) {
+        var menuItems = dataObject.data.data;
+        var categories = dataObject.data.included;
+        $scope.menu = {};
+
+        for (var itemIndex = 0; itemIndex < menuItems.length; itemIndex++) {
+          if (!$scope.menu[categories[itemIndex].attributes.categoryName]) {
+            menuItems[itemIndex].attributes.menuID = menuItems[itemIndex].id;
+            menuItems[itemIndex].attributes.quantity = 0;
+            $scope.menu[categories[itemIndex].attributes.categoryName] = [menuItems[itemIndex].attributes];
+          } else {
+            menuItems[itemIndex].attributes.menuID = menuItems[itemIndex].id;
+            menuItems[itemIndex].attributes.quantity = 0;
+            $scope.menu[categories[itemIndex].attributes.categoryName].push(menuItems[itemIndex].attributes);
+          }
         }
-      }
+      });
     });
-    $scope.rest = restID;
   };
+
   $scope.getMenuItems();
 
   $scope.clickLocationCheckingForOrder = function (event, item) {
@@ -46,7 +46,6 @@ angular.module('dd-restCtrls', [])
     }
   };
 
-
   $scope.sendOrder = function () {
     var partyId = JSON.parse($window.localStorage.getItem('partyId'));
     OrderFactory.sendOrder(partyId);
@@ -61,9 +60,14 @@ angular.module('dd-restCtrls', [])
 
 .controller('RestaurantDisplayCtrl', ['$scope', '$state', 'HomeFactory', function ($scope, $state, HomeFactory) {
   $scope.getFocusedRestaurant = function () {
-    $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
+    HomeFactory.getFocusedRestaurant()
+      .then(function (rest) {
+        $scope.focusedRestaurant = rest;
+      });
   };
+
   $scope.getFocusedRestaurant();
+
 }])
 
 
