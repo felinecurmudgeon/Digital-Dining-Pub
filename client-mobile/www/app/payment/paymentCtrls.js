@@ -164,24 +164,5 @@ angular.module('dd-payCtrls', [])
     });
   };
 
-  // $scope.getOrderItems = function () {
-  //   CheckFactory.getCheckItems($window.localStorage.getItem('partyId'))
-  //     .then(function (items) {
-  //       $scope.orderItems = [];
-  //       for (var i = 0; i < items.data.data.length; i++) {
-  //         $scope.orderItems.push(items.data.data[i].attributes);
-  //         $scope.orderItems[i].price = items.data.included[i].attributes.price;
-  //         $scope.orderItems[i].title = items.data.included[i].attributes.title;
-  //         $scope.orderItems[i].id = items.data.data[i].id;
-  //         $scope.orderItems[i].payAmount = ($scope.orderItems[i].price - $scope.orderItems[i].totalPaid).toFixed(2);
-  //         if (Number($scope.orderItems[i].payAmount) === 0) {
-  //           $scope.orderItems[i].paid = true;
-  //         } else {
-  //           $scope.orderItems[i].paid = false;
-  //         }
-  //       }
-  //     });
-  // };
-  // $scope.getOrderItems();
   $scope.getCheckedInStatusAndMenuItems();
 }]);
