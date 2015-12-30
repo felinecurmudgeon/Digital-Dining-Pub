@@ -54,13 +54,6 @@ angular.module('dd-payCtrls', [])
                    $scope.orderItems[i].paid = false;
                  }
                }
-              // var subtotal = 0;
-              // for (var i = 0; i < items.data.included.length; i++) {
-              //   $scope.orderItems.push(items.data.included[i].attributes);
-              //   subtotal += items.data.included[i].attributes.price;
-              // }
-              // $scope.bill.subtotal = subtotal.toFixed(2);
-              // $scope.bill.tax = taxCalculator(Number($scope.bill.subtotal)).toFixed(2);
             });
        } else {
          $scope.isCheckedIn = false;
