@@ -1,10 +1,24 @@
 /*jshint camelcase: false */
 angular.module('dd-homeFactories', [])
 
-.factory('HomeFactory', ['$http', function ($http) {
+.factory('HomeFactory', ['$http', '$window', function ($http, $window) {
   var getAllRestaurants = function () {
     return $http({
       url: 'http://localhost:8000/api/restaurants',
+      method: 'GET'
+    });
+  };
+
+  var getParty = function () {
+    return $http({
+      url: 'http://localhost:8000/api/parties?user=true',
+      method: 'GET'
+    });
+  };
+
+  var getRestaurant = function (rid) {
+    return $http({
+      url: 'http://localhost:8000/api/restaurants/' + rid,
       method: 'GET'
     });
   };
@@ -16,7 +30,25 @@ angular.module('dd-homeFactories', [])
   };
 
   var getFocusedRestaurant = function () {
-    return focusedRestaurant;
+    //check if user is in a party
+    //if yes, return the party restaurant and set local storage values
+    //if no, use focusedRestaurant
+    return getParty()
+      .then(function (party) {
+        if(party.data.data[0].attributes) {
+          $window.localStorage.setItem('partyInfo', JSON.stringify(party));
+          $window.localStorage.setItem('partyId', JSON.stringify(party.data.data[0].id));
+          $window.localStorage.setItem('restaurantId', JSON.stringify(party.data.data[0].attributes.restaurantId));
+          console.log("rest from focused ", focusedRestaurant);
+          return getRestaurant(party.data.data[0].attributes.restaurantId)
+            .then(function (rest) {
+              console.log("rest from getrest ", rest.data.data[0]);
+              return rest.data.data[0];
+            })
+        } else {
+          return focusedRestaurant;
+        }
+      });
   };
 
   var convertAddress = function (address) {
@@ -26,20 +58,12 @@ angular.module('dd-homeFactories', [])
     });
   };
 
-  var getCheckedInRestaurant = function () {
-    return $http({
-      url: 'http://localhost:8000/api/parties?user=true',
-      method: 'GET'
-    });
-  };
-
   return {
     getAllRestaurants: getAllRestaurants,
     focusedRestaurant: focusedRestaurant,
     focusRestaurant: focusRestaurant,
     getFocusedRestaurant: getFocusedRestaurant,
-    convertAddress: convertAddress,
-    getCheckedInRestaurant: getCheckedInRestaurant
+    convertAddress: convertAddress
   };
 }])
 

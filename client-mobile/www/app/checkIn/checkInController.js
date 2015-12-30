@@ -44,9 +44,12 @@ angular.module('dd-checkInCtrl', [])
       });
   };
 
+  $scope.setSelectedUser = function (user) {
+    $scope.selectedUser = user;
+  }
+
   $scope.addUsersToParty = function () {
-    console.log($scope.selectedUser); //TODO: figure out why this isn't coming through from HTML
-    CheckInFactory.addUsersToParty(10); //hardcoded until line above is fixed
+    CheckInFactory.addUsersToParty($scope.selectedUser); 
   };
 
   $scope.getFocusedRestaurant();

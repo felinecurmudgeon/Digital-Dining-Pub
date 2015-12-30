@@ -1,6 +1,7 @@
 angular.module('dd-restCtrls', [])
 
 .controller('RestaurantMenuCtrl', ['$scope', '$state', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, $state, $window, MenuFactory, HomeFactory, OrderFactory) {
+  
   $scope.getPartyInfo = function () {
     if ($window.localStorage.getItem('partyId')) {
       $scope.isCheckedIn = true;
@@ -8,44 +9,33 @@ angular.module('dd-restCtrls', [])
       $scope.isCheckedIn = false;
     }
   };
+
   $scope.getPartyInfo();
+  
   $scope.getMenuItems = function () {
-    //check if user is in a party
-    $scope.getCheckedInRestaurant = function () {
-      $scope.checkedInRest = HomeFactory.getCheckedInRestaurant()
-        .then(function (rest) {
-          console.log(rest.data.data);
-        });
-    };
+   HomeFactory.getFocusedRestaurant()
+    .then (function (rest) {
+     $scope.focusedRestaurant = rest;
+      MenuFactory.getMenuItems(rest.id).then(function (dataObject) {
+        var menuItems = dataObject.data.data;
+        var categories = dataObject.data.included;
+        $scope.menu = {};
 
-    $scope.getCheckedInRestaurant();
-
-    //if yes, make restID the party restaurant
-
-    //if no, use focusedRestaurant
-
-    var currentRestaurant = HomeFactory.getFocusedRestaurant();
-
-
-    MenuFactory.getMenuItems(currentRestaurant.id).then(function (dataObject) {
-      var menuItems = dataObject.data.data;
-      var categories = dataObject.data.included;
-      $scope.menu = {};
-
-      for (var itemIndex = 0; itemIndex < menuItems.length; itemIndex++) {
-        if (!$scope.menu[categories[itemIndex].attributes.categoryName]) {
-          menuItems[itemIndex].attributes.menuID = menuItems[itemIndex].id;
-          menuItems[itemIndex].attributes.quantity = 0;
-          $scope.menu[categories[itemIndex].attributes.categoryName] = [menuItems[itemIndex].attributes];
-        } else {
-          menuItems[itemIndex].attributes.menuID = menuItems[itemIndex].id;
-          menuItems[itemIndex].attributes.quantity = 0;
-          $scope.menu[categories[itemIndex].attributes.categoryName].push(menuItems[itemIndex].attributes);
+        for (var itemIndex = 0; itemIndex < menuItems.length; itemIndex++) {
+          if (!$scope.menu[categories[itemIndex].attributes.categoryName]) {
+            menuItems[itemIndex].attributes.menuID = menuItems[itemIndex].id;
+            menuItems[itemIndex].attributes.quantity = 0;
+            $scope.menu[categories[itemIndex].attributes.categoryName] = [menuItems[itemIndex].attributes];
+          } else {
+            menuItems[itemIndex].attributes.menuID = menuItems[itemIndex].id;
+            menuItems[itemIndex].attributes.quantity = 0;
+            $scope.menu[categories[itemIndex].attributes.categoryName].push(menuItems[itemIndex].attributes);
+          }
         }
-      }
+      });
     });
-    $scope.rest = currentRestaurant;
   };
+
   $scope.getMenuItems();
 
   $scope.clickLocationCheckingForOrder = function (event, item) {
@@ -76,13 +66,10 @@ angular.module('dd-restCtrls', [])
 
 .controller('RestaurantDisplayCtrl', ['$scope', '$state', 'HomeFactory', function ($scope, $state, HomeFactory) {
   $scope.getFocusedRestaurant = function () {
-    //check if user is in a party
-
-    //if yes, make $scope.focusedRestaurant the party restaurant
-
-    //if no, use focusedRestaurant from homefactory
-
-    $scope.focusedRestaurant = HomeFactory.getFocusedRestaurant();
+    HomeFactory.getFocusedRestaurant()
+      .then(function (rest) {
+        $scope.focusedRestaurant = rest;
+      })
   };
 
   $scope.getFocusedRestaurant();

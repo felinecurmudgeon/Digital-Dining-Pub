@@ -20,23 +20,23 @@
     <br>
     <br>
       <form ng-submit="addUsersToParty()" ng-show="isCheckedIn" class="card">
-        <div class="item item-text-wrap">
-          You are already checked in to {{focusedRestaurant.attributes.restaurantName}}.
+        <div class="item item-text-wrap divCenter">
+          You are checked in to {{focusedRestaurant.attributes.restaurantName}}.
           <br>
           <br>
-
           <div class="list">
             <label class="item item-input item-select">
               <div class="input-label">
-                Select users to add to your reservation:
+     
+           Add users to the reservation:
               </div>
-              <select name="selectedUser" ng-model="selectedUser">
+              <select name="selectedUser" ng-model="selectedUser" ng-change="setSelectedUser(selectedUser)">
                  <option value="">---Please select---</option> 
-                 <option ng-repeat="user in users.data.data" value="{{user.id}}" ng-model="selectedUser">{{user.attributes.username}}</option> 
+                 <option ng-repeat="user in users.data.data" value="{{user.id}}">{{user.attributes.username}}</option> 
                </select>
             </label>
           </div>
-          <button type="submit" class="button button-balanced btnRight">Add User to Reservation</button>
+          <button type="submit" class="button button-small button-balanced btnRight">Add User to Reservation</button>
         </div>
       </form>
       <div ng-show="!hasRestaurant && !isCheckedIn" class="card">

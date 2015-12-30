@@ -1,4 +1,7 @@
-<ion-view view-title="Menu for {{rest.attributes.restaurantName}}">
+<ion-view>
+  <ion-nav-title>
+      Details for {{focusedRestaurant.attributes.restaurantName}}
+  </ion-nav-title>
   <ion-content>
     <div ng-repeat="(category, menuItems) in menu">
       <div class="item item-divider">{{category}}</div> 

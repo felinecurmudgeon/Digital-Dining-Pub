@@ -33,11 +33,6 @@ h1 {
   margin: 0 auto;
 }
 
-.btnRight {
-  float: right;
-  margin: 5%;
-}
-
 .num {
   float:right;
 }
@@ -90,4 +85,8 @@ h1 {
 .tip {
   width: 10%;
   margin-bottom: 2%;
+}
+
+.divCenter {
+  text-align: center;
 }
