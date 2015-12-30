@@ -36,4 +36,19 @@ angular.module('digitalDining.reservationsServices', [])
     getSeatedParties: getSeatedParties,
     seatParty: seatParty
   };
+}])
+
+.factory('ItemsOrdered', ['$http', function ($http) {
+  var getItemsOrdered = function (partyId) {
+    return $http({
+      method: 'GET',
+      url: '/api/parties/' + partyId + '/menuitems'
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
+  };
+  return {
+    getItemsOrdered: getItemsOrdered
+  };
 }]);
