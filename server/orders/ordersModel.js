@@ -33,6 +33,17 @@ module.exports = {
         });
       });
     },
+    put: function (id, parameters) {
+      return new Promise(function (resolve, reject) {
+        db.con.query('UPDATE menu_items_ordered SET ? WHERE id = ?', [parameters, id], function (err, data) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    },
     delete: function (id) {
       return new Promise(function (resolve, reject) {
         db.con.query('DELETE FROM menu_items_ordered WHERE id = ?', id, function (err, data) {

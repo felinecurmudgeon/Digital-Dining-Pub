@@ -154,7 +154,8 @@ TBD
 | ------------- | -------------------   | ---------------------------------
 | GET           | /parties/:pid/menuitems     | Gets all menu items for a given party
 | POST          | /parties/:pid/menuitems     | Adds item(s) to a specific party
-| DELETE        | /parties/:pid/menuitems/:mid | Removes an item from a specific party    
+| PUT          | /parties/:pid/menuitems/:mioid?event=serve     | Serve a menu item ordered
+| DELETE        | /parties/:pid/menuitems/:mioid | Removes an item from a specific party    
 
 - Note: this API follows a nested pattern due to the tight coupling of parties and menu items.
 

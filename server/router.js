@@ -48,5 +48,6 @@ module.exports = function (router) {
 
   router.get('/api/parties/:pid/menuitems', ordersController.getItemsOrdered);
   router.post('/api/parties/:pid/menuitems', ordersController.postItemsOrdered);
-  router.delete('/api/parties/:pid/menuitems/:mid', ordersController.deleteItemsOrdered);
+  router.put('/api/parties/:pid/menuitems/:mioid', ordersController.updateItemsOrdered);
+  router.delete('/api/parties/:pid/menuitems/:mioid', ordersController.deleteItemsOrdered);
 };

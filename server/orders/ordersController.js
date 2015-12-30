@@ -61,8 +61,22 @@ module.exports = {
         res.send(data);
       });
   },
+  updateItemsOrdered: function (req, res) { // expecting an array of items in the body
+    if (req.query.event === 'serve') {
+      ordersModel.order.put(req.params.mioid, {
+          served_at: new Date().toMysqlFormat()
+        })
+        .then(function (data) {
+          res.status(201);
+          res.send(data);
+        });
+    } else {
+      res.status(400);
+      res.send();
+    }
+  },
   deleteItemsOrdered : function (req, res) {
-    ordersModel.order.delete(req.params.mid)
+    ordersModel.order.delete(req.params.mioid)
       .then(function (data) {
         res.status(204);
         res.send(data);
