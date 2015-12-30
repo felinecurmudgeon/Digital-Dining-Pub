@@ -8,20 +8,26 @@
         <th></th>
       </tr>
     </thead>
-    <tbody>
-      <tr ng-repeat="party in parties">
+    <tbody ng-repeat="party in parties">
+      <tr ng-repeat="itemOrdered in party.itemsOrdered" ng-show="party.itemsOrdered.length">
         <td>
           {{party.tableNumber}}
         </td>
         <td>
-          {{party.partySize}}
+          {{itemOrdered.attributes.menuItem.title}}
         </td>
         <td>
-          {{party.partyName}}
+          {{itemOrdered.attributes.orderedAt}}
         </td>
         <td>
           {{party.checkedinAt.slice(12, 16)}}
         </td>
+      </tr>
+      <tr ng-hide="party.itemsOrdered.length">
+        <td>
+          {{party.tableNumber}}
+        </td>
+        <td colspan="3">This party is all served</td>
       </tr>
     </tbody>
   </table>
