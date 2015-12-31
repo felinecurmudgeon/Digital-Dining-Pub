@@ -13,18 +13,17 @@
 
   <h2 class="titleBar">Hours</h2>
     <ul class ='hours list'> 
-      <li class='item'>Monday: {{focusedRestaurant.attributes.openingHourMonday }}-{{focusedRestaurant.attributes.closingHourMonday}}</li>
-      <li class='item'>Tuesday:{{focusedRestaurant.attributes.openingHourTuesday}}-{{focusedRestaurant.attributes.closingHourTuesday}}</li>
-      <li class='item'>Wednesday: {{focusedRestaurant.attributes.openingHourWednesday}}-{{focusedRestaurant.attributes.closingHourWednesday}}</li>
-      <li class='item'>Thursday: {{focusedRestaurant.attributes.openingHourThursday}}-{{focusedRestaurant.attributes.closingHourThursday}}</li>
-      <li class='item'>Friday: {{focusedRestaurant.attributes.openingHourFriday}}-{{focusedRestaurant.attributes.closingHourFriday}}</li>
-      <li class='item'>Saturday: {{focusedRestaurant.attributes.openingHourSatday}}-{{focusedRestaurant.attributes.closingHourSatday}}</li>
-      <li class='item'>Sunday: {{focusedRestaurant.attributes.openingHourSunday}}-{{focusedRestaurant.attributes.closingHourSunday}}</li>
+      <li class='item'>Monday: {{focusedRestaurant.attributes.MondayHours}}</li>
+      <li class='item'>Tuesday: {{focusedRestaurant.attributes.TuesdayHours}}</li>
+      <li class='item'>Wednesday: {{focusedRestaurant.attributes.WednesdayHours}}</li>
+      <li class='item'>Thursday: {{focusedRestaurant.attributes.ThursdayHours}}</li>
+      <li class='item'>Friday: {{focusedRestaurant.attributes.FridayHours}}</li>
+      <li class='item'>Saturday: {{focusedRestaurant.attributes.SatdayHours}}</li>
+      <li class='item'>Sunday: {{focusedRestaurant.attributes.SundayHours}}</li>
     </ul>
     <button class="button button-block button-stable" ng-show="!isCheckedIn" ng-click="goToReservation()"> Check in at {{focusedRestaurant.attributes.restaurantName}} </button>
     
   </ion-content>
-<!--   <ng-include src="footersrc"></ng-include> -->
 
  <ion-footer-bar align-title="left">
   <div class="tabs">

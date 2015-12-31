@@ -80,11 +80,20 @@ module.exports = {
           res.send(data);
         });
     } else if (query.event === 'close') {
-      partiesModel.party.closeParty(req.params.id)
-        .then(function (data) {
-          res.status(200);
-          res.send(data);
-        });
+      partiesModel.party.getParty(req.params.id).then(function (party) {
+        if (party[0].table_id === null) {
+          partiesModel.party.closeUnseatedParty(req.params.id).then(function (data) {
+            res.status(200);
+            res.send(data);
+          });
+        } else {
+          partiesModel.party.closeSeatedParty(req.params.id, party[0].table_id)
+          .then(function (data) {
+            res.status(200);
+            res.send(data);
+          });
+        }
+      });
     } else if (query.event === 'addParticipant') {
       partiesModel.party.addUserToParty(req.params.id, req.body)
         .then(function (data) {

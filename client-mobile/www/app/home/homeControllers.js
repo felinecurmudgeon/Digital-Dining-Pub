@@ -35,7 +35,9 @@ angular.module('dd-homeCtrls', [])
 
 }])
 
-.controller('HomeCtrl', ['$scope', 'HomeFactory' , function ($scope, HomeFactory) {
+.controller('HomeCtrl', ['$scope', 'HomeFactory', '$window', function ($scope, HomeFactory, $window) {
+  $scope.checkedIn = false;
+
   var getLocation = function (cb) {
       var onSuccess = function (position) {
         var lat = position.coords.latitude;
@@ -65,23 +67,31 @@ angular.module('dd-homeCtrls', [])
   };
 
   $scope.displayRestaurants = function () {
-    HomeFactory.getAllRestaurants().then(function (restaurants) {
-    $scope.restaurants = restaurants.data.data;
-      getLocation(function (latLng) {
-        //lookup coords for each rest via google maps
-        restaurants.data.data.forEach(function (restaurant) {
-          var address = restaurant.attributes.restaurantAddress + ',' + restaurant.attributes.restaurantCity + ',' + restaurant.attributes.restaurantState;
-          HomeFactory.convertAddress(address)
-            .then(function (mapResult) {
-              //run through distance function and append distance to restaurants.data.data
-              restaurant.attributes.distance = distance(mapResult.data.results[0].geometry.location.lng, mapResult.data.results[0].geometry.location.lat, latLng[1], latLng[0]);
-                 $scope.restaurants = restaurants.data.data;
-            });
-        });
-     });
-    });
-
+    if ($window.localStorage.getItem('restaurantId')) {
+      HomeFactory.getRestaurant($window.localStorage.getItem('restaurantId')).then(processRestaurants);
+      $scope.checkedIn = true;
+    } else {
+      HomeFactory.getAllRestaurants().then(processRestaurants);
+      $scope.checkedIn = false;
+    }
   };
+
+  var processRestaurants = function (restaurants) {
+    $scope.restaurants = restaurants.data.data;
+    getLocation(function (latLng) {
+      //lookup coords for each rest via google maps
+      restaurants.data.data.forEach(function (restaurant) {
+        var address = restaurant.attributes.restaurantAddress + ',' + restaurant.attributes.restaurantCity + ',' + restaurant.attributes.restaurantState;
+        HomeFactory.convertAddress(address)
+          .then(function (mapResult) {
+            //run through distance function and append distance to restaurants.data.data
+            restaurant.attributes.distance = distance(mapResult.data.results[0].geometry.location.lng, mapResult.data.results[0].geometry.location.lat, latLng[1], latLng[0]);
+               $scope.restaurants = restaurants.data.data;
+          });
+      });
+    });
+  };
+
   $scope.displayRestaurants();
 
   $scope.focusRestaurant = function (rest) {

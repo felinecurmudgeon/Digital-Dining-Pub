@@ -1,20 +1,30 @@
 angular.module('dd-restCtrls', [])
 
-.controller('RestaurantMenuCtrl', ['$scope', '$state', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, $state, $window, MenuFactory, HomeFactory, OrderFactory) {
+.controller('RestaurantMenuCtrl', ['$scope', '$state', '$ionicPopup', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, $state, $ionicPopup, $window, MenuFactory, HomeFactory, OrderFactory) {
 
-  $scope.goToReservation = function () {
-    $state.go('nav.checkIn');
-  };
+    if (!$window.localStorage.getItem('partyId')) {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Please Check In',
+        template: 'You are not able to order until you are checked in. Would you like to check in now?'
+      });
+      confirmPopup.then(function (res) {
+       if (res) {
+         $state.go('nav.checkIn');
+       } else {
+         console.log('Staying on the menu');
+       }
+      });
+    }
 
   $scope.getMenuItems = function () {
    HomeFactory.getFocusedRestaurant()
     .then (function (rest) {
-     $scope.focusedRestaurant = rest;
-       if ($window.localStorage.getItem('partyId')) {
-         $scope.isCheckedIn = true;
-       } else {
-         $scope.isCheckedIn = false;
-       }
+      $scope.focusedRestaurant = rest;
+        if ($window.localStorage.getItem('partyId')) {
+          $scope.isCheckedIn = true;
+        } else {
+          $scope.isCheckedIn = false;
+        }
       MenuFactory.getMenuItems(rest.id).then(function (dataObject) {
         var menuItems = dataObject.data.data;
         var categories = dataObject.data.included;
@@ -34,6 +44,8 @@ angular.module('dd-restCtrls', [])
       });
     });
   };
+
+
 
   $scope.getMenuItems();
 
@@ -62,7 +74,7 @@ angular.module('dd-restCtrls', [])
 }])
 
 
-.controller('RestaurantDisplayCtrl', ['$scope', '$state', '$window', 'HomeFactory', function ($scope, $state, $window, HomeFactory) {
+.controller('RestaurantDisplayCtrl', ['$scope', '$state', '$window', 'HomeFactory', 'RestaurantFactory', function ($scope, $state, $window, HomeFactory, RestaurantFactory) {
 
   $scope.goToReservation = function () {
     $state.go('nav.checkIn');
@@ -76,6 +88,7 @@ angular.module('dd-restCtrls', [])
         } else {
           $scope.isCheckedIn = false;
         }
+        RestaurantFactory.formatTimes(rest);
         $scope.focusedRestaurant = rest;
       });
   };

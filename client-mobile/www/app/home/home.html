@@ -7,9 +7,7 @@
           <p>{{rest.attributes.restaurantAddress}} {{rest.attributes.restaurantCity}} {{rest.attributes.restaurantState}}</p>
           <p> About {{rest.attributes.distance | number:1}} miles from you</p>
         </div>
-
         <div class="item item-image">
-          <!-- <img src="../../img/pizza.jpeg"> -->
           <a href='#/nav/restaurantMenu' ng-click='focusRestaurant(rest)'>
             <img class = 'restaurantContainer' ng-src="{{rest.attributes.restaurantPictureUrl}}">
           </a>
@@ -22,6 +20,8 @@
     </div>
     <br>
     <br>
+    <ion-item class = 'item item-text-wrap divCenter'ng-show="checkedIn">You are currently checked in to {{restaurants[0].attributes.restaurantName}}.  You must complete
+    your meal at this restaurant before accessing other restaurants.</ion-item>
   </ion-content>
 </ion-view>
 

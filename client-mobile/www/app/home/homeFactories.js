@@ -47,6 +47,9 @@ angular.module('dd-homeFactories', [])
               return rest.data.data[0];
             });
         } else {
+          $window.localStorage.removeItem('partyInfo');
+          $window.localStorage.removeItem('partyId');
+          $window.localStorage.removeItem('restaurantId');
           return focusedRestaurant;
         }
       });
@@ -54,12 +57,13 @@ angular.module('dd-homeFactories', [])
 
   var convertAddress = function (address) {
     return $http({
-      url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyDMFRplgg_Ayr8hZyNAK1QUSw5UNPbVmNM',
+      url: window.isMobileDev ? 'http://localhost:8000/api/convertaddress?address=' + address : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/convertaddress?address=' + address,
       method: 'GET'
-    });
+      });
   };
 
   return {
+    getRestaurant: getRestaurant,
     getAllRestaurants: getAllRestaurants,
     focusedRestaurant: focusedRestaurant,
     focusRestaurant: focusRestaurant,
