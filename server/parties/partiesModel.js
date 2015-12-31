@@ -216,18 +216,56 @@ module.exports = {
         });
       });
     },
-    closeParty: function (partyId) {
+    closeSeatedParty: function (partyId, tableId) {
+      return new Promise(function (resolve, reject) {
+        var partyParameters = {
+          closed_at: new Date().toMysqlFormat()
+        };
+        db.con.beginTransaction(function (err) {
+          if (err) {
+            reject(err);
+          }
+          db.con.query('UPDATE parties SET ? WHERE id = ?', [partyParameters, partyId], function (err) {
+            if (err) {
+              return db.con.rollback(function () {
+                reject(err);
+              });
+            } else {
+              db.con.query('UPDATE tables SET available = TRUE WHERE id = ?', tableId, function (err) {
+                if (err) {
+                  return db.con.rollback(function () {
+                    reject(err);
+                  });
+                } else {
+                  db.con.commit(function (err) {
+                    if (err) {
+                      return db.con.rollback(function () {
+                        reject(err);
+                      });
+                    }
+                    partyParameters.id = partyId;
+                    resolve(partyParameters);
+                  });
+                }
+              });
+            }
+          });
+        });
+      });
+    },
+    closeUnseatedParty: function (partyId) {
       return new Promise(function (resolve, reject) {
         var partyParameters = {
           closed_at: new Date().toMysqlFormat()
         };
         db.con.query('UPDATE parties SET ? WHERE id = ?', [partyParameters, partyId], function (err) {
           if (err) {
-            reject(err);
-          } else {
-            partyParameters.id = partyId;
-            resolve(partyParameters);
+            return db.con.rollback(function () {
+              reject(err);
+            });
           }
+          partyParameters.id = partyId;
+          resolve(partyParameters);
         });
       });
     },

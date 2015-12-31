@@ -94,7 +94,7 @@ var Promise = require('bluebird');
       get: function (restaurantId) {
       //retrieves whole menu for a given restaurantId
         return new Promise(function (resolve, reject) {
-          db.con.query('SELECT m.created_at, m.updated_at, m.id, m.restaurant_id, m.menu_category_id, m.title, m.description, m.price, c.category_name FROM menu_items m INNER JOIN menu_categories c ON m.menu_category_id = c.id WHERE m.restaurant_id=' + restaurantId, function (err, data) {
+          db.con.query('SELECT m.created_at, m.menu_item_picture_url, m.updated_at, m.id, m.restaurant_id, m.menu_category_id, m.title, m.description, m.price, c.category_name FROM menu_items m INNER JOIN menu_categories c ON m.menu_category_id = c.id WHERE m.restaurant_id=' + restaurantId, function (err, data) {
             if (err) {
               reject(err);
             } else {

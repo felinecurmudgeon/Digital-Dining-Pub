@@ -54,6 +54,7 @@ angular.module('dd-payCtrls', [])
                    $scope.orderItems[i].paid = false;
                  }
                }
+               calcSubtotalAndTax();
             });
        } else {
          $scope.isCheckedIn = false;
@@ -117,19 +118,24 @@ angular.module('dd-payCtrls', [])
                           items: []
     };
     paymentSummary.total = Number($scope.bill.subtotal) + Number($scope.bill.tax) + Number($scope.bill.tip);
+    if (paymentSummary.total < 0.5) {
+      paymentSummary.total = 0.5;
+    }
     for (var i = 0; i < $scope.orderItems.length; i++) {
       if (!checkInputs($scope.orderItems[i])) {
         $scope.invalidInput = true;
         return;
       }
       if ($scope.orderItems[i].selected) {
-        paymentSummary.items.push({
-                                  totalPaid: Number($scope.orderItems[i].payAmount) + Number($scope.orderItems[i].totalPaid),
-                                  price: $scope.orderItems[i].price,
-                                  id: $scope.orderItems[i].id
+        paymentSummary.items.push(
+        {
+          totalPaid: Number($scope.orderItems[i].payAmount) + Number($scope.orderItems[i].totalPaid),
+          price: $scope.orderItems[i].price,
+          id: $scope.orderItems[i].id
         });
       }
     }
+
     CheckFactory.chargeCard(paymentSummary).then(function () {
       $scope.isBilled = true;
       setTimeout( function () {
@@ -141,12 +147,10 @@ angular.module('dd-payCtrls', [])
           //equal (or greater) to the price of the item
           //the extra 0.001 is to prevent any floating point shenanigans
           if (!$scope.orderItems[i].paid && !($scope.orderItems[i].selected && (Number($scope.orderItems[i].payAmount) + Number($scope.orderItems[i].totalPaid) + 0.001 >= Number($scope.orderItems[i].price)))) {
-            console.log($scope.orderItems[i].id + ' was not paid for');
             allPaid = false;
           }
         }
         if (allPaid) {
-          console.log('everything has been paid for');
           CheckFactory.closeBill().then(function () {
             $state.go('nav.home');
           });
