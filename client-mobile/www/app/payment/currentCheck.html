@@ -5,10 +5,15 @@
   <ion-content>
       <div collection-repeat = 'item in orderItems' ng-show="isCheckedIn">
         <ion-checkbox class="payCheckbox" ng-show="!item.paid" ng-model="item.selected" ng-change="togglePay(item)">
-        <span class='itemName'> {{item.title}} </span><span ng-show="!item.selected && !item.paid" class = 'itemPrice'> {{+item.price - +item.totalPaid | currency}} </span>
-        <input class="payAmount" type="text" ng-change="updatePay()" ng-show="item.selected" ng-model="item.payAmount"><span class="itemPrice" ng-show="item.selected">$</span>
-        <span class='itemPrice' ng-show="item.paid">Paid</span>
+          <span class='itemName'> {{item.title}} </span><span ng-show="!item.selected && !item.paid" class = 'itemPrice'> {{+item.price - +item.totalPaid | currency}} </span>
+          <input class="payAmount" type="text" ng-change="updatePay()" ng-show="item.selected" ng-model="item.payAmount"><span class="itemPrice" ng-show="item.selected">$</span>
+          <span class='itemPrice' ng-show="item.paid">Paid</span>
         </ion-checkbox>
+        <ion-item ng-show="item.paid">
+          <span class='itemName'> {{item.title}} </span><span ng-show="!item.selected && !item.paid" class = 'itemPrice'> {{+item.price - +item.totalPaid | currency}} </span>
+          <input class="payAmount" type="text" ng-change="updatePay()" ng-show="item.selected" ng-model="item.payAmount"><span class="itemPrice" ng-show="item.selected">$</span>
+          <span class='itemPrice' ng-show="item.paid">Paid</span>
+        </ion-item>
         <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
       </div>
       <strong>
@@ -47,8 +52,8 @@
     <div ng-show="!isCheckedIn" class="card">
       You must be seated at a restaurant before your check will be available.
     </div>
-    <ion-item class="item-text-wrap">
-    Please note that any charges totaling less than $.50 will be rounded up to $.50.
+    <ion-item class="item-text-wrap divCenter">
+    Please note that any charges less than $.50 will be rounded up to $.50.
     </ion-item>
   </div>
   </ion-content>

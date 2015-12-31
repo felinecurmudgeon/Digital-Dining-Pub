@@ -9,10 +9,9 @@ angular.module('dd-restCtrls', [])
       });
       confirmPopup.then(function (res) {
        if (res) {
-         console.log('You are sure');
          $state.go('nav.checkIn');
        } else {
-         console.log('You are not sure');
+         console.log('Staying on the menu');
        }
       });
     }
