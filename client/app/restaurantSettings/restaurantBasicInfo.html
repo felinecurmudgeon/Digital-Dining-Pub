@@ -37,9 +37,9 @@
         value = {{restaurant.restaurant_state}} ng-model="restaurant.restaurant_state" required>
     </div>
     <input type="submit" name="submit" id="submit" class="btn btn-info pull-right"
-      value="Create my Restaurant" ng-show="creation">
+      value="Create my Restaurant" ng-show="show.creation">
     <input type="submit" name="submit" id="submit" class="btn btn-info pull-right"
-      value="Update info" ng-hide="creation">
+      value="Update info" ng-hide="show.creation">
   </div>
 </form>
 
@@ -81,7 +81,7 @@
         {{restaurant.restaurant_state}}
       </div>
     </div>
-    <button ng-click="showForm.edit = true" class="btn btn-info pull-right">
+    <button ng-click="show.edit = true" class="btn btn-info pull-right">
       Edit Information
     </button>
   </div>
