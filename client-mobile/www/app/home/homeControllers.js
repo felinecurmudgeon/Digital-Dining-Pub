@@ -7,6 +7,9 @@ angular.module('dd-homeCtrls', [])
     if ($window.localStorage.getItem('digitaldining')) {
       $window.localStorage.removeItem('digitaldining');
     }
+    $window.localStorage.removeItem('partyInfo');
+    $window.localStorage.removeItem('partyId');
+    $window.localStorage.removeItem('restaurantId');
     $state.go('app');
   };
 

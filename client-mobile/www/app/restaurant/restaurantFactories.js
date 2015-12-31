@@ -4,7 +4,8 @@ angular.module('dd-restFactories', [])
 .factory('MenuFactory', ['$http', function ($http) {
   var getMenuItems = function (restID) {
     return $http({
-      url: 'http://localhost:8000/api/menuitems/?rid=' + restID,
+      // url: 'http://localhost:8000/api/menuitems/?rid=' + restID,
+      url: window.isMobileDev ? 'http://localhost:8000/api/menuitems/?rid=' + restID : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/menuitems/?rid=' + restID,
       method: 'GET'
     });
   };
@@ -65,7 +66,8 @@ angular.module('dd-restFactories', [])
     pid = pid || 1;
     var temp = order.menu_items;
     return $http({
-      url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
+      // url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
+      url: window.isMobileDev ? 'http://localhost:8000/api/parties/' + pid + '/menuitems' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties/' + pid + '/menuitems',
       method: 'POST',
       data: temp
     }).then( function () {

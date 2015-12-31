@@ -85,14 +85,18 @@ angular.module('dd-restCtrls', [])
 }])
 
 
-.controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', 'CheckInFactory', function ($scope, MenuFactory, OrderFactory, CheckInFactory) {
+.controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', 'CheckInFactory', '$window', function ($scope, MenuFactory, OrderFactory, CheckInFactory, $window) {
   $scope.getFocusedMenuItem = function () {
     $scope.focusedMenuItem = MenuFactory.getFocusedMenuItem();
   };
   $scope.getFocusedMenuItem();
 
   $scope.getCheckInStatus = function () {
-    $scope.isCheckedIn = CheckInFactory.getCheckInStatus();
+    if ($window.localStorage.getItem('partyId')) {
+      $scope.isCheckedIn = true;
+    } else {
+      $scope.isCheckedIn = false;
+    }
   };
   $scope.getCheckInStatus();
 
