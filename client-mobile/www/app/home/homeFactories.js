@@ -47,6 +47,9 @@ angular.module('dd-homeFactories', [])
               return rest.data.data[0];
             });
         } else {
+          $window.localStorage.removeItem('partyInfo');
+          $window.localStorage.removeItem('partyId');
+          $window.localStorage.removeItem('restaurantId');
           return focusedRestaurant;
         }
       });
