@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('./middleware/logger');
 var passport = require('passport');
 var tokenVerification = require('./middleware/verification');
+var cors = require('cors');
 require('./utils.js');
 
 var app = express();
@@ -24,6 +25,7 @@ app.use(passport.initialize());
 require('./auth/authController.js').initializePassportFB();
 
 //set up router
+app.use(cors());
 app.use('/', expressRouter);
 router(expressRouter, passport);
 

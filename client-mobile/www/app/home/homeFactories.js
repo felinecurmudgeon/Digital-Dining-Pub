@@ -57,9 +57,9 @@ angular.module('dd-homeFactories', [])
 
   var convertAddress = function (address) {
     return $http({
-      url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyDMFRplgg_Ayr8hZyNAK1QUSw5UNPbVmNM',
+      url: window.isMobileDev ? 'http://localhost:8000/api/convertaddress?address=' + address : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/convertaddress?address=' + address,
       method: 'GET'
-    });
+      });
   };
 
   return {
