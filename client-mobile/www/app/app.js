@@ -1,13 +1,7 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
 angular.module('digitalDining', ['ionic', 'angularPayments', 'dd-authCtrl', 'dd-authFactory', 'dd-checkInCtrl', 'dd-checkInFactory',
   'dd-restCtrls', 'dd-restFactories', 'dd-payCtrls', 'dd-payFactories', 'dd-homeCtrls', 'dd-homeFactories', 'ngMap'])
 
-.run(function ($ionicPlatform, $ionicConfig) {
+.run(function ($ionicPlatform, $ionicConfig, $rootScope) {
   $ionicPlatform.ready(function () {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,10 +14,11 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'dd-authCtrl', 'dd-
       // org.apache.cordova.statusbar required
       window.StatusBar.styleDefault();
     }
+    //switch to turn on/off relative paths for api endpoints - make false to use ionic upload, otherwise true
+    window.isMobileDev = true;
+
     $ionicConfig.views.maxCache(0);
 
-    //switch to turn on/off relative paths for api endpoints
-    window.isMobileDev = true;
   });
 })
 
