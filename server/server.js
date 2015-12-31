@@ -25,6 +25,7 @@ app.use(passport.initialize());
 require('./auth/authController.js').initializePassportFB();
 
 //set up router
+app.options('*', cors());
 app.use(cors());
 app.use('/', expressRouter);
 router(expressRouter, passport);
