@@ -3,13 +3,13 @@ angular.module('dd-payFactories', [])
 .factory('CheckFactory', ['$http', '$window', function ($http, $window) {
   var getCheckItems = function (pid) {
     return $http({
-      url: window.isMobileDev ? 'http://localhost:8000/api/parties/' + pid + '/menuitems' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties/' + pid + '/menuitems',
+      url: window.isMobileDev ? 'http://localhost:8000/api/parties/' + pid + '/menuitems' : 'http://52.33.58.174/api/parties/' + pid + '/menuitems',
       method: 'GET'
     });
   };
   var chargeCard = function (paymentSummary) {
     return $http({
-      url: window.isMobileDev ? 'http://localhost:8000/api/charges' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/charges',
+      url: window.isMobileDev ? 'http://localhost:8000/api/charges' : 'http://52.33.58.174/api/charges',
       method: 'POST',
       data: paymentSummary
     }).then(function () {
@@ -19,7 +19,7 @@ angular.module('dd-payFactories', [])
   var closeBill = function () {
     return $http({
       // url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
-      url: window.isMobileDev ? 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
+      url: window.isMobileDev ? 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close' : 'http://52.33.58.174/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
       method: 'PUT'
     })
     .then(function () {
@@ -39,7 +39,7 @@ angular.module('dd-payFactories', [])
 .factory('PaymentFactory', ['$http', function ($http) {
   var addCard = function (token) {
     return $http({
-      url: window.isMobileDev ? 'http://localhost:8000/api/charges/addcard' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/charges/addcard',
+      url: window.isMobileDev ? 'http://localhost:8000/api/charges/addcard' : 'http://52.33.58.174/api/charges/addcard',
       method: 'POST',
       data: {
         'stripeToken' : token
