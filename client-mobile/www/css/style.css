@@ -105,10 +105,10 @@ input.payAmount {
 }
 
 .fbButton {
-  position: relative;
-  left: 50%;
-  margin-left: -100px;
+  /*position: relative;*/
+  /*margin: 10px;*/
 };
+
 
 .payCheckbox {
   width: 100%;
@@ -121,4 +121,5 @@ input.payAmount {
 .checkboxcircle {
   right:0px;
 }
+
 

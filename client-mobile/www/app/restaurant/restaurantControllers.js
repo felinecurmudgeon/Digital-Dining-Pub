@@ -1,10 +1,21 @@
 angular.module('dd-restCtrls', [])
 
-.controller('RestaurantMenuCtrl', ['$scope', '$state', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, $state, $window, MenuFactory, HomeFactory, OrderFactory) {
+.controller('RestaurantMenuCtrl', ['$scope', '$state', '$ionicPopup', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, $state, $ionicPopup, $window, MenuFactory, HomeFactory, OrderFactory) {
 
-  $scope.goToReservation = function () {
-    $state.go('nav.checkIn');
-  };
+    if (!$window.localStorage.getItem('partyId')) {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Please Check In',
+        template: 'You are not allowed to order until you are checked in. Would you like to check in now?'
+      });
+      confirmPopup.then(function (res) {
+       if (res) {
+         console.log('You are sure');
+         $state.go('nav.checkIn');
+       } else {
+         console.log('You are not sure');
+       }
+      });
+    }
 
   $scope.getMenuItems = function () {
    HomeFactory.getFocusedRestaurant()

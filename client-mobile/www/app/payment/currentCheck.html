@@ -47,18 +47,14 @@
     <div ng-show="!isCheckedIn" class="card">
       You must be seated at a restaurant before your check will be available.
     </div>
-    <div>
+    <ion-item class="item-text-wrap">
     Please note that any charges totaling less than $.50 will be rounded up to $.50.
-    </div>
-    <br>
-    <br>
-    <div ng-show="isBilled"> Your card has successfully been charged.</div>
+    </ion-item>
   </div>
-    <!-- <ng-include src="footersrc"></ng-include> -->
   </ion-content>
 
   <ion-footer-bar align-title="left">
-  <div class="tabs">
+    <div class="tabs">
       <a class="tab-item" href='#/nav/restaurantMenu'>
         Menu
       </a>
@@ -75,7 +71,5 @@
         Server
       </a>
     </div>
-</ion-footer-bar>
-
-
+  </ion-footer-bar>
 </ion-view>
