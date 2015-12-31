@@ -53,6 +53,18 @@ angular.module('digitalDining.kitchen', [
         $scope.parties[item.attributes.partyId].itemsOrdered.splice(index, 1);
       });
   };
-
+  $scope.getWaitingTime = function (item) {
+    var msDiff = new Date() - new Date(item.attributes.orderedAt);
+    var hours = Math.floor(msDiff / 1000 / 60 / 60);
+    msDiff -= hours * 1000 * 60 * 60;
+    var minutes = Math.floor(msDiff / 1000 / 60);
+    if (hours === 0) {
+      return minutes + ' minutes';
+    }
+    if (hours === 1) {
+      return '1 hour and ' + minutes + ' minutes';
+    }
+    return hours + ' hours and ' + minutes + ' minutes';
+  };
   $scope.getParties();
 }]);

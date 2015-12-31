@@ -4,7 +4,7 @@
       <tr>
         <th>Table</th>
         <th>Item ordered</th>
-        <th>Waiting time</th>
+        <th>Ordered</th>
         <th></th>
       </tr>
     </thead>
@@ -17,7 +17,7 @@
           {{itemOrdered.attributes.menuItem.title}}
         </td>
         <td>
-          {{itemOrdered.attributes.orderedAt}}
+          {{getWaitingTime(itemOrdered) + ' ago'}}
         </td>
         <td>
           <button class="btn btn-primary btn-sm" ng-click="itemOrdered.serve = true" ng-hide="itemOrdered.serve">Served</button>

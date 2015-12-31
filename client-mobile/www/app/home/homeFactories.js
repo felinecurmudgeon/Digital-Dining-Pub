@@ -63,6 +63,7 @@ angular.module('dd-homeFactories', [])
   };
 
   return {
+    getRestaurant: getRestaurant,
     getAllRestaurants: getAllRestaurants,
     focusedRestaurant: focusedRestaurant,
     focusRestaurant: focusRestaurant,

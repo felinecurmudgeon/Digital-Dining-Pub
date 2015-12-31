@@ -57,12 +57,14 @@ module.exports = {
     var JsonResponseObject = new JsonResponseObj();
     menusModel.menuItems.get(req.query.rid)
       .then(function (menuItems) {
+        console.dir(menuItems);
         for (var i = 0; i < menuItems.length; i++) {
           var JsonDataObject = new JsonDataObj();
           var JsonDataObjectIncluded = new JsonDataObj();
           JsonDataObject.type = 'menuItem';
           JsonDataObject.id = menuItems[i].id;
           JsonDataObject.attributes = {
+            pictureUrl : menuItems[i].menu_item_picture_url || 'http://www.a-cphotography.com/data/photos/1892_1a_c_photography_restaurants___food_18.jpg',
             restaurantId : menuItems[i].restaurant_id,
             title : menuItems[i].title,
             description : menuItems[i].description,
