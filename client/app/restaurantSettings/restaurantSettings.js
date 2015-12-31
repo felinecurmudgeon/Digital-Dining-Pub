@@ -6,19 +6,19 @@ angular.module('digitalDining.restaurantSettings', [
 .controller('restSettingsController', ['$scope', '$window', 'Restaurants', 'Tables', function ($scope, $window, Restaurants, Tables) {
   $scope.restaurant = {};
   $scope.tables = {};
-  $scope.showForm = {
+  $scope.show = {
     creation: true,
     edit: false
   };
   $scope.showForm = function () {
-    return ($scope.showForm.creation || $scope.showForm.edit);
+    return ($scope.show.creation || $scope.show.edit);
   };
   $scope.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   $scope.creating = function () {
     Restaurants.getRestaurantInfo()
       .then(function (resp) {
         if (resp.data.length !== 0) {
-          $scope.creation = false;
+          $scope.show.creation = false;
           $scope.restaurant.id = resp.data[0].id;
           $scope.restaurant.restaurant_name = resp.data[0].attributes.restaurantName;
           $scope.restaurant.restaurant_owner_id = resp.data[0].attributes.restaurantOwnerId;
@@ -54,7 +54,7 @@ angular.module('digitalDining.restaurantSettings', [
   };
   $scope.submitRestaurant = function () {
     var postRestInfo = function () {
-      if ($scope.creation) {
+      if ($scope.show.creation) {
         return Restaurants.createRestaurant($scope.restaurant);
       } else {
         return Restaurants.updateRestaurant($scope.restaurant);
@@ -63,8 +63,8 @@ angular.module('digitalDining.restaurantSettings', [
     postRestInfo()
       .then(function (data) {
         $window.localStorage.setItem('restaurantId', data.id);
-        $scope.showForm.creation = false;
-        $scope.showForm.edit = false;
+        $scope.show.creation = false;
+        $scope.show.edit = false;
       })
       .catch(function (error) {
         console.error(error);
