@@ -18,7 +18,8 @@ angular.module('dd-payFactories', [])
   };
   var closeBill = function () {
     return $http({
-      url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
+      // url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
+      url: window.isMobileProduction ? 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties/' + $window.localStorage.getItem('partyId') + '?event=close',
       method: 'PUT'
     })
     .then(function () {
