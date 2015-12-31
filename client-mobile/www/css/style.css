@@ -37,7 +37,7 @@ h1 {
   float:right;
 }
 
-.itemPrice {
+.checkbox.itemPrice {
   float: right;
 }
 
@@ -109,3 +109,16 @@ input.payAmount {
   left: 50%;
   margin-left: -100px;
 };
+
+.payCheckbox {
+  width: 100%;
+}
+
+.payCheckbox .itemPrice {
+  float:right;
+}
+
+.checkboxcircle {
+  right:0px;
+}
+
