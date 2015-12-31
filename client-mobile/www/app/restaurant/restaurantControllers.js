@@ -88,6 +88,7 @@ angular.module('dd-restCtrls', [])
 .controller('MenuItemDisplayCtrl', ['$scope', 'MenuFactory', 'OrderFactory', 'CheckInFactory', '$window', function ($scope, MenuFactory, OrderFactory, CheckInFactory, $window) {
   $scope.getFocusedMenuItem = function () {
     $scope.focusedMenuItem = MenuFactory.getFocusedMenuItem();
+    console.dir($scope.focusedMenuItem);
   };
   $scope.getFocusedMenuItem();
 

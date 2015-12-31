@@ -85,6 +85,10 @@ var restaurantOwners = [
   
   {username: 'Hans',
   password: '123456',
+  is_restaurant_user: true},
+
+  {username: 'Joe Edwards',
+  password: 'bluehill',
   is_restaurant_user: true}
 ];
 
@@ -140,7 +144,28 @@ var restaurants = [
   restaurant_address: '2518 Mission St',
   restaurant_city: 'San Francisco',
   restaurant_state: 'California',
-  restaurant_zip_code: 94110}
+  restaurant_zip_code: 94110},
+
+  {restaurant_name: 'Blueberry Hill',
+  restaurant_address: '6504 Delmar Blvd',
+  restaurant_city: 'Saint Louis',
+  restaurant_state: 'Missouri',
+  restaurant_zip_code: 63130,
+  restaurant_picture_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Blueberry_Hill_patio.jpg/220px-Blueberry_Hill_patio.jpg',
+  opening_hour_monday:'09:00:00',
+  closing_hour_monday: '22:30:00',
+  opening_hour_tuesday:'09:00:00',
+  closing_hour_tuesday: '22:30:00',
+  opening_hour_wednesday: '09:00:00',
+  closing_hour_wednesday: '22:30:00',
+  opening_hour_thursday: '09:00:00',
+  closing_hour_thursday: '22:30:00',
+  opening_hour_friday: '09:00:00',
+  closing_hour_friday: '26:00:00',
+  opening_hour_saturday: '09:00:00',
+  closing_hour_saturday: '26:00:00',
+  opening_hour_sunday: '09:00:00',
+  closing_hour_sunday: '17:00:00'}
 ];
 
 var tables = [
@@ -164,7 +189,15 @@ var tables = [
   [{table_number: 1, seats: 2},
   {table_number: 2, seats: 4},
   {table_number: 3, seats: 4},
-  {table_number: 4, seats: 2}]
+  {table_number: 4, seats: 2}],
+
+  [{table_number: 1, seats: 2},
+  {table_number: 2, seats: 4},
+  {table_number: 3, seats: 4},
+  {table_number: 4, seats: 2},
+  {table_number: 5, seats: 6},
+  {table_number: 6, seats: 8},
+  {table_number: 7, seats: 4}]
 ];
 
 var menuCategories = [ //each subArray will be affected to the corresponding restaurant above
@@ -178,6 +211,13 @@ var menuCategories = [ //each subArray will be affected to the corresponding res
   {category_name: 'Drinks'}],
   
   [{category_name: 'Main Courses'},
+  {category_name: 'Desserts'}],
+
+  [{category_name: 'Appetizers'},
+  {category_name: 'Salads'},
+  {category_name: 'Soups'},
+  {category_name: 'Hamburgers'},
+  {category_name: 'Specialties'},
   {category_name: 'Desserts'}]
 ];
 
@@ -203,7 +243,60 @@ var menuItems = [ /*each subArray will be affected to the corresponding restaura
   [[{title: 'Angus Steak', 
   description: 'from Wisconsin', 
   price: 12}],
-  []]
+  []],
+
+  [[{title: 'Zucchini Sticks', 
+  description: 'Battered and served with a marinara sauce dip', 
+  price: 5.25,
+  menu_item_picture_url: 'http://www.mygourmetconnection.com/recipes/vegetables/img/crunchy-oven-fried-zucchini-sticks.jpg'},
+  {title: 'Tater Tots', 
+  description: 'As good as you remember!', 
+  price: 3.25,
+  menu_item_picture_url: 'http://www.doghaus.com/dh-uploads/menu-detail/haus%20sides/Dog-Haus_Menu-Detail-tater-tots.jpg'},
+  {title: 'Toasted Ravioli', 
+  description: 'A St. Louis classic - toasted beef ravioli with marinara sauce', 
+  price: 4.25,
+  menu_item_picture_url: 'http://mfoodinfo.com/wp-content/uploads/2015/09/fried-ravioli.jpg'}],
+  [{title: 'House Salad', 
+  description: 'Seasonal mix of salad greens, carrots, cucumbers, radishes, and red onions.', 
+  price: 6.50,
+  menu_item_picture_url: 'http://kabulhouse.com/udata/prods/597_l'},
+  {title: 'Garden Salad', 
+  description: 'Our House Salad with celery, green peppers and provel cheese.', 
+  price: 7.25,
+  menu_item_picture_url: 'http://www.spur.co.za/nutrition/assets/product/Sides_Side_Garden_Salad_a.jpg'}],
+  [{title: 'Vegan Vegetable', 
+  description: 'Carrots, onions, celery, broccoli, corn, peas, asparagus, green beans and tomatoes.', 
+  price: 3.75,
+  menu_item_picture_url: 'http://www.manjulaskitchen.com/blog/wp-content/uploads/vegetable_soup.jpg'},
+  {title: 'French Onion', 
+  description: 'Special decades-old house recipe.  Served with French bread and butter.', 
+  price: 4.25,
+  menu_item_picture_url: 'http://foodnetwork.sndimg.com/content/dam/images/food/fullset/2006/6/5/0/pa0709_french_onion_soup_2.jpg'}],
+  [{title: '5 oz. Hamburger', 
+  description: 'Smaller version of our award-winning hamburger.', 
+  price: 5.95,
+  menu_item_picture_url: 'http://blog.williams-sonoma.com/wp-content/uploads/2013/08/WS_GrillMaster_Howto_Cheeseburger_143.jpg'},
+  {title: 'Hickory Burger', 
+  description: '7 oz. all-natural hickory-seasoned hamburger with hickory sauce.', 
+  price: 6.70,
+  menu_item_picture_url: 'http://www.foxnews.com/recipe/sites/foxnews.com.recipe/files/styles/slideshow/public/NEWOldHickory660.jpg'}],
+  [{title: 'Fish & Chips', 
+  description: 'Beer battered Cod served with cole slaw, tarter sauce and French fries.', 
+  price: 8.50,
+  menu_item_picture_url: 'http://aboutentertainmentinfo.com/wp-content/uploads/2015/04/fish-with-chips-best-food.jpg'},
+  {title: 'Chili Mac', 
+  description: 'Hearty portion of macaroni topped with our award-winning spicy chili.', 
+  price: 5.95,
+  menu_item_picture_url: 'http://thrivingvegetarian.com/blog/wp-content/uploads/chili-mac1.jpg'}],
+  [{title: 'Scrumptious Bread Pudding', 
+  description: 'Served a la mode', 
+  price: 4.95,
+  menu_item_picture_url: 'http://cleditorial.s3.amazonaws.com/article/cruising101/qa/bread-pudding/norwegian-bread-pudding-770.jpg'},
+  {title: 'Gooey Butter Cake', 
+  description: 'A St.Louis classic.', 
+  price: 4.50,
+  menu_item_picture_url: 'http://www.vapealiciousjuice.com/assets/images/stlgooey.jpg'}]]
 ];
 
 module.exports = {
