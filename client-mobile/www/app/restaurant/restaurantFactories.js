@@ -1,6 +1,51 @@
 /*jshint camelcase: false */
 angular.module('dd-restFactories', [])
 
+.factory('RestaurantFactory', function () {
+
+  var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Satday', 'Sunday'];
+
+  var convertToSimple = function (time) {
+    var splitTime = time.split(':');
+    var tag = '';
+    if ((Number(splitTime[0]) >= 0 && Number(splitTime[0]) <= 11) || Number(splitTime[0]) >= 24) {
+      tag = 'AM';
+    } else {
+      tag = 'PM';
+    }
+
+    splitTime[0] = Number(splitTime[0]) % 12;
+
+    if (splitTime[0] === 0) {
+      splitTime[0] = 12;
+    }
+
+    splitTime[0] = splitTime[0].toString();
+    console.log(splitTime[0] + ':' + splitTime[1] + ' ' + tag);
+    return splitTime[0] + ':' + splitTime[1] + ' ' + tag;
+  };
+
+  var formatTimes = function (restaurant) {
+    var openTime, closeTime;
+    for (var i = 0; i < days.length; i++) {
+      console.log('restaurant.attributes[' + 'openingHour' + days[i] + '] = ', restaurant.attributes['openingHour' + days[i]]);
+      if (restaurant.attributes['openingHour' + days[i]]) {
+        openTime = convertToSimple(restaurant.attributes['openingHour' + days[i]]);
+        closeTime = convertToSimple(restaurant.attributes['closingHour' + days[i]]);
+      }
+      if (openTime === closeTime) {
+        restaurant.attributes[days[i] + 'Hours'] = 'Closed';
+      } else {
+        restaurant.attributes[days[i] + 'Hours'] = openTime + ' - ' + closeTime;
+      }
+    }
+  };
+
+  return {
+    formatTimes: formatTimes
+  };
+})
+
 .factory('MenuFactory', ['$http', function ($http) {
   var getMenuItems = function (restID) {
     return $http({
