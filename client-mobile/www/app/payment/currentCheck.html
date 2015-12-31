@@ -3,14 +3,11 @@
       Check for {{focusedRestaurant.attributes.restaurantName}}
   </ion-nav-title>
   <ion-content>
-      <div collection-repeat = 'item in orderItems' ng-show="isCheckedIn">
-        <ion-checkbox class="payCheckbox" ng-show="!item.paid" ng-model="item.selected" ng-change="togglePay(item)">
-        <span class='itemName'> {{item.title}} </span><span ng-show="!item.selected && !item.paid" class = 'itemPrice'> {{+item.price - +item.totalPaid | currency}} </span>
-        <input class="payAmount" type="text" ng-change="updatePay()" ng-show="item.selected" ng-model="item.payAmount"><span class="itemPrice" ng-show="item.selected">$</span>
-        <span class='itemPrice' ng-show="item.paid">Paid</span>
-        </ion-checkbox>
-        <!-- would want to pull them to separate sides of div, also keep a running total in scope to total at bottom -->
-      </div>
+    <ion-item collection-repeat = 'item in orderItems' ng-show="isCheckedIn">
+      <input ng-show="!item.paid" type="checkbox" ng-model="item.selected" ng-change="togglePay(item)"><span class='itemName'> {{item.title}} </span><span ng-show="!item.selected && !item.paid" class = 'itemPrice'> {{+item.price - +item.totalPaid | currency}} </span>
+      <input class="payAmount" type="text" ng-change="updatePay()" ng-show="item.selected" ng-model="item.payAmount"><span class="itemPrice" ng-show="item.selected">$</span>
+      <span class='itemPrice' ng-show="item.paid">Paid</span>
+    </ion-item>
       <strong>
       <ion-item ng-show="isCheckedIn" class='billTotal'>
         Subtotal: {{bill.subtotal | currency}}
@@ -47,18 +44,14 @@
     <div ng-show="!isCheckedIn" class="card">
       You must be seated at a restaurant before your check will be available.
     </div>
-    <div>
-    Please note that any charges totaling less than $.50 will be rounded up to $.50.
-    </div>
-    <br>
-    <br>
-    <div ng-show="isBilled"> Your card has successfully been charged.</div>
+    <ion-item class="item-text-wrap divCenter">
+    Please note that any charges less than $.50 will be rounded up to $.50.
+    </ion-item>
   </div>
-    <!-- <ng-include src="footersrc"></ng-include> -->
   </ion-content>
 
   <ion-footer-bar align-title="left">
-  <div class="tabs">
+    <div class="tabs">
       <a class="tab-item" href='#/nav/restaurantMenu'>
         Menu
       </a>
@@ -75,7 +68,5 @@
         Server
       </a>
     </div>
-</ion-footer-bar>
-
-
+  </ion-footer-bar>
 </ion-view>

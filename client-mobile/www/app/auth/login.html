@@ -17,12 +17,12 @@
           <input type="password" ng-model="loginData.password">
         </label>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
+          <button class="button button-block button-positive" type="submit">Log In</button>
         </label>
+        <a class='fbButton' href='http://localhost:8000/api/auth/facebook'><img style='width: 100%; padding-left: 15px; padding-right: 15px' src="http://i.stack.imgur.com/Vk9SO.png"></a>
       </div>
     </form>
-    <div ng-show="invalidLogin">Invalid login information.  Please try again.</div>
-    <a class='fbButton' href='http://localhost:8000/api/auth/facebook'><img src="../../img/fbLogin.png"></a>
-    <img class = 'buttonLogo' src = 'http://logoholic.org/wp-content/uploads/2012/10/D.jpg'>
+    <ion-item ng-show="invalidLogin">Invalid login information.  Please try again.</ion-item>
+    <img class = 'buttonLogo' src = 'https://s3-us-west-1.amazonaws.com/digitaldiningphotos/logo1.png'>
   </ion-content>
 </ion-view>

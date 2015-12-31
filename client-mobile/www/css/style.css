@@ -105,13 +105,13 @@ input.payAmount {
 }
 
 .fbButton {
-  position: relative;
-  left: 50%;
-  margin-left: -100px;
+  /*position: relative;*/
+  /*margin: 10px;*/
 };
 
+
 .payCheckbox {
-  width: 100%;
+  width: 400px;
 }
 
 .payCheckbox .itemPrice {
@@ -122,3 +122,15 @@ input.payAmount {
   right:0px;
 }
 
+.itemPrice {
+ float:right;
+}
+.itemName {
+  float: left;
+  padding-left: 5px;
+}
+
+input[type=checkbox] {
+ zoom:2.0;
+ float:left;
+}
