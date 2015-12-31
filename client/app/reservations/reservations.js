@@ -49,6 +49,22 @@ angular.module('digitalDining.reservations', [
         $scope.parties.seated.push(partySeated);
       });
   };
+  $scope.getWaitingTime = function (party) {
+    var msDiff = new Date() - new Date(party.attributes.checkedinAt);
+    if (party.attributes.seatedAt !== '0000-00-00 00:00:00') {
+      msDiff = new Date() - new Date(party.attributes.seatedAt);
+    }
+    var hours = Math.floor(msDiff / 1000 / 60 / 60);
+    msDiff -= hours * 1000 * 60 * 60;
+    var minutes = Math.floor(msDiff / 1000 / 60);
+    if (hours === 0) {
+      return minutes + ' minutes';
+    }
+    if (hours === 1) {
+      return '1 hour and ' + minutes + ' minutes';
+    }
+    return hours + ' hours and ' + minutes + ' minutes';
+  };
   $scope.getParties();
   $scope.getTables();
 }]);

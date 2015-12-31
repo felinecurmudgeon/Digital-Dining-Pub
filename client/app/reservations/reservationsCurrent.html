@@ -4,7 +4,7 @@
       <th>Table</th>
       <th>Party Size</th>
       <th>Party Name</th>
-      <th>Hour of arrival</th>
+      <th>Meal Started</th>
     </tr>
   </thead>
   <tbody>
@@ -19,7 +19,7 @@
         {{party.attributes.partyName}}
       </td>
       <td>
-        {{party.attributes.checkedinAt.slice(12, 16)}}
+        {{getWaitingTime(party) + ' ago'}}
       </td>
     </tr>
   </tbody>

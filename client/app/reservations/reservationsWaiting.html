@@ -3,7 +3,7 @@
       <tr>
         <th>Party Size</th>
         <th>Party Name</th>
-        <th>Hour of arrival</th>
+        <th>Waiting Time</th>
         <th></th>
       </tr>
     </thead>
@@ -16,7 +16,7 @@
           {{party.attributes.partyName}}
         </td>
         <td>
-          {{party.attributes.checkedinAt.slice(12, 16)}}
+          {{getWaitingTime(party)}}
         </td>
         <td>
           <!-- Single button -->
