@@ -23,7 +23,7 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'dd-authCtrl', 'dd-
     $ionicConfig.views.maxCache(0);
 
     //switch to turn on/off relative paths for api endpoints
-    window.isMobileProduction = true;
+    window.isDevProduction = true;
   });
 })
 

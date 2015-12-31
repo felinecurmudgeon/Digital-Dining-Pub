@@ -12,7 +12,7 @@ angular.module('dd-checkInFactory', [])
     isCheckedIn = true;
     return $http({
       // url: 'http://localhost:8000/api/parties',
-      url: window.isMobileProduction ? 'http://localhost:8000/api/parties' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties',
+      url: window.isDevProduction ? 'http://localhost:8000/api/parties' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties',
       method: 'POST',
       data: data
     }).then( function (response) {
@@ -29,7 +29,7 @@ angular.module('dd-checkInFactory', [])
   var getUsers = function () {
     return $http({
       // url: 'http://localhost:8000/api/users?custonly=true',
-      url: window.isMobileProduction ? 'http://localhost:8000/api/users?custonly=true' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/users?custonly=true',
+      url: window.isDevProduction ? 'http://localhost:8000/api/users?custonly=true' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/users?custonly=true',
       method: 'GET'
     });
   };
@@ -37,7 +37,7 @@ angular.module('dd-checkInFactory', [])
   var addUsersToParty = function (userId) {
     return $http({
       // url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant',
-      url: window.isMobileProduction ? 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant',
+      url: window.isDevProduction ? 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant',
       method: 'PUT',
       data: {
         'user_id' : userId

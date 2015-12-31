@@ -5,7 +5,7 @@ angular.module('dd-homeFactories', [])
   var getAllRestaurants = function () {
     return $http({
       // url: 'http://localhost:8000/api/restaurants',
-      url: window.isMobileProduction ? 'http://localhost:8000/api/restaurants' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/restaurants',
+      url: window.isDevProduction ? 'http://localhost:8000/api/restaurants' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/restaurants',
       method: 'GET'
     });
   };
@@ -13,7 +13,7 @@ angular.module('dd-homeFactories', [])
   var getParty = function () {
     return $http({
       // url: 'http://localhost:8000/api/parties?user=true',
-      url: window.isMobileProduction ? 'http://localhost:8000/api/parties?user=true' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties?user=true',
+      url: window.isDevProduction ? 'http://localhost:8000/api/parties?user=true' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties?user=true',
       method: 'GET'
     });
   };
@@ -21,7 +21,7 @@ angular.module('dd-homeFactories', [])
   var getRestaurant = function (rid) {
     return $http({
       // url: 'http://localhost:8000/api/restaurants/' + rid,
-      url: window.isMobileProduction ? 'http://localhost:8000/api/restaurants/' + rid : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/restaurants/' + rid,
+      url: window.isDevProduction ? 'http://localhost:8000/api/restaurants/' + rid : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/restaurants/' + rid,
       method: 'GET'
     });
   };
