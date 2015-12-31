@@ -5,7 +5,7 @@ angular.module('dd-restCtrls', [])
     if (!$window.localStorage.getItem('partyId')) {
       var confirmPopup = $ionicPopup.confirm({
         title: 'Please Check In',
-        template: 'You are not allowed to order until you are checked in. Would you like to check in now?'
+        template: 'You are not able to order until you are checked in. Would you like to check in now?'
       });
       confirmPopup.then(function (res) {
        if (res) {
