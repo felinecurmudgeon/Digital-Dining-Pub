@@ -111,7 +111,7 @@ input.payAmount {
 
 
 .payCheckbox {
-  width: 100%;
+  width: 400px;
 }
 
 .payCheckbox .itemPrice {
@@ -123,5 +123,14 @@ input.payAmount {
 }
 
 .itemPrice {
-  float:right;
+ float:right;
+}
+.itemName {
+  float: left;
+  padding-left: 5px;
+}
+
+input[type=checkbox] {
+ zoom:2.0;
+ float:left;
 }
