@@ -2,6 +2,10 @@ angular.module('dd-restCtrls', [])
 
 .controller('RestaurantMenuCtrl', ['$scope', '$state', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, $state, $window, MenuFactory, HomeFactory, OrderFactory) {
 
+  $scope.goToReservation = function () {
+    $state.go('nav.checkIn');
+  };
+
   $scope.getMenuItems = function () {
    HomeFactory.getFocusedRestaurant()
     .then (function (rest) {
@@ -58,10 +62,20 @@ angular.module('dd-restCtrls', [])
 }])
 
 
-.controller('RestaurantDisplayCtrl', ['$scope', '$state', 'HomeFactory', function ($scope, $state, HomeFactory) {
+.controller('RestaurantDisplayCtrl', ['$scope', '$state', '$window', 'HomeFactory', function ($scope, $state, $window, HomeFactory) {
+
+  $scope.goToReservation = function () {
+    $state.go('nav.checkIn');
+  };
+
   $scope.getFocusedRestaurant = function () {
     HomeFactory.getFocusedRestaurant()
       .then(function (rest) {
+        if ($window.localStorage.getItem('partyId')) {
+          $scope.isCheckedIn = true;
+        } else {
+          $scope.isCheckedIn = false;
+        }
         $scope.focusedRestaurant = rest;
       });
   };

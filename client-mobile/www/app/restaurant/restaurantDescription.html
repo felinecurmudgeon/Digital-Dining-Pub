@@ -3,6 +3,7 @@
       Details for {{focusedRestaurant.attributes.restaurantName}}
   </ion-nav-title>
   <ion-content>
+  <button class="button button-block button-stable" ng-show="!isCheckedIn" ng-click="goToReservation()"> Check in at {{focusedRestaurant.attributes.restaurantName}} </button>
     <h2 class="titleBar">Location</h2>
     <p>
       {{focusedRestaurant.attributes.restaurantAddress}}, {{focusedRestaurant.attributes.restaurantCity}}, {{focusedRestaurant.attributes.restaurantState}} {{focusedRestaurant.attributes.restaurantZipCode}}
@@ -20,6 +21,7 @@
       <li class='item'>Saturday: {{focusedRestaurant.attributes.openingHourSatday}}-{{focusedRestaurant.attributes.closingHourSatday}}</li>
       <li class='item'>Sunday: {{focusedRestaurant.attributes.openingHourSunday}}-{{focusedRestaurant.attributes.closingHourSunday}}</li>
     </ul>
+    <button class="button button-block button-stable" ng-show="!isCheckedIn" ng-click="goToReservation()"> Check in at {{focusedRestaurant.attributes.restaurantName}} </button>
     
   </ion-content>
 <!--   <ng-include src="footersrc"></ng-include> -->
@@ -36,7 +38,7 @@
         Check
       </a>
       <a class="tab-item" href='#/nav/checkIn'>
-        Reservation
+        Check In
       </a>
       <a class="tab-item">
         Server

@@ -1,4 +1,7 @@
-<ion-view view-title="Reservation">
+<ion-view>
+ <ion-nav-title>
+      Details for {{focusedRestaurant.attributes.restaurantName}}
+  </ion-nav-title>
   <ion-content>
     <form ng-submit="doCheckIn()" ng-show="!isCheckedIn && hasRestaurant">
       <div class="list">
@@ -11,7 +14,7 @@
           <input type="number" ng-model="partyInfo.party_size">
         </label>
         <label class="item">
-          <button ng-if='!isCheckedIn' class="button button-block button-positive" type="submit">Check In to {{focusedRestaurant.attributes.restaurantName}}</button>
+          <button ng-if='!isCheckedIn' class="button button-block button-positive" type="submit">Check In at {{focusedRestaurant.attributes.restaurantName}}</button>
           <button ng-if='isCheckedIn' class="button button-block button-balanced" type="submit">Checked In at {{focusedRestaurant.attributes.restaurantName}}</button>
         </label>
       </div>
@@ -27,7 +30,7 @@
             <label class="item item-input item-select">
               <div class="input-label">
      
-           Add users to reservation:
+           Add users to check-in:
               </div>
               <select name="selectedUser" ng-model="selectedUser" ng-change="setSelectedUser(selectedUser)">
                  <option value="">---Please select---</option> 
@@ -60,7 +63,7 @@
         Check
       </a>
       <a class="tab-item" href='#/nav/checkIn'>
-        Reservation
+        Check In
       </a>
       <a class="tab-item">
         Server
