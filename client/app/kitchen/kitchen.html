@@ -1,0 +1,42 @@
+<div class="container"> 
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Table</th>
+        <th>Item ordered</th>
+        <th>Waiting time</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="party in parties">
+      <tr class="active" ng-repeat="itemOrdered in party.itemsOrdered" ng-show="party.itemsOrdered.length">
+        <td>
+          {{party.tableNumber}}
+        </td>
+        <td>
+          {{itemOrdered.attributes.menuItem.title}}
+        </td>
+        <td>
+          {{itemOrdered.attributes.orderedAt}}
+        </td>
+        <td>
+          <button class="btn btn-primary btn-sm" ng-click="itemOrdered.serve = true" ng-hide="itemOrdered.serve">Served</button>
+          <div class="btn-group" ng-show="itemOrdered.serve">
+            <button type="button" class="btn btn-primary btn-sm">
+              <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-click="serveItem(itemOrdered)"></span>
+            </button>
+            <button type="button" class="btn btn-primary btn-sm">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-click="itemOrdered.serve = false"></span>
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr ng-hide="party.itemsOrdered.length">
+        <td>
+          {{party.tableNumber}}
+        </td>
+        <td colspan="3">This party is all set</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -41,8 +41,13 @@ angular.module('digitalDining.reservations', [
       });
   };
   $scope.seatParty = function (party, table) {
-    Reservations.seatParty(party, table);
-    console.log(party);
+    Reservations.seatParty(party, table)
+      .then(function () {
+        var index = $scope.parties.waiting.indexOf(party);
+        var partySeated = $scope.parties.waiting.splice(index, 1)[0];
+        partySeated.attributes.tableNumber = table.attributes.tableNumber;
+        $scope.parties.seated.push(partySeated);
+      });
   };
   $scope.getParties();
   $scope.getTables();

@@ -6,7 +6,13 @@ angular.module('digitalDining.restaurantSettings', [
 .controller('restSettingsController', ['$scope', '$window', 'Restaurants', 'Tables', function ($scope, $window, Restaurants, Tables) {
   $scope.restaurant = {};
   $scope.tables = {};
-  $scope.creation = true;
+  $scope.showForm = {
+    creation: true,
+    edit: false
+  };
+  $scope.showForm = function () {
+    return ($scope.showForm.creation || $scope.showForm.edit);
+  };
   $scope.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   $scope.creating = function () {
     Restaurants.getRestaurantInfo()
@@ -56,9 +62,9 @@ angular.module('digitalDining.restaurantSettings', [
     };
     postRestInfo()
       .then(function (data) {
-        console.log('got data ', data);
         $window.localStorage.setItem('restaurantId', data.id);
-        $scope.creation = false;
+        $scope.showForm.creation = false;
+        $scope.showForm.edit = false;
       })
       .catch(function (error) {
         console.error(error);
