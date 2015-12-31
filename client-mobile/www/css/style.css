@@ -123,7 +123,7 @@ input.payAmount {
 }
 
 .itemPrice {
- float:right;
+  float:right;
 }
 .itemName {
   float: left;

@@ -5,6 +5,7 @@ var url = require('url');
 var JsonResponse = require('../JsonResponseObject');
 var JsonData = require('../JsonDataObject');
 var nameGenerator = require('./nameGenerator');
+var usersModel = require('../users/usersModel.js');
 
 var createJsonResponseForParty = function (partyData, included) {
   var JsonResponseObject = new JsonResponse();
@@ -58,18 +59,26 @@ var getAvailablePartyName = function () {
 
 module.exports = {
   checkInAndCreateParty: function (req, res) {
-    getAvailablePartyName()
-      .then(function (partyName) {
-        partiesModel.party.checkInAndCreateParty({
-          party_name: partyName,
-          restaurant_id: req.body.restaurant_id,
-          party_size: req.body.party_size,
-          user_id: req.user.id})
+    usersModel.user.get(req.user.id, true).then(function (user) {
+      console.log('got user = ', user);
+      if (!user[0].stripe_id) {
+        res.status('401');
+        res.send('User must have an account before attempting to check in');
+      } else {
+        getAvailablePartyName()
+        .then(function (partyName) {
+          partiesModel.party.checkInAndCreateParty({
+            party_name: partyName,
+            restaurant_id: req.body.restaurant_id,
+            party_size: req.body.party_size,
+            user_id: req.user.id})
           .then(function (data) {
             res.status(201);
             res.send(data);
           });
-      });
+        });
+      }
+    });
   },
   editParty: function (req, res) {
     var query = url.parse(req.url, true).query;

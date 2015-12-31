@@ -19,6 +19,9 @@
         </label>
       </div>
     </form>
+    <ion-item ng-show='noAccount' class="item-text-wrap divCenter">
+      You must provide your payment information before checking in at a restaurant.
+    </ion-item>
     <br>
     <br>
       <form ng-submit="addUsersToParty()" ng-show="isCheckedIn" class="card">
