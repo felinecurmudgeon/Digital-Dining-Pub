@@ -1,8 +1,8 @@
 angular.module('dd-restCtrls', [])
 
 .controller('RestaurantMenuCtrl', ['$scope', '$state', '$ionicPopup', '$window', 'MenuFactory', 'HomeFactory', 'OrderFactory', function ($scope, $state, $ionicPopup, $window, MenuFactory, HomeFactory, OrderFactory) {
-  if (!$window.localStorage.getItem('partyId') && !window.isCalled) {
-    window.isCalled = true;
+  if (!$window.localStorage.getItem('partyId') && !$window.isCalled) {
+    $window.isCalled = true;
     var confirmPopup = $ionicPopup.confirm({
       title: 'Please Check In',
       template: 'You are not able to order until you are checked in. Would you like to check in now?'
