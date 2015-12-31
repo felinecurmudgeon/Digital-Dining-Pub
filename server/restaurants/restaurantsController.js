@@ -2,7 +2,7 @@
 var restaurantsModel = require('./restaurantsModel.js');
 var JsonResponseObj = require('../JsonResponseObject.js');
 var JsonDataObj = require('../JsonDataObject.js');
-var http = require('request');
+require('request');
 
 module.exports = {
   getRestaurants : function (req, res) {
@@ -138,7 +138,7 @@ module.exports = {
     console.log('getting address');
     var request = require('request');
     request('https://maps.googleapis.com/maps/api/geocode/json?address=' + req.query.address + '&key=AIzaSyDBQWWndCW7m_B3HCBBHm2dmDVs8BfAb5o', function (error, response, body) {
-      if (!error && response.statusCode == 200) {
+      if (!error && response.statusCode === 200) {
         res.send(body);
       }
     });
