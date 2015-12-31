@@ -14,8 +14,6 @@ angular.module('digitalDining', ['ionic', 'angularPayments', 'dd-authCtrl', 'dd-
       // org.apache.cordova.statusbar required
       window.StatusBar.styleDefault();
     }
-    //switch to turn on/off relative paths for api endpoints - make false to use ionic upload, otherwise true
-    window.isMobileDev = true;
 
     $ionicConfig.views.maxCache(0);
 
