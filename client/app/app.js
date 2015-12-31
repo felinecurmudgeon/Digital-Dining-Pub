@@ -11,9 +11,9 @@ angular.module('digitalDining', [
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.when('/restaurantSettings', '/restaurantSettings/info');
   $urlRouterProvider.when('/reservations', '/reservations/waiting');
-  $urlRouterProvider.otherwise( function ($injector) {
+  $urlRouterProvider.otherwise(function ($injector) {
    var $state = $injector.get('$state');
-   $state.go('/reservations/waiting');
+   $state.go('reservations.waiting');
  });
   $stateProvider
     .state('login', {
