@@ -2,7 +2,7 @@
 angular.module('dd-checkInCtrl', [])
 
 .controller('CheckInCtrl', ['$scope', '$state', '$window', '$ionicPopup', 'HomeFactory', 'CheckInFactory', function ($scope, $state, $window, $ionicPopup, HomeFactory, CheckInFactory) {
-
+  $scope.noAccount = false;
   $scope.partyInfo = {};
 
   $scope.getCheckInStatus = function () {
@@ -32,6 +32,15 @@ angular.module('dd-checkInCtrl', [])
     CheckInFactory.doCheckIn($scope.partyInfo).then( function () {
       $state.go('nav.restaurantMenu');
       $scope.isCheckedIn = true;
+    })
+    .catch(function (err) {
+      if (err.status === 401) {
+        $scope.noAccount = true;
+        setTimeout(function () {
+          $state.go('nav.account');
+        }, 1500);
+        console.log('not a valid person ', err);
+      }
     });
   };
 
