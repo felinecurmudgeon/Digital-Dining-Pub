@@ -36,18 +36,20 @@
           </button>
         </div>
       </form>
-    <div ng-show="invalidInput">
+    <ion-item class="item-text-wrap divCenter" ng-show="invalidInput">
     Invalid payment values.
     You must have one or more items selected and valid monetary values provided for each selected item.
     Please do not exceed the remaining balance for any item.
-    </div>
-    <div ng-show="!isCheckedIn" class="card">
+    </ion-item>
+    <ion-item class="item-text-wrap divCenter" ng-show="!isCheckedIn" class="card">
       You must be seated at a restaurant before your check will be available.
-    </div>
+    </ion-item>
     <ion-item class="item-text-wrap divCenter">
     Please note that any charges less than $.50 will be rounded up to $.50.
     </ion-item>
   </div>
+  <br>
+  <br>
   </ion-content>
 
   <ion-footer-bar align-title="left">
