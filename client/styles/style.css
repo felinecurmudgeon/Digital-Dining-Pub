@@ -28,7 +28,7 @@ hr {
 
 .category button {
   width:65px;
-  border-radius:30px;
+  /*border-radius:30px;*/
   vertical-align:middle;
   height:20px;
   line-height:0;
@@ -40,7 +40,7 @@ hr {
 
 .itemContainer button {
   width:60px;
-  border-radius:30px;
+  /*border-radius:30px;*/
   vertical-align:middle;
   height:20px;
   line-height:0;

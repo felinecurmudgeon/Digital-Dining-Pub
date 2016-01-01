@@ -130,14 +130,14 @@ module.exports = {
         return next(err);
       }
       if (!user) {
-        return res.redirect('http://localhost:8100/#/app');
+        return res.redirect('http://digitaldining.co:8200/#/app');
       }
       var profile = {
         username: user.username,
         userID: user.id
       };
       var token = jwt.sign(profile, process.env.DDJWTSECRET);
-      res.redirect('http://localhost:8100/#/successFBLogin?token=' + token);
+      res.redirect('http://digitaldining.co:8200/#/successFBLogin?token=' + token);
     })(req, res, next);
   }
 };

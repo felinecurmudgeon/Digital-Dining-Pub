@@ -4,7 +4,7 @@ angular.module('dd-authFactory', [])
   var signin = function (loginData) {
     return $http({
       method: 'POST',
-      url: window.isMobileDev ? 'http://localhost:8000/api/signin' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/signin',
+      url: window.isMobileDev ? 'http://localhost:8000/api/signin' : 'http://52.33.58.174/api/signin',
       data: {
         username: loginData.username,
         password: loginData.password
@@ -28,7 +28,7 @@ angular.module('dd-authFactory', [])
     return $http({
       method: 'POST',
       // url: 'http://localhost:8000/api/signup',
-      url: window.isMobileDev ? 'http://localhost:8000/api/signup' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/signup',
+      url: window.isMobileDev ? 'http://localhost:8000/api/signup' : 'http://52.33.58.174/api/signup',
       data: {
         username: signupData.username,
         password: signupData.password
