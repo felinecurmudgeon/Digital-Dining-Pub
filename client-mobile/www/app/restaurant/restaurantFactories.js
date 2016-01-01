@@ -21,14 +21,12 @@ angular.module('dd-restFactories', [])
     }
 
     splitTime[0] = splitTime[0].toString();
-    console.log(splitTime[0] + ':' + splitTime[1] + ' ' + tag);
     return splitTime[0] + ':' + splitTime[1] + ' ' + tag;
   };
 
   var formatTimes = function (restaurant) {
     var openTime, closeTime;
     for (var i = 0; i < days.length; i++) {
-      console.log('restaurant.attributes[' + 'openingHour' + days[i] + '] = ', restaurant.attributes['openingHour' + days[i]]);
       if (restaurant.attributes['openingHour' + days[i]]) {
         openTime = convertToSimple(restaurant.attributes['openingHour' + days[i]]);
         closeTime = convertToSimple(restaurant.attributes['closingHour' + days[i]]);
@@ -50,7 +48,7 @@ angular.module('dd-restFactories', [])
   var getMenuItems = function (restID) {
     return $http({
       // url: 'http://localhost:8000/api/menuitems/?rid=' + restID,
-      url: window.isMobileDev ? 'http://localhost:8000/api/menuitems/?rid=' + restID : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/menuitems/?rid=' + restID,
+      url: window.isMobileDev ? 'http://localhost:8000/api/menuitems/?rid=' + restID : 'http://52.33.58.174/api/menuitems/?rid=' + restID,
       method: 'GET'
     });
   };
@@ -112,7 +110,7 @@ angular.module('dd-restFactories', [])
     var temp = order.menu_items;
     return $http({
       // url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
-      url: window.isMobileDev ? 'http://localhost:8000/api/parties/' + pid + '/menuitems' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties/' + pid + '/menuitems',
+      url: window.isMobileDev ? 'http://localhost:8000/api/parties/' + pid + '/menuitems' : 'http://52.33.58.174/api/parties/' + pid + '/menuitems',
       method: 'POST',
       data: temp
     }).then( function () {

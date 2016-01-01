@@ -5,7 +5,7 @@ angular.module('dd-homeFactories', [])
   var getAllRestaurants = function () {
     return $http({
       // url: 'http://localhost:8000/api/restaurants',
-      url: window.isMobileDev ? 'http://localhost:8000/api/restaurants' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/restaurants',
+      url: window.isMobileDev ? 'http://localhost:8000/api/restaurants' : 'http://52.33.58.174/api/restaurants',
       method: 'GET'
     });
   };
@@ -13,7 +13,7 @@ angular.module('dd-homeFactories', [])
   var getParty = function () {
     return $http({
       // url: 'http://localhost:8000/api/parties?user=true',
-      url: window.isMobileDev ? 'http://localhost:8000/api/parties?user=true' : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/parties?user=true',
+      url: window.isMobileDev ? 'http://localhost:8000/api/parties?user=true' : 'http://52.33.58.174/api/parties?user=true',
       method: 'GET'
     });
   };
@@ -21,7 +21,7 @@ angular.module('dd-homeFactories', [])
   var getRestaurant = function (rid) {
     return $http({
       // url: 'http://localhost:8000/api/restaurants/' + rid,
-      url: window.isMobileDev ? 'http://localhost:8000/api/restaurants/' + rid : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/restaurants/' + rid,
+      url: window.isMobileDev ? 'http://localhost:8000/api/restaurants/' + rid : 'http://52.33.58.174/api/restaurants/' + rid,
       method: 'GET'
     });
   };
@@ -57,7 +57,7 @@ angular.module('dd-homeFactories', [])
 
   var convertAddress = function (address) {
     return $http({
-      url: window.isMobileDev ? 'http://localhost:8000/api/convertaddress?address=' + address : 'http://ec2-52-33-106-186.us-west-2.compute.amazonaws.com/api/convertaddress?address=' + address,
+      url: window.isMobileDev ? 'http://localhost:8000/api/convertaddress?address=' + address : 'http://52.33.58.174/api/convertaddress?address=' + address,
       method: 'GET'
       });
   };
