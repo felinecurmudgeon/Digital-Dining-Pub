@@ -9,7 +9,6 @@
 1. [Requirements](#requirements)
 1. [Development](#development)
 1. [Team](#team)
-1. [Contributing](#contributing)
 
 ## Usage
 
