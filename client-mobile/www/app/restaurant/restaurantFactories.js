@@ -48,7 +48,7 @@ angular.module('dd-restFactories', [])
   var getMenuItems = function (restID) {
     return $http({
       // url: 'http://localhost:8000/api/menuitems/?rid=' + restID,
-      url: window.isMobileDev ? 'http://localhost:8000/api/menuitems/?rid=' + restID : 'http://52.33.58.174/api/menuitems/?rid=' + restID,
+      url: window.isMobileDev ? 'http://localhost:8000/api/menuitems/?rid=' + restID : 'http://52.33.58.174:8000/api/menuitems/?rid=' + restID,
       method: 'GET'
     });
   };
@@ -110,7 +110,7 @@ angular.module('dd-restFactories', [])
     var temp = order.menu_items;
     return $http({
       // url: 'http://localhost:8000/api/parties/' + pid + '/menuitems',
-      url: window.isMobileDev ? 'http://localhost:8000/api/parties/' + pid + '/menuitems' : 'http://52.33.58.174/api/parties/' + pid + '/menuitems',
+      url: window.isMobileDev ? 'http://localhost:8000/api/parties/' + pid + '/menuitems' : 'http://52.33.58.174:8000/api/parties/' + pid + '/menuitems',
       method: 'POST',
       data: temp
     }).then( function () {

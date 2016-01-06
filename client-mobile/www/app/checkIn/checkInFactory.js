@@ -12,7 +12,7 @@ angular.module('dd-checkInFactory', [])
     isCheckedIn = true;
     return $http({
       // url: 'http://localhost:8000/api/parties',
-      url: window.isMobileDev ? 'http://localhost:8000/api/parties' : 'http://52.33.58.174/api/parties',
+      url: window.isMobileDev ? 'http://localhost:8000/api/parties' : 'http://52.33.58.174:8000/api/parties',
       method: 'POST',
       data: data
     }).then( function (response) {
@@ -29,7 +29,7 @@ angular.module('dd-checkInFactory', [])
   var getUsers = function () {
     return $http({
       // url: 'http://localhost:8000/api/users?custonly=true',
-      url: window.isMobileDev ? 'http://localhost:8000/api/users?custonly=true' : 'http://52.33.58.174/api/users?custonly=true',
+      url: window.isMobileDev ? 'http://localhost:8000/api/users?custonly=true' : 'http://52.33.58.174:8000/api/users?custonly=true',
       method: 'GET'
     });
   };
@@ -37,7 +37,7 @@ angular.module('dd-checkInFactory', [])
   var addUsersToParty = function (userId) {
     return $http({
       // url: 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant',
-      url: window.isMobileDev ? 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant' : 'http://52.33.58.174/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant',
+      url: window.isMobileDev ? 'http://localhost:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant' : 'http://52.33.58.174:8000/api/parties/' + $window.localStorage.getItem('partyId') + '?event=addParticipant',
       method: 'PUT',
       data: {
         'user_id' : userId
