@@ -3,6 +3,10 @@
       Check for {{focusedRestaurant.attributes.restaurantName}}
   </ion-nav-title>
   <ion-content>
+    <ion-refresher
+      pulling-text="Pull to refresh..."
+      on-refresh="getCheckedInStatusAndMenuItems()">
+    </ion-refresher>
     <ion-item collection-repeat = 'item in orderItems' ng-show="isCheckedIn">
       <input ng-show="!item.paid" type="checkbox" ng-model="item.selected" ng-change="togglePay(item)"><span class='itemName'> {{item.title}} </span><span ng-show="!item.selected && !item.paid" class = 'itemPrice'> {{+item.price - +item.totalPaid | currency}} </span>
       <input class="payAmount" type="text" ng-change="updatePay()" ng-show="item.selected" ng-model="item.payAmount"><span class="itemPrice" ng-show="item.selected">$</span>
